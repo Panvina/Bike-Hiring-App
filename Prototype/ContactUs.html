@@ -26,6 +26,7 @@
 			color: #000000;
 			font-weight: bolder;
 		}
+		
 		#headercomment h2 {
 			font-weight:lighter;
 			
@@ -83,12 +84,19 @@
 		{
 			float:none;
 		}
-		/*this makes all the imputs to the correct length*/
+		/*this makes all the imputs to the correct length and remove any outlines*/
 		.fourmsize
 		{
-			width: 100%
+        border-top-style: hidden;
+        border-right-style: hidden;
+        border-left-style: hidden;
+        border-bottom-style: hidden;
+			width: 100%;
 		}
-		
+		label
+		{
+			font-weight: bold;
+		}
 		
 		
 		
@@ -171,7 +179,7 @@
 			<div id="emailform" class="textcentral" action="contactus.html" method="post">
 			 	<form>
 					<p>
-					  <lable for="name">Your Name (Required):</lable>
+					  <label for="name">Your Name (Required):</label>
 					  <br>
 <input name="name" type="text" required="required" id="name" class="fourmsize"/>
 					</p>
@@ -183,14 +191,14 @@
 					<p>
 			  		  <label for="subject">Subject:</label>
 			  		  <br>
-<input name="Subject" type="text" id="subject" class="fourmsize"/>
+						<input name="Subject" type="text" id="subject" class="fourmsize"/>
 					</p>
 					<p>
 			  		  <label for="msg">Your Message:</label>
 			  		  <br>
-<textarea name="Message" rows="10" id="msg" class="fourmsize"></textarea>
+						<textarea name="Message" rows="10" id="msg" class="fourmsize"></textarea>
 					</p>
-<button id="submit" class="submitbutton"><span>Send</span></button>
+					<button id="submit" class="submitbutton"><span>Send</span></button>
 				</form>
             </div>
 			</div>
