@@ -7,45 +7,104 @@
 	<link rel="stylesheet" href="styles/style.css"/>
 	<script src="scripts/animation.js"></script>
 	<style>
-		/*These code is going to be moved to CSS in a later date
-		code from: https://www.w3schools.com/howto/howto_js_collapsible.asp
-		*/
-		#contactInfo
-		{
-			margin-left: 0%;
-			background-color: #aaecd0;
-		}
-		#emailform
-		{
-			margin-right: 0%;
-			background-color: #ebf7f7;
-		}
-		#contactInfo, #emailform
-		{
-			padding: 18px;
-			width: 50%;
-		}
+		
+		/*Contact Us Page info*/
+		/*This is mainly setting up the looks of the page*/
 		#faq, #headercomment, #contactUsInfo
 		{
 			display: block;
-			width: 60%;
+			width: 70%;
 			margin-left: auto;
 			margin-right: auto;
 		}
-		
 		#headercomment{
 			text-align: right;
+			text-decoration-color: black;
 		}
+		#headercomment a {
+			text-decoration: none;
+			color: #000000;
+			font-weight: bolder;
+		}
+		#headercomment h2 {
+			font-weight:lighter;
+			
+		}
+		#contactUsInfo p 
+		{
+			font-size: 20px;
+		}
+		
+		/*Decoratintg the buttons*/
+		.submitbutton
+		{
+			background-color: black;
+			color:  white;
+			border: 0px;
+			flaot: left;
+			font-size: 15px;
+			width: 30%;
+		}
+		
+		
+		/*Idea from https://www.w3schools.com/howto/howto_css_equal_height.asp*/
+		#Conactbox1/*This is mainly a box containing contact info*/
+		{
+			background-color: #aaecd0;
+			float: left;
+			
+		}
+		#Conactbox2/*This is mainly a box containing the fourm*/
+		{
+			background-color: #ebf7f7;
+			float: left;
+		}
+		.Contactbox/*This is mainly to hold data of both containers*/
+		{
+			flex: 10;
+			/*display: table-cell;
+			width: 50%;
+			height: 33em ;*/
+		}
+		
+		#contactbox /*This contains both Contact information and fourm of the contianer*/
+		{
+			display: flex;
+				width:100%;
+		}
+		.textcentral /*This mainly aline the text in the containers*/
+		{
+			margin: auto;
+			width: 70%;
+			padding: 5%;
+		}
+		
+		#faq /*Mainly set to make it seperate from the container above*/
+		{
+			float:none;
+		}
+		/*this makes all the imputs to the correct length*/
+		.fourmsize
+		{
+			width: 100%
+		}
+		
+		
+		
+		
+		/*These code is going to be moved to CSS in a later date
+		code from: https://www.w3schools.com/howto/howto_js_collapsible.asp
+		*/
 		/* Style the button that is used to open and close the collapsible content */
-.collapsible {
-  background-color: #eee;
-  color: #444;
-  cursor: pointer;
-  padding: 18px;
-  border: none;
-  text-align: left;
-  outline: none;
-}
+		.collapsible {
+			background-color: #eee;
+			color: #444;
+			cursor: pointer;
+			padding: 18px;
+			border: none;
+			text-align: left;
+			outline: none;
+		}
 
 		.collapsible, .content
 		{
@@ -53,19 +112,31 @@
 			width: 100%;
 			font-size: 18px;
 		}
-/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
-.active, .collapsible:hover {
-	background-color: #ccc;
-}
-
-/* Style the collapsible content. Note: hidden by default */
-.content {
-  padding: 0 ;
-  background-color: white;
-  max-height: 0px;
-  overflow: hidden;
-  transition: max-height 0.2s ease-out;
-}
+		/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+		.active, .collapsible:hover {
+			background-color: #ccc;
+		}
+		
+		/*This is mainly to make it more responsive*/
+		/* Style the collapsible content. Note: hidden by default */
+		.content {
+		  padding: 0 ;
+		  background-color: white;
+		  max-height: 0px;
+		  overflow: hidden;
+		  transition: max-height 0.2s ease-out;
+		}
+		@media only screen and (max-width: 600px) {
+		  .Contactbox {
+			display: block;
+			width: 100%;
+			  height: auto;
+		  }
+			#contactbox
+			{
+				display: block;
+			}
+		}
 	</style>
 </head>
 
@@ -75,13 +146,15 @@
 	<main>
 		<div id="headercomment">
 			<h2> For questions, bookings or just to chat about eBikes, contact us today. <br/>
-			Or Check Our <a href="#faq"><strong>FAQ's</strong></a>.</h2>
+			Or Check Our <a href="#faq">FAQ'S</a>.</h2>
 		</div>
 		
 		
-		<div id="contactUsInfo">
-			<div id="contactInfo">
-			  <h3>CONTACT INFORMATION</h3>
+		<div id="contactUsInfo">	
+			<div id="contactbox">
+			<div class="Contactbox" id="Conactbox1">
+				<div id="contactInfo" class="textcentral">
+			  <h2>CONTACT INFORMATION</h2>
 			  <p> We are a 'Click &amp; Collect' Service. Book a location and pick-up time online and your bike/s will be waiting for you.</p>
 			  <p>TRADING HOURS<br>
 			    Open -Days a week;<br>
@@ -93,38 +166,40 @@
 			    postcode&nbsp;</p>
 			  <p>We look foward to hearing from you.&nbsp;</p>
 			</div>
-			<div id="emailform">
+			</div>
+			<div class="Contactbox" id="Conactbox2">
+			<div id="emailform" class="textcentral" action="contactus.html" method="post">
 			 	<form>
 					<p>
 					  <lable for="name">Your Name (Required):</lable>
+					  <br>
+<input name="name" type="text" required="required" id="name" class="fourmsize"/>
 					</p>
 					<p>
-				  		<input type="text" required="required" id="name"/>
+			  		  <label for="emailinput">Your Email (Required):</label>
+			  		  <br>
+<input name="email" type="text" required="required" id="emailinput" class="fourmsize"/>
 					</p>
 					<p>
-				  		<label for="emailinput">Your Email (Required):</label>
+			  		  <label for="subject">Subject:</label>
+			  		  <br>
+<input name="Subject" type="text" id="subject" class="fourmsize"/>
 					</p>
 					<p>
-						<input type="text" required="required" id="emailinput"/>
+			  		  <label for="msg">Your Message:</label>
+			  		  <br>
+<textarea name="Message" rows="10" id="msg" class="fourmsize"></textarea>
 					</p>
-					<p>
-				  		<label for="subject">Subject:</label>
-					</p>
-					<p>
-						<input type="text" id="subject"/>
-					</p>
-					<p>
-				  		<label for="msg">Your Message:</label>
-					</p>
-					<p>
-						<textarea id="msg">test</textarea>
-					</p>
-					<button id="submit">Send</button>
+<button id="submit" class="submitbutton"><span>Send</span></button>
 				</form>
             </div>
-			
+			</div>
+				</div>
 		</div>
+		<div id="faqfloat">
 		<div id="faq">
+			
+			
 			<h2>FAQ'S</h2>
 			<p><em>If you can't find the answer to your questions bellow, feel free to get in touch.</em></p>
 			<div id="mainfaq">
@@ -178,7 +253,7 @@
 				</div>
 			</div>
 		</div>
-		
+		</div>
 	</main>
 	
 	<footer></footer>
