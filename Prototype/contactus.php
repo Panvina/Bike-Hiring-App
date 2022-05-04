@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<title>Contact Us Page</title>
-	<link rel="stylesheet" href="styles/style.css"/>
+	<link rel="stylesheet" href="style/style.css"/>
 	<script src="scripts/animation.js"></script>
 	<?php 
 	//this is mainly used to sanatise the code
