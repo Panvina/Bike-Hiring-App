@@ -3,6 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<title>Contact Us Page</title>
+	<link rel="shortcut icon" href="/img/icons/logo.png" /><!--temp name till real logo is placed in here-->
 	<link rel="stylesheet" href="style/style.css"/>
 	<script src="scripts/animation.js"></script>
 	<?php 
@@ -24,8 +25,10 @@
 		<?php //php coding starts here for the main proccess of this seciton
 		$err_msg = "";
 		echo "<p>Testing is this work</p>";
-		if (isset ($_POST["submit"]))
+		if (isset ($_POST["submit"]))//has some code issue here
 		{
+			
+		echo "<p>Test2</p>";
 			$name = $_POST["names"];
 			$name = sanitise_input($name);
 			$email = $_POST['email'];
@@ -67,6 +70,7 @@
 				$recieving_email="s103076376@gmail.com";//"invenlochbikes@gmail.com"; //This is blocked off and use an alt email so that the main email wont be filled up with spam.
 				
 				$emailresult = mail($recieving_email, $subject, $msg, $email);
+				echo $emailresult . "<br/>";
 				if($emailresult == true)
 				{
 					echo"<p>email successfully send</p>";
@@ -78,13 +82,13 @@
 			}
 		}
 		?>
-		<div id="headercomment">
+		<div id="headercomment" class="contactmargin">
 			<h2> For questions, bookings or just to chat about eBikes, contact us today. <br/>
 			Or Check Our <a href="#faq">FAQ'S</a>.</h2>
 		</div>
 		
 		
-		<div id="contactUsInfo">
+		<div id="contactUsInfo" class="contactmargin">
 			<div id="contactbox">
 				<div class="Contactbox" id="Conactbox1">
 					<div id="contactInfo" class="textcentral">
@@ -102,29 +106,29 @@
 					</div>
 				</div>
 				<div class="Contactbox" id="Conactbox2">
-						<form  action="contactus.php" method="post" id="emailform" class="textcentral">
+					<form action="contactus.php" method="post" id="emailform" class="textcentral">
 							<p>
-								<label for="names">Your Name (Required):</label>
+								<label for="name">Your Name (Required):</label>
 								<br>
-								<input name="names" type="text" required="required" id="names" class="fourmsize"/>
+								<input name="name" type="text" required="required" id="name" class="fourmsize"/>
 							</p>
 							<p>
-								<label for="email">Your Email (Required):</label>
+								<label for="emailinput">Your Email (Required):</label>
 								<br>
-								<input name="email" type="text" required="required" id="email" class="fourmsize"/>
+								<input name="email" type="text" required="required" id="emailinput" class="fourmsize"/>
 							</p>
 							<p>
 								<label for="subject">Subject:</label>
 								<br>
-								<input name="subject" type="text" id="subject" class="fourmsize"/>
+								<input name="Subject" type="text" id="subject" class="fourmsize"/>
 							</p>
 							<p>
 								<label for="msg">Your Message:</label>
 								<br>
-								<textarea name="msg" rows="10" id="msg" class="fourmsize"></textarea>
+								<textarea name="Message" rows="10" id="msg" class="fourmsize"></textarea>
 							</p>
-							<button type="submit" class="submitbutton" name="submit" id="submit"><span>Send</span></button>
-							<?php 
+							<button id="submit" class="submitbutton"><span>Send</span></button>
+						<?php 
 							if($err_msg!="")
 							{
 								echo "<p class='errors'>Errors when input:<br/>";
@@ -136,7 +140,7 @@
 			</div>
 		</div>
 		<div id="faqfloat">
-			<div id="faq">
+			<div id="faq" class="contactmargin">
 				
 				<h2>FAQ'S</h2>
 				<p><em>If you can't find the answer to your questions bellow, feel free to get in touch.</em></p>

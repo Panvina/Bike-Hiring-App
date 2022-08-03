@@ -7,7 +7,7 @@
 		
 		/*Contact Us Page info*/
 		/*This is mainly setting up the looks of the page*/
-		#faq, #headercomment, #contactUsInfo
+		.contactmargin
 		{
 			display: block;
 			width: 70%;
@@ -24,9 +24,9 @@
 			font-weight: bolder;
 		}
 		
-		#headercomment h2 {
+		#headercomment h2 
+		{
 			font-weight:lighter;
-			
 		}
 		#contactUsInfo p 
 		{
