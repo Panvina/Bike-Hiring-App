@@ -28,11 +28,12 @@
 		{
 			font-weight:lighter;
 		}
-		#contactUsInfo p 
+		#contactInfo p, #contactInfo table
 		{
-			font-size: 20px;
+    font-size: 15px;
+    table-layout: auto;
+    word-wrap: normal;
 		}
-		
 		/*Decoratintg the buttons*/
 		.submitbutton
 		{
@@ -131,7 +132,15 @@
 		  overflow: hidden;
 		  transition: max-height 0.2s ease-out;
 		}
-		@media only screen and (max-width: 600px) {
+
+		.imgpadding
+		{
+			text-align:center;
+			padding-right: 1em;
+			padding-bottom: 20%;
+		}
+
+		@media only screen and (max-width: 900px) {
 		  .Contactbox {
 			display: block;
 			width: 100%;

@@ -24,12 +24,19 @@
 	<main>
 		<?php //php coding starts here for the main proccess of this seciton
 		$err_msg = "";
-		echo "<p>Testing is this work</p>";
-		if (isset ($_POST["submit"]))//has some code issue here
+//		if(isset($_POST["name"]))
+//		{
+//			echo "<p>isset</p>";
+//		}
+//		if(!isset($_POST["name"]))
+//		{
+//			echo "<p>!isset</p>";
+//		}
+		if (isset($_POST["name"]))
 		{
-			
-		echo "<p>Test2</p>";
-			$name = $_POST["names"];
+//		echo "<p>Testing is this work</p>";
+//			echo "<p>Test2</p>";
+			$name = $_POST["name"];
 			$name = sanitise_input($name);
 			$email = $_POST['email'];
 			$email = sanitise_input($email);
@@ -55,7 +62,7 @@
 			if ($email=="") {
 				$err_msg .= "<p>Please enter email.</p>";
 			}
-			else if (!preg_match("/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/",$email)) {
+			else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 				$err_msg .= "<p>The email you have entered is invalid.</p>";
 			}
 			
@@ -77,14 +84,14 @@
 				}
 				else
 				{
-					$err_msg.="Email fail";
+					$err_msg.="Email was unable to send out";
 				}
 			}
 		}
 		?>
 		<div id="headercomment" class="contactmargin">
 			<h2> For questions, bookings or just to chat about eBikes, contact us today. <br/>
-			Or Check Our <a href="#faq">FAQ'S</a>.</h2>
+			Or Check Our <a href="#faq">FAQ'S </a>.</h2>
 		</div>
 		
 		
@@ -94,14 +101,29 @@
 					<div id="contactInfo" class="textcentral">
 						<h2>CONTACT INFORMATION</h2>
 						<p> We are a 'Click &amp; Collect' Service. Book a location and pick-up time online and your bike/s will be waiting for you.</p>
-						<p>TRADING HOURS<br>
-							Open -Days a week;<br>
-							9am-5pm</p>
-						<p>INVERLOCK BIKE HIRE&nbsp;<br>
-							invenlochbikes@gmail.com<br>
-							Mob:0455 896 240</p>
-						<p>addresshere street suburb, state, <br>
-							postcode&nbsp;</p>
+						<table width="100%" border="0">
+						  <tbody>
+							<tr>
+							  <td><img src="images/icons/calandar.png" alt="" width="59" height="55" class="imgpadding"/></td>
+							  <td><p>TRADING HOURS<br>
+													Open -Days a week;<br>
+										9am-5pm</p></td>
+							</tr>
+							<tr>
+							  <td><img src="images/icons/phone.png" alt="" width="56" height="59" class="imgpadding"/></td>
+							  <td><p>INVERLOCH BIKE HIRE&nbsp;<br>
+													invenlochbikes@gmail.com<br>
+													Mob:0455 896 240</p></td>
+							</tr>
+<!--
+							<tr>
+							  <td><img src="images/icons/pin.png" alt="" width="51" height="77" class="imgpadding"/></td>
+							  <td>addresshere street suburb, state, <br>
+													postcode&nbsp</p>;</td>
+							</tr>
+-->
+						  </tbody>
+						</table>
 						<p>We look foward to hearing from you.&nbsp;</p>
 					</div>
 				</div>
@@ -120,12 +142,12 @@
 							<p>
 								<label for="subject">Subject:</label>
 								<br>
-								<input name="Subject" type="text" id="subject" class="fourmsize"/>
+								<input name="subject" type="text" id="subject" class="fourmsize"/>
 							</p>
 							<p>
 								<label for="msg">Your Message:</label>
 								<br>
-								<textarea name="Message" rows="10" id="msg" class="fourmsize"></textarea>
+								<textarea name="msg" rows="10" id="msg" class="fourmsize"></textarea>
 							</p>
 							<button id="submit" class="submitbutton"><span>Send</span></button>
 						<?php 
