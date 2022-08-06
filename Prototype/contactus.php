@@ -68,16 +68,15 @@
 			
 			if($err_msg=="")
 			{
-				$email="From: $email \r\n";
+				$headers="From: $email \r\n";
 				/*echo"<p>Round 2:</p>";
 				echo "<p>Name:".$name."</p>";
 				echo "<p>Email:".$email."</p>";
 				echo "<p>Subject:".$subject."</p>";
 				echo "<p>Message:".$msg."</p>";*/
-				$recieving_email="s103076376@gmail.com";//"invenlochbikes@gmail.com"; //This is blocked off and use an alt email so that the main email wont be filled up with spam.
-				
-				$emailresult = mail($recieving_email, $subject, $msg, $email);
-				echo $emailresult . "<br/>";
+				$recieving_email="shadowwizard07@gmail.com";//"invenlochbikes@gmail.com"; //This is blocked off and use an alt email so that the main email wont be filled up with spam.
+				echo $recieving_email. $subject. $msg. $headers;
+				$emailresult = mail($recieving_email, $subject, $msg, $headers);
 				if($emailresult == true)
 				{
 					echo"<p>email successfully send</p>";
@@ -150,13 +149,13 @@
 								<textarea name="msg" rows="10" id="msg" class="fourmsize"></textarea>
 							</p>
 							<button id="submit" class="submitbutton"><span>Send</span></button>
-						<?php 
+						<p class='errors'><?php 
 							if($err_msg!="")
 							{
-								echo "<p class='errors'>Errors when input:<br/>";
-								echo $err_msg."</p>";
+								echo "Errors when input:<br/>" . 
+									$err_msg;
 							}
-							?>
+							?></p>
 						</form>
 				</div>
 			</div>

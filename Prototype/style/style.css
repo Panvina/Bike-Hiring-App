@@ -1,6 +1,9 @@
 @charset "utf-8";
 /* CSS Document */
-
+.errors{
+    color: #FF0004;
+	
+}
 
 /*These are for contact.us page*/
 
