@@ -77,7 +77,7 @@
 				$recieving_email="s103076376@gmail.com";//"invenlochbikes@gmail.com"; //This is blocked off and use an alt email so that the main email wont be filled up with spam.
 //				echo $recieving_email. $subject. $msg. $headers;
 				$emailresult = mail($recieving_email, $subject, $msg, $headers);
-				if($emailresult == true)
+				if($emailresult)
 				{
 					echo"<p>email successfully send</p>";
 				}
