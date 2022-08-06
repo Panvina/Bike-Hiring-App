@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            body, p
+            {
+                font-family: "Times New Roman", Helvetica, sans-serif;
+            }
+
+            .modal-overlay
+            {
+                display: none; /* Hidden by default */
+                position: fixed; /* Stay in place */
+                z-index: 1; /* Sit on top */
+                padding-top: 100px; /* Location of the box */
+                left: 0;
+                top: 0;
+                width: 100%; /* Full width */
+                height: 100%; /* Full height */
+                overflow: auto; /* Enable scroll if needed */
+                background-color: rgb(0,0,0); /* Fallback color */
+                background-color: rgba(0,0,0,0.6); /* Black w/ opacity */
+            }
+
+            .modal-content
+            {
+                /* background-color: #fefefe; */
+                background-image:
+                linear-gradient(to bottom, rgba(255,255,255,0.44), rgba(255,255,255,0.44)),
+                url('img/backgrounds/login-background.jpg');
+                background-size: cover;
+                margin: auto;
+                padding: 20px;
+                border: 1px solid #888;
+                width: 500px;
+            }
+
+            .close-btn
+            {
+                color: #aaaaaa;
+                float: right;
+                font-size: 28px;
+                font-weight: bold;
+            }
+
+            .close-btn:hover, .close-btn:focus
+            {
+                color: #000;
+                text-decoration: none;
+                cursor: pointer;
+            }
+
+            .centre-text
+            {
+                text-align: center;
+            }
+
+            .centre-element
+            {
+                position: relative;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+            }
+
+            .decorated-lines
+            {
+                position: relative;
+                z-index: 1;
+                overflow: hidden;
+                text-align: center;
+            }
+
+            .decorated-lines:before, .decorated-lines:after {
+                position: absolute;
+                top: 51%;
+                overflow: hidden;
+                width: 50%;
+                height: 1px;
+                content: '\a0';
+                background-color: black;
+            }
+
+            .decorated-lines:before
+            {
+                margin-left: -50%;
+            }
+
+            .no-text-decoration
+            {
+                text-decoration: none;
+            }
+
+            .no-vertical-margins
+            {
+                margin-top: 0px;
+            }
+
+            .no-vertical-padding
+            {
+                padding-top: 0px;
+                padding-bottom: 0px;
+            }
+
+            input
+            {
+                font-size: 20px;
+            }
+
+            input::placeholder
+            {
+                text-align: center;
+            }
+
+            .input-window-format
+            {
+                margin-bottom: 7px;
+                width: 75%;
+                height: 30px;
+                border: none;
+            }
+
+            .modal-content-header
+            {
+                font-size: 30px;
+            }
+
+        </style>
+    </head>
+    <body>
+
+        <h2>Modal Example</h2>
+
+        <!-- Trigger/Open The Modal -->
+        <button id="login-btn">Open Modal</button>
+
+        <!-- The Modal -->
+        <div id="overlay" class="modal-overlay">
+
+            <!-- Modal content -->
+            <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <p class="centre-text modal-content-header">SIGN IN</p>
+                <input class="centre-element input-window-format" type="text" placeholder="Email Address"></input>
+                <br>
+                <input class="centre-element input-window-format" type="password" placeholder="Password"></input>
+                <br>
+                <a href="https://blank.org" class="no-text-decoration">Forgot Password</a>
+                <br>
+                <button class="centre-element">Login</button>
+                <p class="decorated-lines no-vertical-margins">OR</p>
+                <button class="centre-element">Create an Account</button>
+            </div>
+
+        </div>
+
+        <script>
+            // Get the modal
+            var modal = document.getElementById("overlay");
+
+            // Get the button that opens the modal
+            var btn = document.getElementById("login-btn");
+
+            // Get the <span> element that closes the modal
+            var span = document.getElementsByClassName("close-btn")[0];
+
+            // When the user clicks the button, open the modal
+            btn.onclick = function()
+            {
+                modal.style.display = "block";
+            }
+
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function()
+            {
+                modal.style.display = "none";
+            }
+        </script>
+    </body>
+</html>
