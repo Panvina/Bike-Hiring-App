@@ -34,7 +34,7 @@
 //		}
 		if (isset($_POST["name"]))
 		{
-//		echo "<p>Testing is this work</p>";
+//		echo "<p>Testing is this work</p>"; testestst
 //			echo "<p>Test2</p>";
 			$name = $_POST["name"];
 			$name = sanitise_input($name);
