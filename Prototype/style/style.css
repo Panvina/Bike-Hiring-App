@@ -25,11 +25,11 @@
     background-color: #00b7b1;
 }
 
-/*Generic banner image styling*/
-#banner {
+/*Home banner image styling*/
+.Homebanner {
     margin: 0 auto;
     width: 95%;
-    background-image: url('../img/1.jpg');
+    background-image: url('../img/photos/1.jpg');
     height: 300px;
     background-color: rgba(234, 247, 246,0.3);
     background-position: center;
@@ -52,6 +52,21 @@
 
 #bannerP{
 font-size: 25px;
+}
+
+/*Generic banner image styling*/
+.banner {
+    padding-left: 10px;
+    margin-left: -10px;
+    margin-right: -10px;
+    padding-right: 10px;
+    width: 100%;
+    background-image: url('../img/photos/1.jpg');
+    height: 250px;
+    background-color: rgba(234, 247, 246,0.3);
+    background-position: center;
+    background-blend-mode: soft-light;
+    margin-bottom: 20px;
 }
 
 /*Generic banner text styling for all pages*/
