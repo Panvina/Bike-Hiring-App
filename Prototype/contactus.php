@@ -74,12 +74,12 @@
 				echo "<p>Email:".$email."</p>";
 				echo "<p>Subject:".$subject."</p>";
 				echo "<p>Message:".$msg."</p>";*/
-				$recieving_email="s103076376@gmail.com";//"invenlochbikes@gmail.com"; //This is blocked off and use an alt email so that the main email wont be filled up with spam.
+				$recieving_email="strent@gmail.com";//"invenlochbikes@gmail.com"; //This is blocked off and use an alt email so that the main email wont be filled up with spam.
 //				echo $recieving_email. $subject. $msg. $headers;
 				$emailresult = mail($recieving_email, $subject, $msg, $headers);
 				if($emailresult)
 				{
-					echo"<p>email successfully send</p>";
+					$err_msg ="<p>email successfully send</p>";
 				}
 				else
 				{
@@ -103,20 +103,20 @@
 						<table width="100%" border="0">
 						  <tbody>
 							<tr>
-							  <td><img src="images/icons/calandar.png" alt="" width="59" height="55" class="imgpadding"/></td>
+							  <td><img src="img/icons/calandar.png" alt="" width="59" height="55" class="imgpadding"/></td>
 							  <td><p>TRADING HOURS<br>
 													Open -Days a week;<br>
 										9am-5pm</p></td>
 							</tr>
 							<tr>
-							  <td><img src="images/icons/phone.png" alt="" width="56" height="59" class="imgpadding"/></td>
+							  <td><img src="img/icons/phone.png" alt="" width="56" height="59" class="imgpadding"/></td>
 							  <td><p>INVERLOCH BIKE HIRE&nbsp;<br>
 													invenlochbikes@gmail.com<br>
 													Mob:0455 896 240</p></td>
 							</tr>
 <!--
 							<tr>
-							  <td><img src="images/icons/pin.png" alt="" width="51" height="77" class="imgpadding"/></td>
+							  <td><img src="img/icons/pin.png" alt="" width="51" height="77" class="imgpadding"/></td>
 							  <td>addresshere street suburb, state, <br>
 													postcode&nbsp</p>;</td>
 							</tr>
