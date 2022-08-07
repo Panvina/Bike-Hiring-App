@@ -1,4 +1,4 @@
-// Example modified from 
+// Example modified from
 <!DOCTYPE html>
 <html>
     <head>
@@ -153,54 +153,119 @@
         <h2>Modal Example</h2>
 
         <!-- Trigger/Open The Modal -->
-        <button id="login-launch-btn">Open Modal</button>
+        <button id="login-launch-btn">Login</button>
+        <br/>
+        <button style="margin-top: 10px;" id="create-account-launch-btn">Create Account</button>
 
-        <!-- The Modal -->
-        <div id="overlay" class="modal-overlay">
-
-            <!-- Modal content -->
+        <!-- Login Popup -->
+        <div id="login-overlay" class="modal-overlay">
+            <!-- Login Popup Content -->
             <div class="modal-content">
                 <span class="close-btn">&times;</span>
                 <p class="centre-text modal-content-header">SIGN IN</p>
-                <input
-                    class="centre-element input-window-format"
-                    type="text"
-                    placeholder="Email Address"
-                    style="
-                        margin-bottom: 7px;
-                    "
-                />
-                <br>
-                <input class="centre-element input-window-format" type="password" placeholder="Password"/>
-                <p style="margin-top: 0px;" class="centre-text"><a href="https://blank.org" class="no-text-decoration">Forgot Password</a></p>
-                <br>
-                <button class="centre-element modal-btn login-btn">Login</button>
-                <p class="decorated-lines no-vertical-margins">OR</p>
-                <button style="margin-top: 15px;" class="centre-element modal-btn create-account-option-btn">Create an Account</button>
+                <form>
+                    <input
+                        class="centre-element input-window-format"
+                        type="text"
+                        placeholder="EMAIL ADDRESS"
+                        style="margin-bottom: 7px;"
+                    />
+                    <br>
+                    <input
+                        class="centre-element input-window-format"
+                        type="password"
+                        placeholder="PASSWORD"
+                    />
+                    <p style="margin-top: 0px; transform: translate(0, -15px);" class="centre-text"><a href="https://blank.org" class="no-text-decoration">Forgot Password</a></p>
+                    <input type="submit" class="centre-element modal-btn login-btn" value="LOGIN">
+                </form>
+                <p class="decorated-lines no-vertical-margins" style="transform: translate(0, -10px);">OR</p>
+                <button style="margin-top: 15px;" class="centre-element modal-btn create-account-option-btn">CREATE AN ACCOUNT</button>
             </div>
+        </div>
 
+        <!-- Create Account Popup -->
+        <div id="create-account-overlay" class="modal-overlay">
+            <!-- Create Account Popup Content -->
+            <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <p class="centre-text modal-content-header">CREATE AN ACCOUNT</p>
+                <form action="">
+                    <input
+                        class="centre-element input-window-format"
+                        type="text"
+                        placeholder="FIRST NAME"
+                        style="margin-bottom: 7px;"
+                    />
+                    <br>
+                    <input
+                        class="centre-element input-window-format"
+                        type="text"
+                        placeholder="LAST NAME"
+                        style="margin-bottom: 7px;"
+                    />
+                    <br>
+                    <input
+                        class="centre-element input-window-format"
+                        type="text"
+                        placeholder="EMAIL ADDRESS"
+                        style="margin-bottom: 7px;"
+                    />
+                    <br>
+                    <input
+                        class="centre-element input-window-format"
+                        type="password"
+                        placeholder="PASSWORD"
+                        style="margin-bottom: 7px;"
+                    />
+                    <br>
+                    <input
+                        class="centre-element input-window-format"
+                        type="password"
+                        placeholder="CONFIRM PASSWORD"
+                        style="margin-bottom: 0px;"
+                    />
+                    <br>
+                    <label for="privacy-policy-checkbox" style="position: relative; left: 12%;">
+                        <input type="checkbox"/> I agree to the <a href="https://www.blank.org">privacy policy</a>
+                    </label>
+                    <br>
+                    <input type="submit" class="centre-element modal-btn login-btn" style="position: relative; transform: translate(-50%, 15px)" value="LOGIN">
+                </form>
+            </div>
         </div>
 
         <script>
-            // Get the modal
-            var modal = document.getElementById("overlay");
+            // Get modals
+            var login_modal = document.getElementById("login-overlay");
+            var create_account_modal = document.getElementById("create-account-overlay");
 
-            // Get the button that opens the modal
-            var btn = document.getElementById("login-launch-btn");
+            // Get popup buttons
+            var login_popup_button = document.getElementById("login-launch-btn");
+            var create_account_popup_button = document.getElementById("create-account-launch-btn");
 
             // Get the <span> element that closes the modal
-            var span = document.getElementsByClassName("close-btn")[0];
+            var span = document.getElementsByClassName("close-btn");
 
             // When the user clicks the button, open the modal
-            btn.onclick = function()
+            login_popup_button.onclick = function()
             {
-                modal.style.display = "block";
+                login_modal.style.display = "block";
             }
 
-            // When the user clicks on <span> (x), close the modal
-            span.onclick = function()
+            create_account_popup_button.onclick = function()
             {
-                modal.style.display = "none";
+                create_account_modal.style.display = "block";
+            }
+
+            for (let i = 0; i < span.length; i++)
+            {
+                // When the user clicks on <span> (x), close the modal
+                span[i].onclick = function()
+                {
+                    login_modal.style.display = "none";
+                    create_account_modal.style.display = "none";
+                }
             }
         </script>
     </body>
