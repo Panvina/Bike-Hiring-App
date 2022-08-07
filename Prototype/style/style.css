@@ -1,4 +1,249 @@
-@charset "utf-8";
-/* CSS Document */
+﻿body
+{
+    background-color:whitesmoke;
+}
 
+#main{
+}
 
+/*Buttons generic styling*/
+.button {
+    background-color: #172026;
+    color: white;
+    text-align: center;
+    margin: 4px 2px;
+    padding-left: 18px;
+    padding-right: 18px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 2px;
+    font-size: 15px;
+    font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif,sans-serif;
+}
+
+.button:hover{
+    background-color: #00b7b1;
+}
+
+/*Generic banner image styling*/
+#banner {
+    margin: 0 auto;
+    width: 95%;
+    background-image: url('../img/1.jpg');
+    height: 300px;
+    background-color: rgba(234, 247, 246,0.3);
+    background-position: center;
+    background-blend-mode: soft-light;
+    margin-bottom: 20px;
+}
+
+/*Homepage banner text styling*/
+#homebannertext {
+    text-align: left;
+    padding-left: 50px;
+    padding-top: 25px;
+    font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif,sans-serif;
+}
+
+#bannerH1{
+    font-size: 50px;
+    color: #172026;
+}
+
+#bannerP{
+font-size: 25px;
+}
+
+/*Generic banner text styling for all pages*/
+#bannertext{
+    text-align: left;
+    padding-left: 50px;
+    padding-top: 50px;
+    font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif,sans-serif;
+    font-size: 25px;
+    color: #172026;
+}
+
+.container {
+    width: 95%;
+    height: 300px;
+    margin: 0 auto;
+    background-color: rgb(175, 166, 166);
+    background-position: center;
+    background-blend-mode: soft-light;
+    margin-bottom: 20px;
+}
+
+.aboutcontainer {
+    width: 95%;
+    height: 380px;
+    margin: 0 auto;
+    background-color: #caf3f0;
+    background-position: center;
+    background-blend-mode: soft-light;
+    margin-bottom: 20px;
+}
+
+/*Container styling for all pages*/
+/*Styling for for containers with text on the left*/
+#rightcontainertext{
+    font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif,sans-serif;
+    color: #172026;
+    padding-left: 2%;
+}
+
+/*Styling for containers with text on the right*/
+#leftcontainertext{
+    font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif,sans-serif;
+    color: #172026;
+    padding-top: 0px;
+    padding-left: 3%;
+    padding-top: -10px;
+    overflow: auto;
+}
+
+#containerH1{
+    font-size: 40px;
+    color: #172026;
+    padding-top: 5px;
+}
+
+/*Home page Container alignment styling*/
+.divleftc1{
+    border-right:1px solid black;
+    width:50%;
+    height:300px;
+    float: left;
+}
+
+.divrightc1{
+    margin-left: 50%;
+    background-color: #caf3f0;
+    height:300px;
+    padding-left: 10px;
+    overflow: auto;
+}
+
+.divleftc2{
+    border-right:1px solid black;
+    background-color: #caf3f0;
+    width:50%;
+    height:300px;
+    float: left;
+    font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif,sans-serif;
+    overflow: auto;
+}
+
+.divrightc2{
+    margin-left: 50%;
+    height:300px;
+    padding-left: 1px;
+}
+
+.divleftc3{
+    border-right:1px solid black;
+    width:50%;
+    height:300px;
+    float: left;
+}
+
+.divrightc3{
+    margin-left: 50%;
+    background-color: #caf3f0;
+    height:300px;
+    padding-left: 10px;
+    overflow: auto;
+}
+
+/*About page Container alignment styling*/
+.Aboutdivleftc1{
+    border-right:1px solid black;
+    width:50%;
+    height:380px;
+    float: left;
+}
+
+.Aboutdivrightc1{
+    margin-left: 50%;
+    background-color: #caf3f0;
+    height:380px;
+    padding-left: 10px;
+    padding-top: 0.2mm;
+    overflow: auto;
+}
+
+.Aboutdivleftc2{
+    background-color: #caf3f0;
+    width:48%;
+    height:380px;
+    float: left;
+    font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif,sans-serif;
+    padding-right: 2px;
+    overflow: auto;
+}
+
+.Aboutdivrightc2{
+    margin-left: 50%;
+    height:380px;
+    padding-left: 1px;
+}
+
+/*Explore page Container alignment styling*/
+.Exploredivleftc1{
+    border-right:1px solid black;
+    background-color: #caf3f0;
+    width:50%;
+    height:300px;
+    float: left;
+    font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif,sans-serif;
+    overflow: auto;
+}
+
+.Exploredivrightc1{
+    margin-left: 50%;
+    height:300px;
+    padding-left: 1px;
+}
+
+.Exploredivleftc2{
+    border-right:1px solid black;
+    width:50%;
+    height:300px;
+    float: left;
+}
+
+.Exploredivrightc2{
+    margin-left: 50%;
+    background-color: #caf3f0;
+    height:300px;
+    padding-left: 10px;
+    overflow: auto;
+}
+
+#AboutH1{
+    font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif,sans-serif;
+    font-size: 40px;
+    color: #172026;
+    padding-left: 30px;
+}
+
+/*About Page Carousel Styling*/
+#carousel
+{
+    margin:0 auto;
+    padding: 0;
+    width: 95%;
+}
+.cell{
+    width: 32%;
+    height: 350px;
+    margin:0 15px;
+    overflow: hidden;
+    border-radius: 0px;
+}
+
+.cell img{
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
