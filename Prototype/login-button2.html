@@ -180,7 +180,7 @@
                     <input type="submit" class="centre-element modal-btn login-btn" value="LOGIN">
                 </form>
                 <p class="decorated-lines no-vertical-margins" style="transform: translate(0, -10px);">OR</p>
-                <button style="margin-top: 15px;" class="centre-element modal-btn create-account-option-btn">CREATE AN ACCOUNT</button>
+                <button id="login-create-account-btn" style="margin-top: 15px;" class="centre-element modal-btn create-account-option-btn">CREATE AN ACCOUNT</button>
             </div>
         </div>
 
@@ -244,6 +244,8 @@
             var login_popup_button = document.getElementById("login-launch-btn");
             var create_account_popup_button = document.getElementById("create-account-launch-btn");
 
+            var login_create_account_button = document.getElementById("login-create-account-btn");
+
             // Get the <span> element that closes the modal
             var span = document.getElementsByClassName("close-btn");
 
@@ -255,6 +257,12 @@
 
             create_account_popup_button.onclick = function()
             {
+                create_account_modal.style.display = "block";
+            }
+
+            login_create_account_button.onclick = function()
+            {
+                login_modal.style.display = "none";
                 create_account_modal.style.display = "block";
             }
 
