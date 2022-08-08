@@ -1,4 +1,152 @@
 @charset "utf-8";
 /* CSS Document */
+body{
+  background-color: #eaf7f6;
+}
+
+.sideNavigation{
+  width: 16.5%;
+  margin: auto;
+  height: 1000px;
+  float: left;
+  font-size: 40px;
+}
+
+.sideNavigation a {
+  color: black;
+}
+
+.sideNavigation a.active {
+  background-color: white;
+  color: #00b7b1;
+  position: absolute;
+  width: 17%;
+}
+
+.sideNavigation a:hover {
+  background-color: white;
+  color: #00b7b1;
+  position: absolute;
+  width: 17%;
+}
+
+.header{
+  font-size: 40px;
+  text-align: center;
+  height: 100px;
+  line-height: 3;
+}
+
+#Logo{
+  height: 190px;
+  float: left;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+
+.Content{
+  padding-left: 175px;
+  padding-right: 175px;
+  background-color: white;
+  margin: 0 auto;
+  width: 64.5%;
+  height: 1300px;
+  float: left;
+  display: inline-block;
+}
+
+.Content input[type=text] {
+  font-size: 20px;
+  display: inline-block;
+  float: right;
+  margin-top: 2%;
+  position: relative;
+  margin-right: 2%;
+  height: 2%;
+}
+
+.Content h1{
+  display: inline-block;
+}
+
+.Content img{
+  display: inline-block;
+  margin-top: 2.3%;
+  float: right;
+  position: relative;
+  left: -25%;
+}
+
+.Content button{
+  display: inline-block;
+  margin-top: 2%;
+  float: right;
+  left: 38%;
+  position: relative;
+  background-color: darkcyan;
+  border: none;
+  color: white;
+  font-size: 25px;
+  border: solid white;
+  border-width: thin;
+}
+
+.Date{
+  display:inline-block;
+  font-size: 20px;
+}
+
+.Headings{
+  font-size: 30px;
+  text-align: center;
+  display:inline-block;
+  padding-inline: 8%;
+}
+
+.DashboardInformationContainer{
+  display:inline-block;
+  width: 100%; 
+  height: auto;
+  background-color: lightgray;
+  display: table;
+  border: solid white;
+  
+}
+
+.DashboardInformation{
+  width: auto;
+  height: auto;
+  background-color: lightgray;
+  display:table-cell;
+  border: solid white;
+  text-align: center;
+  
+}
+
+
+nav a {text-decoration: none;
+}
+
+.TableContent{
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.TableContent th, td{
+  text-align: center;
+  border: 2px solid black;
+  padding: 8px;
+}
+
+.CheckBox{
+  height: 25px;
+  width: 25px;
+  accent-color: black;
+}
+
+.CheckBox:hover{
+  cursor: pointer;
+}
 
 
