@@ -5,7 +5,7 @@
 	<title>Contact Us Page</title>
 	<link rel="shortcut icon" href="/img/icons/logo.png" /><!--temp name till real logo is placed in here-->
 	<link rel="stylesheet" href="style/ContactUsStyle.css"/>
-	<script src="scripts/animation.js"></script>
+	<script src="scripts/SendMailTo.js"></script>
 	<?php 
 	//this is mainly used to sanatise the code
 	function sanitise_input($data){
@@ -22,72 +22,56 @@
 	<header></header>
 	
 	<main>
-		<?php //php coding starts here for the main proccess of this seciton
-		$err_msg = "";
-//		if(isset($_POST["name"]))
+<!--		<?php //php coding starts here for the main proccess of this seciton
+//		$err_msg = "";
+//		if (isset($_POST["name"]))
 //		{
-//			echo "<p>isset</p>";
+////		echo "<p>Testing is this work</p>"; testestst
+////			echo "<p>Test2</p>";
+//			$name = $_POST["name"];
+//			$name = sanitise_input($name);
+//			$email = $_POST['email'];
+//			$email = sanitise_input($email);
+//			$subject = $_POST["subject"];
+//			$subject = sanitise_input($subject);
+//			$msg = $_POST["msg"];
+//			$msg = sanitise_input($msg);
+//			/*echo"<p>Round 1:</p>";
+//			echo "<p>Name:".$name."</p>";
+//			echo "<p>Email:".$email."</p>";
+//			echo "<p>Subject:".$subject."</p>";
+//			echo "<p>Message:".$msg."</p>";*/
+//			$err_msg="";
+//			//name
+//			if (($name)=="") {
+//				$err_msg .= "<p>Please enter first name.</p>";
+//			}
+//			else if (!preg_match("/^[a-zA-Z]{1,25}$/",$name)) {
+//				$err_msg .= "<p>Your name can only contain max 25 alpha characters.</p>";
+//			}
+//			
+//			//email
+//			if ($email=="") {
+//				$err_msg .= "<p>Please enter email.</p>";
+//			}
+//			else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+//				$err_msg .= "<p>The email you have entered is invalid.</p>";
+//			}
+//			
+//			if($err_msg=="")
+//			{
+//				$headers="From: $email \r\n";
+//				/*echo"<p>Round 2:</p>";
+//				echo "<p>Name:".$name."</p>";
+//				echo "<p>Email:".$email."</p>";
+//				echo "<p>Subject:".$subject."</p>";
+//				echo "<p>Message:".$msg."</p>";*/
+//				$recieving_email="strent@gmail.com";//"invenlochbikes@gmail.com"; //This is blocked off and use an alt email so that the main email wont be filled up with spam.
+////				echo $recieving_email. $subject. $msg. $headers;
+//				echo"<a href=mailto:$recieving_email?subject=$subject&body=$msg>SEND MAIL TEST</a>";
+//			}
 //		}
-//		if(!isset($_POST["name"]))
-//		{
-//			echo "<p>!isset</p>";
-//		}
-		if (isset($_POST["name"]))
-		{
-//		echo "<p>Testing is this work</p>"; testestst
-//			echo "<p>Test2</p>";
-			$name = $_POST["name"];
-			$name = sanitise_input($name);
-			$email = $_POST['email'];
-			$email = sanitise_input($email);
-			$subject = $_POST["subject"];
-			$subject = sanitise_input($subject);
-			$msg = $_POST["msg"];
-			$msg = sanitise_input($msg);
-			/*echo"<p>Round 1:</p>";
-			echo "<p>Name:".$name."</p>";
-			echo "<p>Email:".$email."</p>";
-			echo "<p>Subject:".$subject."</p>";
-			echo "<p>Message:".$msg."</p>";*/
-			$err_msg="";
-			//name
-			if (($name)=="") {
-				$err_msg .= "<p>Please enter first name.</p>";
-			}
-			else if (!preg_match("/^[a-zA-Z]{1,25}$/",$name)) {
-				$err_msg .= "<p>First name can only contain max 25 alpha characters.</p>";
-			}
-			
-			//email
-			if ($email=="") {
-				$err_msg .= "<p>Please enter email.</p>";
-			}
-			else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-				$err_msg .= "<p>The email you have entered is invalid.</p>";
-			}
-			
-			if($err_msg=="")
-			{
-				$headers="From: $email \r\n";
-				/*echo"<p>Round 2:</p>";
-				echo "<p>Name:".$name."</p>";
-				echo "<p>Email:".$email."</p>";
-				echo "<p>Subject:".$subject."</p>";
-				echo "<p>Message:".$msg."</p>";*/
-				$recieving_email="strent@gmail.com";//"invenlochbikes@gmail.com"; //This is blocked off and use an alt email so that the main email wont be filled up with spam.
-//				echo $recieving_email. $subject. $msg. $headers;
-				$emailresult = mail($recieving_email, $subject, $msg, $headers);
-				if($emailresult)
-				{
-					$err_msg ="<p>email successfully send</p>";
-				}
-				else
-				{
-					$err_msg.="Email was unable to send out";
-				}
-			}
-		}
-		?>
+		?>-->
 		<div id="headercomment" class="contactmargin">
 			<h2> For questions, bookings or just to chat about eBikes, contact us today. <br/>
 			Or Check Our <a href="#faq">FAQ'S </a>.</h2>
@@ -127,7 +111,7 @@
 					</div>
 				</div>
 				<div class="Contactbox" id="Conactbox2">
-					<form action="contactus.php" method="post" id="emailform" class="textcentral">
+					<form action="contactus.php" method="post" id="emailform" name="emailform" class="textcentral">
 							<p>
 								<label for="name">Your Name (Required):</label>
 								<br>
@@ -136,7 +120,7 @@
 							<p>
 								<label for="emailinput">Your Email (Required):</label>
 								<br>
-								<input name="email" type="text" required="required" id="emailinput" class="fourmsize"/>
+								<input name="email" type="text" required="required" id="email" class="fourmsize"/>
 							</p>
 							<p>
 								<label for="subject">Subject:</label>
@@ -149,13 +133,13 @@
 								<textarea name="msg" rows="10" id="msg" class="fourmsize"></textarea>
 							</p>
 							<button id="submit" class="submitbutton"><span>Send</span></button>
-						<p class='errors'><?php 
-							if($err_msg!="")
+						<!--<p class='errors'><?php 
+							/*if($err_msg!="")
 							{
 								echo "Errors when input:<br/>" . 
 									$err_msg;
-							}
-							?></p>
+							}*/
+							?></p>-->
 						</form>
 				</div>
 			</div>
