@@ -1,9 +1,6 @@
 ﻿body
 {
-    background-color:whitesmoke;
-}
-
-#main{
+    background-color:none;
 }
 
 /*Buttons generic styling*/
@@ -19,6 +16,7 @@
     border-radius: 2px;
     font-size: 15px;
     font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif,sans-serif;
+    margin-bottom: 10px;
 }
 
 .button:hover{
@@ -79,161 +77,88 @@ font-size: 25px;
     color: #172026;
 }
 
-.container {
-    width: 95%;
-    height: 300px;
-    margin: 0 auto;
-    background-color: rgb(175, 166, 166);
-    background-position: center;
-    background-blend-mode: soft-light;
-    margin-bottom: 20px;
-}
-
-.aboutcontainer {
-    width: 95%;
-    height: 380px;
-    margin: 0 auto;
-    background-color: #caf3f0;
-    background-position: center;
-    background-blend-mode: soft-light;
-    margin-bottom: 20px;
-}
-
-/*Container styling for all pages*/
-/*Styling for for containers with text on the left*/
-#rightcontainertext{
-    font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif,sans-serif;
-    color: #172026;
-    padding-left: 2%;
-}
-
-/*Styling for containers with text on the right*/
-#leftcontainertext{
-    font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif,sans-serif;
-    color: #172026;
-    padding-top: 0px;
-    padding-left: 3%;
-    padding-top: -10px;
-    overflow: auto;
-}
-
-#containerH1{
-    font-size: 40px;
-    color: #172026;
-    padding-top: 5px;
-}
 
 /*Home page Container alignment styling*/
-.divleftc1{
-    border-right:1px solid black;
-    width:50%;
-    height:300px;
-    float: left;
+
+.HomeMainCont{
+    /* background-color: blue; */
+    height: 320px;
+    display: grid;
+    grid-template-columns:50% 50%;
+    width: 95%;
+    margin: 0 auto;   
+    overflow:visible;
+    margin-bottom: 20px;
 }
 
-.divrightc1{
-    margin-left: 50%;
-    background-color: #caf3f0;
-    height:300px;
-    padding-left: 10px;
-    overflow: auto;
+.HomeImg{
+    overflow:hidden ;
+}
+.HomeTxt{
+    background-color: #eaf7f6;
+    height: 100%;
+    overflow:auto;
 }
 
-.divleftc2{
-    border-right:1px solid black;
-    background-color: #caf3f0;
-    width:50%;
-    height:300px;
-    float: left;
+#HomeHeader{
     font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif,sans-serif;
-    overflow: auto;
+    font-size: 40px;
+    color: #172026;
+    padding-left: 30px;
 }
 
-.divrightc2{
-    margin-left: 50%;
-    height:300px;
-    padding-left: 1px;
+.HomeDesc{
+    /* background-color: red; */
+    padding-right: 10px;
+    padding-left: 28px;
+    line-height: 1.9;
+    font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif,sans-serif;
+    font-size: 18px;
+    color: #172026;
 }
 
-.divleftc3{
-    border-right:1px solid black;
-    width:50%;
-    height:300px;
-    float: left;
-}
-
-.divrightc3{
-    margin-left: 50%;
-    background-color: #caf3f0;
-    height:300px;
-    padding-left: 10px;
-    overflow: auto;
-}
 
 /*About page Container alignment styling*/
-.Aboutdivleftc1{
-    border-right:1px solid black;
-    width:50%;
-    height:380px;
-    float: left;
+
+.AboutMainCont{
+    /* background-color: blue; */
+    height: 370px;
+    display: grid;
+    grid-template-columns:50% 50%;
+    width: 95%;
+    margin: 0 auto;   
+    overflow:visible;
+    margin-bottom: 20px;
 }
 
-.Aboutdivrightc1{
-    margin-left: 50%;
-    background-color: #caf3f0;
-    height:380px;
-    padding-left: 10px;
-    padding-top: 0.2mm;
-    overflow: auto;
+.AboutImg{
+    overflow:hidden ;
+}
+.AboutTxt{
+    background-color: #eaf7f6;
+    height: 370px;
+    overflow:auto;
 }
 
-.Aboutdivleftc2{
-    background-color: #caf3f0;
-    width:48%;
-    height:380px;
-    float: left;
+#AboutHeader{
     font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif,sans-serif;
-    padding-right: 2px;
-    overflow: auto;
+    font-size: 40px;
+    color: #172026;
+    padding-left: 30px;
 }
 
-.Aboutdivrightc2{
-    margin-left: 50%;
-    height:380px;
-    padding-left: 1px;
-}
-
-/*Explore page Container alignment styling*/
-.Exploredivleftc1{
-    border-right:1px solid black;
-    background-color: #caf3f0;
-    width:50%;
-    height:300px;
-    float: left;
+.AboutDesc{
+    /* background-color: red; */
+    padding-right: 10px;
+    padding-left: 28px;
+    line-height: 1.9;
     font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif,sans-serif;
-    overflow: auto;
+    font-size: 18px;
+    color: #172026;
 }
 
-.Exploredivrightc1{
-    margin-left: 50%;
-    height:300px;
-    padding-left: 1px;
-}
 
-.Exploredivleftc2{
-    border-right:1px solid black;
-    width:50%;
-    height:300px;
-    float: left;
-}
-
-.Exploredivrightc2{
-    margin-left: 50%;
-    background-color: #caf3f0;
-    height:300px;
-    padding-left: 10px;
-    overflow: auto;
-}
+/*About Page Carousel Styling*/
 
 #AboutH1{
     font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif,sans-serif;
@@ -242,7 +167,6 @@ font-size: 25px;
     padding-left: 30px;
 }
 
-/*About Page Carousel Styling*/
 #carousel
 {
     margin:0 auto;
@@ -262,3 +186,42 @@ font-size: 25px;
     height: 300px;
     object-fit: cover;
 }
+
+/*Explore page Container alignment styling*/
+.ExploreMainCont{
+    /* background-color: blue; */
+    height: 360px;
+    display: grid;
+    grid-template-columns:50% 50%;
+    width: 95%;
+    margin: 0 auto;   
+    overflow:visible;
+    margin-bottom: 20px;
+}
+
+.ExploreImg{
+    overflow:hidden ;
+}
+.ExploreTxt{
+    background-color: #eaf7f6;
+    height: 100%;
+    overflow:auto;
+}
+
+#ExploreHeader{
+    font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif,sans-serif;
+    font-size: 40px;
+    color: #172026;
+    padding-left: 30px;
+}
+
+.ExploreDesc{
+    /* background-color: red; */
+    padding-right: 10px;
+    padding-left: 28px;
+    line-height: 1.9;
+    font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif,sans-serif;
+    font-size: 18px;
+    color: #172026;
+}
+
