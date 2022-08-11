@@ -2,10 +2,12 @@
 <html>
     <link rel="stylesheet" href="style/Jake_style.css">
     <head>
+        <!-- header -->
         <title> Locations </title>
         <h1 class="header"> <img src="img/photos/Inverloch_Logo3.png" alt="Inverloch Logo" id="Logo"/> Locations </h1>
     </head>
     <body>
+        <!-- Side navigation -->
         <nav>
             <div class = "sideNavigation">
                 <a href = "Dashboard.php"> <img src= "img/icons/bulletin-board.png" alt="Dashboard Logo" /> Dashboard </a> <br>
@@ -16,10 +18,15 @@
                 <a class="active" href= "Locations.php"> <img src= "img/icons/earth.png" alt="Locations Logo" /> Locations </a> <br>
             </div>
          </nav>
-
+         
+         <!-- Block of content in center -->
          <div class="Content">
             <h1> Pick-Up & Drop-Off Locations </h1>
+
+            <!-- Add location pop up -->
             <button type="button" style="left: 0%">+ Add Location</button> 
+
+            <!-- List of available locations -->
             <table class="TableContent">
                  <tr>
                      <th> Name </th>

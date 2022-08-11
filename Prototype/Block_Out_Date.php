@@ -2,10 +2,12 @@
 <html>
     <link rel="stylesheet" href="style/Jake_style.css">
     <head>
+         <!-- Header -->
         <title> Block Out Dates </title>
         <h1 class="header"> <img src="img/photos/Inverloch_Logo3.png" alt="Inverloch Logo" id="Logo"/> Block Out Dates </h1>
     </head>
     <body>
+        <!-- Side navigation -->
         <nav>
             <div class = "sideNavigation">
                 <a href = "Dashboard.php"> <img src= "img/icons/bulletin-board.png" alt="Dashboard Logo" /> Dashboard </a> <br>
@@ -16,10 +18,12 @@
                 <a href= "Locations.php"> <img src= "img/icons/earth.png" alt="Locations Logo" /> Locations </a> <br>
             </div>
          </nav>
-
+         <!-- Block of content in center -->
          <div class="Content">
             <h1> Block Out Dates </h1>
+            <!-- Add Block out date pop up -->
             <button type="button" style="left: 0%">+ Add Item</button> 
+            <!-- List of current block out dates-->
             <table class="TableContent">
                  <tr>
                      <th> From </th>
