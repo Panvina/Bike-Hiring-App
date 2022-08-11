@@ -76,6 +76,37 @@ font-size: 25px;
     color: #172026;
 }
 
+/*Breadcrumb nav styling*/
+.NavContainer{
+    padding-left: 50px;
+}
+
+.Breadcrumbs{
+    padding: 2px;
+    font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif,sans-serif;
+    font-size: 25px;
+    background-color: none;
+    margin-top: -15px;
+}
+
+.BreadcrumbsItem{
+    display:inline-block;
+}
+
+.BreadcrumbsItem:not(:last-of-type)::after{
+    content: '>';
+    margin: 0 5px;
+    color: white;
+}
+
+.BreadcrumbsURL{
+    text-decoration: none;
+    color: white;
+}
+
+.BreadcrumbsURL:hover{
+    text-decoration: underline;
+}
 
 /*Home page Container alignment styling*/
 
