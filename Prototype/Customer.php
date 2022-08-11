@@ -1,3 +1,19 @@
+<?php
+    class DBConnection
+    {
+        private $conn = null;
+
+        public function __construct($servername, $username, $password, $dbname)
+        {
+            $this->conn = new mysqli($servername, $username, $password, $dbname);
+        }
+
+
+    }
+
+?>
+
+
 <!DOCTYPE html>
 <html>
     <link rel="stylesheet" href="style/Jake_style.css">
@@ -8,12 +24,12 @@
     <body>
         <nav>
             <div class = "sideNavigation">
-                <a href = "Dashboard.html"> <img src= "img/icons/bulletin-board.png" alt="Dashboard Logo" /> Dashboard </a> <br>
-                <a class="active" href = "Customer.html"> <img src= "img/icons/account-group.png" alt="Customer Logo" />  Customer  </a> <br>
-                <a href= "Inventory.html"> <img src= "img/icons/bicycle.png" alt="Inventory Logo" />  Inventory </a> <br>
-                <a href= "Bookings.html"> <img src= "img/icons/book-open-blank-variant.png" alt="Bookings Logo" /> Bookings </a> <br>
-                <a href= "Block_Out_Date.html"> <img src= "img/icons/calendar.png" alt="Block out date Logo" /> Block Out Dates </a> <br>
-                <a href= "Locations.html"> <img src= "img/icons/earth.png" alt="Locations Logo" /> Locations </a> <br>
+                <a href = "Dashboard.php"> <img src= "img/icons/bulletin-board.png" alt="Dashboard Logo" /> Dashboard </a> <br>
+                <a class="active" href = "Customer.php"> <img src= "img/icons/account-group.png" alt="Customer Logo" />  Customer  </a> <br>
+                <a href= "Inventory.php"> <img src= "img/icons/bicycle.png" alt="Inventory Logo" />  Inventory </a> <br>
+                <a href= "Bookings.php"> <img src= "img/icons/book-open-blank-variant.png" alt="Bookings Logo" /> Bookings </a> <br>
+                <a href= "Block_Out_Date.php"> <img src= "img/icons/calendar.png" alt="Block out date Logo" /> Block Out Dates </a> <br>
+                <a href= "Locations.php"> <img src= "img/icons/earth.png" alt="Locations Logo" /> Locations </a> <br>
             </div>
          </nav>
 
@@ -41,7 +57,6 @@
                 </tr>
            </table>
         </div>
-        adadasdbaskjbdlakjsbfksdfbkajsfdbkaf
 
     </body>
 </html>
