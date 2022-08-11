@@ -1,7 +1,7 @@
 <?php
 	class DBConnection
 	{
-		private $conn = null;
+		public $conn = null;
 
 		public function __construct($servername, $username, $password, $dbname)
 		{
@@ -16,7 +16,7 @@
 		public function insert($tablename, $columns, $data)
 		{
 			$query = "INSERT INTO $tablename ($columns) VALUES ($data)";
-			echo $query;
+			//echo $query;
 			if ($this->conn->query($query) == TRUE)
 			{
 				echo "Record created successfully";
