@@ -1,0 +1,12 @@
+follow:
+https://roytuts.com/how-to-send-mail-with-xampp-and-mercury32-in-windows/ (follow only Configure XAMPP for sending Email section)
+
+or
+
+https://www.c-sharpcorner.com/UploadFile/c8aa13/send-mail-on-local-host-via-mercury-with-xampp/
+
+
+the two files needing configerations:
+php.ini and sendmail.ini (thou these are also in this folder)
+https://stackoverflow.com/questions/31797911/cant-send-mail-using-mercury-xampp (only in question bit as it has php.ini configeration and sendmail.ini configeration info)
+
