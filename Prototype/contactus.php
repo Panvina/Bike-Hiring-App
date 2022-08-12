@@ -19,7 +19,7 @@
 
 <body>
 	
-	<header></header>
+	<?php include 'header.php'?>
 	
 	<main>
 <!--		<?php //php coding starts here for the main proccess of this seciton

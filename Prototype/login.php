@@ -2,19 +2,15 @@
     session_start();
     $_SESSION['id'] = '123';
 ?>
-
-// Example modified from
 <!DOCTYPE html>
 <html>
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="style/style.css">
+        <link rel="stylesheet" href="style/login.css">
     </head>
     <body>
-        <h2>Modal Example</h2>
-
         <!-- Trigger/Open The Modal -->
-        <button id="login-launch-btn">Login</button>
+        <button id="login-launch-btn">Account</button>
         <br/>
         <button style="margin-top: 10px;" id="create-account-launch-btn">Create Account</button>
 
