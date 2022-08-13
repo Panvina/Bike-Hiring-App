@@ -1,4 +1,4 @@
-﻿body
+body
 {
     background-color:none;
 }
@@ -85,7 +85,7 @@ font-size: 25px;
     display: grid;
     grid-template-columns:50% 50%;
     width: 95%;
-    margin: 0 auto;   
+    margin: 0 auto;
     overflow:visible;
     margin-bottom: 20px;
 }
@@ -125,7 +125,7 @@ font-size: 25px;
     display: grid;
     grid-template-columns:50% 50%;
     width: 95%;
-    margin: 0 auto;   
+    margin: 0 auto;
     overflow:visible;
     margin-bottom: 20px;
 }
@@ -193,7 +193,7 @@ font-size: 25px;
     display: grid;
     grid-template-columns:50% 50%;
     width: 95%;
-    margin: 0 auto;   
+    margin: 0 auto;
     overflow:visible;
     margin-bottom: 20px;
 }
@@ -222,6 +222,8 @@ font-size: 25px;
     font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif,sans-serif;
     font-size: 18px;
     color: #172026;
+}
+
 .hidden
 {
     display: none;
@@ -374,4 +376,85 @@ input::placeholder
     color: red;
     position: relative;
     transform: translate(12%, -15%);
+}
+
+.explore-rail-description
+{
+    display: block;
+    padding-bottom: 0px;
+}
+
+.explore-std-padding
+{
+    padding-left: 2.5%;
+    padding-right: 2.5%;
+}
+
+.explore-std-header
+{
+    text-decoration: underline;
+    font-weight: bold;
+    margin-bottom: 0px;
+}
+
+.no-top-margin
+{
+    margin-top: 0px;
+}
+
+.no-bottom-margin
+{
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+}
+
+.left-location-container
+{
+    width: 30%;
+    float: left;
+    padding-left: 10%;
+}
+
+.right-location-container
+{
+    width: 30%;
+    float: right;
+    padding-right: 10%;
+}
+
+.no-separation
+{
+    margin: 0;
+    padding: 0;
+    display: block;
+}
+
+.location-description
+{
+    background-color: white;
+    border-style: solid;
+    border-width: 4px;
+    border-top-style: none;
+    margin-top: 0px;
+    padding-left: 1em;
+    padding-top: 1px;
+    border-color: #BAEECB;
+}
+
+.location-container-content
+{
+    display: inline-block;
+    margin-top: 0px;
+}
+
+.location-details-button
+{
+    display: inline-block;
+    float: right;
+    margin-right: 1em;
+}
+
+.location-container-separator
+{
+    padding-top: 35em;
 }

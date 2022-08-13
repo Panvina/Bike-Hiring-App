@@ -13,72 +13,87 @@
                     <h1> EXPLORE</h1>
                 </div>
             </div>
-            <div class="explore-std-padding" style="padding-left: 2.5%;">
+            <div class="explore-std-padding">
                 <p>
                     <a href="About.php" class="no-text-decoration">Home</a> > <a href="About.php" class="no-text-decoration">Explore</a> > Rail Trails
                 </p>
             </div>
 
-            <div class="explore-rail-description explore-std-padding" style="display: block; padding-bottom: 0px;">
-                <h1 class="explore-std-padding" style="padding-left: 2.5%; text-decoration: underline; font-weight: bold;">RAIL TRAILS</h1>
-                <p style="padding-left: 2.5%; padding-right: 2.5%;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. In porta laoreet gravida. Morbi et sagittis lorem. Nullam luctus nibh at pharetra tempus. Donec mattis vitae lacus eget placerat. Phasellus elit lorem, pellentesque ut ultricies non, ultrices at leo. Vestibulum convallis erat metus, eleifend ultricies tortor tincidunt in. Vestibulum ac efficitur turpis. Nulla eu mattis tortor. Integer gravida pulvinar neque nec ultricies. Mauris sit amet turpis iaculis, pellentesque tellus sit amet, sagittis odio. Integer ac libero vel justo facilisis congue nec sit amet ligula. Aenean sit amet imperdiet ex. In finibus convallis condimentum. Nam convallis faucibus velit, sed tempus metus tempus sed.</p>
+            <div class="explore-rail-description explore-std-padding">
+                <h1 class="explore-std-header">RAIL TRAILS</h1>
+                <p class="no-top-margin">Lorem ipsum dolor sit amet, consectetur adipiscing elit. In porta laoreet gravida. Morbi et sagittis lorem. Nullam luctus nibh at pharetra tempus. Donec mattis vitae lacus eget placerat. Phasellus elit lorem, pellentesque ut ultricies non, ultrices at leo. Vestibulum convallis erat metus, eleifend ultricies tortor tincidunt in. Vestibulum ac efficitur turpis. Nulla eu mattis tortor. Integer gravida pulvinar neque nec ultricies. Mauris sit amet turpis iaculis, pellentesque tellus sit amet, sagittis odio. Integer ac libero vel justo facilisis congue nec sit amet ligula. Aenean sit amet imperdiet ex. In finibus convallis condimentum. Nam convallis faucibus velit, sed tempus metus tempus sed.</p>
             </div>
-            <div class="explore-rail-content-row" style="padding-left: 2.5%; padding-right: 2.5%;" >
-                <div class="location-container" style="width: 30%; float: left; padding-left: 7.5%;">
-                    <div class="location-image-container" style="background-image: url('img/photos/1.jpg'); background-size: contain; background-repeat: no-repeat; width: 100%; height: 0; padding-top: 66.64%; margin-bottom: 0px;"
-                        <a/>
-                    </div>
-                    <div class="location-description" style="background-color: silver; border-style: solid; border-width: 2px; border-top-style: none; margin-top: 0px; padding-left: 1em; padding-top: 1px;">
-                        <h3 class="location-container-header">Name Placeholder</h3>
-                        <p class="location-container-content">Location: Placeholder</p>
-                    </div>
-                </div>
 
-                <div class="location-container" style="width: 30%; float: right; padding-right: 7.5%;">
-                    <div class="location-image-container" style="
-                        background-image: url('img/photos/1.jpg');
-                        background-size: contain;
-                        background-repeat: no-repeat;
-                        width: 100%;
-                        height: 0;
-                        padding-top: 66.64%;
-                        margin-bottom: 0px;">
-                    </div>
-                    <div class="location-description" style="background-color: silver; border-style: solid; border-width: 2px; border-top-style: none; margin-top: 0px; padding-left: 1em; padding-top: 1px;">
-                        <h3 class="location-container-header">Name Placeholder</h3>
-                        <p class="location-container-content">Location: Placeholder</p>
-                    </div>
-                </div>
-            </div>
-            <div style="padding-top: 33em; margin-botton: 90em;">
-                <p></p>
-            </div>
-            <div class="explore-rail-content-row" style="padding-left: 2.5%; padding-right: 2.5%;" >
-                <div class="location-container" style="width: 30%; float: left; padding-left: 7.5%;">
-                    <div class="location-image-container" style="background-image: url('img/photos/1.jpg'); background-size: contain; background-repeat: no-repeat; width: 100%; height: 0; padding-top: 66.64%; margin-bottom: 0px;"
+            <!-- single-row container  -->
+            <div class="explore-rail-content-row explore-std-padding">
+                <div class="left-location-container">
+                    <!-- <div class="location-image-container" style="background-image: url('img/photos/1.jpg'); background-size: contain; background-repeat: no-repeat; width: 100%; height: 0; padding-top: 66.64%; margin-bottom: 0px;"
                         <a/>
-                    </div>
-                    <div class="location-description" style="background-color: silver; border-style: solid; border-width: 2px; border-top-style: none; margin-top: 0px; padding-left: 1em; padding-top: 1px;">
+                    </div> -->
+                    <img src="img/photos/1.jpg" class="no-separation" alt="nothing" width="579" height="390">
+                    <div class="location-description">
                         <h3 class="location-container-header">Name Placeholder</h3>
                         <p class="location-container-content">Location: Placeholder</p>
+                        <button class="location-details-button">Details</button>
                     </div>
                 </div>
+                <div class="right-location-container">
+                    <img src="img/photos/1.jpg" class="no-separation" alt="nothing" width="579" height="390">
+                    <div class="location-description">
+                        <h3 class="location-container-header">Name Placeholder</h3>
+                        <p class="location-container-content">Location: Placeholder</p>
+                        <button class="location-details-button">Details</button>
+                    </div>
+                </div>
+            </div>
 
-                <div class="location-container" style="width: 30%; float: right; padding-right: 7.5%;">
-                    <div class="location-image-container" style="
-                        background-image: url('img/photos/1.jpg');
-                        background-size: contain;
-                        background-repeat: no-repeat;
-                        width: 100%;
-                        height: 0;
-                        padding-top: 66.64%;
-                        margin-bottom: 0px;">
-                    </div>
-                    <div class="location-description" style="background-color: silver; border-style: solid; border-width: 2px; border-top-style: none; margin-top: 0px; padding-left: 1em; padding-top: 1px;">
+            <!-- separator  -->
+            <div class="location-container-separator">
+            </div>
+
+            <!-- single-row container  -->
+            <div class="explore-rail-content-row explore-std-padding">
+                <div class="left-location-container">
+                    <!-- <div class="location-image-container" style="background-image: url('img/photos/1.jpg'); background-size: contain; background-repeat: no-repeat; width: 100%; height: 0; padding-top: 66.64%; margin-bottom: 0px;"
+                        <a/>
+                    </div> -->
+                    <img src="img/photos/1.jpg" class="no-separation" alt="nothing" width="579" height="390">
+                    <div class="location-description">
                         <h3 class="location-container-header">Name Placeholder</h3>
                         <p class="location-container-content">Location: Placeholder</p>
+                        <button class="location-details-button">Details</button>
                     </div>
                 </div>
+                <div class="right-location-container">
+                    <img src="img/photos/1.jpg" class="no-separation" alt="nothing" width="579" height="390">
+                    <div class="location-description">
+                        <h3 class="location-container-header">Name Placeholder</h3>
+                        <p class="location-container-content">Location: Placeholder</p>
+                        <button class="location-details-button">Details</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- separator  -->
+            <div class="location-container-separator">
+            </div>
+
+            <div class="explore-std-padding">
+                <img src="img/photos/1.jpg" alt="nothing" width="1000" height="390" style="padding-left: 10%; float: left;">
+                <div style="background-color: #eaf7f6; position: relative; top: 0em; left: 61.8%; width: 30%; height: 24.4em; ">
+                    <div style="margin-left: 10em; transform: translate(0, -15em);">
+                        <h2>Your New Journey?</h2>
+                        <p>Explore the surrounds of our region!</p>
+                        <button>Explore</button>
+                    </div>
+                    <!-- <h2 style="padding-top: 4.2em; padding-left: 3em;">Your New Journey?</h2>
+                    <p style="padding-left: 4.5em;">Explore the surrounds of our region!</p>
+                    <button style="">Explore</button> -->
+                </div>
+            </div>
+
+            <!-- separator  -->
+            <div class="location-container-separator">
             </div>
         </div>
     </body>
