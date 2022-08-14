@@ -14,6 +14,17 @@
             <div id="bannertext">
                 <h1> ABOUT INVERLOCH</h1>
             </div>
+            <div class ="NavContainer">
+                     <ul class="Breadcrumbs">
+                        <li class="BreadcrumbsItem">
+                            <a href="Index.php" class="BreadcrumbsURL">Home</a>
+                        </li>
+                        <li class="BreadcrumbsItem">
+                            <a href="javascript:window.location.href=window.location.href" class="BreadcrumbsURL BreadcrumbsURLactive">About Inverloch</a>
+                        </li>
+                     </ul>
+                </div>
+            </div>
         </div>
                                
         </div>
