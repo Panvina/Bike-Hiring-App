@@ -1,6 +1,14 @@
 // JavaScript Document
 
 "use strict";
+
+//idea from https://futurestud.io/tutorials/split-a-string-into-a-list-of-lines-in-javascript-or-node-js#:~:text=You%20can%20split%20a%20long,in%20other%20languages%3A%20%5Cn%20.
+//protection from https://stackoverflow.com/questions/20855482/preventing-html-and-script-injections-in-javascript
+function lines(text) {  
+	text = text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  return text.split('\n')
+}
+
 function sendmail()
 {
 	var errMsg = "";
@@ -14,8 +22,7 @@ function sendmail()
 	
 	var emailvalidate =
   /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-	
-	
+	var LinesArray;
 	if(name == ""){
 		errMsg += "The First Name cannot be empty.\n";
 	} else if(!name.match(/^[A-Za-z]{1,25}$/)){
@@ -35,25 +42,36 @@ function sendmail()
 		result=false;
 	}
 	
+	var fullmessage = "";
 	if(message == ""){
 		errMsg += "The message cannot be empty. \n";
 		result=false;
+	}
+	else
+	{
+		LinesArray = lines(message);
+		var stringLength = LinesArray.length;
+		for(let i=0; i < stringLength; i++)
+		{
+			fullmessage += LinesArray[i];
+			fullmessage += "%0D%0A"
+		}
 	}
 	
 	if (errMsg != ""){
 		alert (errMsg);
 		result = false;
 	}
+	
+	
 	var completemessage="";
 	//https://stackoverflow.com/questions/22765834/insert-a-line-break-in-mailto-body making new lines
-	completemessage=message + "%0D%0AFrom: " +name+"%0D%0A"+emailin; 
+	completemessage=fullmessage + "%0D%0ASender: " +name+"%0D%0AEmail: "+emailin; 
+	
 	if (result){
 		var sendcompletemail = "mailto:" +emailto+"?subject="+subject+"&body="+completemessage;
 		window.location.href = sendcompletemail;
 	}
-	
-	
-	
 	
 	return result;
 }
@@ -71,8 +89,7 @@ function init()
 
 window.onload = init;
 
-
-//this is operational and fdor the animation dropdown
+//this is operational and for the animation dropdown
 function collapsibles()
 {
 	var coll = document.getElementsByClassName("collapsible");

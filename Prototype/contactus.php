@@ -71,7 +71,7 @@
 							<p>
 								<label for="msg">Your Message:</label>
 								<br>
-								<textarea name="msg" rows="10" id="msg" class="fourmsize"></textarea>
+								<textarea name="msg" rows="10" id="msg" class="fourmsize" maxlength="500000"></textarea>
 							</p>
 							<button id="submit" class="submitbutton"><span>Send</span></button>
 						</form>
