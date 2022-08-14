@@ -6,13 +6,13 @@
 <html>
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="style/login.css">
+        <link rel="stylesheet" href="style/style.css">
     </head>
     <body>
         <!-- Trigger/Open The Modal -->
         <button id="login-launch-btn">Account</button>
-        <br/>
-        <button style="margin-top: 10px;" id="create-account-launch-btn">Create Account</button>
+        <!--<br/>
+        <button style="margin-top: 10px;" id="create-account-launch-btn">Create Account</button>-->
 
         <!-- Login Popup -->
         <div id="login-overlay" class="modal-overlay">
@@ -142,7 +142,7 @@
             </div>
         </div>
         <script src="scripts/login-js.php"></script>
-        <script>
+        <scrip t>
             <?php
                 if (isset($_GET["login"]))
                 {

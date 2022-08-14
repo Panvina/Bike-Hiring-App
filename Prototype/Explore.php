@@ -34,6 +34,6 @@
             <div class='ExploreImg'><img style= 'height: 100%; width: 100%; 'src="./img/photos/2.jpg" alt="About Us"/></div>
         </div> 
     </div>
-
+    <?php include 'footer.php'?>
 </body>
 </html>
