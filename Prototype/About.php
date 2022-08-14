@@ -9,24 +9,22 @@
     <title>About Inverloch</title>
 </head>
 <body>
+    <?php include 'header.php'?>    
     <div id = "main">
         <div class="banner">
             <div id="bannertext">
                 <h1> ABOUT INVERLOCH</h1>
             </div>
             <div class ="NavContainer">
-                     <ul class="Breadcrumbs">
+                    <ul class="Breadcrumbs">
                         <li class="BreadcrumbsItem">
                             <a href="Index.php" class="BreadcrumbsURL">Home</a>
                         </li>
                         <li class="BreadcrumbsItem">
                             <a href="javascript:window.location.href=window.location.href" class="BreadcrumbsURL BreadcrumbsURLactive">About Inverloch</a>
                         </li>
-                     </ul>
-                </div>
+                    </ul>
             </div>
-        </div>
-                               
         </div>
         <div class='AboutMainCont'>
             <div class='AboutTxt'><h1 id="AboutHeader"> POPULAR SPOTS</h1>
@@ -59,5 +57,6 @@
         freeScroll:true
         });</script>
     </div>
+    <?php include 'footer.php'?>
 </body>
 </html>

@@ -7,6 +7,7 @@
         <title>Explore</title>
     </head>
     <body>
+        <header><?php include 'header.php'?></header>
         <div id = "main">
             <div class="banner">
                 <div id="bannertext">
@@ -104,5 +105,6 @@
             <div class="location-container-separator">
             </div>
         </div>
+        <footer><?php include 'footer.php'?></footer>
     </body>
 </html>

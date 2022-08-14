@@ -4,7 +4,7 @@ var create_account_modal = document.getElementById("create-account-overlay");
 
 // Get popup buttons
 var login_popup_button = document.getElementById("login-launch-btn");
-var create_account_popup_button = document.getElementById("create-account-launch-btn");
+//var create_account_popup_button = document.getElementById("create-account-launch-btn");
 
 var login_create_account_button = document.getElementById("login-create-account-btn");
 
@@ -15,11 +15,6 @@ var span = document.getElementsByClassName("close-btn");
 login_popup_button.onclick = function()
 {
 	login_modal.style.display = "block";
-}
-
-create_account_popup_button.onclick = function()
-{
-	create_account_modal.style.display = "block";
 }
 
 login_create_account_button.onclick = function()

@@ -2,8 +2,6 @@
     session_start();
     $_SESSION['id'] = '123';
 ?>
-
-// Example modified from
 <!DOCTYPE html>
 <html>
     <head>
@@ -11,12 +9,10 @@
         <link rel="stylesheet" href="style/style.css">
     </head>
     <body>
-        <h2>Modal Example</h2>
-
         <!-- Trigger/Open The Modal -->
-        <button id="login-launch-btn">Login</button>
-        <br/>
-        <button style="margin-top: 10px;" id="create-account-launch-btn">Create Account</button>
+        <button id="login-launch-btn">Account</button>
+        <!--<br/>
+        <button style="margin-top: 10px;" id="create-account-launch-btn">Create Account</button>-->
 
         <!-- Login Popup -->
         <div id="login-overlay" class="modal-overlay">
@@ -146,7 +142,7 @@
             </div>
         </div>
         <script src="scripts/login-js.php"></script>
-        <script>
+        <scrip t>
             <?php
                 if (isset($_GET["login"]))
                 {

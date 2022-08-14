@@ -8,6 +8,7 @@
     <title>Explore</title>
 </head>
 <body>
+    <?php include 'header.php'?>
     <div id = "main">
         <div class="banner">
             <div id="bannertext">
@@ -44,6 +45,6 @@
             <div class='ExploreImg'><img style= 'height: 100%; width: 100%; 'src="./img/photos/2.jpg" alt="About Us"/></div>
         </div> 
     </div>
-
+    <?php include 'footer.php'?>
 </body>
 </html>
