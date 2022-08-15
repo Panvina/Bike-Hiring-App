@@ -1,10 +1,13 @@
 <!doctype html>
-<html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<meta charset="utf-8">
 		<title>Contact Us Page</title>
-		<link rel="shortcut icon" href="/img/icons/logo.png" /><!--temp name till real logo is placed in here-->
-		<link rel="stylesheet" href="style/ContactUsStyle.css"/>
+		<link rel="shortcut icon" href="./img/photos/logo-no-text.png" /><!--temp name till real logo is placed in here-->
+		<link rel="stylesheet" href="./style/ContactUsStyle.css"/>
+		<link rel="stylesheet" href="./style/style.css"/>
+		<link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 		<script src="scripts/SendMailTo.js"></script>
 	</head>
 	
@@ -14,6 +17,21 @@
 			<?php include 'header.php'?>
     </header>
 		<main>
+			<div class="banner">
+				<div id="bannertext">
+					<h1>CONTACT US</h1>
+				</div>
+				<div class ="NavContainer">
+						<ul class="Breadcrumbs">
+							<li class="BreadcrumbsItem">
+								<a href="Index.php" class="BreadcrumbsURL">Home</a>
+							</li>
+							<li class="BreadcrumbsItem">
+								<a href="javascript:window.location.href=window.location.href" class="BreadcrumbsURL BreadcrumbsURLactive">CONTACT US</a>
+							</li>
+						</ul>
+				</div>
+			</div>
 			<div id="headercomment" class="contactmargin">
 				<h2> For questions, bookings or just to chat about eBikes, contact us today. <br/>
 					Or Check Our <a href="#faq">FAQ'S</a>.</h2>
@@ -141,9 +159,7 @@
 				</div>
 			</div>
 		</main>
-	<footer>	
-    <?php include 'footer.php'?>
-  </footer>
-
-</body>
+		
+		<footer></footer>
+	</body>
 </html>
