@@ -16,16 +16,16 @@
                 <div class="column">
                     <nav class="mainNav">
                         <ul id="menu">
-                            <li><a class="remove-link-decorations" href="index.php">Home</a></li>
-                            <li><a class="remove-link-decorations" href="">Hire</a></li>
-                            <li><a class="remove-link-decorations" href="about.php">About Inverloch</a></li>
-                            <li><a class="remove-link-decorations" href="explore.php">About Cycling</a>
+                            <li><a href="index.php">Home</a></li>
+                            <li><a href="">Hire</a></li>
+                            <li><a href="about.php">About Inverloch</a></li>
+                            <li><a href="explore.php">About Cycling</a>
                                 <ul id="subNav">
-                                    <li><a class="remove-link-decorations" href="explore-local.php">Cycling in Out Region</a></li>
-                                    <li><a class="remove-link-decorations" href="explore-rail.php">Rail Trails</a></li>
+                                    <li><a href="explore-local.php">Cycling in Out Region</a></li>
+                                    <li><a href="explore-rail.php">Rail Trails</a></li>
                                 </ul>
                             </li>
-                            <li><a class="remove-link-decorations" href="contactus.php">Contact Us</a></li>
+                            <li><a href="contactus.php">Contact Us</a></li>
                             <!--<li id="login">Login</li>-->
                             <li><?php include 'login.php'?></li>
                         </ul>
