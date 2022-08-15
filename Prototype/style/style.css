@@ -1,7 +1,3 @@
-body
-{
-    background-color:none;
-}
 /*Buttons generic styling*/
 .button {
     background-color: #172026;
@@ -259,10 +255,6 @@ font-size: 25px;
     display: none;
 }
 
-/* body, p
-{
-    font-family: "Times New Roman", Helvetica, sans-serif;
-} */
 
 .modal-overlay
 {
