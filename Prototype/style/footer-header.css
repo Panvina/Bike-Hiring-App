@@ -1,0 +1,146 @@
+footer{
+    background: #eaf7f6;
+}
+
+/* Divides div into 2 columns for header content*/
+.column {
+    float: left;
+    width: 50%;
+}
+
+/* .cta {
+    background-image: url('../img/heading.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding-bottom: 50px;
+    text-align: center;
+    font-size: 20px;
+} */
+
+h1{
+    margin-top: 50px;
+}
+
+nav.mainNav li{
+    display:inline-block;
+    padding:10px;
+    font-size:22px;
+    text-decoration: none;
+}
+
+/*hide the sub nav when main nav is not hovered*/
+#subNav{
+    display: none;
+    position: absolute;
+    top: 80px;
+    width: 150px;
+    left: 0;
+    padding: 0;
+    background: white;
+}
+
+#menu li li{
+    font-size: 16px;
+    float: none;
+}
+/* shows sub-sublist on hover */
+#menu li:hover ul {
+    display:block; 
+    margin-left:60.5em; /* this should be the same width as the parent list item */
+    
+}
+
+a {
+    text-decoration: none;
+}
+
+#menu a:hover{
+    color: #00b7b1;
+}
+  
+  /* The sticky class is added to the navbar with JS when it reaches its scroll position */
+.sticky {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    transition: padding 1s;
+    background: #eaf7f6;
+  }
+
+/*#login:before{
+    content: "";
+    display: table;
+    clear: both;
+}
+#login{
+    font-size:20px;
+    padding: 5px 10px 5px 10px;
+    margin-left: 1em;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 5px;
+    border-color: #172026;
+}*/
+
+.logo, #panel1{
+    padding-left: 20em;
+}
+
+div.column1 #panel1, img, p, .cta{
+    padding-top: 5px;
+}
+div.column1 p{
+    padding-left: 10em;
+}
+nav.mainNav{
+    padding-top: 1em;
+}
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+.button {
+    background-color: #172026;
+    color: white;
+    font-size: 18px;
+    padding: 15px 20px 15px 20px;
+    border-radius: 5px;
+    border-width: 0px;
+}
+
+.button:hover{
+    background-color: #00b7b1;
+    color: white;
+    border-width: 0px;
+}
+@media screen and (max-width: 320px) {
+    .column,.column1{
+      width: 100%;
+    }
+  }
+
+/*Footer Styling*/
+
+/* Divides div into 3 columns for footer content */
+.column1{
+    float: left;
+    width: 33%;
+}
+
+/* Change the alignment of footer mid text. */
+#footer-text{
+    text-align: center;
+}
+
+nav.footerNav li{
+    list-style-type: none;
+}
+
+.remove-link-decorations
+{
+    text-decoration: none;
+    color: #172026;
+}

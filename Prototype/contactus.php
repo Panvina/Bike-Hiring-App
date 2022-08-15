@@ -11,8 +11,11 @@
 		<script src="scripts/SendMailTo.js"></script>
 	</head>
 	
+
 	<body>
-		<header></header>
+		<header>	
+			<?php include 'header.php'?>
+    </header>
 		<main>
 			<div class="banner">
 				<div id="bannertext">
