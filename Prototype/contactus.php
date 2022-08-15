@@ -11,8 +11,11 @@
 		<script src="scripts/SendMailTo.js"></script>
 	</head>
 	
+
 	<body>
-		<header></header>
+		<header>	
+			<?php include 'header.php'?>
+    </header>
 		<main>
 			<div class="banner">
 				<div id="bannertext">
@@ -156,7 +159,9 @@
 				</div>
 			</div>
 		</main>
-		
-		<footer></footer>
-	</body>
+	<footer>	
+    <?php include 'footer.php'?>
+  </footer>
+
+</body>
 </html>
