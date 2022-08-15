@@ -138,3 +138,9 @@ nav.mainNav{
 nav.footerNav li{
     list-style-type: none;
 }
+
+.remove-link-decorations
+{
+    text-decoration: none;
+    color: #172026;
+}
