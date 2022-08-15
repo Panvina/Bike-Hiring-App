@@ -5,7 +5,6 @@
         <title>Inverloch Bike Hire</title>
         <link rel="stylesheet" href="style/footer-header.css" type="text/css"/>
         <link rel="stylesheet" href="style/font-change.css" type="text/css"/>
-        <link rel="stylesheet" href="style/login.css" type="text/css"/>
     </head>
     <body>
         <header id="h">
