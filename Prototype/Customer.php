@@ -44,63 +44,6 @@
                 </div>
            </div>
 
-
-           <!-- Trigger/Open The Modal -->
-        <button  id="login-launch-btn">Login</button>
-        <br/>
-        <button style="margin-top: 10px;" id="create-account-launch-btn">Create Account</button>
-
-        <!-- Login Popup -->
-        <div id="login-overlay" class="modal-overlay">
-            <!-- Login Popup Content -->
-            <div class="modal-content">
-                <span class="close-btn">&times;</span>
-                <p class="centre-text modal-content-header">SIGN IN</p>
-                <?php
-                    if (isset($_GET["login"]))
-                    {
-                        $loginVar = $_GET["login"];
-
-                        if ($loginVar == "empty")
-                        {
-                            echo '<p class="error">Empty inputs</p>';
-                        }
-                        elseif ($loginVar == "email")
-                        {
-                            echo '<p class="error">Invalid email</p>';
-                        }
-                    }
-                ?>
-                <form action="login-script.php" method="POST">
-                    <input
-                        name="login-email"
-                        class="centre-element input-window-format"
-                        type="text"
-                        placeholder="EMAIL ADDRESS"
-                        style="margin-bottom: 7px;"
-                        <?php
-                            if (isset($_SESSION["login-email"]))
-                            {
-                                $email = $_SESSION["login-email"];
-                                echo "value='$email'";
-                            }
-                        ?>
-                    />
-                    <br>
-                    <input
-                        name="login-password"
-                        class="centre-element input-window-format"
-                        type="password"
-                        placeholder="PASSWORD"
-                    />
-                    <p style="margin-top: 0px; transform: translate(0, -15px);" class="centre-text"><a href="https://blank.org" class="no-text-decoration">Forgot Password</a></p>
-                    <button type="submit" name="login-submit" >LOGIN</button>
-                </form>
-                <p class="decorated-lines no-vertical-margins" style="transform: translate(0, -10px);">OR</p>
-                <button id="login-create-account-btn" style="margin-top: 15px;" class="centre-element modal-btn create-account-option-btn">CREATE AN ACCOUNT</button>
-            </div>
-        </div>
-
            <!-- List of current customers -->
            <table class="TableContent">
                 <tr>
@@ -121,32 +64,6 @@
                 </tr>
            </table>
         </div>
-        <script src="scripts/customer_popUp.js"></script>
-
-        <script src="scripts/login-js.php"></script>
-        <script>
-            <?php
-                if (isset($_GET["login"]))
-                {
-                    $loginVar = $_GET["login"];
-
-                    if ($loginVar != "success")
-                    {
-                        echo 'var login_modal = document.getElementById("login-overlay");';
-                        echo 'login_modal.style.display = "block";';
-                    }
-                }
-                elseif (isset($_GET["ca"]))
-                {
-                    $caVar = $_GET["ca"];
-
-                    if ($caVar != "success")
-                    {
-                        echo 'var create_account_modal = document.getElementById("create-account-overlay");';
-                        echo 'create_account_modal.style.display = "block";';
-                    }
-                }
-            ?>
-        </script>
+        
     </body>
 </html>
