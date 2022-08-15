@@ -8,8 +8,11 @@
 		<script src="scripts/SendMailTo.js"></script>
 	</head>
 	
+
 	<body>
-		<header></header>
+		<header>	
+			<?php include 'header.php'?>
+    </header>
 		<main>
 			<div id="headercomment" class="contactmargin">
 				<h2> For questions, bookings or just to chat about eBikes, contact us today. <br/>
@@ -138,7 +141,9 @@
 				</div>
 			</div>
 		</main>
-		
-		<footer></footer>
-	</body>
+	<footer>	
+    <?php include 'footer.php'?>
+  </footer>
+
+</body>
 </html>
