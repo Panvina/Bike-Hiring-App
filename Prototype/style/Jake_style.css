@@ -138,8 +138,8 @@ body{
   
 }
 
-
-nav a {text-decoration: none;
+nav a {
+  text-decoration: none;
 }
 
 .TableContent{
@@ -162,3 +162,4 @@ nav a {text-decoration: none;
 .CheckBox:hover{
   cursor: pointer;
 }
+

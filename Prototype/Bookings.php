@@ -2,10 +2,12 @@
 <html>
     <link rel="stylesheet" href="style/Jake_style.css">
     <head>
+        <!-- Header -->
         <title> Bookings </title>
         <h1 class="header"> <img src="img/photos/Inverloch_Logo3.png" alt="Inverloch Logo" id="Logo"/> Bookings </h1>
     </head>
     <body>
+        <!-- Side navigation -->
         <nav>
             <div class = "sideNavigation">
                 <a href = "Dashboard.php"> <img src= "img/icons/bulletin-board.png" alt="Dashboard Logo" /> Dashboard </a> <br>
@@ -16,12 +18,18 @@
                 <a href= "Locations.php"> <img src= "img/icons/earth.png" alt="Locations Logo" /> Locations </a> <br>
             </div>
          </nav>
-
+         <!-- Block of content in center -->
          <div class="Content">
             <h1> All Bookings </h1>
+            
+            <!-- Search bar with icons --> 
             <img src="img/icons/account-search.png" alt="Customer Search Logo"/>
             <input type="text"  placeholder="Search">
+
+            <!-- Add Booking pop up -->
             <button type="button">+ Add Booking</button> 
+
+            <!-- List of available bookings -->
             <table class="TableContent">
                  <tr>
                      <th> Booking Id </th>
