@@ -3,9 +3,9 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Contact Us Page</title>
-		<link rel="shortcut icon" href="/img/icons/logo.png" /><!--temp name till real logo is placed in here-->
-		<link rel="stylesheet" href="style/ContactUsStyle.css"/>
-		<link rel="stylesheet" href="style/style.css"/>
+		<link rel="shortcut icon" href="./img/photos/logo-no-text.png" /><!--temp name till real logo is placed in here-->
+		<link rel="stylesheet" href="./style/ContactUsStyle.css"/>
+		<link rel="stylesheet" href="./style/style.css"/>
 		<link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 		<script src="scripts/SendMailTo.js"></script>
