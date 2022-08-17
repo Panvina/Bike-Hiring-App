@@ -1,20 +1,16 @@
-body
-{
-    background-color:none;
-}
 /*Buttons generic styling*/
 .button {
     background-color: #172026;
     color: white;
     text-align: center;
     margin: 4px 2px;
-    padding-left: 18px;
-    padding-right: 18px;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     border-radius: 2px;
     font-size: 15px;
-    font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif,sans-serif;
+    /* font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif,sans-serif; */
     margin-bottom: 10px;
 }
 
@@ -26,20 +22,19 @@ body
 .Homebanner {
     margin: 0 auto;
     width: 95%;
+    height:320px;
     background-image: url('../img/photos/1.jpg');
-    height: 300px;
-    background-color: rgba(234, 247, 246,0.3);
+    background-color: rgba(234, 247, 246,0.7);
     background-position: center;
     background-blend-mode: soft-light;
-    margin-bottom: 20px;
+    margin-bottom: 35px;
 }
 
 /*Homepage banner text styling*/
 #homebannertext {
-    text-align: left;
-    padding-left: 50px;
-    padding-top: 25px;
-    font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif,sans-serif;
+    text-align: center;
+    padding-top: 10px;
+    /* font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif,sans-serif; */
 }
 
 #bannerH1{
@@ -60,7 +55,7 @@ font-size: 25px;
     width: 100%;
     background-image: url('../img/photos/1.jpg');
     height: 250px;
-    background-color: rgba(234, 247, 246,0.3);
+    background-color: rgba(234, 247, 246,0.7);
     background-position: center;
     background-blend-mode: soft-light;
     margin-bottom: 20px;
@@ -68,14 +63,45 @@ font-size: 25px;
 
 /*Generic banner text styling for all pages*/
 #bannertext{
-    text-align: left;
+    text-align: center;
     padding-left: 50px;
     padding-top: 50px;
-    font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif,sans-serif;
+    /* font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif,sans-serif; */
     font-size: 25px;
     color: #172026;
 }
 
+/*Breadcrumb nav styling*/
+.NavContainer{
+    padding-left: 50px;
+}
+
+.Breadcrumbs{
+    padding: 2px;
+    font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif,sans-serif;
+    font-size: 25px;
+    background-color: none;
+    margin-top: -15px;
+}
+
+.BreadcrumbsItem{
+    display:inline-block;
+}
+
+.BreadcrumbsItem:not(:last-of-type)::after{
+    content: '>';
+    margin: 0 5px;
+    color: white;
+}
+
+.BreadcrumbsURL{
+    text-decoration: none;
+    color: white;
+}
+
+.BreadcrumbsURL:hover{
+    text-decoration: underline;
+}
 
 /*Home page Container alignment styling*/
 
@@ -85,9 +111,9 @@ font-size: 25px;
     display: grid;
     grid-template-columns:50% 50%;
     width: 95%;
-    margin: 0 auto;
+    margin: 0 auto;   
     overflow:visible;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
 .HomeImg{
@@ -100,7 +126,7 @@ font-size: 25px;
 }
 
 #HomeHeader{
-    font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif,sans-serif;
+    /* font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif,sans-serif; */
     font-size: 40px;
     color: #172026;
     padding-left: 30px;
@@ -111,7 +137,7 @@ font-size: 25px;
     padding-right: 10px;
     padding-left: 28px;
     line-height: 1.9;
-    font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif,sans-serif;
+    /* font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif,sans-serif; */
     font-size: 18px;
     color: #172026;
 }
@@ -125,7 +151,7 @@ font-size: 25px;
     display: grid;
     grid-template-columns:50% 50%;
     width: 95%;
-    margin: 0 auto;
+    margin: 0 auto;   
     overflow:visible;
     margin-bottom: 20px;
 }
@@ -140,7 +166,7 @@ font-size: 25px;
 }
 
 #AboutHeader{
-    font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif,sans-serif;
+    /* font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif,sans-serif; */
     font-size: 40px;
     color: #172026;
     padding-left: 30px;
@@ -151,7 +177,7 @@ font-size: 25px;
     padding-right: 10px;
     padding-left: 28px;
     line-height: 1.9;
-    font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif,sans-serif;
+    /* font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif,sans-serif; */
     font-size: 18px;
     color: #172026;
 }
@@ -160,7 +186,7 @@ font-size: 25px;
 /*About Page Carousel Styling*/
 
 #AboutH1{
-    font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif,sans-serif;
+    /* font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif,sans-serif; */
     font-size: 40px;
     color: #172026;
     padding-left: 30px;
@@ -193,7 +219,7 @@ font-size: 25px;
     display: grid;
     grid-template-columns:50% 50%;
     width: 95%;
-    margin: 0 auto;
+    margin: 0 auto;   
     overflow:visible;
     margin-bottom: 20px;
 }
@@ -208,7 +234,7 @@ font-size: 25px;
 }
 
 #ExploreHeader{
-    font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif,sans-serif;
+    /* font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif,sans-serif; */
     font-size: 40px;
     color: #172026;
     padding-left: 30px;
@@ -219,7 +245,7 @@ font-size: 25px;
     padding-right: 10px;
     padding-left: 28px;
     line-height: 1.9;
-    font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif,sans-serif;
+    /* font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif,sans-serif; */
     font-size: 18px;
     color: #172026;
 }
@@ -229,10 +255,6 @@ font-size: 25px;
     display: none;
 }
 
-body, p
-{
-    font-family: "Times New Roman", Helvetica, sans-serif;
-}
 
 .modal-overlay
 {

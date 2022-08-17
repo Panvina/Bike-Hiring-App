@@ -7,16 +7,25 @@
         <title>Explore</title>
     </head>
     <body>
+        <header><?php include 'header.php'?></header>
         <div id = "main">
             <div class="banner">
                 <div id="bannertext">
                     <h1> EXPLORE</h1>
                 </div>
-            </div>
-            <div class="explore-std-padding">
-                <p>
-                    <a href="About.php" class="no-text-decoration">Home</a> > <a href="About.php" class="no-text-decoration">Explore</a> > Rail Trails
-                </p>
+                <div class ="NavContainer">
+                     <ul class="Breadcrumbs">
+                        <li class="BreadcrumbsItem">
+                            <a href="Index.php" class="BreadcrumbsURL">Home</a>
+                        </li>
+                        <li class="BreadcrumbsItem">
+                            <a href="Explore.php" class="BreadcrumbsURL">Explore</a>
+                        </li>
+                        <li class="BreadcrumbsItem">
+                            <a href="javascript:window.location.href=window.location.href" class="BreadcrumbsURL BreadcrumbsURLactive">Rail Trails</a>
+                        </li>
+                     </ul>
+                </div>
             </div>
 
             <div class="explore-rail-description explore-std-padding">
@@ -96,5 +105,6 @@
             <div class="location-container-separator">
             </div>
         </div>
+        <footer><?php include 'footer.php'?></footer>
     </body>
 </html>
