@@ -8,7 +8,7 @@
 
 		public $conn = null;
 
-		public function __construct($servername, $username, $password, $dbname)
+		public function __construct($servername="localhost", $username="root", $password="", $dbname="bike_hiring_system")
 		{
 			$this->servername = $servername;
 			$this->username = $username;
@@ -48,7 +48,7 @@
 				$ret = TRUE;
 			}
 
-			$this->close();
+			$this->closeConn();
 			return $ret;
 		}
 
@@ -71,7 +71,7 @@
 			$columnValuePairs = [];
 			if (is_array($colnames))
 			{
-				
+
 			}
 			$query = "UPDATE $tablename SET lastname='Doe' WHERE id=2";
 
@@ -81,7 +81,7 @@
 				$ret = TRUE;
 			}
 
-			$this->close();
+			$this->closeConn();
 
 			return $ret;
 		}
@@ -99,7 +99,7 @@
 		{
 			$ret = FALSE;
 
-			$this->getConn();
+                        $this->getConn();
 			$query = "DELETE FROM $tablename WHERE id=$id";
 			//echo $query;
 			if ($this->conn->query($query) == TRUE)
@@ -110,7 +110,7 @@
 			{
 				echo "Error: " . $query . "<br>" . $this->conn->error;
 			}
-			$this->close();
+			$this->closeConn();
 
 			return $ret;
 		}
@@ -125,61 +125,57 @@
 		 *	Return:
 		 *		- ret : Array of rows returned by query
 		 */
-		public function get($tablename, $colnames, $condition)
+		public function get($tablename, $colnames, $condition=0)
 		{
-			$ret = [];
+			$ret = array();
 
 			$this->getConn();
-			$query = "SELECT $colnames FROM $tablename WHERE $condition";
-			//echo $query;
+			$query = "SELECT $colnames FROM $tablename";
+			if ($condition)
+			{
+				$query = append_string($query, " WHERE $condition");
+			}
+
+			echo '<br>';
+			echo $query;
 			$res = $this->conn->query($query);
 			if ($res->num_rows > 0)
 			{
 				while($row = $res->fetch_assoc())
 				{
-					array_push($res, $row);
+					array_push($ret, $row);
 				}
 			}
 
-                        $this->close();
+            $this->closeConn();
 
-                        return $ret;
-		}
-
-		public function delete($tablename, $id)
-		{
-			$this->getConn();
-			$query = "DELETE FROM $tablename WHERE id=$id";
-			//echo $query;
-			if ($this->conn->query($query) == TRUE)
-			{
-				echo "Record deleted successfully!";
-			}
-			else
-			{
-				echo "Error: " . $query . "<br>" . $this->conn->error;
-			}
-			$this->close();
-		}
-
-		public function get($tablename, $names, )
-		{
-			$this->getConn();
-			$query = "SELECT id, firstname, lastname FROM MyGuests";
-			//echo $query;
-			if ($this->conn->query($query) == TRUE)
-			{
-				echo "Record created successfully";
-			}
-			else
-			{
-				echo "Error: " . $query . "<br>" . $this->conn->error;
-			}
-			$this->close();
+            return $ret;
 		}
 	}
 
-	// Testing
-	// $conn = new DBConnection("localhost", "root", "", "bike_hiring_system");
-	// $conn->insert("bike_type_table", "Name, Description", "'Hydro', 'Non-existent'");
+
+	// Instantiate database connection object
+	$conn = new DBConnection();
+
+	// Test INSERT method
+    $conn->insert("bike_type_table", "Name, Description", "'Hydro', 'Non-existent'");
+    echo "insert bike_type_table name=hydro, description=non-existent";
+
+	// Test GET method
+    $ret = $conn->get("bike_type_table", "BikeTypeID, Name, Description");
+	$keys = array_keys($ret[0]);
+	for($x = 0; $x < count($ret); $x++)
+	{
+		$row = $ret[$x];
+		$str = "";
+		for($y = 0; $y < count($keys); $y++)
+		{
+			$key = $keys[$y];
+			$str .= "$key: ";
+			$str .="$row[$key] ";
+		}
+		echo "$str<br>";
+	}
+    //$conn->insert("bike_type_table", "Name, Description", "'Hydro', 'Non-existent'");
+    //$conn->delete();
 ?>
