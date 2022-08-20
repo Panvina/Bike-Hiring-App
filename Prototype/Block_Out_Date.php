@@ -13,7 +13,7 @@
                 <a href = "Dashboard.php"> <img src= "img/icons/bulletin-board.png" alt="Dashboard Logo" /> Dashboard </a> <br>
                 <a href = "Customer.php"> <img src= "img/icons/account-group.png" alt="Customer Logo" />  Customer  </a> <br>
                 <a href= "Inventory.php"> <img src= "img/icons/bicycle.png" alt="Inventory Logo" />  Inventory </a> <br>
-                <a href= "Bookings.php"> <img src= "img/icons/book-open-blank-variant.png" alt="Bookings Logo" /> Bookings </a> <br>
+                <a href= "bookings.php"> <img src= "img/icons/book-open-blank-variant.png" alt="Bookings Logo" /> Bookings </a> <br>
                 <a class="active" href= "Block_Out_Date.php"> <img src= "img/icons/calendar.png" alt="Block out date Logo" /> Block Out Dates </a> <br>
                 <a href= "Locations.php"> <img src= "img/icons/earth.png" alt="Locations Logo" /> Locations </a> <br>
             </div>
@@ -22,7 +22,7 @@
          <div class="Content">
             <h1> Block Out Dates </h1>
             <!-- Add Block out date pop up -->
-            <button type="button" style="left: 0%">+ Add Item</button> 
+            <button type="button" style="left: 0%">+ Add Item</button>
             <!-- List of current block out dates-->
             <table class="TableContent">
                  <tr>

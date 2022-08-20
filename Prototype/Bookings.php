@@ -6,6 +6,15 @@
         <title> Bookings </title>
         <h1 class="header"> <img src="img/photos/Inverloch_Logo3.png" alt="Inverloch Logo" id="Logo"/> Bookings </h1>
     </head>
+    <?php
+        $bookingsLocation = "php-scripts";
+        $bookingsPhpFile = "bookings-db.php";
+        
+        $bookingsLocation .= "$delim";
+        $bookingsLocation .= "$bookingsPhpFile";
+
+        include $bookingsLocation;
+    ?>
     <body>
         <!-- Side navigation -->
         <nav>
@@ -21,13 +30,13 @@
          <!-- Block of content in center -->
          <div class="Content">
             <h1> All Bookings </h1>
-            
-            <!-- Search bar with icons --> 
+
+            <!-- Search bar with icons -->
             <img src="img/icons/account-search.png" alt="Customer Search Logo"/>
             <input type="text"  placeholder="Search">
 
             <!-- Add Booking pop up -->
-            <button type="button">+ Add Booking</button> 
+            <button type="button">+ Add Booking</button>
 
             <!-- List of available bookings -->
             <table class="TableContent">
