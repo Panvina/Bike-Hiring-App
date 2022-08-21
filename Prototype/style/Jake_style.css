@@ -90,6 +90,7 @@ body{
   font-size: 25px;
   border: solid white;
   border-width: thin;
+  cursor: pointer;
 }
 
 .Date{
@@ -179,12 +180,36 @@ nav a {
 /* Modal Content/Box */
 .modal-content {
   margin: 15% auto; /* 15% from the top and centered */
-  margin-left: 25%;
+  margin-left: 45%;
   padding: 20px;
   border: 1px solid #888;
-  width: 65%; /* Could be more or less, depending on screen size */
+  width: 20%; /* Could be more or less, depending on screen size */
   background-color: #eaf7f6;
 }
+
+.modal-content h2, input[type=text]{
+ display:inline-block;
+ text-align: center;
+}
+
+.modal-content h1{
+  display:inline-block;
+  text-align: center;
+  margin-left: 15%;
+ }
+ 
+.modal-content button{
+  display:inline-block;
+  text-align: center;
+  margin-left: 40%;
+  background-color: darkcyan;
+  border: none;
+  color: white;
+  font-size: 25px;
+  border: solid white;
+  border-width: thin;
+  cursor: pointer;
+ }
 
 /* The Close Button */
 .close {

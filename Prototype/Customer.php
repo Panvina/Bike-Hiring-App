@@ -35,6 +35,9 @@
            <img src="img/icons/account-search.png" alt="Customer Search Logo"/>
            <input type="text"  placeholder="Search">
 
+            <!-- Add Customer pop up -->
+           <button id="CustomerPopUp">+ New Customer</button>
+
            <!-- List of current customers -->
            <table class="TableContent">
                 <tr>
@@ -56,17 +59,49 @@
            </table>
         </div>
 
-         <!-- Add Customer pop up -->
-         <button id="CustomerPopUp">+ New Customer</button>
-
         <div id="CustomerModal" class="modal">
 
             <div class ="modal-content">
                 <span class="close">&times;</span>
-                <p> Some text in the Modal..</p>
+                <form>
+                    <h1> Create a customer </h1>
+                    <div>
+                        <h2> Name: </h2>
+                        <input type="text">
+                    </div>
+                    <div>
+                        <h2> Phone Number: </h2>
+                        <input type="text">'
+                    </div>
+                    <div>
+                        <h2> Email: </h2>
+                        <input type="text">'
+                    </div>
+                    <div>
+                        <h2> Street Address </h2>
+                        <input type="text">'
+                    </div>
+                    <div>
+                        <h2> Suburb </h2>
+                        <input type="text">'
+                    </div>
+                    <div>
+                        <h2> Post Code </h2>
+                        <input type="text">'
+                    </div>
+                    <div>
+                        <h2> Licence Number </h2>
+                        <input type="text">'
+                    </div>
+                    </br>
+                    <div>
+                        <button id="SubmitCustomer">Submit</button>
+                    </div>
+                </form>
             </div>
         </div>
 
         
     </body>
 </html>
+<script src="scripts/customer_popup.js"></script>
