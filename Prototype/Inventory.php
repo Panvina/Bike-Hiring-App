@@ -6,6 +6,20 @@
         <title> Inventory </title>
         <h1 class="header"> <img src="img/photos/Inverloch_Logo3.png" alt="Inverloch Logo" id="Logo"/> Inventory </h1>
     </head>
+    <?php
+    /*
+    include 'backend-connection.php';
+    
+    $conn = new DBConnection("localhost", "root", "", "bike_hiring_system");
+
+    if(!$conn){
+        echo 'Connection error: ' . mysqli_connect_error();
+    }
+
+    else{
+        echo 'SUCCESS';
+    }
+    */?>
     <body>
         <!-- Side navigation -->
         <nav>
@@ -35,6 +49,8 @@
 
             <!-- List of available bookings -->
             <table class="TableContent">
+                <?php
+                echo "
                 <tr>
                     <th> Item ID </th>
                     <th> Item Name </th> 
@@ -50,7 +66,38 @@
                     <td> Available </td>
                     <td> Checked </td>
                     <td> Perfect bike to be used for your first time </td>
-                </tr>
+                </tr>";
+
+                include 'backend-connection.php';
+                    $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
+
+                    $sql = "SELECT * FROM bike_inventory_table";
+                    $result = $conn->query($sql);
+                    
+                    echo"
+                    <tr>
+                            <th> Item ID </th>
+                            <th> Item Name </th> 
+                            <th> Item Type </th>
+                            <th> Item Status </th>
+                            <th> Safety Check </th>
+                            <th> Description </th>
+                    </tr>";
+                        
+                    while($row = $result->fetch_assoc()){           
+                        
+                        echo "
+                        <tr>
+                            <td>" . $row["BikeID"] . "</td>
+                            <td>" . $row["Name"] . "</td>
+                            <td>" . $row["BikeTypeID"] . "</td>
+                            <td>" . $row["Safety Inspect"] . "</td>
+                            <td>" . $row["Safety Inspect"] . "</td>
+                            <td>" . $row["Description"] . "</td>
+                        </tr>";
+
+                    }
+                ?>  
            </table>
         </div>
 
