@@ -14,6 +14,13 @@
 			$this->username = $username;
 			$this->password = $password;
 			$this->dbname = $dbname;
+
+			$this->getConn();
+		}
+
+		function __destruct()
+		{
+			$this->closeConn();
 		}
 
 		private function getConn()
@@ -40,7 +47,6 @@
 		{
 			$ret = FALSE;
 
-			$this->getConn();
 			$query = "INSERT INTO $tablename ($columns) VALUES ($data)";
 			//echo $query;
 			if ($this->conn->query($query) == TRUE)
@@ -48,7 +54,6 @@
 				$ret = TRUE;
 			}
 
-			$this->closeConn();
 			return $ret;
 		}
 
@@ -72,8 +77,6 @@
 		public function update($tablename, $idColName, $id, $colnames, $data)
 		{
 			$ret = false;
-
-			$this->getConn();
 
 			// Convert data and columns to arrays
 			$cols = explode(",", $colnames);
@@ -117,8 +120,6 @@
 				echo "<br>Data and column counts are not equal<br>";
 			}
 
-			$this->closeConn();
-
 			return $ret;
 		}
 
@@ -136,7 +137,6 @@
 		{
 			$ret = FALSE;
 
-            $this->getConn();
 			$query = "DELETE FROM $tablename WHERE $pkeyColName=$pkeyValue";
 			//echo $query;
 			if ($this->conn->query($query) == TRUE)
@@ -147,7 +147,6 @@
 			{
 				echo "Error: " . $query . "<br>" . $this->conn->error;
 			}
-			$this->closeConn();
 
 			return $ret;
 		}
@@ -167,7 +166,6 @@
 		{
 			$ret = array();
 
-			$this->getConn();
 			$query = "SELECT $colnames FROM $tablename";
 			if ($condition)
 			{
@@ -185,8 +183,6 @@
 				}
 			}
 
-            $this->closeConn();
-
             return $ret;
 		}
 
@@ -202,8 +198,6 @@
 		{
 			$ret = array();
 
-			$this->getConn();
-
 			$query = "SELECT * FROM $tablename ORDER BY $pkeyName DESC LIMIT $x";
 			echo '<br>';
 			echo $query;
@@ -216,8 +210,6 @@
 				}
 			}
 
-			$this->closeConn();
-
 			return $ret;
 		}
 	}
@@ -229,7 +221,6 @@
 	 */
 	function printRows($tablename)
 	{
-		$conn = new DBConnection();
 		echo "<br>Printing array<br>";
 		$ret = $conn->get("$tablename", "*");
 		$keys = array_keys($ret[0]);
@@ -244,7 +235,6 @@
 				$str .="$row[$key] ";
 
 			}
-			echo "$str<br>";
 		}
 	}
 
