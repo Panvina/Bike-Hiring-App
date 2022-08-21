@@ -7,13 +7,7 @@
         <h1 class="header"> <img src="img/photos/Inverloch_Logo3.png" alt="Inverloch Logo" id="Logo"/> Bookings </h1>
     </head>
     <?php
-        $bookingsLocation = "php-scripts";
-        $bookingsPhpFile = "bookings-db.php";
-        
-        $bookingsLocation .= "$delim";
-        $bookingsLocation .= "$bookingsPhpFile";
-
-        include $bookingsLocation;
+        include "bookings-db.php";
     ?>
     <body>
         <!-- Side navigation -->
