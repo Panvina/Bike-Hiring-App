@@ -242,7 +242,6 @@
 				$key = $keys[$y];
 				$str .= "$key: ";
 				$str .="$row[$key] ";
-
 			}
 			echo "$str<br>";
 		}

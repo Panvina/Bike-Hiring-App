@@ -35,15 +35,6 @@
            <img src="img/icons/account-search.png" alt="Customer Search Logo"/>
            <input type="text"  placeholder="Search">
 
-           <!-- Add Customer pop up -->
-           <button id="login-launch-btn">+ New Customer</button>
-
-           <div id="login-overlay" class="modal-overlay" >
-                <div class="modal-content">
-
-                </div>
-           </div>
-
            <!-- List of current customers -->
            <table class="TableContent">
                 <tr>
@@ -64,6 +55,18 @@
                 </tr>
            </table>
         </div>
+
+         <!-- Add Customer pop up -->
+         <button id="CustomerPopUp">+ New Customer</button>
+
+        <div id="CustomerModal" class="modal">
+
+            <div class ="modal-content">
+                <span class="close">&times;</span>
+                <p> Some text in the Modal..</p>
+            </div>
+        </div>
+
         
     </body>
 </html>
