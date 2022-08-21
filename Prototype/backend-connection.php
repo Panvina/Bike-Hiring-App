@@ -171,7 +171,7 @@
 			$query = "SELECT $colnames FROM $tablename";
 			if ($condition)
 			{
-				$query = append_string($query, " WHERE $condition");
+				$query .= " WHERE $condition";
 			}
 
 			echo '<br>';
@@ -272,13 +272,13 @@
 		$conn->update("bike_type_table", "BikeTypeID", $toUpdateId, "Description, Name", "New Description, Updated-Hydro");
 
 		// Test DELETE method
-		$conn->insert("bike_type_table", "Name, Description", "'Hydro', 'Test'");
-		$ret = $conn->getLastX("bike_type_table", "BikeTypeID", 1);
-		$toDeleteId = $ret[0]["BikeTypeID"];
+		//$conn->insert("bike_type_table", "Name, Description", "'Hydro', 'Test'");
+		//$ret = $conn->getLastX("bike_type_table", "BikeTypeID", 1);
+		//$toDeleteId = $ret[0]["BikeTypeID"];
 
-		printRows("bike_type_table");
-		$conn->delete("bike_type_table", "BikeTypeID", $toDeleteId);
-		echo "<br>DELETE success";
+		//printRows("bike_type_table");
+		//$conn->delete("bike_type_table", "BikeTypeID", $toDeleteId);
+		//echo "<br>DELETE success";
 
 		printRows("bike_type_table");
 	}

@@ -70,7 +70,6 @@
 
                 include 'backend-connection.php';
                     $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
-
                     $sql = "SELECT * FROM bike_inventory_table";
                     $result = $conn->query($sql);
                     
@@ -84,8 +83,28 @@
                             <th> Description </th>
                     </tr>";
                         
-                    while($row = $result->fetch_assoc()){           
-                        
+                    while($row = $result->fetch_assoc()){   
+                        // Print Safety Inspection based on 0 or 1 values        
+                        if($row["Safety Inspect"] == 1 ){
+                            $row["Safety Inspect"] = "Yes";
+                        }
+                        else{
+                            $row["Safety Inspect"] = "No";
+                        }
+
+                        switch($row["BikeTypeID"]){
+                            case 1:
+                                $row["BikeTypeID"] = "Helmet";
+                                break;
+                            case 2:
+                                $row["BikeTypeID"] = "Carrier";
+                                break;
+                            default:
+                                $row["BikeTypeID"] = "Unknown";
+
+                        }
+                    
+
                         echo "
                         <tr>
                             <td>" . $row["BikeID"] . "</td>
