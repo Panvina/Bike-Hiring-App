@@ -1,3 +1,7 @@
+<?php
+    include "bookings-db.php";
+?>
+
 <!DOCTYPE html>
 <html>
     <link rel="stylesheet" href="style/Jake_style.css">
@@ -6,9 +10,6 @@
         <title> Bookings </title>
         <h1 class="header"> <img src="img/photos/Inverloch_Logo3.png" alt="Inverloch Logo" id="Logo"/> Bookings </h1>
     </head>
-    <?php
-        include "bookings-db.php";
-    ?>
     <body>
         <!-- Side navigation -->
         <nav>
@@ -34,28 +35,56 @@
 
             <!-- List of available bookings -->
             <table class="TableContent">
-                 <tr>
-                     <th> Booking Id </th>
-                     <th> Bike Name </th>
-                     <th> Customer Name </th>
-                     <th> Customer Number </th>
-                     <th> From </th>
-                     <th> To </th>
-                     <th> Quantity </th>
-                     <th> Duration </th>
-                     <th> Pick-up-Location </th>
-                 </tr>
-                 <tr>
-                     <td> 00001 </td>
-                     <td> Outback wizard </td>
-                     <td> John Stevenson </td>
-                     <td> 5837 </td>
-                     <td> 11:00AM </td>
-                     <td> 4:00PM </td>
-                     <td> 1 </td>
-                     <td> 5 Hours </td>
-                     <td> Inverloch Libary </td>
-                 </tr>
+                <tr>
+                    <?php
+                        $cols = "Booking ID,Bike Name,Customer Name,Start Date,Start Time,End Date,End Time,Duration,Pick Up,Drop Off,Price";
+                        $cols = explode(',', $cols);
+                        $count = count($cols);
+                        // print_r($cols);
+                        // echo "<br>";
+                        for($x = 0; $x < $count; $x++)
+                        {
+                            $col = trim($cols[$x]);
+                            echo "<th> $col </th>";
+                        }
+                    ?>
+                    <!-- <th> Booking Id </th>
+                    <th> Bike Name </th>
+                    <th> Customer Name </th>
+                    <th> Phone Number </th>
+                    <th> From </th>
+                    <th> To </th>
+                    <th> Duration </th>
+                    <th> Pick-up-Location </th> -->
+                </tr>
+                <?php
+                   $conn = new BookingsDBConnection();
+                   $rows = $conn->getBookingRows();
+                   if ($rows == null)
+                   {
+                       $rows = array();
+                       $tmp = array();
+                       for($x = 0; $x < count($cols); $x++)
+                       {
+                           array_push($tmp, "null");
+                       }
+                       array_push($rows, $tmp);
+                   }
+
+                   $keys = array_keys($rows[0]);
+                   for($x = 0; $x < count($rows); $x++)
+                   {
+                       echo "<tr>";
+                       for($y = 0; $y < count($keys); $y++)
+                       {
+                           $row = $rows[$x];
+                           $key = $keys[$y];
+                           $data = $row[$key];
+                           echo "<td> $data </td>";
+                       }
+                       echo "</tr>";
+                   }
+                ?>
             </table>
         </div>
 

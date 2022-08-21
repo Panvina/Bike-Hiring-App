@@ -1,34 +1,44 @@
 <?php
+	/**
+	 *
+	 *
+	 *
+	 *
+	 * IMPORTANT NOTE:
+	 *	- For column names with spaces, MySQL uses backticks (`) for these. Don't forget these, or the query will fail.
+	 */
 	class DBConnection
 	{
-		public $servername = "";
-		public $username = "";
-		public $password = "";
-		public $dbname = "";
+		protected $servername = "";
+		protected $username = "";
+		protected $password = "";
+		protected $dbname = "";
+		protected $tablename = "";
 
-		public $conn = null;
+		protected $conn = null;
 
-		public function __construct($servername="localhost", $username="root", $password="", $dbname="bike_hiring_system")
+		public function __construct($tablename, $servername="localhost", $username="root", $password="", $dbname="bike_hiring_system")
 		{
 			$this->servername = $servername;
 			$this->username = $username;
 			$this->password = $password;
 			$this->dbname = $dbname;
+			$this->tablename = $tablename;
 
 			$this->getConn();
 		}
 
-		function __destruct()
+		public function __destruct()
 		{
 			$this->closeConn();
 		}
 
-		private function getConn()
+		protected function getConn()
 		{
 			$this->conn = new mysqli($this->servername, $this->username, $this->password, $this->dbname);
 		}
 
-		private function closeConn()
+		protected function closeConn()
 		{
 			$this->conn->close();
 		}
@@ -43,12 +53,12 @@
 		 *	Return:
 		 * 		- Return if insert was successful
 		 */
-		public function insert($tablename, $columns, $data)
+		public function insert($columns, $data)
 		{
 			$ret = FALSE;
 
-			$query = "INSERT INTO $tablename ($columns) VALUES ($data)";
-			//echo $query;
+			$query = "INSERT INTO $this->tablename ($columns) VALUES ($data)";
+			echo $query;
 			if ($this->conn->query($query) == TRUE)
 			{
 				$ret = TRUE;
@@ -74,7 +84,7 @@
 		 *	Return:
 		 *		- ret : return if update was successful
 		 */
-		public function update($tablename, $idColName, $id, $colnames, $data)
+		public function update($idColName, $id, $colnames, $data)
 		{
 			$ret = false;
 
@@ -88,7 +98,7 @@
 			if ($colDataCheckSuccess)
 			{
 				// construct update query
-				$query = "UPDATE $tablename SET ";
+				$query = "UPDATE $this->tablename SET ";
 
 				for($x = 0; $x < count($cols); $x++)
 				{
@@ -133,11 +143,11 @@
 		 *	Return:
 		 *		- Return if delete operation was successful
 		 */
-		public function delete($tablename, $pkeyColName, $pkeyValue)
+		public function delete($pkeyColName, $pkeyValue)
 		{
 			$ret = FALSE;
 
-			$query = "DELETE FROM $tablename WHERE $pkeyColName=$pkeyValue";
+			$query = "DELETE FROM $this->tablename WHERE $pkeyColName=$pkeyValue";
 			//echo $query;
 			if ($this->conn->query($query) == TRUE)
 			{
@@ -162,11 +172,11 @@
 		 *	Return:
 		 *		- ret : Array of rows returned by query
 		 */
-		public function get($tablename, $colnames, $condition=0)
+		public function get($colnames, $condition=0)
 		{
 			$ret = array();
 
-			$query = "SELECT $colnames FROM $tablename";
+			$query = "SELECT $colnames FROM $this->tablename";
 			if ($condition)
 			{
 				$query = append_string($query, " WHERE $condition");
@@ -194,11 +204,11 @@
 		 *	- pkeyName	: name of primary key of table (auto-incrementing pkey)
 		 *	- x			: number of rows (from last) to retrieve
 		 */
-		public function getLastX($tablename, $pkeyName, $x)
+		public function getLastX($pkeyName, $x)
 		{
 			$ret = array();
 
-			$query = "SELECT * FROM $tablename ORDER BY $pkeyName DESC LIMIT $x";
+			$query = "SELECT * FROM $this->tablename ORDER BY $pkeyName DESC LIMIT $x";
 			echo '<br>';
 			echo $query;
 			$res = $this->conn->query($query);
@@ -212,28 +222,28 @@
 
 			return $ret;
 		}
-	}
 
-	/**
-	 *	Prints a table. For testing.
-	 *	Parameters:
-	 *	- $tablename	: name of table to print
-	 */
-	function printRows($tablename)
-	{
-		echo "<br>Printing array<br>";
-		$ret = $conn->get("$tablename", "*");
-		$keys = array_keys($ret[0]);
-		for($x = 0; $x < count($ret); $x++)
+		/**
+		 *	Prints a table. For testing.
+		 *	Parameters:
+		 *	- $tablename	: name of table to print
+		 */
+		public function printRows()
 		{
-			$row = $ret[$x];
-			$str = "";
-			for($y = 0; $y < count($keys); $y++)
+			echo "<br>Printing array<br>";
+			$ret = $this->get("*");
+			$keys = array_keys($ret[0]);
+			for($x = 0; $x < count($ret); $x++)
 			{
-				$key = $keys[$y];
-				$str .= "$key: ";
-				$str .="$row[$key] ";
-
+				$row = $ret[$x];
+				$str = "";
+				for($y = 0; $y < count($keys); $y++)
+				{
+					$key = $keys[$y];
+					$str .= "$key: ";
+					$str .="$row[$key] ";
+				}
+				echo "$str<br>";
 			}
 		}
 	}
@@ -243,33 +253,35 @@
 	if ($doTest)
 	{
 		// Instantiate database connection object
-		$conn = new DBConnection();
+		$conn = new DBConnection("bike_type_table");
 
 		// Test INSERT method
-	    $conn->insert("bike_type_table", "Name, Description", "'Hydro', 'Non-existent'");
+	    $conn->insert("Name, Description", "'Hydro', 'Non-existent'");
 	    echo "INSERT success";
 
 		// Test GET method
-		printRows("bike_type_table");
+		$conn->printRows();
 
 		echo "GET success";
 
 		// Test UPDATE method
-		$conn->insert("bike_type_table", "Name, Description", "'Hydro', 'Non-existent'");
+		$conn->insert("Name, Description", "'Hydro', 'Non-existent'");
+		$conn->printRows();
 		echo "inserted<br>";
-		$ret = $conn->getLastX("bike_type_table", "BikeTypeID", 1);
+		$ret = $conn->getLastX("BikeTypeID", 1);
 		$toUpdateId = $ret[0]["BikeTypeID"];
-		$conn->update("bike_type_table", "BikeTypeID", $toUpdateId, "Description, Name", "New Description, Updated-Hydro");
+		$conn->update("BikeTypeID", $toUpdateId, "Description, Name", "New Description, Updated-Hydro");
+		$conn->printRows();
 
 		// Test DELETE method
-		$conn->insert("bike_type_table", "Name, Description", "'Hydro', 'Test'");
-		$ret = $conn->getLastX("bike_type_table", "BikeTypeID", 1);
+		$conn->insert("Name, Description", "'Hydro', 'Test'");
+		$ret = $conn->getLastX("BikeTypeID", 1);
 		$toDeleteId = $ret[0]["BikeTypeID"];
 
-		printRows("bike_type_table");
-		$conn->delete("bike_type_table", "BikeTypeID", $toDeleteId);
+		$conn->printRows("bike_type_table");
+		$conn->delete("BikeTypeID", $toDeleteId);
 		echo "<br>DELETE success";
 
-		printRows("bike_type_table");
+		$conn->printRows("bike_type_table");
 	}
 ?>
