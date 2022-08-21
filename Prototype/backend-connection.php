@@ -30,7 +30,7 @@
 	}
 
 	$conn = new DBConnection("localhost", "root", "", "bike_hiring_system");
-	$conn->insert("bike_type_table", "Name, Description", "'Hydro', 'Non-existent'");
+	//$conn->insert("bike_type_table", "Name, Description", "'Hydro', 'Non-existent'");
 
 	// $servername = "localhost";
 	// $username = "root";
