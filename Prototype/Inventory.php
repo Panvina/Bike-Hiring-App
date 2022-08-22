@@ -70,8 +70,8 @@
 
                 include 'backend-connection.php';
                     $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
-                    $sql = "SELECT * FROM bike_inventory_table";
-                    $result = $conn->query($sql);
+                    $query1 = "SELECT * FROM bike_inventory_table";
+                    $result = $conn->query($query1);
                     
                     echo"
                     <tr>
@@ -86,31 +86,57 @@
                     while($row = $result->fetch_assoc()){   
                         // Print Safety Inspection based on 0 or 1 values        
                         if($row["Safety Inspect"] == 1 ){
-                            $row["Safety Inspect"] = "Yes";
+                            $row["Safety Inspect"] = "Checked";
                         }
                         else{
-                            $row["Safety Inspect"] = "No";
+                            $row["Safety Inspect"] = "Not Checked";
                         }
 
-                        switch($row["BikeTypeID"]){
-                            case 1:
-                                $row["BikeTypeID"] = "Helmet";
-                                break;
-                            case 2:
-                                $row["BikeTypeID"] = "Carrier";
-                                break;
-                            default:
-                                $row["BikeTypeID"] = "Unknown";
+                        //Retreive bike type based on Bike Type ID from the Inventory
+                        $biketype = $row["BikeTypeID"];
+                        $query2 = "SELECT Name FROM bike_type_table WHERE BikeTypeID=$biketype";
+                        $type = $conn->query($query2)->fetch_assoc();
 
+                        //Determining availability of bikes based on booking
+                        $bikeID =  $row["BikeID"];
+                        $query3 = "SELECT * FROM booking_table WHERE BikeID=$bikeID";
+                        $booking = $conn->query($query3)->fetch_assoc();
+
+                        $status;
+                       
+                        if (isset($booking["BikeID"]) && strtotime(date("Y-m-d")) < strtotime($booking["Start Date"]) && strtotime(date("Y-m-d")) > strtotime($booking["End Date"]))
+                        {
+                            $status = "Available";
                         }
-                    
+                        else if(isset($booking["BikeID"]) == false)
+                        {
+                            $status = "Available";
+                        }
+                        else 
+                        {
+                            $status = "Not available";
+                        }
+                        
+                        
 
+
+                        // switch($row["BikeTypeID"]){
+                        //     case 1:
+                        //         $row["BikeTypeID"] = "Helmet";
+                        //         break;
+                        //     case 2:
+                        //         $row["BikeTypeID"] = "Carrier";
+                        //         break;
+                        //     default:
+                        //         $row["BikeTypeID"] = "Unknown";
+
+                        // }
                         echo "
                         <tr>
                             <td>" . $row["BikeID"] . "</td>
                             <td>" . $row["Name"] . "</td>
-                            <td>" . $row["BikeTypeID"] . "</td>
-                            <td>" . $row["Safety Inspect"] . "</td>
+                            <td>" . $type["Name"] . "</td>
+                            <td>" . $status . "</td>
                             <td>" . $row["Safety Inspect"] . "</td>
                             <td>" . $row["Description"] . "</td>
                         </tr>";
