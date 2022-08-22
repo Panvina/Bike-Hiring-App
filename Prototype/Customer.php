@@ -194,7 +194,7 @@
                 </form>
             </div>
         </div>
-
+        
 
     </body>
 </html>
@@ -203,20 +203,18 @@
 
 <?php
 
-    if (isset($_SESSION["ret"]))
+if (isset($_SESSION["ret"]))
+{
+    if ($_SESSION["ret"] == "true")
     {
-        if ($_SESSION["ret"] == "true")
-        {
-            echo "<p style = 'color: red; font-size: 25px; margin-left: 45%; position: absolute; z-index: 1; left: 0; top: 0; padding-top: 5%;'> Record successfuly created </p>";
-            $_SESSION["ret"] = null;
-        }
-        else if ($_SESSION["ret"] == "false")
-        {
-            echo "<p style = 'color: red; font-size: 25px;display:block;margin-left: 45%; position: absolute; z-index: 1; left: 0; top: 0; padding-top: 5%;'>  Unable to insert record </p>";
-            $_SESSION["ret"] = null;
-        }
+        echo "<p class = 'echo' id='tempEcho'>  Record successfuly created </p>";
+        $_SESSION["ret"] = null;
     }
+    else if ($_SESSION["ret"] == "false")
+    {
+        echo "<p class = 'echo'>  Record successfuly created </p>";
+        $_SESSION["ret"] = null;
+    }
+}
 
-?>
-    </body>
-</html>
+?>              

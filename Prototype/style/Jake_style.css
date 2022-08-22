@@ -229,3 +229,13 @@ nav a {
   text-decoration: none;
   cursor: pointer;
 }
+
+.echo{
+  color: red; 
+  font-size: 25px;
+  margin-left: 45%; 
+  position: absolute; 
+  z-index: 1; left: 0; 
+  top: 0; 
+  padding-top: 5%;
+}

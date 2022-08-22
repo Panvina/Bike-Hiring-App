@@ -2,6 +2,9 @@
 var modal = document.getElementById("CustomerModal");
 var updateModal = document.getElementById("UpdateCustomerModal");
 
+
+var tempEcho = document.getElementById("tempEcho");
+
 // Get the button that opens the modal
 var btn = document.getElementById("CustomerPopUp");
 var updateBtn = document.getElementById("UpdateCustomer");
@@ -22,10 +25,12 @@ updateBtn.onclick = function() {
 // When the user clicks on <span> (x), close the modal
 span.onclick = function() {
   modal.style.display = "none";
+  $_SESSION["ret"] = null;
 }
 
 updateSpan.onclick = function() {
   updateModal.style.display = "none";
+  $_SESSION["ret"] = null;
 }
 
 // When the user clicks anywhere outside of the modal, close it
