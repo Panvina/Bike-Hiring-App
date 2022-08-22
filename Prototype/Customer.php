@@ -4,22 +4,7 @@
     include("backend-connection.php");
     $conn = new DBConnection("localhost", "root", "", "bike_hiring_system");
 
-   
-
-   // $sqlQry = "INSERT INTO customer_table VALUES $name, $phoneNumber, $email, $streetAdress, $suburb, $postCode, $licenceNumber";
-
-    //$conn->insert("customer_table", "Name, Phone Number, Email, Street Address, Suburb, Post Code, Licence Number" , "$name, $phoneNumber, $email, $streetAdress, $suburb, $postCode, $licenceNumber");
-
-    //$conn->insert("bike_type_table", "Name, Description", "'Hydro', 'Non-existent'");
-
-    //if ($conn->query($sqlQry) === TRUE) {
-       // echo "New record created successfully";
-     //} else {
-      //  echo "Error: " . $sql . "<br>" . $conn->error;
-    // }
-    
 ?>
-
 
 <!DOCTYPE html>
 <html>
@@ -42,7 +27,6 @@
             </div>
          </nav>
 
-         
          <!-- Block of content in center -->
          <div class="Content">
            <h1> All Customers</h1>
@@ -54,6 +38,54 @@
             <!-- Add Customer pop up -->
            <button id="CustomerPopUp">+ New Customer</button>
 
+            <?php
+
+                $name = "";
+                $phoneNumber = "";
+                $Email = "";
+                $customerArray = $conn->get("customer_table", "*");
+        
+                $arrayLength = count($customerArray);
+            
+                // for ($row = 0; $row < $arrayLength; $row++)
+                // {
+                //     //echo "Name: " . $row["Name"]. " Phone Number: " . $row["`Phone Number`"]. " Email: " .  $row["Email"]. " Street Address: " .  $row["`Street Address`"]. " Suburb: " .  $row["Suburb"]. " Post Code: " .  $row["`Post Code`"]. " Licence Number " . $row["`Licence Number`"] . "<br>";
+                //     extract($customerArray);
+                //     echo "\$name = $name";
+                // }
+
+                //$result = $customerArray ->fetch_assoc(); 
+
+                // for ($i = 0; $i < $arrayLength; $i++)
+                // {
+                //     echo "Name: " . $customerArray
+                // } 
+
+                // for ($i = 0; $i < $arrayLength; $i++)
+                // {
+                //     //echo $customerArray[$i];
+                //     //echo implode(" ", $customerArray);
+                //     //$text = $customerArray.join(" and ");
+                //     //echo (explode(" ", $customerArray[i]));
+                //     echo "<br>";
+                // }
+
+                while ($row = mysql_fetch_assoc($customerArray )) 
+                {
+                    // echo
+                    //     "<tr>
+                    //     <td>{$row\['Name'\]}</td>
+                    //     <td>{$row\['Phone Number'\]}</td>
+                    //     <td>{$row\['Email'\]}</td>
+                    //     <td>{$row\['Street Address'\]}</td>
+                    //     <td>{$row\['Suburb'\]}</td>
+                    //     <td>{$row\['Post Code'\]}</td> 
+                    //     <td>{$row\['Licence Number'\]}</td> 
+                    //     </tr>\n";
+
+                        echo "<tr><td>{$row['Name']}</td><td>{$row['Phone Number']}</td><td>{$row['Email']}</td><td>{$row['Street Address']}</td><td>{$row['Suburb']}</td><td>{$row['Post Code']}</td><td>{$row['Licence Number']}</td></tr>\n";
+                }
+            ?>
            <!-- List of current customers -->
            <table class="TableContent">
                 <tr>
@@ -131,12 +163,12 @@
     {
         if ($_SESSION["ret"] == "true")
         {
-            echo "<p style = 'color: red; font-size: 25px;display:block;margin-left: 45%; position: fixed; z-index: 1; left: 0; top: 0; padding-top: 5%;'> Record successfuly created </p>";
+            echo "<p style = 'color: red; font-size: 25px; margin-left: 45%; position: absolute; z-index: 1; left: 0; top: 0; padding-top: 5%;'> Record successfuly created </p>";
             $_SESSION["ret"] = null;
         }
         else if ($_SESSION["ret"] == "false")
         {
-            echo "<p style = 'color: red; font-size: 25px;display:block;margin-left: 45%; position: fixed; z-index: 1; left: 0; top: 0; padding-top: 5%;'>  Unable to insert record </p>";
+            echo "<p style = 'color: red; font-size: 25px;display:block;margin-left: 45%; position: absolute; z-index: 1; left: 0; top: 0; padding-top: 5%;'>  Unable to insert record </p>";
             $_SESSION["ret"] = null;
         }
     }
