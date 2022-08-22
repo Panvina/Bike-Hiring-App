@@ -1,7 +1,7 @@
 <?php
 session_start();
  include("backend-connection.php");
- $conn = new DBConnection("localhost", "root", "", "bike_hiring_system");
+ $conn = new DBConnection("customer_table");
 
 $name = $_GET["name"];
 $phoneNumber = $_GET["phoneNumber"];

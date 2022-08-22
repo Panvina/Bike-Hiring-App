@@ -2,7 +2,7 @@
     session_start();
     //connection to the database
     include("backend-connection.php");
-    $conn = new DBConnection("localhost", "root", "", "bike_hiring_system");
+    $conn = new DBConnection("customer_table");
 
 ?>
 
@@ -36,55 +36,56 @@
            <input type="text"  placeholder="Search">
 
             <!-- Add Customer pop up -->
+            <button id="UpdateCustomer"> Update Customer</button>
            <button id="CustomerPopUp">+ New Customer</button>
 
             <?php
 
-                $name = "";
-                $phoneNumber = "";
-                $Email = "";
-                $customerArray = $conn->get("customer_table", "*");
+                // $name = "";
+                // $phoneNumber = "";
+                // $Email = "";
+                // $customerArray = $conn->get("customer_table", "*");
         
-                $arrayLength = count($customerArray);
+                // $arrayLength = count($customerArray);
             
-                // for ($row = 0; $row < $arrayLength; $row++)
+                // // for ($row = 0; $row < $arrayLength; $row++)
+                // // {
+                // //     //echo "Name: " . $row["Name"]. " Phone Number: " . $row["`Phone Number`"]. " Email: " .  $row["Email"]. " Street Address: " .  $row["`Street Address`"]. " Suburb: " .  $row["Suburb"]. " Post Code: " .  $row["`Post Code`"]. " Licence Number " . $row["`Licence Number`"] . "<br>";
+                // //     extract($customerArray);
+                // //     echo "\$name = $name";
+                // // }
+
+                // //$result = $customerArray ->fetch_assoc(); 
+
+                // // for ($i = 0; $i < $arrayLength; $i++)
+                // // {
+                // //     echo "Name: " . $customerArray
+                // // } 
+
+                // // for ($i = 0; $i < $arrayLength; $i++)
+                // // {
+                // //     //echo $customerArray[$i];
+                // //     //echo implode(" ", $customerArray);
+                // //     //$text = $customerArray.join(" and ");
+                // //     //echo (explode(" ", $customerArray[i]));
+                // //     echo "<br>";
+                // // }
+
+                // while ($row = mysql_fetch_assoc($customerArray )) 
                 // {
-                //     //echo "Name: " . $row["Name"]. " Phone Number: " . $row["`Phone Number`"]. " Email: " .  $row["Email"]. " Street Address: " .  $row["`Street Address`"]. " Suburb: " .  $row["Suburb"]. " Post Code: " .  $row["`Post Code`"]. " Licence Number " . $row["`Licence Number`"] . "<br>";
-                //     extract($customerArray);
-                //     echo "\$name = $name";
+                //     // echo
+                //     //     "<tr>
+                //     //     <td>{$row\['Name'\]}</td>
+                //     //     <td>{$row\['Phone Number'\]}</td>
+                //     //     <td>{$row\['Email'\]}</td>
+                //     //     <td>{$row\['Street Address'\]}</td>
+                //     //     <td>{$row\['Suburb'\]}</td>
+                //     //     <td>{$row\['Post Code'\]}</td> 
+                //     //     <td>{$row\['Licence Number'\]}</td> 
+                //     //     </tr>\n";
+
+                //         echo "<tr><td>{$row['Name']}</td><td>{$row['Phone Number']}</td><td>{$row['Email']}</td><td>{$row['Street Address']}</td><td>{$row['Suburb']}</td><td>{$row['Post Code']}</td><td>{$row['Licence Number']}</td></tr>\n";
                 // }
-
-                //$result = $customerArray ->fetch_assoc(); 
-
-                // for ($i = 0; $i < $arrayLength; $i++)
-                // {
-                //     echo "Name: " . $customerArray
-                // } 
-
-                // for ($i = 0; $i < $arrayLength; $i++)
-                // {
-                //     //echo $customerArray[$i];
-                //     //echo implode(" ", $customerArray);
-                //     //$text = $customerArray.join(" and ");
-                //     //echo (explode(" ", $customerArray[i]));
-                //     echo "<br>";
-                // }
-
-                while ($row = mysql_fetch_assoc($customerArray )) 
-                {
-                    // echo
-                    //     "<tr>
-                    //     <td>{$row\['Name'\]}</td>
-                    //     <td>{$row\['Phone Number'\]}</td>
-                    //     <td>{$row\['Email'\]}</td>
-                    //     <td>{$row\['Street Address'\]}</td>
-                    //     <td>{$row\['Suburb'\]}</td>
-                    //     <td>{$row\['Post Code'\]}</td> 
-                    //     <td>{$row\['Licence Number'\]}</td> 
-                    //     </tr>\n";
-
-                        echo "<tr><td>{$row['Name']}</td><td>{$row['Phone Number']}</td><td>{$row['Email']}</td><td>{$row['Street Address']}</td><td>{$row['Suburb']}</td><td>{$row['Post Code']}</td><td>{$row['Licence Number']}</td></tr>\n";
-                }
             ?>
            <!-- List of current customers -->
            <table class="TableContent">
@@ -115,6 +116,49 @@
                 <span class="close">&times;</span>
                 <form action="customer-script.php" method="get" event.preventDefault()>
                     <h1> Create a customer </h1>
+                    <div>
+                        <h2> Name: </h2>
+                        <input type="text" name="name">
+                    </div>
+                    <div>
+                        <h2> Phone Number: </h2>
+                        <input type="text" name="phoneNumber">'
+                    </div>
+                    <div>
+                        <h2> Email: </h2>
+                        <input type="text" name="email">
+                    </div>
+                    <div>
+                        <h2> Street Address </h2>
+                        <input type="text" name="streetAddress">
+                    </div>
+                    <div>
+                        <h2> Suburb </h2>
+                        <input type="text" name="suburb">
+                    </div>
+                    <div>
+                        <h2> Post Code </h2>
+                        <input type="text" name="postCode">
+                    </div>
+                    <div>
+                        <h2> Licence Number </h2>
+                        <input type="text"name="licenceNumber">
+                    </div>
+                    </br>
+                    <div>
+                        <button type= "submit" name="SubmitCustomer" >Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div id="UpdateCustomerModal" class="modal">
+
+            <!-- Creates the content within the pop up -->
+            <div class ="modal-content">
+                <span class="updateFormClose">&times;</span>
+                <form action="customer-script.php" method="get" event.preventDefault()>
+                    <h1> Update a customer </h1>
                     <div>
                         <h2> Name: </h2>
                         <input type="text" name="name">
