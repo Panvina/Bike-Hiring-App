@@ -13,7 +13,7 @@
                 <a class="active" href= "Dashboard.php"> <img src= "img/icons/bulletin-board.png" alt="Dashboard Logo" /> Dashboard </a> <br>
                 <a href = "Customer.php"> <img src= "img/icons/account-group.png" alt="Customer Logo" />  Customer  </a> <br>
                 <a href= "Inventory.php"> <img src= "img/icons/bicycle.png" alt="Inventory Logo" />  Inventory </a> <br>
-                <a href= "Bookings.php"> <img src= "img/icons/book-open-blank-variant.png" alt="Bookings Logo" /> Bookings </a> <br>
+                <a href= "bookings.php"> <img src= "img/icons/book-open-blank-variant.png" alt="Bookings Logo" /> Bookings </a> <br>
                 <a href= "Block_Out_Date.php"> <img src= "img/icons/calendar.png" alt="Block out date Logo" /> Block Out Dates </a> <br>
                 <a href= "Locations.php"> <img src= "img/icons/earth.png" alt="Locations Logo" /> Locations </a> <br>
             </div>
@@ -22,7 +22,7 @@
         <div class="Content">
             <div style="display: inline-block;">
                 <label class="Date" for="dDate"> Tuesday 10th May 2022 </label>
-                <img id="rightArrow" src="img/icons/arrow-right-bold.png"/> 
+                <img id="rightArrow" src="img/icons/arrow-right-bold.png"/>
                 <img id="calendar" src="img/icons/calendar-blank.png"/>
                 <img id="leftArrow" src="img/icons/arrow-left-bold.png"/>
                 <br>
@@ -34,7 +34,7 @@
             <h1 class="Headings"> Inventory Summary: </h1>
 
             <div class="DashboardInformationContainer">
-                <!-- Booking summary section --> 
+                <!-- Booking summary section -->
                 <div class="DashboardInformation">
                     <h2> Booking Summary </h2>
                     <h3> Total Bookings: </h3>
@@ -52,7 +52,7 @@
                     <h3>Available Bikes:</h3>
                     <h3>Pending Inspections:</h3>
                 </div>
-            </div>  
+            </div>
             <br>
 
             <!-- Current bookings section -->
@@ -61,6 +61,6 @@
 
             </div>
         </div>
-       
+
     </body>
 </html>
