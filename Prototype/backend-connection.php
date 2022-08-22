@@ -28,6 +28,11 @@
 			$this->getConn();
 		}
 
+		// public function __construct($servername, $username, $password, $dbname)
+		// {
+		// 	$this->conn = new mysqli($servername, $username, $password, $dbname);
+		// }
+
 		public function __destruct()
 		{
 			$this->closeConn();
@@ -53,6 +58,7 @@
 		 *	Return:
 		 * 		- Return if insert was successful
 		 */
+
 		public function insert($columns, $data)
 		{
 			$ret = FALSE;
@@ -66,6 +72,22 @@
 
 			return $ret;
 		}
+
+
+		// public function insert($tablename, $columns, $data)
+		// {
+		// 	$query = "INSERT INTO $tablename ($columns) VALUES ($data)";
+		// 	//echo $query;
+		// 	if ($this->conn->query($query) == TRUE)
+		// 	{
+		// 		echo "Record created successfully";
+		// 	}
+		// 	else
+		// 	{
+		// 		echo "Error: " . $query . "<br>" . $this->conn->error;
+
+		// 	}
+		// }
 
 		/**
 		 *	Update method
@@ -235,6 +257,11 @@
 			$keys = array_keys($ret[0]);
 			for($x = 0; $x < count($ret); $x++)
 			{
+
+				$key = $keys[$y];
+				$str .= "$key: ";
+				$str .="$row[$key] ";
+
 				$row = $ret[$x];
 				$str = "";
 				for($y = 0; $y < count($keys); $y++)
