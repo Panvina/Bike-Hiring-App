@@ -201,7 +201,7 @@
 			$query = "SELECT $colnames FROM $this->tablename";
 			if ($condition)
 			{
-				$query = append_string($query, " WHERE $condition");
+				$query .= " WHERE $condition";
 			}
 
 			echo '<br>';

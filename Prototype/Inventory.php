@@ -6,6 +6,20 @@
         <title> Inventory </title>
         <h1 class="header"> <img src="img/photos/Inverloch_Logo3.png" alt="Inverloch Logo" id="Logo"/> Inventory </h1>
     </head>
+    <?php
+    /*
+    include 'backend-connection.php';
+    
+    $conn = new DBConnection("localhost", "root", "", "bike_hiring_system");
+
+    if(!$conn){
+        echo 'Connection error: ' . mysqli_connect_error();
+    }
+
+    else{
+        echo 'SUCCESS';
+    }
+    */?>
     <body>
         <!-- Side navigation -->
         <nav>
@@ -35,6 +49,8 @@
 
             <!-- List of available bookings -->
             <table class="TableContent">
+                <?php
+                echo "
                 <tr>
                     <th> Item ID </th>
                     <th> Item Name </th>
@@ -50,7 +66,83 @@
                     <td> Available </td>
                     <td> Checked </td>
                     <td> Perfect bike to be used for your first time </td>
-                </tr>
+                </tr>";
+
+                include 'backend-connection.php';
+                    $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
+                    $query1 = "SELECT * FROM bike_inventory_table";
+                    $result = $conn->query($query1);
+                    
+                    echo"
+                    <tr>
+                            <th> Item ID </th>
+                            <th> Item Name </th> 
+                            <th> Item Type </th>
+                            <th> Item Status </th>
+                            <th> Safety Check </th>
+                            <th> Description </th>
+                    </tr>";
+                        
+                    while($row = $result->fetch_assoc()){   
+                        // Print Safety Inspection based on 0 or 1 values        
+                        if($row["Safety Inspect"] == 1 ){
+                            $row["Safety Inspect"] = "Checked";
+                        }
+                        else{
+                            $row["Safety Inspect"] = "Not Checked";
+                        }
+
+                        //Retreive bike type based on Bike Type ID from the Inventory
+                        $biketype = $row["BikeTypeID"];
+                        $query2 = "SELECT Name FROM bike_type_table WHERE BikeTypeID=$biketype";
+                        $type = $conn->query($query2)->fetch_assoc();
+
+                        //Determining availability of bikes based on booking
+                        $bikeID =  $row["BikeID"];
+                        $query3 = "SELECT * FROM booking_table WHERE BikeID=$bikeID";
+                        $booking = $conn->query($query3)->fetch_assoc();
+
+                        $status;
+                       
+                        if (isset($booking["BikeID"]) && strtotime(date("Y-m-d")) < strtotime($booking["Start Date"]) && strtotime(date("Y-m-d")) > strtotime($booking["End Date"]))
+                        {
+                            $status = "Available";
+                        }
+                        else if(isset($booking["BikeID"]) == false)
+                        {
+                            $status = "Available";
+                        }
+                        else 
+                        {
+                            $status = "Not available";
+                        }
+                        
+                        
+
+
+                        // switch($row["BikeTypeID"]){
+                        //     case 1:
+                        //         $row["BikeTypeID"] = "Helmet";
+                        //         break;
+                        //     case 2:
+                        //         $row["BikeTypeID"] = "Carrier";
+                        //         break;
+                        //     default:
+                        //         $row["BikeTypeID"] = "Unknown";
+
+                        // }
+                        echo "
+                        <tr>
+                            <td>" . $row["BikeID"] . "</td>
+                            <td>" . $row["Name"] . "</td>
+                            <td>" . $type["Name"] . "</td>
+                            <td>" . $status . "</td>
+                            <td>" . $row["Safety Inspect"] . "</td>
+                            <td>" . $row["Description"] . "</td>
+                        </tr>";
+
+                    }
+                ?>  
            </table>
         </div>
 
