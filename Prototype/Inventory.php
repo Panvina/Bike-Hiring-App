@@ -27,12 +27,12 @@
                 <a href = "Dashboard.php"> <img src= "img/icons/bulletin-board.png" alt="Dashboard Logo" /> Dashboard </a> <br>
                 <a href = "Customer.php"> <img src= "img/icons/account-group.png" alt="Customer Logo" />  Customer  </a> <br>
                 <a class="active" href= "Inventory.php"> <img src= "img/icons/bicycle.png" alt="Inventory Logo" />  Inventory </a> <br>
-                <a href= "Bookings.php"> <img src= "img/icons/book-open-blank-variant.png" alt="Bookings Logo" /> Bookings </a> <br>
+                <a href= "bookings.php"> <img src= "img/icons/book-open-blank-variant.png" alt="Bookings Logo" /> Bookings </a> <br>
                 <a href= "Block_Out_Date.php"> <img src= "img/icons/calendar.png" alt="Block out date Logo" /> Block Out Dates </a> <br>
                 <a href= "Locations.php"> <img src= "img/icons/earth.png" alt="Locations Logo" /> Locations </a> <br>
             </div>
          </nav>
-         
+
          <!-- Block of content in center -->
          <div class="Content">
             <h1> All Items </h1>
@@ -42,10 +42,10 @@
             <input type="text"  placeholder="Search">
 
             <!-- Add Item pop up -->
-            <button type="button">+ Add Item</button> 
+            <button type="button">+ Add Item</button>
 
             <!-- Filter information pop up -->
-            <button type="button">Filter:</button> 
+            <button type="button">Filter:</button>
 
             <!-- List of available bookings -->
             <table class="TableContent">
@@ -53,7 +53,7 @@
                 echo "
                 <tr>
                     <th> Item ID </th>
-                    <th> Item Name </th> 
+                    <th> Item Name </th>
                     <th> Item Type </th>
                     <th> Item Status </th>
                     <th> Safety Check </th>
