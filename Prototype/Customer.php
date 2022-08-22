@@ -45,9 +45,9 @@
                 // $phoneNumber = "";
                 // $Email = "";
                 // $customerArray = $conn->get("customer_table", "*");
-        
+
                 // $arrayLength = count($customerArray);
-            
+
                 // // for ($row = 0; $row < $arrayLength; $row++)
                 // // {
                 // //     //echo "Name: " . $row["Name"]. " Phone Number: " . $row["`Phone Number`"]. " Email: " .  $row["Email"]. " Street Address: " .  $row["`Street Address`"]. " Suburb: " .  $row["Suburb"]. " Post Code: " .  $row["`Post Code`"]. " Licence Number " . $row["`Licence Number`"] . "<br>";
@@ -55,12 +55,12 @@
                 // //     echo "\$name = $name";
                 // // }
 
-                // //$result = $customerArray ->fetch_assoc(); 
+                // //$result = $customerArray ->fetch_assoc();
 
                 // // for ($i = 0; $i < $arrayLength; $i++)
                 // // {
                 // //     echo "Name: " . $customerArray
-                // // } 
+                // // }
 
                 // // for ($i = 0; $i < $arrayLength; $i++)
                 // // {
@@ -71,7 +71,7 @@
                 // //     echo "<br>";
                 // // }
 
-                // while ($row = mysql_fetch_assoc($customerArray )) 
+                // while ($row = mysql_fetch_assoc($customerArray ))
                 // {
                 //     // echo
                 //     //     "<tr>
@@ -80,8 +80,8 @@
                 //     //     <td>{$row\['Email'\]}</td>
                 //     //     <td>{$row\['Street Address'\]}</td>
                 //     //     <td>{$row\['Suburb'\]}</td>
-                //     //     <td>{$row\['Post Code'\]}</td> 
-                //     //     <td>{$row\['Licence Number'\]}</td> 
+                //     //     <td>{$row\['Post Code'\]}</td>
+                //     //     <td>{$row\['Licence Number'\]}</td>
                 //     //     </tr>\n";
 
                 //         echo "<tr><td>{$row['Name']}</td><td>{$row['Phone Number']}</td><td>{$row['Email']}</td><td>{$row['Street Address']}</td><td>{$row['Suburb']}</td><td>{$row['Post Code']}</td><td>{$row['Licence Number']}</td></tr>\n";
@@ -195,7 +195,7 @@
             </div>
         </div>
 
-        
+
     </body>
 </html>
 <!-- Link the js file needed for pop up -->
@@ -216,8 +216,7 @@
             $_SESSION["ret"] = null;
         }
     }
-   
+
 ?>
     </body>
 </html>
-

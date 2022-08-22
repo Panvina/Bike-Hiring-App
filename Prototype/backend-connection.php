@@ -58,11 +58,9 @@
 		 *	Return:
 		 * 		- Return if insert was successful
 		 */
-		
+
 		public function insert($columns, $data)
 		{
-			$this->closeConn();
-			$this->getConn();
 			$ret = FALSE;
 
 			$query = "INSERT INTO $this->tablename ($columns) VALUES ($data)";
@@ -74,7 +72,7 @@
 
 			return $ret;
 		}
-			
+
 
 		// public function insert($tablename, $columns, $data)
 		// {
