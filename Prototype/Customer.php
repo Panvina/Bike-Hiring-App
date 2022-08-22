@@ -1,7 +1,23 @@
 <?php
+    session_start();
     //connection to the database
     include("backend-connection.php");
     $conn = new DBConnection("localhost", "root", "", "bike_hiring_system");
+
+   
+
+   // $sqlQry = "INSERT INTO customer_table VALUES $name, $phoneNumber, $email, $streetAdress, $suburb, $postCode, $licenceNumber";
+
+    //$conn->insert("customer_table", "Name, Phone Number, Email, Street Address, Suburb, Post Code, Licence Number" , "$name, $phoneNumber, $email, $streetAdress, $suburb, $postCode, $licenceNumber");
+
+    //$conn->insert("bike_type_table", "Name, Description", "'Hydro', 'Non-existent'");
+
+    //if ($conn->query($sqlQry) === TRUE) {
+       // echo "New record created successfully";
+     //} else {
+      //  echo "Error: " . $sql . "<br>" . $conn->error;
+    // }
+    
 ?>
 
 
@@ -59,43 +75,45 @@
            </table>
         </div>
 
+        <!-- Create the initial window for the pop up -->
         <div id="CustomerModal" class="modal">
 
+            <!-- Creates the content within the pop up -->
             <div class ="modal-content">
                 <span class="close">&times;</span>
-                <form>
+                <form action="customer-script.php" method="get" event.preventDefault()>
                     <h1> Create a customer </h1>
                     <div>
                         <h2> Name: </h2>
-                        <input type="text">
+                        <input type="text" name="name">
                     </div>
                     <div>
                         <h2> Phone Number: </h2>
-                        <input type="text">'
+                        <input type="text" name="phoneNumber">'
                     </div>
                     <div>
                         <h2> Email: </h2>
-                        <input type="text">'
+                        <input type="text" name="email">
                     </div>
                     <div>
                         <h2> Street Address </h2>
-                        <input type="text">'
+                        <input type="text" name="streetAddress">
                     </div>
                     <div>
                         <h2> Suburb </h2>
-                        <input type="text">'
+                        <input type="text" name="suburb">
                     </div>
                     <div>
                         <h2> Post Code </h2>
-                        <input type="text">'
+                        <input type="text" name="postCode">
                     </div>
                     <div>
                         <h2> Licence Number </h2>
-                        <input type="text">'
+                        <input type="text"name="licenceNumber">
                     </div>
                     </br>
                     <div>
-                        <button id="SubmitCustomer">Submit</button>
+                        <button type= "submit" name="SubmitCustomer" >Submit</button>
                     </div>
                 </form>
             </div>
@@ -104,4 +122,23 @@
         
     </body>
 </html>
+<!-- Link the js file needed for pop up -->
 <script src="scripts/customer_popup.js"></script>
+
+<?php
+
+    if (isset($_SESSION["ret"]))
+    {
+        if ($_SESSION["ret"] == "true")
+        {
+            echo "<p style = 'color: red; font-size: 25px;display:block;margin-left: 45%; position: fixed; z-index: 1; left: 0; top: 0; padding-top: 5%;'> Record successfuly created </p>";
+            $_SESSION["ret"] = null;
+        }
+        else if ($_SESSION["ret"] == "false")
+        {
+            echo "<p style = 'color: red; font-size: 25px;display:block;margin-left: 45%; position: fixed; z-index: 1; left: 0; top: 0; padding-top: 5%;'>  Unable to insert record </p>";
+            $_SESSION["ret"] = null;
+        }
+    }
+   
+?>

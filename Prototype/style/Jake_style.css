@@ -179,7 +179,7 @@ nav a {
 
 /* Modal Content/Box */
 .modal-content {
-  margin: 15% auto; /* 15% from the top and centered */
+  margin: 5% auto; /* 15% from the top and centered */
   margin-left: 45%;
   padding: 20px;
   border: 1px solid #888;
@@ -225,3 +225,4 @@ nav a {
   text-decoration: none;
   cursor: pointer;
 }
+
