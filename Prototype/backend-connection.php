@@ -58,21 +58,37 @@
 		 *	Return:
 		 * 		- Return if insert was successful
 		 */
+		
+		// public function insert($columns, $data)
+		// {
+		// 	// $this->closeConn();
+		// 	// $this->getConn();
+		// 	$ret = FALSE;
 
-		public function insert($columns, $data)
+		// 	$query = "INSERT INTO $this->tablename ($columns) VALUES ($data)";
+		// 	echo $query;
+		// 	if ($this->conn->query($query) == TRUE)
+		// 	{
+		// 		$ret = TRUE;
+		// 	}
+
+		// 	return $ret;
+		// }
+			
+		public function insert($tablename, $columns, $data)
 		{
-			$ret = FALSE;
-
-			$query = "INSERT INTO $this->tablename ($columns) VALUES ($data)";
-			echo $query;
+			$query = "INSERT INTO $tablename ($columns) VALUES ($data)";
+			//echo $query;
 			if ($this->conn->query($query) == TRUE)
 			{
-				$ret = TRUE;
+				echo "Record created successfully";
 			}
+			else
+			{
+				echo "Error: " . $query . "<br>" . $this->conn->error;
 
-			return $ret;
+			}
 		}
-
 
 		// public function insert($tablename, $columns, $data)
 		// {
@@ -205,7 +221,7 @@
 			}
 
 			echo '<br>';
-			echo $query;
+			//echo $query;
 			$res = $this->conn->query($query);
 			if ($res->num_rows > 0)
 			{

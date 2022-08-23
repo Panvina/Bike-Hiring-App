@@ -8,195 +8,185 @@
 
 <!DOCTYPE html>
 <html>
-    <link rel="stylesheet" href="style/Jake_style.css">
-    <head>
-        <!-- Header -->
-        <title> Customers </title>
-        <h1 class="header"> <img src="img/photos/Inverloch_Logo3.png" alt="Inverloch Logo" id="Logo"/> Customers </h1>
-    </head>
-    <body>
-        <!-- Side navigation -->
-        <nav>
-            <div class = "sideNavigation">
-                <a href = "Dashboard.php"> <img src= "img/icons/bulletin-board.png" alt="Dashboard Logo" /> Dashboard </a> <br>
-                <a class="active" href = "Customer.php"> <img src= "img/icons/account-group.png" alt="Customer Logo" />  Customer  </a> <br>
-                <a href= "Inventory.php"> <img src= "img/icons/bicycle.png" alt="Inventory Logo" />  Inventory </a> <br>
-                <a href= "bookings.php"> <img src= "img/icons/book-open-blank-variant.png" alt="Bookings Logo" /> Bookings </a> <br>
-                <a href= "Block_Out_Date.php"> <img src= "img/icons/calendar.png" alt="Block out date Logo" /> Block Out Dates </a> <br>
-                <a href= "Locations.php"> <img src= "img/icons/earth.png" alt="Locations Logo" /> Locations </a> <br>
-            </div>
-         </nav>
+<link rel="stylesheet" href="style/Jake_style.css">
 
-         <!-- Block of content in center -->
-         <div class="Content">
-           <h1> All Customers</h1>
+<head>
+    <!-- Header -->
+    <title> Customers </title>
+    <h1 class="header"> <img src="img/photos/Inverloch_Logo3.png" alt="Inverloch Logo" id="Logo" /> Customers </h1>
+</head>
 
-           <!-- Search bar with icons -->
-           <img src="img/icons/account-search.png" alt="Customer Search Logo"/>
-           <input type="text"  placeholder="Search">
+<body>
+    <!-- Side navigation -->
+    <nav>
+        <div class="sideNavigation">
+            <a href="Dashboard.php"> <img src="img/icons/bulletin-board.png" alt="Dashboard Logo" /> Dashboard </a> <br>
+            <a class="active" href="Customer.php"> <img src="img/icons/account-group.png" alt="Customer Logo" />
+                Customer </a> <br>
+            <a href="Inventory.php"> <img src="img/icons/bicycle.png" alt="Inventory Logo" /> Inventory </a> <br>
+            <a href="bookings.php"> <img src="img/icons/book-open-blank-variant.png" alt="Bookings Logo" /> Bookings
+            </a> <br>
+            <a href="Block_Out_Date.php"> <img src="img/icons/calendar.png" alt="Block out date Logo" /> Block Out Dates
+            </a> <br>
+            <a href="Locations.php"> <img src="img/icons/earth.png" alt="Locations Logo" /> Locations </a> <br>
+        </div>
+    </nav>
 
-            <!-- Add Customer pop up -->
-            <button id="UpdateCustomer"> Update Customer</button>
-           <button id="CustomerPopUp">+ New Customer</button>
+    <!-- Block of content in center -->
+    <div class="Content">
+        <h1> All Customers</h1>
 
-            <?php
+        <!-- Search bar with icons -->
+        <img src="img/icons/account-search.png" alt="Customer Search Logo" />
+        <input type="text" placeholder="Search">
 
-                // $name = "";
-                // $phoneNumber = "";
-                // $Email = "";
-                // $customerArray = $conn->get("customer_table", "*");
+        <!-- Add Customer pop up -->
+        <button id="UpdateCustomer"> Update Customer</button>
+        <button id="CustomerPopUp">+ New Customer</button>
 
-                // $arrayLength = count($customerArray);
 
-                // // for ($row = 0; $row < $arrayLength; $row++)
-                // // {
-                // //     //echo "Name: " . $row["Name"]. " Phone Number: " . $row["`Phone Number`"]. " Email: " .  $row["Email"]. " Street Address: " .  $row["`Street Address`"]. " Suburb: " .  $row["Suburb"]. " Post Code: " .  $row["`Post Code`"]. " Licence Number " . $row["`Licence Number`"] . "<br>";
-                // //     extract($customerArray);
-                // //     echo "\$name = $name";
-                // // }
+        <!-- List of current customers -->
+        <table class="TableContent">
+            <tr>
+                <?php
+                    $cols = "Name, `Phone Number`, Email, `Street Address`, Suburb, `Post Code`, `Licence Number`";
+                    $rows = $conn->get($cols);
+     
+                    $tableHeadings = "Name, Phone Number, Email, Street Address, Suburb, Post Code, Licence Number";
 
-                // //$result = $customerArray ->fetch_assoc();
+                    $cols = explode(',', $cols);
+                    $tableHeadings = explode(',', $tableHeadings);
 
-                // // for ($i = 0; $i < $arrayLength; $i++)
-                // // {
-                // //     echo "Name: " . $customerArray
-                // // }
+                    $count = count($cols);
+                    for($x = 0; $x < $count; $x++)
+                    {
+                       // $tableHeadings = "Name, Phone Number, Email, Street Address, Suburb, Post Code, Licence Number";
+                        $col = trim($tableHeadings[$x]);
+                        //$tableHeadings = trim($tableHeadings[$x]);
+                        echo "<th> $col </th>";
+                        //echo "<th> $tableHeadings </th>";
+                    }
+                ?> 
+            </tr>
+            <?php       
+                if ($rows == null)
+                {
+                    $rows = array();
+                     $tmp = array();
+                     for($x = 0; $x < count($cols); $x++)
+                    {
+                         array_push($tmp, "null");
+                    }
+                    array_push($rows, $tmp);
+                }
 
-                // // for ($i = 0; $i < $arrayLength; $i++)
-                // // {
-                // //     //echo $customerArray[$i];
-                // //     //echo implode(" ", $customerArray);
-                // //     //$text = $customerArray.join(" and ");
-                // //     //echo (explode(" ", $customerArray[i]));
-                // //     echo "<br>";
-                // // }
-
-                // while ($row = mysql_fetch_assoc($customerArray ))
-                // {
-                //     // echo
-                //     //     "<tr>
-                //     //     <td>{$row\['Name'\]}</td>
-                //     //     <td>{$row\['Phone Number'\]}</td>
-                //     //     <td>{$row\['Email'\]}</td>
-                //     //     <td>{$row\['Street Address'\]}</td>
-                //     //     <td>{$row\['Suburb'\]}</td>
-                //     //     <td>{$row\['Post Code'\]}</td>
-                //     //     <td>{$row\['Licence Number'\]}</td>
-                //     //     </tr>\n";
-
-                //         echo "<tr><td>{$row['Name']}</td><td>{$row['Phone Number']}</td><td>{$row['Email']}</td><td>{$row['Street Address']}</td><td>{$row['Suburb']}</td><td>{$row['Post Code']}</td><td>{$row['Licence Number']}</td></tr>\n";
-                // }
+                $keys = array_keys($rows[0]);
+                for($x = 0; $x < count($rows); $x++)
+                {
+                    echo "<tr>";
+                    for($y = 0; $y < count($keys); $y++)
+                    {
+                        $row = $rows[$x];
+                        $key = $keys[$y];
+                        $data = $row[$key];
+                        echo "<td> $data </td>";
+                    }
+                        echo "</tr>";
+                }
             ?>
-           <!-- List of current customers -->
-           <table class="TableContent">
-                <tr>
-                    <th> Name </th>
-                    <th> Phone Number </th>
-                    <th> Email </th>
-                    <th> Address </th>
-                    <th> Licence Number </th>
-                    <th> Username </th>
-                </tr>
-                <tr>
-                    <td> John Smith </td>
-                    <td> 012345678 </td>
-                    <td> JohnSmith@gmail.com </td>
-                    <td> Johns Address </td>
-                    <td> 0123456 </td>
-                    <td> JohhnySmithy </td>
-                </tr>
-           </table>
+        </table>
+    </div>
+
+    <!-- Create the initial window for the pop up -->
+    <div id="CustomerModal" class="modal">
+
+        <!-- Creates the content within the pop up -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <form action="customer-script.php" method="get" event.preventDefault()>
+                <h1> Create a customer </h1>
+                <div>
+                    <h2> Name: </h2>
+                    <input type="text" name="name">
+                </div>
+                <div>
+                    <h2> Phone Number: </h2>
+                    <input type="text" name="phoneNumber">'
+                </div>
+                <div>
+                    <h2> Email: </h2>
+                    <input type="text" name="email">
+                </div>
+                <div>
+                    <h2> Street Address </h2>
+                    <input type="text" name="streetAddress">
+                </div>
+                <div>
+                    <h2> Suburb </h2>
+                    <input type="text" name="suburb">
+                </div>
+                <div>
+                    <h2> Post Code </h2>
+                    <input type="text" name="postCode">
+                </div>
+                <div>
+                    <h2> Licence Number </h2>
+                    <input type="text" name="licenceNumber">
+                </div>
+                </br>
+                <div>
+                    <button type="submit" name="SubmitCustomer">Submit</button>
+                </div>
+            </form>
         </div>
+    </div>
 
-        <!-- Create the initial window for the pop up -->
-        <div id="CustomerModal" class="modal">
+    <div id="UpdateCustomerModal" class="modal">
 
-            <!-- Creates the content within the pop up -->
-            <div class ="modal-content">
-                <span class="close">&times;</span>
-                <form action="customer-script.php" method="get" event.preventDefault()>
-                    <h1> Create a customer </h1>
-                    <div>
-                        <h2> Name: </h2>
-                        <input type="text" name="name">
-                    </div>
-                    <div>
-                        <h2> Phone Number: </h2>
-                        <input type="text" name="phoneNumber">'
-                    </div>
-                    <div>
-                        <h2> Email: </h2>
-                        <input type="text" name="email">
-                    </div>
-                    <div>
-                        <h2> Street Address </h2>
-                        <input type="text" name="streetAddress">
-                    </div>
-                    <div>
-                        <h2> Suburb </h2>
-                        <input type="text" name="suburb">
-                    </div>
-                    <div>
-                        <h2> Post Code </h2>
-                        <input type="text" name="postCode">
-                    </div>
-                    <div>
-                        <h2> Licence Number </h2>
-                        <input type="text"name="licenceNumber">
-                    </div>
-                    </br>
-                    <div>
-                        <button type= "submit" name="SubmitCustomer" >Submit</button>
-                    </div>
-                </form>
-            </div>
+        <!-- Creates the content within the pop up -->
+        <div class="modal-content">
+            <span class="updateFormClose">&times;</span>
+            <form action="customer-script.php" method="get" event.preventDefault()>
+                <h1> Update a customer </h1>
+                <div>
+                    <h2> Name: </h2>
+                    <input type="text" name="name">
+                </div>
+                <div>
+                    <h2> Phone Number: </h2>
+                    <input type="text" name="phoneNumber">'
+                </div>
+                <div>
+                    <h2> Email: </h2>
+                    <input type="text" name="email">
+                </div>
+                <div>
+                    <h2> Street Address </h2>
+                    <input type="text" name="streetAddress">
+                </div>
+                <div>
+                    <h2> Suburb </h2>
+                    <input type="text" name="suburb">
+                </div>
+                <div>
+                    <h2> Post Code </h2>
+                    <input type="text" name="postCode">
+                </div>
+                <div>
+                    <h2> Licence Number </h2>
+                    <input type="text" name="licenceNumber">
+                </div>
+                </br>
+                <div>
+                    <button type="submit" name="SubmitCustomer">Submit</button>
+                </div>
+            </form>
         </div>
+    </div>
 
-        <div id="UpdateCustomerModal" class="modal">
 
-            <!-- Creates the content within the pop up -->
-            <div class ="modal-content">
-                <span class="updateFormClose">&times;</span>
-                <form action="customer-script.php" method="get" event.preventDefault()>
-                    <h1> Update a customer </h1>
-                    <div>
-                        <h2> Name: </h2>
-                        <input type="text" name="name">
-                    </div>
-                    <div>
-                        <h2> Phone Number: </h2>
-                        <input type="text" name="phoneNumber">'
-                    </div>
-                    <div>
-                        <h2> Email: </h2>
-                        <input type="text" name="email">
-                    </div>
-                    <div>
-                        <h2> Street Address </h2>
-                        <input type="text" name="streetAddress">
-                    </div>
-                    <div>
-                        <h2> Suburb </h2>
-                        <input type="text" name="suburb">
-                    </div>
-                    <div>
-                        <h2> Post Code </h2>
-                        <input type="text" name="postCode">
-                    </div>
-                    <div>
-                        <h2> Licence Number </h2>
-                        <input type="text"name="licenceNumber">
-                    </div>
-                    </br>
-                    <div>
-                        <button type= "submit" name="SubmitCustomer" >Submit</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-        
+</body>
 
-    </body>
 </html>
 <!-- Link the js file needed for pop up -->
 <script src="scripts/customer_popup.js"></script>
@@ -217,4 +207,4 @@ if (isset($_SESSION["ret"]))
     }
 }
 
-?>              
+?>
