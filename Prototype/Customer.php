@@ -44,12 +44,11 @@
         <button id="UpdateCustomer"> Update Customer</button>
         <button id="CustomerPopUp">+ New Customer</button>
 
-
         <!-- List of current customers -->
         <table class="TableContent">
             <tr>
                 <?php
-                    $cols = "Name, `Phone Number`, Email, `Street Address`, Suburb, `Post Code`, `Licence Number`";
+                    $cols = "name, phone_number, email, street_address, suburb, post_code, licence_number";
                     $rows = $conn->get($cols);
      
                     $tableHeadings = "Name, Phone Number, Email, Street Address, Suburb, Post Code, Licence Number";
@@ -60,11 +59,8 @@
                     $count = count($cols);
                     for($x = 0; $x < $count; $x++)
                     {
-                       // $tableHeadings = "Name, Phone Number, Email, Street Address, Suburb, Post Code, Licence Number";
                         $col = trim($tableHeadings[$x]);
-                        //$tableHeadings = trim($tableHeadings[$x]);
                         echo "<th> $col </th>";
-                        //echo "<th> $tableHeadings </th>";
                     }
                 ?> 
             </tr>
@@ -75,7 +71,7 @@
                      $tmp = array();
                      for($x = 0; $x < count($cols); $x++)
                     {
-                         array_push($tmp, "null");
+                        array_push($tmp, "null");
                     }
                     array_push($rows, $tmp);
                 }

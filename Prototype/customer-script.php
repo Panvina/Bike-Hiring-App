@@ -11,7 +11,7 @@
     $postCode = $_GET["postCode"];
     $licenceNumber = $_GET["licenceNumber"];
 
-    $cols = "Name, `Phone Number`, Email, `Street Address`, Suburb, `Post Code`, `Licence Number`";
+    $cols = "name, phone_number, email, street_address, suburb, post_code, licence_number";
     $data = "'$name', '$phoneNumber', '$email', '$streetAddress', '$suburb', '$postCode', '$licenceNumber'";
     if ($conn->insert($cols , $data) == true)
     {
