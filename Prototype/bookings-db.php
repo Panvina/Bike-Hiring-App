@@ -23,6 +23,11 @@
 		 *
 		 *	Return:
 		 * 		- Return if insert was successful
+		 *
+		 *	To insert a new row, need to first create a booking_table row:
+		 *		Requirements:
+		 *		- CustomerID, Start Date, End Date, Start Time, End Time, Duration, Pick-up, Drop-off, and final price
+		 *			- Final Price =
 		 */
 		public function insert($columns="CustID, BikeID, `Start Date`, `End Date`, `Start Time`, `Expected End Time`, `Duration of Booking`, `Pick Up Location`, `Drop Off Location`, `Final Price`", $data)
 		{
@@ -46,21 +51,29 @@
 			return $ret;
 		}
 
+		/**
+		 *	Retrieve all rows from bookings table, with associated data.
+		 *	USAGE:
+		 *
+		 *
+		 *
+		 */
 		public function getBookingRows()
 		{
 			$ret = array();
 
 			$cols = "
-				booking_table.BookingID,bike_inventory_table.Name as `Bike Name`,
-				customer_table.Name as `Customer Name`, booking_table.`Start Date`,
-				booking_table.`Start Time`, `booking_table`.`End Date`, booking_table.`Expected End Time`,
-				booking_table.`Duration Of Booking`, lt1.Name as `Pick Up Location`,
-				lt2.Name as `Drop Off Location`, booking_table.`Final Price`";
+				booking_table.booking_id, bike_inventory_table.name as `Bike Name`,
+				customer_table.name, booking_table.start_date, booking_table.start_time,
+				booking_table.end_date, booking_table.expected_end_time,
+				booking_table.duration_of_booking, lt1.name AS `Pick Up`,
+				lt2.name AS `Drop Off`, booking_table.final_price";
 
 			$bookingsTableName = $this->tablename;
-			$locationTableName = "location_table";
-			$bikeInvTableName = "bike_inventory_table";
-			$custTableName = "customer_table";
+			$bookingBikeTableName = "booking_bike_table";	// Table linking bikes to bookings
+			$locationTableName = "location_table";			// Table with drop-off and pick-up locations
+			$bikeInvTableName = "bike_inventory_table";		// Table with all individual concrete bikes
+			$custTableName = "customer_table";				// Table with customer details
 
 			/*
 			 * Select rows: BookingID, CustomerID, BikeID, Start Date, Start Time,
@@ -71,17 +84,19 @@
 			 */
 			$query =   "SELECT $cols
 						FROM $bookingsTableName
-							LEFT JOIN $locationTableName lt1
-								ON $bookingsTableName.`Pick Up Location`=`lt1`.`LocationID`
-							LEFT JOIN $locationTableName lt2
-    							ON $bookingsTableName.`Drop Off Location`=`lt2`.`LocationID`
-    						LEFT JOIN $bikeInvTableName
-						    	ON $bikeInvTableName.`BikeID` = $bookingsTableName.`BikeID`
+							LEFT JOIN $bookingBikeTableName
+								ON $bookingBikeTableName.booking_id = $bookingsTableName.booking_id
+							LEFT JOIN $bikeInvTableName
+						    	ON $bikeInvTableName.bike_id = $bookingBikeTableName.bike_id
 						    LEFT JOIN $custTableName
-						    	ON $bookingsTableName.CustID = $custTableName.`CustID`";
+						    	ON $bookingsTableName.cust_id = $custTableName.cust_id
+							LEFT JOIN $locationTableName lt1
+								ON $bookingsTableName.pick_up_location=lt1.location_id
+							LEFT JOIN $locationTableName lt2
+    							ON $bookingsTableName.drop_off_location=lt2.location_id";
 
 			// perform query and verify successful
-			// echo "$query";
+			//echo "$query";
 			$res = $this->conn->query($query);
 			if ($res->num_rows > 0)
 			{
@@ -89,6 +104,13 @@
 				while($row = $res->fetch_assoc())
 				{
 					array_push($ret, $row);
+					// For testing
+					if (false)
+					{
+						print_r($row);
+						echo "<br>";
+						break;
+					}
 				}
 			}
 			else

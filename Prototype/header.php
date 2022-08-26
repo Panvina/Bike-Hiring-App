@@ -9,30 +9,30 @@
     <body>
         <header id="h">
             <div class="row">
-            <div  id="nav">    
-                <div class="column" id="logo">
-                    <img class="logo" src="img/photos/IBH_top_logo.png" alt="business logo - a bike wheel is covered with waves. 'Inverloch bike hire' is written underneath" width="250px">
-                </div>
-                <div class="column">
-                    <nav class="mainNav">
-                        <ul id="menu">
-                            <li><a href="index.php">Home</a></li>
-                            <li><a href="">Hire</a></li>
-                            <li><a href="about.php">About Inverloch</a></li>
-                            <li><a href="explore.php">About Cycling</a>
-                                <ul id="subNav">
-                                    <li><a href="explore-local.php">Cycling in Out Region</a></li>
-                                    <li><a href="explore-rail.php">Rail Trails</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="contactus.php">Contact Us</a></li>
-                            <!--<li id="login">Login</li>-->
-                            <li><?php include 'login.php'?></li>
-                        </ul>
-                    </nav>
+                <div  id="nav">
+                    <div class="column" id="logo">
+                        <img class="logo" src="img/photos/IBH_top_logo.png" alt="business logo - a bike wheel is covered with waves. 'Inverloch bike hire' is written underneath" width="250px">
+                    </div>
+                    <div class="column">
+                        <nav class="mainNav">
+                            <ul id="menu">
+                                <li><a href="index.php">Home</a></li>
+                                <li><a href="">Hire</a></li>
+                                <li><a href="about.php">About Inverloch</a></li>
+                                <li><a href="explore.php">About Cycling</a>
+                                    <ul id="subNav">
+                                        <li><a href="explore-local.php">Cycling in Out Region</a></li>
+                                        <li><a href="explore-rail.php">Rail Trails</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="contactus.php">Contact Us</a></li>
+                                <!-- <li id="login">Login</li> -->
+                                <li><?php include 'login.php'?></li>
+                            </ul>
+                        </nav>
+                    </div>
                 </div>
             </div>
-            </div> 
         </header>
         <script>
         // Get the navbar
