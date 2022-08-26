@@ -8,7 +8,7 @@
 
 		public $conn = null;
 
-		public function __construct($servername="localhost", $username="root", $password="", $dbname="bike_hiring_system")
+		public function __construct($servername="localhost", $username="root", $password="", $dbname="testnew")
 		{
 			$this->servername = $servername;
 			$this->username = $username;
@@ -171,7 +171,7 @@
 			$query = "SELECT $colnames FROM $tablename";
 			if ($condition)
 			{
-				$query = append_string($query, " WHERE $condition");
+				$query = $query. " WHERE $condition";
 			}
 
 			echo '<br>';

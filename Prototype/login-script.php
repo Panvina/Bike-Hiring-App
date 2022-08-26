@@ -1,5 +1,6 @@
 //  Resources:
 //      https://www.w3schools.com/php/php_form_url_email.asp
+<?php include 'auth-script.php';?>
 
 <?php
     session_start();
@@ -29,14 +30,21 @@
             header("Location: login.php?login=empty");
             exit();
         }
-        elseif (!validEmail($email))
-        {
-            header("Location: login.php?login=email");
-            exit();
-        }
+        // elseif (!validEmail($email))
+        // {
+        //     header("Location: login.php?login=email");
+        //     exit();
+        // }
         else
         {
-            header("Location: login.php?login=success");
+            $role = authUser($email, $pwd);      
+            if($role == "C"){
+                header("Location: index.php?Customerlogin=success");
+            }else if ($role == "A"){
+                header("Location: dashboard.php?Adminlogin=success");
+            }else {
+                header("Location: index.php?Error=$role");
+            }
             exit();
         }
     }
