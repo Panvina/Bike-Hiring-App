@@ -42,17 +42,17 @@
     }
 
 	// Check if any values within array are empty
-	// Returns false if any variables are empty
-	function checkForEmptyVariables($arr)
+	// Returns true if any variables are empty
+	function checkEmptyVariables($arr)
 	{
 		$ret = true;
 
 		for($i = 0; $i < count($arr) && $ret; $i++)
 		{
 			$ret &= !empty($arr[$i]);
-			echo "<script></script>"
+			// echo "<script></script>";
 		}
 
-		return $ret;
+		return !$ret;
 	}
 ?>

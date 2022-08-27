@@ -17,8 +17,8 @@
         <h1 class="header"> <img src="img/photos/Inverloch_Logo3.png" alt="Inverloch Logo" id="Logo"/> Bookings </h1>
     </head>
     <body>
-        <!-- Booking Popup -->
-        <div id="add-booking-modal" class="add-booking-modal">
+        <!-- Booking Popup (main) -->
+        <div id="add-booking-main-modal" class="add-booking-modal" style="display: none;">
             <div class="add-booking-modal-content">
                 <!-- booking form -->
                 <form action="booking-popups.php" method="POST">
@@ -76,7 +76,15 @@
                         ?>
                     </select><br><br>
 
-                    <button type="submit" name="add-booking-submit"> Add Booking </button>
+                    <button type="submit" name="add-booking-main-submit"> Select Bikes </button>
+                </form>
+            </div>
+        </div>
+        <div id="add-booking-bike-modal" class="add-booking-modal">
+            <div id="add-booking-bike-modal-content" class="add-booking-bike-modal-content" style="display: block;">
+                <form action="booking-popups.php" method="POST">
+
+                    <button type="submit" name="add-booking-bike-submit"> Add Booking </button>
                 </form>
             </div>
         </div>
