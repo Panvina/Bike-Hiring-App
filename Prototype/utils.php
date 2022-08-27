@@ -17,13 +17,16 @@
 				$key = $keys[$j];
 				if ($key == $primaryKey)
 				{
-					$id = $key;
+					$id = $row[$key];
+				}
+				else
+				{
+					array_push($option, $row[$key]);
 				}
 				// echo "<br>val = $row[$key]<br>";
-				array_push($option, $row[$key]);
 			}
 			$option = implode(": ", $option);
-			echo "<option value='$id,$option'>$option</option>";
+			echo "<option value='$id,$option'>$id: $option</option>";
 		}
 	}
 

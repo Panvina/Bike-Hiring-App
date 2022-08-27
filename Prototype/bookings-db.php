@@ -29,15 +29,17 @@
 		 *		- CustomerID, Start Date, End Date, Start Time, End Time, Duration, Pick-up, Drop-off, and final price
 		 *			- Final Price =
 		 */
-		public function insert($columns="CustID, BikeID, `Start Date`, `End Date`, `Start Time`, `Expected End Time`, `Duration of Booking`, `Pick Up Location`, `Drop Off Location`, `Final Price`", $data)
+		public function insert($columns="cust_id, start_date, start_time, expected_end_time, end_time, duration_of_booking, pick_up_location, drop_off_location, final_price", $data)
 		{
 			$ret = FALSE;
 
-			$data = explode(',', $data);
-			if (count($data) == count(explode(',', $columns)))
+			$dataLen = explode(',', $data);
+			$colLen = explode(',', $columns);
+
+			if ($dataLen != $colLen)
 			{
-				$query = "INSERT INTO $tablename ($columns) VALUES ($data)";
-				//echo $query;
+				$query = "INSERT INTO $this->tablename ($columns) VALUES ($data)";
+				echo $query;
 				if ($this->conn->query($query) == TRUE)
 				{
 					$ret = TRUE;
@@ -116,6 +118,149 @@
 			else
 			{
 				$res = null;
+			}
+
+			return $ret;
+		}
+
+		/**
+		 * TODO: Switch from standard arrays to associative arrays
+		 * Required booking data (in order):
+		 *	- cust_id 			  : Customer ID
+		 *	- start_date		  : Booking start date
+		 *	- start_time		  : Booking start time
+		 *	- end_date			  : Booking end date
+		 *	- end_time			  : Booking end time
+		 *	- booking_duration	  : Duration of booking (in hours)
+		 *	- pick_up_location	  : Location of pick-up for booking
+		 *	- drop_off_location	  : Location of drop-off for booking
+		 *	- final_price		  : Price of booking (function of duration and bikes/accessories)
+		 *
+		 * Required bike data (in order):
+		 *	- bike_id[array]	  : Array of bike ids for booking
+		 *
+		 * Optional data (accessories - in order):
+		 *	- accessory_id[array] :	Array of accessory ids for booking (may be empty)
+		 *
+		 * Performs an SQL transaction
+		 *
+		 */
+		public function addBooking($bookingData, $bikeData, $accessoryData=array())
+		{
+			$ret = false;
+
+			// initialise local variables (purely for readability/semantic reasons)
+			$cust_id = $bookingData[0];
+			$start_date = $bookingData[1];
+			$start_time = $bookingData[2];
+			$end_date = $bookingData[3];
+			$end_time = $bookingData[4];
+			$booking_duration = $bookingData[5];
+			$drop_off_location = $bookingData[6];
+			$pick_up_location = $bookingData[7];
+			$final_price = $bookingData[8];
+
+			echo "$cust_id<br>";
+			echo "$start_date<br>";
+			echo "$start_time<br>";
+			echo "$end_date<br>";
+			echo "$end_time<br>";
+			echo "$booking_duration<br>";
+			echo "$drop_off_location<br>";
+			echo "$pick_up_location<br>";
+			echo "$final_price<br>";
+			echo "<br>";
+
+			// Get data for transactions into single strings
+			// Booking data
+			$bookingData = "$cust_id, '$start_date', '$start_time', '$end_date', '$end_time', $booking_duration, $pick_up_location, $drop_off_location, $final_price";
+
+			// construct booking table query
+			$bookingTableQuery = "INSERT INTO $this->tablename (cust_id, start_date, start_time, end_date, expected_end_time, duration_of_booking, pick_up_location, drop_off_location, final_price) VALUES ($bookingData); ";
+
+			// query to save last insert id (from booking) as booking id
+			$getLastBookingIdQuery = "SET @booking_id=LAST_INSERT_ID();  ";
+
+			// construct booking bike table query
+			// need to repeat for count(explode(",", $bike_id))
+			$bookingBikeTableQuery = "INSERT INTO booking_bike_table (booking_id, bike_id) VALUES";
+			for($i = 0; $i < count($bikeData); $i++)
+			{
+				$bikeId = $bikeData[$i];
+				$bookingBikeTableQuery .= "(@booking_id, $bikeId)";
+				if ($i < count($bikeData) - 1)
+				{
+					$bookingBikeTableQuery .= ',';
+				}
+				else
+				{
+					$bookingBikeTableQuery .= ';';
+				}
+			}
+
+
+			// construct booking bike table query
+			// need to repeat for count(explode(",", $bike_id))
+			$bookingAccessoryTableQuery = "";
+			if (count($accessoryData) > 0)
+			{
+				$bookingAccessoryTableQuery = "INSERT INTO booking_accessory_table (booking_id, accessory_id) VALUES ";
+				for($i = 0; $i < count($accessoryData); $i++)
+				{
+					$accessoryId = $accessoryData[$i];
+					$bookingAccessoryTableQuery .= "(@booking_id, $accessoryId) ";
+
+					if ($i < count($accessoryData) - 1)
+					{
+						$bookingAccessoryTableQuery .= ',';
+					}
+					else
+					{
+						$bookingAccessoryTableQuery .= ';';
+					}
+				}
+			}
+
+			//$query ="START TRANSACTION; $bookingTableQuery $getLastBookingIdQuery $bookingBikeTableQuery $bookingAccessoryTableQuery COMMIT;";
+
+			// NOTE: Multiple queries used, as according to https://stackoverflow.com/a/1307645
+			// PHP's MySQL module does not allow multiple queries. Testing supports this.
+
+			// Begin transaction
+			if ($this->conn->query("START TRANSACTION;") == TRUE)
+			{
+				$ret = TRUE;
+			}
+
+			// execute booking_table query
+			if ($this->conn->query($bookingTableQuery) == TRUE)
+			{
+				$ret = TRUE;
+			}
+
+			// retrieve primary key of previously executed query
+			if ($this->conn->query($getLastBookingIdQuery) == TRUE)
+			{
+				$ret = TRUE;
+			}
+
+			// execute booking_bike_table query
+			if ($this->conn->query($bookingBikeTableQuery) == TRUE)
+			{
+				$ret = TRUE;
+			}
+
+			// execute booking_accessory_table query
+			echo $bookingAccessoryTableQuery;
+			if ($this->conn->query($bookingAccessoryTableQuery) == TRUE)
+			{
+				$ret = TRUE;
+			}
+
+			// commit changes to database
+			if ($this->conn->query("COMMIT;") == TRUE)
+			{
+				$ret = TRUE;
 			}
 
 			return $ret;

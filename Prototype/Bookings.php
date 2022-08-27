@@ -2,15 +2,24 @@
     include_once "bookings-db.php";
     include_once "customer-db.php";
     include_once "locations-db.php";
+    include_once "accessory-inventory-db.php";
+    include_once "bike-inventory-db.php";
     include_once "utils.php";
 
     session_start();
     $_SESSION['id'] = '123';
+
+    $bookingMode = "none";
+    if (isset($_GET["booking-mode"]))
+    {
+        $bookingMode = $_GET["booking-mode"];
+    }
 ?>
 
 <!DOCTYPE html>
 <html>
     <link rel="stylesheet" href="style/Jake_style.css">
+    <link rel="stylesheet" href="style/popup.css">
     <head>
         <!-- Header -->
         <title> Bookings </title>
@@ -18,8 +27,22 @@
     </head>
     <body>
         <!-- Booking Popup (main) -->
-        <div id="add-booking-main-modal" class="add-booking-modal" style="display: none;">
-            <div class="add-booking-modal-content">
+        <div id="add-booking-main-modal" class="modal-overlay"
+            <?php
+                $mainModalBookingModes = ["invalid"];
+                if (!in_array($bookingMode, $mainModalBookingModes))
+                {
+                    echo "style='display: none';";
+                }
+                else
+                {
+                    echo "style='display: block';";
+                }
+            ?>
+            >
+            <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <h2> Add Booking </h2>
                 <!-- booking form -->
                 <form action="booking-popups.php" method="POST">
                     <!-- Select customer -->
@@ -75,16 +98,65 @@
                             }
                         ?>
                     </select><br><br>
-
                     <button type="submit" name="add-booking-main-submit"> Select Bikes </button>
                 </form>
             </div>
         </div>
-        <div id="add-booking-bike-modal" class="add-booking-modal">
-            <div id="add-booking-bike-modal-content" class="add-booking-bike-modal-content" style="display: block;">
-                <form action="booking-popups.php" method="POST">
 
-                    <button type="submit" name="add-booking-bike-submit"> Add Booking </button>
+        <!-- Form for adding bikes and accessories to bookings -->
+        <div id="add-booking-bikes-modal" class="modal-overlay"
+        <?php
+            if ($bookingMode != "stage2")
+            {
+                echo "style='display: none';";
+            }
+            else
+            {
+                echo "style='display: block';";
+            }
+        ?>
+        >
+            <!-- Modal content for bikes and accessories -->
+            <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <!-- Form for submitting selections to PHP -->
+                <form action="booking-popups.php" method="POST">
+                    <!-- Bike list -->
+                    <p>To select multiple values for either bikes or accessories, hold CTRL while clicking.</p>
+                    <label>Bikes</label><br>
+                    <!-- Get bikes as array (for PHP) -->
+                    <select name="add-booking-bike[]" id="add-booking-bike" multiple><br><br>
+                        <?php
+                            // Get DB connection object
+                            $conn = new BikeInventoryDBConnection();
+
+                            // Populate list of dropoff locations
+                            $bikes = $conn->get("bike_id, name");
+
+                            if ($bikes != null)
+                            {
+                                arrayToComboBoxOptions($bikes, "bike_id");
+                            }
+                        ?>
+                    </select><br><br>
+                    <!-- Accessory list -->
+                    <label>Accessories</label><br>
+                    <!-- Get accessories as array (for PHP) -->
+                    <select name="add-booking-accessory[]" id="add-booking-accessory" multiple><br><br>
+                        <?php
+                            // Get DB connection object
+                            $conn = new AccessoryInventoryDBConnection();
+
+                            // Populate list of dropoff locations
+                            $accessories = $conn->get("accessory_id, name");
+
+                            if ($accessories != null)
+                            {
+                                arrayToComboBoxOptions($accessories, "accessory_id");
+                            }
+                        ?>
+                    </select><br><br>
+                    <button type="submit" name="add-booking-bike-accessory-submit"> Add Booking </button>
                 </form>
             </div>
         </div>
@@ -108,7 +180,7 @@
             <input type="text"  placeholder="Search">
 
             <!-- Add Booking pop up -->
-            <button type="button">+ Add Booking</button>
+            <button type="button" id="add-booking-btn">+ Add Booking</button>
 
             <!-- List of available bookings -->
             <table class="TableContent">
@@ -174,6 +246,6 @@
                 ?>
             </table>
         </div>
+        <script src="scripts/bookings.js"></script>
     </body>
 </html>
-<script></script>
