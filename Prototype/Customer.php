@@ -1,9 +1,9 @@
 <?php
     session_start();
     //connection to the database
+
     include("backend-connection.php");
     $conn = new DBConnection("customer_table");
-
 ?>
 
 <!DOCTYPE html>
