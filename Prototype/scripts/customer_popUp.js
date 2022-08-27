@@ -47,3 +47,4 @@ window.onclick = function(event) {
     updateModal.style.display = "none";
   }
 }
+

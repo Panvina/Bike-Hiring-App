@@ -199,6 +199,24 @@
 			return $ret;
 		}
 
+		public function findPrimaryKey()
+		{
+			$ret = array();
+
+			$query = "SHOW KEYS FROM $this->tablename WHERE Key_name = 'PRIMARY'";
+
+			$res = $this->conn->query($query);
+			if ($res->num_rows > 0)
+			{
+				while($row = $res->fetch_assoc())
+				{
+					array_push($ret, $row);
+				}
+			}
+
+            return $ret;
+		}
+
 		/**
 		 *	SELECT method
 		 *	Parameters:

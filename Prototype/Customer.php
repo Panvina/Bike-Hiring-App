@@ -80,7 +80,7 @@
                 $keys = array_keys($rows[0]);
 
                 $primaryColumn = "user_name";
-                $primaryKey = "Jake";
+                $primaryKey = "";
                 
 
                 for($x = 0; $x < count($rows); $x++)
@@ -93,12 +93,13 @@
                         $data = $row[$key];
                         echo "<td> $data </td>";
 
-                        if($key == $primaryKey)
+                        if($key == $primaryColumn)
                         {
-                            $primaryKey = $key;
+                            $primaryKey = $data;
                         }
                     }
                     $_SESSION["primaryKey"] = $primaryKey;
+                    print_r($_SESSION["primaryKey"]);
                     echo "<td>  <button id= '$primaryKey' class='UpdateCustomer'> Update Customer</button> </td>";
                     echo "</tr>";
                 }
@@ -166,47 +167,69 @@
             <?php
 
                 $ret = array();
+                $primaryKey =  $_SESSION["primaryKey"];
 
                 $cols = "user_name, name, phone_number, email, street_address, suburb, post_code, licence_number, state";
-                $condition = "user_name=Jake";
-                $ret = $conn->get($cols);
+                $condition = "user_name='$primaryKey'";
+                $ret = $conn->get($cols, $condition);
+                $ret = $ret[0];
+                
+                $_SESSION["user_name"] = $ret["user_name"];
+                $_SESSION["name"] = $ret["name"];
+                $_SESSION["phone_number"] = $ret["phone_number"];
+                $_SESSION["email"] = $ret["email"];
+                $_SESSION["street_address"] = $ret["street_address"];
+                $_SESSION["suburb"] = $ret["suburb"];
+                $_SESSION["post_code"] = $ret["post_code"];
+                $_SESSION["licence_number"] = $ret["licence_number"];
+                $_SESSION["state"] = $ret["state"];
+                
+                //for(int i = 0; i < sizeof($ret); i++)
+               // {
 
-                //window.alert('$ret');
+               // }
             ?>
 
             <span class="updateFormClose">&times;</span>
             <form action="customer-script.php" method="get" event.preventDefault()>
                 <h1> Update a customer </h1>
                 <div>
+                    <h2> User Name: </h2>
+                    <input type="text" name="userName" disabled value = "<?php echo $_SESSION['user_name'];?>">
+                </div>
+                <div>
                     <h2> Name: </h2>
-                    <input type="text" name="name">
+                    <input type="text" name="name" value = "<?php echo $_SESSION['name'];?>">
                 </div>
                 <div>
                     <h2> Phone Number: </h2>
-                    <input type="text" name="phoneNumber">'
+                    <input type="text" name="phoneNumber" value = "<?php echo $_SESSION['phone_number'];?>">
                 </div>
                 <div>
                     <h2> Email: </h2>
-                    <input type="text" name="email">
+                    <input type="text" name="email" value = "<?php echo $_SESSION['email'];?>">
                 </div>
                 <div>
                     <h2> Street Address </h2>
-                    <input type="text" name="streetAddress">
+                    <input type="text" name="streetAddress" value = "<?php echo $_SESSION['street_address'];?>">
                 </div>
                 <div>
                     <h2> Suburb </h2>
-                    <input type="text" name="suburb">
+                    <input type="text" name="suburb" value = "<?php echo $_SESSION['suburb'];?>">
                 </div>
                 <div>
                     <h2> Post Code </h2>
-                    <input type="text" name="postCode">
+                    <input type="text" name="postCode" value = "<?php echo $_SESSION['post_code'];?>">
                 </div>
                 <div>
                     <h2> Licence Number </h2>
-                    <input type="text" name="licenceNumber">
+                    <input type="text" name="licenceNumber" value = "<?php echo $_SESSION['licence_number'];?>">
+                </div>
+                <div>
+                    <h2> State </h2>
+                    <input type="text" name="state" value = "<?php echo $_SESSION['state'];?>">
                 </div>
                 </br>
-                <div>
                     <button type="submit" name="SubmitCustomer">Submit</button>
                 </div>
             </form>
