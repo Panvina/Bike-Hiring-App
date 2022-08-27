@@ -41,7 +41,7 @@ else if(!(substr($postcodeInput,-4,1)==3)){//To show this is from the state of v
 	$err_msg .= "<p>The postcode you enetered is not a Victorian postcode.</p>";
 }
 
-		//setting up and connecting to DB
+//setting up and connecting to DB
 if($err_msg!=""){
 	echo"<p>$err_msg</p>";
 	exit();
@@ -96,6 +96,5 @@ else
 if($db_msg!="")//this is to print if there is any errors
 {
 	echo"<p>$db_msg</p>";
-	exit();
 }
 ?>
