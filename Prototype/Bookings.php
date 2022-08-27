@@ -1,5 +1,11 @@
 <?php
-    include "bookings-db.php";
+    include_once "bookings-db.php";
+    include_once "customer-db.php";
+    include_once "locations-db.php";
+    include_once "utils.php";
+
+    session_start();
+    $_SESSION['id'] = '123';
 ?>
 
 <!DOCTYPE html>
@@ -14,14 +20,20 @@
         <!-- Booking Popup -->
         <div id="add-booking-modal" class="add-booking-modal">
             <div class="add-booking-modal-content">
-                <!-- boo -->
-                <form action="add-booking-script.php" method="POST">
+                <!-- booking form -->
+                <form action="booking-popups.php" method="POST">
                     <!-- Select customer -->
                     <label>Customer:</label><br>
                     <select name="add-booking-customer" id="add-booking-customer"><br><br>
                         <?php
-                            // Get list of customers
+                            // Populate customer combo box with all customers
+                            $conn = new CustomerDBConnection();
+                    		$customerList = $conn->get("cust_id, name");
 
+                    		if ($customerList != null)
+                    		{
+                                arrayToComboBoxOptions($customerList, "cust_id");
+                    		}
                         ?>
                     </select><br><br>
 
@@ -41,19 +53,30 @@
                     <label>Pick-Up Location</label><br>
                     <select name="add-booking-pick-up-location" id="add-booking-pick-up-location"><br><br>
                         <?php
-                            // Get list of pickup locations
+                            // Populate list of pickup locations
+                            $conn = new LocationsDBConnection();
+                            $pickupLocations = $conn->get("location_id, name", "pick_up_location=1");
 
+                            if ($pickupLocations != null)
+                            {
+                                arrayToComboBoxOptions($pickupLocations, "location_id");
+                            }
                         ?>
                     </select><br><br>
                     <label>Drop-off Location</label><br>
                     <select name="add-booking-drop-off-location" id="add-booking-drop-off-location"><br><br>
                         <?php
-                            // Get list of dropoff locations
+                            // Populate list of dropoff locations
+                            $pickupLocations = $conn->get("location_id, name", "drop_off_location=1");
 
+                            if ($pickupLocations != null)
+                            {
+                                arrayToComboBoxOptions($pickupLocations, "location_id");
+                            }
                         ?>
                     </select><br><br>
 
-                    <input type="button" value="Add Booking">
+                    <button type="submit" name="add-booking-submit"> Add Booking </button>
                 </form>
             </div>
         </div>

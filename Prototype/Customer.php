@@ -1,6 +1,6 @@
 <?php
     //connection to the database
-    include("backend-connection.php");
+    include_once("backend-connection.php");
     $conn = new DBConnection("localhost", "root", "", "bike_hiring_system");
 ?>
 

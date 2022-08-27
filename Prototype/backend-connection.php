@@ -179,7 +179,7 @@
 			$query = "SELECT $colnames FROM $this->tablename";
 			if ($condition)
 			{
-				$query = append_string($query, " WHERE $condition");
+				$query .= " WHERE $condition";
 			}
 
 			echo '<br>';
@@ -206,12 +206,10 @@
 		 */
 		public function getLastX($pkeyName, $x)
 		{
-			$ret = array();
-
 			$query = "SELECT * FROM $this->tablename ORDER BY $pkeyName DESC LIMIT $x";
 			echo '<br>';
 			echo $query;
-			$res = $this->conn->query($query);
+			$ret = $this->conn->query($query);
 			if ($res->num_rows > 0)
 			{
 				while($row = $res->fetch_assoc())
@@ -245,6 +243,23 @@
 				}
 				echo "$str<br>";
 			}
+		}
+
+		// Convert result from SQL query to PHP array
+		public function getRowsFromResult($queryRes)
+		{
+			$ret = null;
+
+			if ($queryRes->num_rows > 0)
+			{
+				$ret = array();
+				while($row = $queryRes->fetch_assoc())
+				{
+					array_push($ret, $row);
+				}
+			}
+
+			return $ret;
 		}
 	}
 
