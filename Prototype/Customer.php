@@ -41,17 +41,17 @@
         <input type="text" placeholder="Search">
 
         <!-- Add Customer pop up -->
-        <button id="UpdateCustomer"> Update Customer</button>
-        <button id="CustomerPopUp">+ New Customer</button>
+       
+        <button id="CustomerPopUp" class="CustomerPopUp">+ New Customer</button>
 
         <!-- List of current customers -->
         <table class="TableContent">
             <tr>
                 <?php
-                    $cols = "name, phone_number, email, street_address, suburb, post_code, licence_number";
+                    $cols = "user_name, name, phone_number, email, street_address, suburb, post_code, licence_number, state";
                     $rows = $conn->get($cols);
      
-                    $tableHeadings = "Name, Phone Number, Email, Street Address, Suburb, Post Code, Licence Number";
+                    $tableHeadings = "User Name, Name, Phone Number, Email, Street Address, Suburb, Post Code, Licence Number, State";
 
                     $cols = explode(',', $cols);
                     $tableHeadings = explode(',', $tableHeadings);
@@ -62,14 +62,15 @@
                         $col = trim($tableHeadings[$x]);
                         echo "<th> $col </th>";
                     }
+                    echo "<th> Edit </th>"
                 ?> 
             </tr>
             <?php       
                 if ($rows == null)
                 {
                     $rows = array();
-                     $tmp = array();
-                     for($x = 0; $x < count($cols); $x++)
+                    $tmp = array();
+                    for($x = 0; $x < count($cols); $x++)
                     {
                         array_push($tmp, "null");
                     }
@@ -77,6 +78,11 @@
                 }
 
                 $keys = array_keys($rows[0]);
+
+                $primaryColumn = "user_name";
+                $primaryKey = "Jake";
+                
+
                 for($x = 0; $x < count($rows); $x++)
                 {
                     echo "<tr>";
@@ -86,8 +92,15 @@
                         $key = $keys[$y];
                         $data = $row[$key];
                         echo "<td> $data </td>";
+
+                        if($key == $primaryKey)
+                        {
+                            $primaryKey = $key;
+                        }
                     }
-                        echo "</tr>";
+                    $_SESSION["primaryKey"] = $primaryKey;
+                    echo "<td>  <button id= '$primaryKey' class='UpdateCustomer'> Update Customer</button> </td>";
+                    echo "</tr>";
                 }
             ?>
         </table>
@@ -101,6 +114,10 @@
             <span class="close">&times;</span>
             <form action="customer-script.php" method="get" event.preventDefault()>
                 <h1> Create a customer </h1>
+                <div>
+                    <h2> User Name: </h2>
+                    <input type="text" name="userName">
+                </div>
                 <div>
                     <h2> Name: </h2>
                     <input type="text" name="name">
@@ -129,6 +146,10 @@
                     <h2> Licence Number </h2>
                     <input type="text" name="licenceNumber">
                 </div>
+                <div>
+                    <h2> State </h2>
+                    <input type="text" name="state">
+                </div>
                 </br>
                 <div>
                     <button type="submit" name="SubmitCustomer">Submit</button>
@@ -141,6 +162,18 @@
 
         <!-- Creates the content within the pop up -->
         <div class="modal-content">
+        
+            <?php
+
+                $ret = array();
+
+                $cols = "user_name, name, phone_number, email, street_address, suburb, post_code, licence_number, state";
+                $condition = "user_name=Jake";
+                $ret = $conn->get($cols);
+
+                //window.alert('$ret');
+            ?>
+
             <span class="updateFormClose">&times;</span>
             <form action="customer-script.php" method="get" event.preventDefault()>
                 <h1> Update a customer </h1>

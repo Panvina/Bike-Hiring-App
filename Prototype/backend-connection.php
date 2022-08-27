@@ -59,36 +59,36 @@
 		 * 		- Return if insert was successful
 		 */
 		
-		// public function insert($columns, $data)
-		// {
-		// 	// $this->closeConn();
-		// 	// $this->getConn();
-		// 	$ret = FALSE;
-
-		// 	$query = "INSERT INTO $this->tablename ($columns) VALUES ($data)";
-		// 	echo $query;
-		// 	if ($this->conn->query($query) == TRUE)
-		// 	{
-		// 		$ret = TRUE;
-		// 	}
-
-		// 	return $ret;
-		// }
-			
-		public function insert($tablename, $columns, $data)
+		public function insert($columns, $data)
 		{
-			$query = "INSERT INTO $tablename ($columns) VALUES ($data)";
-			//echo $query;
+			// $this->closeConn();
+			// $this->getConn();
+			$ret = FALSE;
+
+			$query = "INSERT INTO $this->tablename ($columns) VALUES ($data)";
+			echo $query;
 			if ($this->conn->query($query) == TRUE)
 			{
-				echo "Record created successfully";
+				$ret = TRUE;
 			}
-			else
-			{
-				echo "Error: " . $query . "<br>" . $this->conn->error;
 
-			}
+			return $ret;
 		}
+			
+		// public function insert($tablename, $columns, $data)
+		// {
+		// 	$query = "INSERT INTO $tablename ($columns) VALUES ($data)";
+		// 	//echo $query;
+		// 	if ($this->conn->query($query) == TRUE)
+		// 	{
+		// 		echo "Record created successfully";
+		// 	}
+		// 	else
+		// 	{
+		// 		echo "Error: " . $query . "<br>" . $this->conn->error;
+
+		// 	}
+		// }
 
 		// public function insert($tablename, $columns, $data)
 		// {

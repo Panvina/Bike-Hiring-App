@@ -7,7 +7,8 @@ var tempEcho = document.getElementById("tempEcho");
 
 // Get the button that opens the modal
 var btn = document.getElementById("CustomerPopUp");
-var updateBtn = document.getElementById("UpdateCustomer");
+//var updateBtn = document.getElementById("UpdateCustomer");
+var updateBtn = document.getElementsByClassName("UpdateCustomer");
 
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
@@ -18,9 +19,13 @@ btn.onclick = function() {
   modal.style.display = "block";
 }
 
-updateBtn.onclick = function() {
-  updateModal.style.display = "block";
+for (var i = 0; i < updateBtn.length; i++)
+{
+  updateBtn[i].onclick = function() {
+    updateModal.style.display = "block";
+  }
 }
+
 
 // When the user clicks on <span> (x), close the modal
 span.onclick = function() {
