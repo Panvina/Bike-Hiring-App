@@ -1,6 +1,7 @@
 //  Resources:
 //      https://www.w3schools.com/php/php_form_url_email.asp
-<?php include 'scripts/auth-script.php';?>
+<?php
+    include 'person-dto.php';?>
 
 <?php
     session_start();
@@ -37,10 +38,11 @@
         // }
         else
         {
-            $role = authUser($email, $pwd);      
-            if($role == "C"){
-                header("Location: index.php?Customerlogin=success");
-            }else if ($role == "A"){
+            $roleObj = new PersonDTO($email);
+            $role = $roleObj->authenticateUser($pwd);    
+            if($role == "3"){
+                header("Location: booking-summary.php?Customerlogin=$email");
+            }else if ($role == "2"){
                 header("Location: dashboard.php?Adminlogin=success");
             }else {
                 header("Location: index.php?Error=$role");

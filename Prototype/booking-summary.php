@@ -25,14 +25,26 @@
             </div>
         </div>
     </div>
-    <?php echo "<h2 id='greet-heading'>Hey #name, <br></h2>";?>
+    <?php 
+    include 'person-dto.php';
+    $email = $_SESSION["login-email"];
+
+    $userDetail = new PersonDTO($email);
+    $userDetail->getDetails();
+    echo "<h1 id='greet-heading'>Hey $email, <br></h1>";?>
     <div class="section"> 
         <div class="col" id="col1">
             <h3>Your Current Booking/s:</h3>
             <p>sdasdas</p>
         </div>
         <div class="col" id="col2">
-            <h3>Your Details:</h3>
+            <h3>Your Booking Details:</h3>
+            <div class="text">
+                <div class="text-col"><h4>Name:</h4>
+                    <h4>Address:</h4></div>
+                <div class="text-col"><h4>Phone Number:</h4>
+                    <h4>Email:</h4></div>
+            </div>
         </div>
     </div>
     <footer><?php include 'footer.php'?></footer>
