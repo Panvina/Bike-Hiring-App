@@ -80,7 +80,7 @@
                 $keys = array_keys($rows[0]);
 
                 $primaryColumn = "user_name";
-                $primaryKey = "";
+                $primaryKey = "Jake";
                 
 
                 for($x = 0; $x < count($rows); $x++)
@@ -99,8 +99,20 @@
                         }
                     }
                     $_SESSION["primaryKey"] = $primaryKey;
-                    print_r($_SESSION["primaryKey"]);
-                    echo "<td>  <button id= '$primaryKey' class='UpdateCustomer'> Update Customer</button> </td>";
+                    //echo $_SESSION["primaryKey"];
+                    //print_r($_SESSION["primaryKey"]);
+                    
+                    //echo "<td>  <button id= '$primaryKey' class='UpdateCustomer' name='$primaryKey'> 
+                    //Update Customer</button> </td> ";
+                    // echo "<td>  <input type='submit' id= '$primaryKey' class='UpdateCustomer' name='$primaryKey' 
+                    // value='Update Customer'> </td> </form>";
+                    
+                    //$update = $_SESSION["update"];
+                    //echo $update;
+                    //echo "<form action='customer-update-script.php' method='post' event.preventDefault() ><td>  <button type='submit' id= '$primaryKey' class='UpdateCustomer' name='updateCustomer' 
+                    //value='$primaryKey'> Update Customer </button> </td> </form>";
+                    echo "<form action='customer-update-script.php' method='post' event.preventDefault() ><td>  <button type='submit' id= '$primaryKey' class='UpdateCustomer' name='updateCustomer' 
+                    value='$primaryKey'> Update Customer </button> </td> </form>";
                     echo "</tr>";
                 }
             ?>
@@ -113,43 +125,58 @@
         <!-- Creates the content within the pop up -->
         <div class="modal-content">
             <span class="close">&times;</span>
-            <form action="customer-script.php" method="get" event.preventDefault()>
+           <!--<form name="createCustomer" action="customer-script.php" method="get" event.preventDefault() onsubmit="return validateForm()> -->
+           <form action="customer-script.php" method="get" event.preventDefault()>
                 <h1> Create a customer </h1>
                 <div>
                     <h2> User Name: </h2>
                     <input type="text" name="userName">
+                    <span class="error"> 
+                        <?php 
+                            if (isset($_GET["insert"]))
+                            {
+                                $userName = $_GET["insert"];
+                                if ($userName == "userName")
+                                {
+                                    echo 'var createCustomerModel = document.getElementById("CustomerModal");';
+                                    echo 'createCustomerModel.style.display = "block";';
+                                    echo '<p class="error">* Invalid user name</p>';
+                                }
+                            }
+                        ?>
+                    </span>
                 </div>
                 <div>
                     <h2> Name: </h2>
-                    <input type="text" name="name">
+                    <input type="text" name="name" required>
                 </div>
                 <div>
                     <h2> Phone Number: </h2>
-                    <input type="text" name="phoneNumber">'
+                    <input type="text" name="phoneNumber" required>
                 </div>
                 <div>
                     <h2> Email: </h2>
-                    <input type="text" name="email">
+                    <input type="text" name="email" required>
                 </div>
                 <div>
                     <h2> Street Address </h2>
-                    <input type="text" name="streetAddress">
+                    <input type="text" name="streetAddress" required>
                 </div>
                 <div>
                     <h2> Suburb </h2>
-                    <input type="text" name="suburb">
+                    <input type="text" name="suburb" required>
                 </div>
                 <div>
                     <h2> Post Code </h2>
-                    <input type="text" name="postCode">
+                    <input type="text" name="postCode" required>
                 </div>
                 <div>
                     <h2> Licence Number </h2>
-                    <input type="text" name="licenceNumber">
+                    <input type="text" name="licenceNumber" required>
                 </div>
                 <div>
                     <h2> State </h2>
-                    <input type="text" name="state">
+                    <input type="text" name="state" required>
                 </div>
                 </br>
                 <div>
@@ -159,39 +186,28 @@
         </div>
     </div>
 
-    <div id="UpdateCustomerModal" class="modal">
+    <div id="UpdateCustomerModal" class="modal" <?php
+            if(isset($_GET["update"]))
+            {
+                if ($_GET["update"] == "true")
+                {
+                    echo "style = 'display:inline-block'";
+                    unset($_GET);
+                }
+                else if($_GET["update"] == "false")
+                {
+                    echo "style = 'display:none'";
+                    unset($_GET);
+                }
+            }
+        ?>>
 
         <!-- Creates the content within the pop up -->
-        <div class="modal-content">
+        <div class="modal-content" >
         
-            <?php
-
-                $ret = array();
-                $primaryKey =  $_SESSION["primaryKey"];
-
-                $cols = "user_name, name, phone_number, email, street_address, suburb, post_code, licence_number, state";
-                $condition = "user_name='$primaryKey'";
-                $ret = $conn->get($cols, $condition);
-                $ret = $ret[0];
-                
-                $_SESSION["user_name"] = $ret["user_name"];
-                $_SESSION["name"] = $ret["name"];
-                $_SESSION["phone_number"] = $ret["phone_number"];
-                $_SESSION["email"] = $ret["email"];
-                $_SESSION["street_address"] = $ret["street_address"];
-                $_SESSION["suburb"] = $ret["suburb"];
-                $_SESSION["post_code"] = $ret["post_code"];
-                $_SESSION["licence_number"] = $ret["licence_number"];
-                $_SESSION["state"] = $ret["state"];
-                
-                //for(int i = 0; i < sizeof($ret); i++)
-               // {
-
-               // }
-            ?>
-
             <span class="updateFormClose">&times;</span>
-            <form action="customer-script.php" method="get" event.preventDefault()>
+            <form action="customer-update-script.php" method="get" event.preventDefault()>
+
                 <h1> Update a customer </h1>
                 <div>
                     <h2> User Name: </h2>
@@ -230,7 +246,10 @@
                     <input type="text" name="state" value = "<?php echo $_SESSION['state'];?>">
                 </div>
                 </br>
-                    <button type="submit" name="SubmitCustomer">Submit</button>
+                    <button type="submit" name="SubmitCustomer"
+                    <?php
+                        unset($_GET);
+                    ?>>Submit</button>
                 </div>
             </form>
         </div>
@@ -245,17 +264,27 @@
 
 <?php
 
-if (isset($_SESSION["ret"]))
+if (isset($_GET["insert"]))
 {
-    if ($_SESSION["ret"] == "true")
+    if ($_GET["insert"] == "true")
     {
         echo "<p class = 'echo' id='tempEcho'>  Record successfuly created </p>";
-        $_SESSION["ret"] = null;
     }
-    else if ($_SESSION["ret"] == "false")
+    else if ($_GET["insert"] == "false")
     {
-        echo "<p class = 'echo'>  Record successfuly created </p>";
-        $_SESSION["ret"] = null;
+        echo "<p class = 'echo'>  Record was not created successfuly </p>";
+    }
+}
+
+if (isset($_GET["update"]))
+{
+    if ($_GET["update"] == "true")
+    {
+        echo "<p class = 'echo' id='tempEcho'>  Record successfuly updated </p>";
+    }
+    else if ($_GET["insert"] == "false")
+    {
+        echo "<p class = 'echo' id='tempEcho'> Record was not updated successfuly </p>";
     }
 }
 

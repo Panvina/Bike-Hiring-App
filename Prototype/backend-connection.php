@@ -157,7 +157,8 @@
 				}
 				$query .= " WHERE $idColName=$id";
 
-				//echo $query;
+				echo $query;
+				//echo "<p> $query </p>";
 				if ($this->conn->query($query) == TRUE)
 				{
 					$ret = TRUE;

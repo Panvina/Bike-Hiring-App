@@ -21,11 +21,17 @@ btn.onclick = function() {
 
 for (var i = 0; i < updateBtn.length; i++)
 {
-  updateBtn[i].onclick = function() {
+  updateBtn[i].onclick = function(event) {
     updateModal.style.display = "block";
+    //document.getElementById(updateBtn[i]).value = event.target.id;
+    //updateBtn[i].value = updateBtn[i].id;
+    //updateBtn[i].value = updateBtn.dataset.pk;
+    //event.target.value = event.target.dataset.pk;
+    //window.alert(event.target.value);
+    // window.alert(updateBtn[i].value);
+    // alert(updateBtn[i].value);
   }
 }
-
 
 // When the user clicks on <span> (x), close the modal
 span.onclick = function() {
@@ -48,3 +54,23 @@ window.onclick = function(event) {
   }
 }
 
+function validateForm()
+{
+  let userName = document.forms["createCustomer"]["userName"].value;
+  let name = document.forms["createCustomer"]["name"].value;
+  let phoneNumber = document.forms["createCustomer"]["phoneNumber"].value;
+  let email = document.forms["createCustomer"]["email"].value;
+  let streetAddress = document.forms["createCustomer"]["streetAddress"].value;
+  let suburb = document.forms["createCustomer"]["suburb"].value;
+  let postCode = document.forms["createCustomer"]["postCode"].value;
+  let licenceNumber = document.forms["createCustomer"]["licenceNumber"].value;
+  let state = document.forms["createCustomer"]["state"].value;
+
+
+}
+
+function testInput(data)
+{
+  data = trim(data);
+  
+}
