@@ -1,6 +1,6 @@
 //  Resources:
 //      https://www.w3schools.com/php/php_form_url_email.asp
-<?php include 'auth-script.php';?>
+<?php include 'scripts/auth-script.php';?>
 
 <?php
     session_start();

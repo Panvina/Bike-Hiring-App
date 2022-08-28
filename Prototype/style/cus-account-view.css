@@ -1,0 +1,41 @@
+/*Styling the customer account page*/
+
+
+#col1{
+    background-color: #aaecd0; 
+}
+
+#col2{
+    background-color: #eaf7f6; 
+}
+
+#greet-heading{
+    padding-top: 20px;
+    padding-left: 58px;
+}
+.section {
+    display: flex;
+  }
+
+  .left {
+    width: 25%;
+  }
+  
+  .right {
+    width: 75%;
+  }
+  
+  .col {
+    flex: 50%;
+    float: left;
+    padding: 10px;
+    margin-bottom: 30px;
+  }
+  #col1{
+    margin-left: 30px;
+    padding-left: 28px;
+  }
+  #col2{
+    margin-right: 30px;
+    padding-left: 28px;
+  }

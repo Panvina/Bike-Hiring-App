@@ -8,7 +8,7 @@
 
 		public $conn = null;
 
-		public function __construct($servername="localhost", $username="root", $password="", $dbname="testnew")
+		public function __construct($servername="localhost", $username="root", $password="", $dbname="bike_hiring_system")
 		{
 			$this->servername = $servername;
 			$this->username = $username;
