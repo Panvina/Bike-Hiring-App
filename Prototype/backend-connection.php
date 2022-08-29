@@ -7,6 +7,7 @@
 	 * IMPORTANT NOTE:
 	 *	- For column names with spaces, MySQL uses backticks (`) for these. Don't forget these, or the query will fail.
 	 */
+	
 	class DBConnection
 	{
 		protected $servername = "";
@@ -58,9 +59,11 @@
 		 *	Return:
 		 * 		- Return if insert was successful
 		 */
-
+		
 		public function insert($columns, $data)
 		{
+			// $this->closeConn();
+			// $this->getConn();
 			$ret = FALSE;
 
 			$query = "INSERT INTO $this->tablename ($columns) VALUES ($data)";
@@ -72,7 +75,21 @@
 
 			return $ret;
 		}
+			
+		// public function insert($tablename, $columns, $data)
+		// {
+		// 	$query = "INSERT INTO $tablename ($columns) VALUES ($data)";
+		// 	//echo $query;
+		// 	if ($this->conn->query($query) == TRUE)
+		// 	{
+		// 		echo "Record created successfully";
+		// 	}
+		// 	else
+		// 	{
+		// 		echo "Error: " . $query . "<br>" . $this->conn->error;
 
+		// 	}
+		// }
 
 		// public function insert($tablename, $columns, $data)
 		// {
@@ -141,7 +158,8 @@
 				}
 				$query .= " WHERE $idColName=$id";
 
-				//echo $query;
+				echo $query;
+				//echo "<p> $query </p>";
 				if ($this->conn->query($query) == TRUE)
 				{
 					$ret = TRUE;
@@ -183,6 +201,24 @@
 			return $ret;
 		}
 
+		public function findPrimaryKey()
+		{
+			$ret = array();
+
+			$query = "SHOW KEYS FROM $this->tablename WHERE Key_name = 'PRIMARY'";
+
+			$res = $this->conn->query($query);
+			if ($res->num_rows > 0)
+			{
+				while($row = $res->fetch_assoc())
+				{
+					array_push($ret, $row);
+				}
+			}
+
+            return $ret;
+		}
+
 		/**
 		 *	SELECT method
 		 *	Parameters:
@@ -205,7 +241,7 @@
 			}
 
 			echo '<br>';
-			echo $query;
+			//echo $query;
 			$res = $this->conn->query($query);
 			if ($res->num_rows > 0)
 			{
@@ -228,12 +264,10 @@
 		 */
 		public function getLastX($pkeyName, $x)
 		{
-			$ret = array();
-
 			$query = "SELECT * FROM $this->tablename ORDER BY $pkeyName DESC LIMIT $x";
 			echo '<br>';
 			echo $query;
-			$res = $this->conn->query($query);
+			$ret = $this->conn->query($query);
 			if ($res->num_rows > 0)
 			{
 				while($row = $res->fetch_assoc())
@@ -272,6 +306,23 @@
 				}
 				echo "$str<br>";
 			}
+		}
+
+		// Convert result from SQL query to PHP array
+		public function getRowsFromResult($queryRes)
+		{
+			$ret = null;
+
+			if ($queryRes->num_rows > 0)
+			{
+				$ret = array();
+				while($row = $queryRes->fetch_assoc())
+				{
+					array_push($ret, $row);
+				}
+			}
+
+			return $ret;
 		}
 	}
 

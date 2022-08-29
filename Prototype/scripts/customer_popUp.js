@@ -7,7 +7,8 @@ var tempEcho = document.getElementById("tempEcho");
 
 // Get the button that opens the modal
 var btn = document.getElementById("CustomerPopUp");
-var updateBtn = document.getElementById("UpdateCustomer");
+//var updateBtn = document.getElementById("UpdateCustomer");
+var updateBtn = document.getElementsByClassName("UpdateCustomer");
 
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
@@ -16,20 +17,27 @@ var updateSpan = document.getElementsByClassName("updateFormClose")[0];
 // When the user clicks on the button, open the modal
 btn.onclick = function() {
   modal.style.display = "block";
+  //window.location.replace("Customer.php");
 }
 
-updateBtn.onclick = function() {
-  updateModal.style.display = "block";
+for (var i = 0; i < updateBtn.length; i++)
+{
+  updateBtn[i].onclick = function(event) {
+    updateModal.style.display = "block";
+    //window.location.replace("Customer.php");
+  }
 }
 
 // When the user clicks on <span> (x), close the modal
 span.onclick = function() {
   modal.style.display = "none";
+  window.location.replace("Customer.php");
   $_SESSION["ret"] = null;
 }
 
 updateSpan.onclick = function() {
   updateModal.style.display = "none";
+  window.location.replace("Customer.php");
   $_SESSION["ret"] = null;
 }
 
@@ -37,8 +45,10 @@ updateSpan.onclick = function() {
 window.onclick = function(event) {
   if (event.target == modal) {
     modal.style.display = "none";
+    window.location.replace("Customer.php");
   }
   else if(event.target == updateModal){
     updateModal.style.display = "none";
+    window.location.replace("Customer.php");
   }
 }

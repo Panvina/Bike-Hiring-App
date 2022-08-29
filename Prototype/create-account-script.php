@@ -2,37 +2,10 @@
 //      https://www.w3schools.com/php/php_form_url_email.asp
 
 <?php
+    require "utils.php";
+
     session_start();
     $_SESSION['id'] = '123';
-
-    function validEmail($email)
-    {
-        return filter_var($email, FILTER_VALIDATE_EMAIL);
-    }
-
-    function validName($name)
-    {
-        return preg_match("/^[a-zA-Z-' ]*$/",$name);
-    }
-
-    function checkEmpty($arr)
-    {
-        $ret = true;
-
-        if (is_array($arr))
-        {
-            for($x = 0; $x < count($arr) || $ret; $x++)
-            {
-                $ret &= empty($arr[$x]);
-            }
-        }
-        else
-        {
-            $ret = empty($arr);
-        }
-
-        return $ret;
-    }
 
     if (isset($_POST["ca-submit"]))
     {
