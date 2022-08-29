@@ -71,7 +71,7 @@
 							<p>We look foward to hearing from you.&nbsp;</p>
 						</div>
 					</div>
-					
+<!--					This is a contact us form-->
 					<div class="Contactbox" id="Conactbox2">
 						<form action="contactus.php" method="post" id="emailform" name="emailform" class="textcentral">
 							<p>
@@ -106,7 +106,8 @@
 					<p>
 						<em>If you can't find the answer to your questions bellow, feel free to get in touch.</em>
 					</p>
-					<div id="mainfaq">
+					<div id="mainfaq"> 
+<!--						The class="collapsibles" are using buttons function so when click, the dropbox can open or close.-->
 						<button type="button" class="collapsible">Do I need a license to ride on an eBike?</button>
 						<div class="content">
 							<p>For most electric bikes, you do not need a licence of anykind to use.</p>
@@ -159,7 +160,9 @@
 				</div>
 			</div>
 		</main>
-		
-		<footer></footer>
-	</body>
+	<footer>	
+    <?php include 'footer.php'?>
+  </footer>
+
+</body>
 </html>
