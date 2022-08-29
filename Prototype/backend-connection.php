@@ -7,6 +7,7 @@
 	 * IMPORTANT NOTE:
 	 *	- For column names with spaces, MySQL uses backticks (`) for these. Don't forget these, or the query will fail.
 	 */
+	
 	class DBConnection
 	{
 		protected $servername = "";

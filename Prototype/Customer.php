@@ -2,7 +2,8 @@
     session_start();
     //connection to the database
 
-    include("backend-connection.php");
+    include_once("backend-connection.php");
+    include_once "utils.php";
     $conn = new DBConnection("customer_table");
 ?>
 
@@ -80,9 +81,7 @@
                 $keys = array_keys($rows[0]);
 
                 $primaryColumn = "user_name";
-                $primaryKey = "Jake";
-                
-
+        
                 for($x = 0; $x < count($rows); $x++)
                 {
                     echo "<tr>";
@@ -99,19 +98,7 @@
                         }
                     }
                     $_SESSION["primaryKey"] = $primaryKey;
-                    //echo $_SESSION["primaryKey"];
-                    //print_r($_SESSION["primaryKey"]);
-                    
-                    //echo "<td>  <button id= '$primaryKey' class='UpdateCustomer' name='$primaryKey'> 
-                    //Update Customer</button> </td> ";
-                    // echo "<td>  <input type='submit' id= '$primaryKey' class='UpdateCustomer' name='$primaryKey' 
-                    // value='Update Customer'> </td> </form>";
-                    
-                    //$update = $_SESSION["update"];
-                    //echo $update;
-                    //echo "<form action='customer-update-script.php' method='post' event.preventDefault() ><td>  <button type='submit' id= '$primaryKey' class='UpdateCustomer' name='updateCustomer' 
-                    //value='$primaryKey'> Update Customer </button> </td> </form>";
-                    echo "<form action='customer-update-script.php' method='post' event.preventDefault() ><td>  <button type='submit' id= '$primaryKey' class='UpdateCustomer' name='updateCustomer' 
+                    echo "<form action='customer-update-script.php' method='POST' event.preventDefault() ><td>  <button type='submit' id= '$primaryKey' class='UpdateCustomer' name='updateCustomer' 
                     value='$primaryKey'> Update Customer </button> </td> </form>";
                     echo "</tr>";
                 }
@@ -120,13 +107,25 @@
     </div>
 
     <!-- Create the initial window for the pop up -->
-    <div id="CustomerModal" class="modal">
+    <div id="CustomerModal" class="modal"<?php
+            if(isset($_GET["insert"]))
+            {
+                if ($_GET["insert"] != "true")
+                {
+                    echo "style = 'display:inline-block'";
+                }
+                else if($_GET["update"] == "true")
+                {
+                    echo "style = 'display:none'";
+                }
+            }
+        ?>>
 
         <!-- Creates the content within the pop up -->
         <div class="modal-content">
             <span class="close">&times;</span>
            <!--<form name="createCustomer" action="customer-script.php" method="get" event.preventDefault() onsubmit="return validateForm()> -->
-           <form action="customer-script.php" method="get" event.preventDefault()>
+           <form action="customer-script.php" method="POST" event.preventDefault()>
                 <h1> Create a customer </h1>
                 <div>
                     <h2> User Name: </h2>
@@ -136,11 +135,9 @@
                             if (isset($_GET["insert"]))
                             {
                                 $userName = $_GET["insert"];
-                                if ($userName == "userName")
+                                if ($userName == "userNameErr")
                                 {
-                                    echo 'var createCustomerModel = document.getElementById("CustomerModal");';
-                                    echo 'createCustomerModel.style.display = "block";';
-                                    echo '<p class="error">* Invalid user name</p>';
+                                    echo '<p>* User name cannot be empty</p>';
                                 }
                             }
                         ?>
@@ -148,35 +145,131 @@
                 </div>
                 <div>
                     <h2> Name: </h2>
-                    <input type="text" name="name" required>
+                    <input type="text" name="name">
+                    <span class="error"> 
+                        <?php 
+                            if (isset($_GET["insert"]))
+                            {
+                                $name = $_GET["insert"];
+                                if ($name == "nameErr")
+                                {
+                                    echo '<p>* Name cannot be empty</p>';
+                                }
+                            }
+                        ?>
+                    </span>
                 </div>
                 <div>
                     <h2> Phone Number: </h2>
-                    <input type="text" name="phoneNumber" required>
+                    <input type="text" name="phoneNumber">
+                    <span class="error"> 
+                        <?php 
+                            if (isset($_GET["insert"]))
+                            {
+                                $phoneNumber = $_GET["insert"];
+                                if ($phoneNumber == "phoneNumberErr")
+                                {
+                                    echo '<p>* Phone number cannot be empty</p>';
+                                }
+                            }
+                        ?>
+                    </span>
                 </div>
                 <div>
                     <h2> Email: </h2>
-                    <input type="text" name="email" required>
+                    <input type="text" name="email">
+                    <span class="error"> 
+                        <?php 
+                            if (isset($_GET["insert"]))
+                            {
+                                $email = $_GET["insert"];
+                                if ($email == "emailErr")
+                                {
+                                    echo '<p>* Email cannot be empty</p>';
+                                }
+                            }
+                        ?>
+                    </span>
                 </div>
                 <div>
                     <h2> Street Address </h2>
-                    <input type="text" name="streetAddress" required>
+                    <input type="text" name="streetAddress">
+                    <span class="error"> 
+                        <?php 
+                            if (isset($_GET["insert"]))
+                            {
+                                $streetAddress = $_GET["insert"];
+                                if ($streetAddress == "streetAddressErr")
+                                {
+                                    echo '<p>* Street Address cannot be empty</p>';
+                                }
+                            }
+                        ?>
+                    </span>
                 </div>
                 <div>
                     <h2> Suburb </h2>
-                    <input type="text" name="suburb" required>
+                    <input type="text" name="suburb">
+                    <span class="error"> 
+                        <?php 
+                            if (isset($_GET["insert"]))
+                            {
+                                $suburb = $_GET["insert"];
+                                if ($suburb == "suburbErr")
+                                {
+                                    echo '<p>* Suburb cannot be empty</p>';
+                                }
+                            }
+                        ?>
+                    </span>
                 </div>
                 <div>
                     <h2> Post Code </h2>
-                    <input type="text" name="postCode" required>
+                    <input type="text" name="postCode">
+                    <span class="error"> 
+                        <?php 
+                            if (isset($_GET["insert"]))
+                            {
+                                $postCode = $_GET["insert"];
+                                if ($postCode == "postCodeErr")
+                                {
+                                    echo '<p>* Post code cannot be empty</p>';
+                                }
+                            }
+                        ?>
+                    </span>
                 </div>
                 <div>
                     <h2> Licence Number </h2>
-                    <input type="text" name="licenceNumber" required>
+                    <input type="text" name="licenceNumber">
+                    <span class="error"> 
+                        <?php 
+                            if (isset($_GET["insert"]))
+                            {
+                                $licenceNumber = $_GET["insert"];
+                                if ($licenceNumber == "licenceNumberErr")
+                                {
+                                    echo '<p>* Licence number cannot be empty</p>';
+                                }
+                            }
+                        ?>
+                    </span>
                 </div>
                 <div>
                     <h2> State </h2>
-                    <input type="text" name="state" required>
+                    <input type="text" name="state">
+                    <span class="error"> 
+                        <?php 
+                            if (isset($_GET["insert"]))
+                            {
+                                $state = $_GET["insert"];
+                                if ($state == "stateErr")
+                                {
+                                    echo '<p>* State cannot be empty</p>';
+                                }
+                            }
+                        ?>
+                    </span>
                 </div>
                 </br>
                 <div>
@@ -189,15 +282,15 @@
     <div id="UpdateCustomerModal" class="modal" <?php
             if(isset($_GET["update"]))
             {
-                if ($_GET["update"] == "true")
+                if ($_GET["update"] == "notEmpty")
                 {
                     echo "style = 'display:inline-block'";
-                    unset($_GET);
+                    //unset($_GET[);
                 }
-                else if($_GET["update"] == "false")
+                else if($_GET["update"] == "empty")
                 {
                     echo "style = 'display:none'";
-                    unset($_GET);
+                    //($_GET[);
                 }
             }
         ?>>
@@ -206,12 +299,12 @@
         <div class="modal-content" >
         
             <span class="updateFormClose">&times;</span>
-            <form action="customer-update-script.php" method="get" event.preventDefault()>
+            <form action="customer-update-script.php" method="POST" event.preventDefault()>
 
                 <h1> Update a customer </h1>
                 <div>
                     <h2> User Name: </h2>
-                    <input type="text" name="userName" disabled value = "<?php echo $_SESSION['user_name'];?>">
+                    <input type="text" name="userName" readonly value = "<?php echo $_SESSION['user_name'];?>">
                 </div>
                 <div>
                     <h2> Name: </h2>
@@ -246,10 +339,7 @@
                     <input type="text" name="state" value = "<?php echo $_SESSION['state'];?>">
                 </div>
                 </br>
-                    <button type="submit" name="SubmitCustomer"
-                    <?php
-                        unset($_GET);
-                    ?>>Submit</button>
+                    <button type="submit" name="submitUpdateCustomer">Submit</button>
                 </div>
             </form>
         </div>
