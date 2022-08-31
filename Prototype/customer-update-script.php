@@ -38,16 +38,16 @@
         $licenceNumber =  $_SESSION["licence_number"];
         $state = $_SESSION["state"];
 
-        // if (!checkEmptyVariables([$name, $phoneNumber, $email, $streetAddress, $suburb , $postCode, $licenceNumber, $state]))
-        // {
-        //     header("Location: Customer.php?update=notEmpty");
-        //     exit();
-        // }
-        // else
-        // {
-        //     header("Location: Customer.php?update=empty");
-        //     exit();
-        // }
+        if (!checkEmptyVariables([$name, $phoneNumber, $email, $streetAddress, $suburb , $postCode, $licenceNumber, $state]))
+        {
+            header("Location: Customer.php?update=notEmpty");
+            exit();
+        }
+        else
+        {
+            header("Location: Customer.php?update=empty");
+            exit();
+        }
    }
    
    if (isset($_POST["submitUpdateCustomer"]))

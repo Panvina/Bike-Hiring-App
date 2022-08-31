@@ -99,8 +99,22 @@
                         }
                     }
                     $_SESSION["primaryKey"] = $primaryKey;
-                    echo "<form action='customer-update-script.php' method='POST' event.preventDefault() ><td>  <button type='submit' id= '$primaryKey' class='UpdateCustomer' name='updateCustomer' 
-                    value='$primaryKey'> Update Customer </button> </td> </form>";
+                    // echo "<form action='customer-update-script.php' method='POST' event.preventDefault() ><td> <button type='submit' id= '$primaryKey' class='UpdateCustomer' name='updateCustomer' 
+                    // value='$primaryKey'> Update Customer </button> </td> </form>";
+                    // echo "</tr>";
+
+                    echo 
+                        "<td>  
+                        <div class='dropdown'>
+                            <button class='dropbtn' disabled>...</button>
+                            <div class='dropdown-content'>
+                                <button type='submit' name='deleteLocation' id='deleteLocation' class='deleteLocation'>Delete</button><br/>
+                                <form action='customer-update-script.php' method='POST' event.preventDefault() > <button type='submit' id= '$primaryKey' class='UpdateCustomer' name='updateCustomer' 
+                                value='$primaryKey'> Update Customer </button> </form>
+                            </div>
+                        </div>
+                        </td>";
+                    
                     echo "</tr>";
                 }
             ?>
