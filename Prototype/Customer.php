@@ -1,3 +1,4 @@
+<!-- All code on this page has been completed by Jake.H 102090870 -->
 <?php
     session_start();
     //connection to the database
@@ -114,7 +115,7 @@
                 {
                     echo "style = 'display:inline-block'";
                 }
-                else if($_GET["update"] == "true")
+                else if($_GET["insert"] == "true")
                 {
                     echo "style = 'display:none'";
                 }
@@ -135,9 +136,15 @@
                             if (isset($_GET["insert"]))
                             {
                                 $userName = $_GET["insert"];
-                                if ($userName == "userNameErr")
+                                if ($userName == "userNameEmptyErr")
                                 {
                                     echo '<p>* User name cannot be empty</p>';
+                                }
+                                else if ($userName == "userNameValidErr")
+                                {
+                                    echo '<p>* 1. User Name must be 8-20 characters </br>
+                                               2. Not have any special characters besides / and . </br>
+                                               3. / and . must not be used at the start, end, used together or used multiple times </br> </p>';
                                 }
                             }
                         ?>
@@ -151,9 +158,13 @@
                             if (isset($_GET["insert"]))
                             {
                                 $name = $_GET["insert"];
-                                if ($name == "nameErr")
+                                if ($name == "nameEmptyErr")
                                 {
                                     echo '<p>* Name cannot be empty</p>';
+                                }
+                                else if ($name == "nameValidErr")
+                                {
+                                    echo '<p>* Name is not in a valid format</p>';
                                 }
                             }
                         ?>
@@ -167,9 +178,13 @@
                             if (isset($_GET["insert"]))
                             {
                                 $phoneNumber = $_GET["insert"];
-                                if ($phoneNumber == "phoneNumberErr")
+                                if ($phoneNumber == "phoneNumberEmptyErr")
                                 {
                                     echo '<p>* Phone number cannot be empty</p>';
+                                }
+                                else if ($phoneNumber == "phoneValidErr")
+                                {
+                                    echo '<p>* Phone number is not in the correct format</p>';
                                 }
                             }
                         ?>
@@ -183,9 +198,13 @@
                             if (isset($_GET["insert"]))
                             {
                                 $email = $_GET["insert"];
-                                if ($email == "emailErr")
+                                if ($email == "emailEmptyErr")
                                 {
                                     echo '<p>* Email cannot be empty</p>';
+                                }
+                                else if ($email == "emailValidErr")
+                                {
+                                    echo '<p>* Email format is not valid</p>';
                                 }
                             }
                         ?>
@@ -199,9 +218,13 @@
                             if (isset($_GET["insert"]))
                             {
                                 $streetAddress = $_GET["insert"];
-                                if ($streetAddress == "streetAddressErr")
+                                if ($streetAddress == "streetAddressEmptyErr")
                                 {
                                     echo '<p>* Street Address cannot be empty</p>';
+                                }
+                                else if ($streetAddress == "streetAddressValidErr")
+                                {
+                                    echo '<p>* Address format is not valid </p>';
                                 }
                             }
                         ?>
@@ -215,9 +238,13 @@
                             if (isset($_GET["insert"]))
                             {
                                 $suburb = $_GET["insert"];
-                                if ($suburb == "suburbErr")
+                                if ($suburb == "suburbEmptyErr")
                                 {
                                     echo '<p>* Suburb cannot be empty</p>';
+                                }
+                                else if ($suburb == "suburbValidErr")
+                                {
+                                    echo '<p>* Suburb format is not valid</p>';
                                 }
                             }
                         ?>
@@ -231,9 +258,13 @@
                             if (isset($_GET["insert"]))
                             {
                                 $postCode = $_GET["insert"];
-                                if ($postCode == "postCodeErr")
+                                if ($postCode == "postCodeEmptyErr")
                                 {
                                     echo '<p>* Post code cannot be empty</p>';
+                                }
+                                else if ($postCode == "postCodeValidErr")
+                                {
+                                    echo '<p>* Post code must be 4 numbers </p>';
                                 }
                             }
                         ?>
@@ -247,9 +278,13 @@
                             if (isset($_GET["insert"]))
                             {
                                 $licenceNumber = $_GET["insert"];
-                                if ($licenceNumber == "licenceNumberErr")
+                                if ($licenceNumber == "licenceNumberEmptyErr")
                                 {
                                     echo '<p>* Licence number cannot be empty</p>';
+                                }
+                                else if ($licenceNumber == "licenceNumberValidErr")
+                                {
+                                    echo '<p>* Licence number must be 9 numbers </p>';
                                 }
                             }
                         ?>
@@ -263,9 +298,13 @@
                             if (isset($_GET["insert"]))
                             {
                                 $state = $_GET["insert"];
-                                if ($state == "stateErr")
+                                if ($state == "stateEmptyErr")
                                 {
                                     echo '<p>* State cannot be empty</p>';
+                                }
+                                else if ($state == "stateValidErr")
+                                {
+                                    echo '<p>* State must be an Australian state </p>';
                                 }
                             }
                         ?>
@@ -280,17 +319,28 @@
     </div>
 
     <div id="UpdateCustomerModal" class="modal" <?php
+            // if(isset($_GET["update"]))
+            // {
+            //     if ($_GET["update"] == "notEmpty")
+            //     {
+            //         echo "style = 'display:inline-block'";
+            //         //unset($_GET[);
+            //     }
+            //     else if($_GET["update"] == "empty")
+            //     {
+            //         echo "style = 'display:none'";
+            //         //($_GET[);
+            //     }
+            // }
             if(isset($_GET["update"]))
             {
-                if ($_GET["update"] == "notEmpty")
+                if ($_GET["update"] != "true")
                 {
                     echo "style = 'display:inline-block'";
-                    //unset($_GET[);
                 }
-                else if($_GET["update"] == "empty")
+                else if($_GET["insert"] == "true")
                 {
                     echo "style = 'display:none'";
-                    //($_GET[);
                 }
             }
         ?>>
@@ -309,34 +359,162 @@
                 <div>
                     <h2> Name: </h2>
                     <input type="text" name="name" value = "<?php echo $_SESSION['name'];?>">
+                    <span class="error"> 
+                        <?php 
+                            if (isset($_GET["update"]))
+                            {
+                                $name = $_GET["update"];
+                                if ($name == "nameEmptyErr")
+                                {
+                                    echo '<p>* Name cannot be empty</p>';
+                                }
+                                else if ($name == "nameValidErr")
+                                {
+                                    echo '<p>* Name is not in a valid format</p>';
+                                }
+                            }
+                        ?>
+                    </span>
                 </div>
                 <div>
                     <h2> Phone Number: </h2>
                     <input type="text" name="phoneNumber" value = "<?php echo $_SESSION['phone_number'];?>">
+                    <span class="error"> 
+                        <?php 
+                            if (isset($_GET["update"]))
+                            {
+                                $phoneNumber = $_GET["update"];
+                                if ($phoneNumber == "phoneNumberEmptyErr")
+                                {
+                                    echo '<p>* Phone number cannot be empty</p>';
+                                }
+                                else if ($phoneNumber == "phoneValidErr")
+                                {
+                                    echo '<p>* Phone number is not in the correct format</p>';
+                                }
+                            }
+                        ?>
+                    </span>
                 </div>
                 <div>
                     <h2> Email: </h2>
                     <input type="text" name="email" value = "<?php echo $_SESSION['email'];?>">
+                    <span class="error"> 
+                        <?php 
+                            if (isset($_GET["update"]))
+                            {
+                                $email = $_GET["update"];
+                                if ($email == "emailEmptyErr")
+                                {
+                                    echo '<p>* Email cannot be empty</p>';
+                                }
+                                else if ($email == "emailValidErr")
+                                {
+                                    echo '<p>* Email format is not valid</p>';
+                                }
+                            }
+                        ?>
+                    </span>
                 </div>
                 <div>
                     <h2> Street Address </h2>
                     <input type="text" name="streetAddress" value = "<?php echo $_SESSION['street_address'];?>">
+                    <span class="error"> 
+                        <?php 
+                            if (isset($_GET["update"]))
+                            {
+                                $streetAddress = $_GET["update"];
+                                if ($streetAddress == "streetAddressEmptyErr")
+                                {
+                                    echo '<p>* Street Address cannot be empty</p>';
+                                }
+                                else if ($streetAddress == "streetAddressValidErr")
+                                {
+                                    echo '<p>* Address format is not valid </p>';
+                                }
+                            }
+                        ?>
+                    </span>
                 </div>
                 <div>
                     <h2> Suburb </h2>
                     <input type="text" name="suburb" value = "<?php echo $_SESSION['suburb'];?>">
+                    <span class="error"> 
+                        <?php 
+                            if (isset($_GET["update"]))
+                            {
+                                $suburb = $_GET["update"];
+                                if ($suburb == "suburbEmptyErr")
+                                {
+                                    echo '<p>* Suburb cannot be empty</p>';
+                                }
+                                else if ($suburb == "suburbValidErr")
+                                {
+                                    echo '<p>* Suburb format is not valid</p>';
+                                }
+                            }
+                        ?>
+                    </span>
                 </div>
                 <div>
                     <h2> Post Code </h2>
                     <input type="text" name="postCode" value = "<?php echo $_SESSION['post_code'];?>">
+                    <span class="error"> 
+                        <?php 
+                            if (isset($_GET["update"]))
+                            {
+                                $postCode = $_GET["update"];
+                                if ($postCode == "postCodeEmptyErr")
+                                {
+                                    echo '<p>* Post code cannot be empty</p>';
+                                }
+                                else if ($postCode == "postCodeValidErr")
+                                {
+                                    echo '<p>* Post code must be 4 numbers </p>';
+                                }
+                            }
+                        ?>
+                    </span>
                 </div>
                 <div>
                     <h2> Licence Number </h2>
                     <input type="text" name="licenceNumber" value = "<?php echo $_SESSION['licence_number'];?>">
+                    <span class="error"> 
+                        <?php 
+                            if (isset($_GET["update"]))
+                            {
+                                $licenceNumber = $_GET["update"];
+                                if ($licenceNumber == "licenceNumberEmptyErr")
+                                {
+                                    echo '<p>* Licence number cannot be empty</p>';
+                                }
+                                else if ($licenceNumber == "licenceNumberValidErr")
+                                {
+                                    echo '<p>* Licence number must be 9 numbers </p>';
+                                }
+                            }
+                        ?>
+                    </span>
                 </div>
                 <div>
                     <h2> State </h2>
                     <input type="text" name="state" value = "<?php echo $_SESSION['state'];?>">
+                    <span class="error"> 
+                        <?php 
+                            if (isset($_GET["update"]))
+                            {
+                                $state = $_GET["update"];
+                                if ($state == "stateEmptyErr")
+                                {
+                                    echo '<p>* State cannot be empty</p>';
+                                }
+                                else if ($state == "stateValidErr")
+                                {
+                                    echo '<p>* State must be an Australian state </p>';
+                                }
+                            }
+                        ?>
+                    </span>
                 </div>
                 </br>
                     <button type="submit" name="submitUpdateCustomer">Submit</button>

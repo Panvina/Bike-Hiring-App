@@ -1,4 +1,5 @@
 @charset "utf-8";
+/* This document was created by Jake.H 102090870 */
 /* CSS Document */
 body{
   background-color: #eaf7f6;
@@ -51,7 +52,7 @@ body{
   background-color: white;
   margin: 0 auto;
   width: 64.5%;
-  height: 1300px;
+  height: 1300px auto;
   float: left;
   display: inline-block;
 }
@@ -260,5 +261,5 @@ nav a {
   border: solid white!important;
   border-width: thin!important;
   cursor: pointer!important;
-  left: -10%!important;
+  left: -2%!important;
 }

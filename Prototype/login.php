@@ -27,7 +27,7 @@
 
                         if ($loginVar == "empty")
                         {
-                            echo '<p class="error">Empty inputs</p>';
+                            echo '<p class="error">Em pty inputs</p>';
                         }
                         elseif ($loginVar == "email")
                         {
