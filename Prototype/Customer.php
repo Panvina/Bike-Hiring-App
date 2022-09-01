@@ -1,13 +1,13 @@
 <!-- All code on this page has been completed by Jake.H 102090870 -->
 <?php
+    //start the session with the database
     session_start();
-    //connection to the database
-
+    //include database functions
     include_once("backend-connection.php");
     include_once "utils.php";
+    //create the connection with the database
     $conn = new DBConnection("customer_table");
 ?>
-
 <!DOCTYPE html>
 <html>
 <link rel="stylesheet" href="style/Jake_style.css">
@@ -50,11 +50,16 @@
         <table class="TableContent">
             <tr>
                 <?php
+                    //Fetch data done by Alex, altered by Jake for customer table
+                    //establishes the collumns in the table to be used in the query
                     $cols = "user_name, name, phone_number, email, street_address, suburb, post_code, licence_number, state";
+                    //get the data from the table
                     $rows = $conn->get($cols);
-     
+
+                    //establish the headings that will be used to display the data in the table
                     $tableHeadings = "User Name, Name, Phone Number, Email, Street Address, Suburb, Post Code, Licence Number, State";
 
+                    //data validation to remove ',' for querying and displaying data in the table
                     $cols = explode(',', $cols);
                     $tableHeadings = explode(',', $tableHeadings);
 
@@ -99,18 +104,17 @@
                         }
                     }
                     $_SESSION["primaryKey"] = $primaryKey;
-                    // echo "<form action='customer-update-script.php' method='POST' event.preventDefault() ><td> <button type='submit' id= '$primaryKey' class='UpdateCustomer' name='updateCustomer' 
-                    // value='$primaryKey'> Update Customer </button> </td> </form>";
-                    // echo "</tr>";
-
+                    //Creates the dropdown box with the buttons used for updating and deleting
+                    //Clemeant created the drop down box. Jake repurposed it and changed the style and functionality to suit current methods
                     echo 
                         "<td>  
                         <div class='dropdown'>
                             <button class='dropbtn' disabled>...</button>
                             <div class='dropdown-content'>
-                                <button type='submit' name='deleteLocation' id='deleteLocation' class='deleteLocation'>Delete</button><br/>
                                 <form action='customer-update-script.php' method='POST' event.preventDefault() > <button type='submit' id= '$primaryKey' class='UpdateCustomer' name='updateCustomer' 
                                 value='$primaryKey'> Update Customer </button> </form>
+                                <form action='customer-delete-script.php' method='POST' event.preventDefault()> <button type='submit' name='deleteCustomer' id='$primaryKey' class='deleteCustomer' 
+                                value = '$primaryKey'>Delete Customer</button> </form>
                             </div>
                         </div>
                         </td>";
@@ -123,6 +127,7 @@
 
     <!-- Create the initial window for the pop up -->
     <div id="CustomerModal" class="modal"<?php
+            //checks to see if there was any errors and if there was, it will continue to display the modal
             if(isset($_GET["insert"]))
             {
                 if ($_GET["insert"] != "true")
@@ -139,10 +144,10 @@
         <!-- Creates the content within the pop up -->
         <div class="modal-content">
             <span class="close">&times;</span>
-           <!--<form name="createCustomer" action="customer-script.php" method="get" event.preventDefault() onsubmit="return validateForm()> -->
-           <form action="customer-script.php" method="POST" event.preventDefault()>
+            <form action="customer-script.php" method="POST" event.preventDefault()>
                 <h1> Create a customer </h1>
                 <div>
+                    <!-- User name input validation, checks based on error and displays accurate error message -->
                     <h2> User Name: </h2>
                     <input type="text" name="userName">
                     <span class="error"> 
@@ -152,11 +157,11 @@
                                 $userName = $_GET["insert"];
                                 if ($userName == "userNameEmptyErr")
                                 {
-                                    echo '<p>* User name cannot be empty</p>';
+                                    echo '<p class = "error">* User name cannot be empty</p>';
                                 }
                                 else if ($userName == "userNameValidErr")
                                 {
-                                    echo '<p>* 1. User Name must be 8-20 characters </br>
+                                    echo '<p class = "error">* 1. User Name must be 8-20 characters </br>
                                                2. Not have any special characters besides / and . </br>
                                                3. / and . must not be used at the start, end, used together or used multiple times </br> </p>';
                                 }
@@ -165,6 +170,7 @@
                     </span>
                 </div>
                 <div>
+                    <!-- Name input validation, checks based on error and displays accurate error message -->
                     <h2> Name: </h2>
                     <input type="text" name="name">
                     <span class="error"> 
@@ -174,17 +180,18 @@
                                 $name = $_GET["insert"];
                                 if ($name == "nameEmptyErr")
                                 {
-                                    echo '<p>* Name cannot be empty</p>';
+                                    echo '<p class = "error">* Name cannot be empty</p>';
                                 }
                                 else if ($name == "nameValidErr")
                                 {
-                                    echo '<p>* Name is not in a valid format</p>';
+                                    echo '<p class = "error">* Name is not in a valid format</p>';
                                 }
                             }
                         ?>
                     </span>
                 </div>
                 <div>
+                    <!-- Phone Number input validation, checks based on error and displays accurate error message -->
                     <h2> Phone Number: </h2>
                     <input type="text" name="phoneNumber">
                     <span class="error"> 
@@ -194,17 +201,18 @@
                                 $phoneNumber = $_GET["insert"];
                                 if ($phoneNumber == "phoneNumberEmptyErr")
                                 {
-                                    echo '<p>* Phone number cannot be empty</p>';
+                                    echo '<p class = "error">* Phone number cannot be empty</p>';
                                 }
                                 else if ($phoneNumber == "phoneValidErr")
                                 {
-                                    echo '<p>* Phone number is not in the correct format</p>';
+                                    echo '<p class = "error">* Phone number is not in the correct format</p>';
                                 }
                             }
                         ?>
                     </span>
                 </div>
                 <div>
+                    <!-- Email input validation, checks based on error and displays accurate error message -->
                     <h2> Email: </h2>
                     <input type="text" name="email">
                     <span class="error"> 
@@ -214,17 +222,18 @@
                                 $email = $_GET["insert"];
                                 if ($email == "emailEmptyErr")
                                 {
-                                    echo '<p>* Email cannot be empty</p>';
+                                    echo '<p class = "error">* Email cannot be empty</p>';
                                 }
                                 else if ($email == "emailValidErr")
                                 {
-                                    echo '<p>* Email format is not valid</p>';
+                                    echo '<p class = "error">* Email format is not valid</p>';
                                 }
                             }
                         ?>
                     </span>
                 </div>
                 <div>
+                    <!-- Street Address input validation, checks based on error and displays accurate error message -->
                     <h2> Street Address </h2>
                     <input type="text" name="streetAddress">
                     <span class="error"> 
@@ -234,17 +243,18 @@
                                 $streetAddress = $_GET["insert"];
                                 if ($streetAddress == "streetAddressEmptyErr")
                                 {
-                                    echo '<p>* Street Address cannot be empty</p>';
+                                    echo '<p class = "error">* Street Address cannot be empty</p>';
                                 }
                                 else if ($streetAddress == "streetAddressValidErr")
                                 {
-                                    echo '<p>* Address format is not valid </p>';
+                                    echo '<p class = "error">* Address format is not valid </p>';
                                 }
                             }
                         ?>
                     </span>
                 </div>
                 <div>
+                    <!-- Suburb input validation, checks based on error and displays accurate error message -->
                     <h2> Suburb </h2>
                     <input type="text" name="suburb">
                     <span class="error"> 
@@ -254,17 +264,18 @@
                                 $suburb = $_GET["insert"];
                                 if ($suburb == "suburbEmptyErr")
                                 {
-                                    echo '<p>* Suburb cannot be empty</p>';
+                                    echo '<p class = "error">* Suburb cannot be empty</p>';
                                 }
                                 else if ($suburb == "suburbValidErr")
                                 {
-                                    echo '<p>* Suburb format is not valid</p>';
+                                    echo '<p class = "error">* Suburb format is not valid</p>';
                                 }
                             }
                         ?>
                     </span>
                 </div>
                 <div>
+                    <!-- Post Code input validation, checks based on error and displays accurate error message -->
                     <h2> Post Code </h2>
                     <input type="text" name="postCode">
                     <span class="error"> 
@@ -274,17 +285,18 @@
                                 $postCode = $_GET["insert"];
                                 if ($postCode == "postCodeEmptyErr")
                                 {
-                                    echo '<p>* Post code cannot be empty</p>';
+                                    echo '<p class = "error">* Post code cannot be empty</p>';
                                 }
                                 else if ($postCode == "postCodeValidErr")
                                 {
-                                    echo '<p>* Post code must be 4 numbers </p>';
+                                    echo '<p class = "error">* Post code must be 4 numbers </p>';
                                 }
                             }
                         ?>
                     </span>
                 </div>
                 <div>
+                    <!-- Licence number input validation, checks based on error and displays accurate error message -->
                     <h2> Licence Number </h2>
                     <input type="text" name="licenceNumber">
                     <span class="error"> 
@@ -294,17 +306,18 @@
                                 $licenceNumber = $_GET["insert"];
                                 if ($licenceNumber == "licenceNumberEmptyErr")
                                 {
-                                    echo '<p>* Licence number cannot be empty</p>';
+                                    echo '<p class = "error">* Licence number cannot be empty</p>';
                                 }
                                 else if ($licenceNumber == "licenceNumberValidErr")
                                 {
-                                    echo '<p>* Licence number must be 9 numbers </p>';
+                                    echo '<p class = "error">* Licence number must be 9 numbers </p>';
                                 }
                             }
                         ?>
                     </span>
                 </div>
                 <div>
+                    <!-- State input validation, checks based on error and displays accurate error message -->
                     <h2> State </h2>
                     <input type="text" name="state">
                     <span class="error"> 
@@ -314,11 +327,11 @@
                                 $state = $_GET["insert"];
                                 if ($state == "stateEmptyErr")
                                 {
-                                    echo '<p>* State cannot be empty</p>';
+                                    echo '<p class = "error">* State cannot be empty</p>';
                                 }
                                 else if ($state == "stateValidErr")
                                 {
-                                    echo '<p>* State must be an Australian state </p>';
+                                    echo '<p class = "error">* State must be an Australian state </p>';
                                 }
                             }
                         ?>
@@ -332,27 +345,16 @@
         </div>
     </div>
 
+     <!-- Create the initial window for the pop up -->
     <div id="UpdateCustomerModal" class="modal" <?php
-            // if(isset($_GET["update"]))
-            // {
-            //     if ($_GET["update"] == "notEmpty")
-            //     {
-            //         echo "style = 'display:inline-block'";
-            //         //unset($_GET[);
-            //     }
-            //     else if($_GET["update"] == "empty")
-            //     {
-            //         echo "style = 'display:none'";
-            //         //($_GET[);
-            //     }
-            // }
+            //checks to see if there was any errors and if there was, it will continue to display the modal
             if(isset($_GET["update"]))
             {
                 if ($_GET["update"] != "true")
                 {
                     echo "style = 'display:inline-block'";
                 }
-                else if($_GET["insert"] == "true")
+                else if($_GET["update"] == "true")
                 {
                     echo "style = 'display:none'";
                 }
@@ -367,10 +369,12 @@
 
                 <h1> Update a customer </h1>
                 <div>
+                    <!-- //Made User name not editable to ensure database intergrity  -->
                     <h2> User Name: </h2>
                     <input type="text" name="userName" readonly value = "<?php echo $_SESSION['user_name'];?>">
                 </div>
                 <div>
+                    <!-- Name input validation, checks based on error and displays accurate error message -->
                     <h2> Name: </h2>
                     <input type="text" name="name" value = "<?php echo $_SESSION['name'];?>">
                     <span class="error"> 
@@ -380,17 +384,18 @@
                                 $name = $_GET["update"];
                                 if ($name == "nameEmptyErr")
                                 {
-                                    echo '<p>* Name cannot be empty</p>';
+                                    echo '<p class = "error">* Name cannot be empty</p>';
                                 }
                                 else if ($name == "nameValidErr")
                                 {
-                                    echo '<p>* Name is not in a valid format</p>';
+                                    echo '<p class = "error">* Name is not in a valid format</p>';
                                 }
                             }
                         ?>
                     </span>
                 </div>
                 <div>
+                    <!-- Phone number validation, checks based on error and displays accurate error message -->
                     <h2> Phone Number: </h2>
                     <input type="text" name="phoneNumber" value = "<?php echo $_SESSION['phone_number'];?>">
                     <span class="error"> 
@@ -400,17 +405,18 @@
                                 $phoneNumber = $_GET["update"];
                                 if ($phoneNumber == "phoneNumberEmptyErr")
                                 {
-                                    echo '<p>* Phone number cannot be empty</p>';
+                                    echo '<p class = "error">* Phone number cannot be empty</p>';
                                 }
                                 else if ($phoneNumber == "phoneValidErr")
                                 {
-                                    echo '<p>* Phone number is not in the correct format</p>';
+                                    echo '<p class = "error">* Phone number is not in the correct format</p>';
                                 }
                             }
                         ?>
                     </span>
                 </div>
                 <div>
+                    <!-- Email input validation, checks based on error and displays accurate error message -->
                     <h2> Email: </h2>
                     <input type="text" name="email" value = "<?php echo $_SESSION['email'];?>">
                     <span class="error"> 
@@ -420,17 +426,18 @@
                                 $email = $_GET["update"];
                                 if ($email == "emailEmptyErr")
                                 {
-                                    echo '<p>* Email cannot be empty</p>';
+                                    echo '<p class = "error">* Email cannot be empty</p>';
                                 }
                                 else if ($email == "emailValidErr")
                                 {
-                                    echo '<p>* Email format is not valid</p>';
+                                    echo '<p class = "error">* Email format is not valid</p>';
                                 }
                             }
                         ?>
                     </span>
                 </div>
                 <div>
+                    <!-- Street address input validation, checks based on error and displays accurate error message -->
                     <h2> Street Address </h2>
                     <input type="text" name="streetAddress" value = "<?php echo $_SESSION['street_address'];?>">
                     <span class="error"> 
@@ -440,17 +447,18 @@
                                 $streetAddress = $_GET["update"];
                                 if ($streetAddress == "streetAddressEmptyErr")
                                 {
-                                    echo '<p>* Street Address cannot be empty</p>';
+                                    echo '<p class = "error">* Street Address cannot be empty</p>';
                                 }
                                 else if ($streetAddress == "streetAddressValidErr")
                                 {
-                                    echo '<p>* Address format is not valid </p>';
+                                    echo '<p class = "error">* Address format is not valid </p>';
                                 }
                             }
                         ?>
                     </span>
                 </div>
                 <div>
+                    <!-- Suburb input validation, checks based on error and displays accurate error message -->
                     <h2> Suburb </h2>
                     <input type="text" name="suburb" value = "<?php echo $_SESSION['suburb'];?>">
                     <span class="error"> 
@@ -460,17 +468,18 @@
                                 $suburb = $_GET["update"];
                                 if ($suburb == "suburbEmptyErr")
                                 {
-                                    echo '<p>* Suburb cannot be empty</p>';
+                                    echo '<p class = "error">* Suburb cannot be empty</p>';
                                 }
                                 else if ($suburb == "suburbValidErr")
                                 {
-                                    echo '<p>* Suburb format is not valid</p>';
+                                    echo '<p class = "error">* Suburb format is not valid</p>';
                                 }
                             }
                         ?>
                     </span>
                 </div>
                 <div>
+                    <!-- Post code input validation, checks based on error and displays accurate error message -->
                     <h2> Post Code </h2>
                     <input type="text" name="postCode" value = "<?php echo $_SESSION['post_code'];?>">
                     <span class="error"> 
@@ -480,17 +489,18 @@
                                 $postCode = $_GET["update"];
                                 if ($postCode == "postCodeEmptyErr")
                                 {
-                                    echo '<p>* Post code cannot be empty</p>';
+                                    echo '<p class = "error">* Post code cannot be empty</p>';
                                 }
                                 else if ($postCode == "postCodeValidErr")
                                 {
-                                    echo '<p>* Post code must be 4 numbers </p>';
+                                    echo '<p class = "error">* Post code must be 4 numbers </p>';
                                 }
                             }
                         ?>
                     </span>
                 </div>
                 <div>
+                    <!-- Licence Number input validation, checks based on error and displays accurate error message -->
                     <h2> Licence Number </h2>
                     <input type="text" name="licenceNumber" value = "<?php echo $_SESSION['licence_number'];?>">
                     <span class="error"> 
@@ -500,17 +510,18 @@
                                 $licenceNumber = $_GET["update"];
                                 if ($licenceNumber == "licenceNumberEmptyErr")
                                 {
-                                    echo '<p>* Licence number cannot be empty</p>';
+                                    echo '<p class = "error">* Licence number cannot be empty</p>';
                                 }
                                 else if ($licenceNumber == "licenceNumberValidErr")
                                 {
-                                    echo '<p>* Licence number must be 9 numbers </p>';
+                                    echo '<p class = "error">* Licence number must be 9 numbers </p>';
                                 }
                             }
                         ?>
                     </span>
                 </div>
                 <div>
+                    <!-- State input validation, checks based on error and displays accurate error message -->
                     <h2> State </h2>
                     <input type="text" name="state" value = "<?php echo $_SESSION['state'];?>">
                     <span class="error"> 
@@ -520,11 +531,11 @@
                                 $state = $_GET["update"];
                                 if ($state == "stateEmptyErr")
                                 {
-                                    echo '<p>* State cannot be empty</p>';
+                                    echo '<p class = "error">* State cannot be empty</p>';
                                 }
                                 else if ($state == "stateValidErr")
                                 {
-                                    echo '<p>* State must be an Australian state </p>';
+                                    echo '<p class = "error">* State must be an Australian state </p>';
                                 }
                             }
                         ?>
@@ -537,6 +548,37 @@
         </div>
     </div>
 
+    <!-- Create the initial window for the pop up -->                        
+    <div id="DeleteCustomerModal" class="modal" 
+        <?php
+            //Used to redirect back to the form once the first button has been pressed
+            if(isset($_GET["delete"]))
+            {
+                if ($_GET["delete"] != "true")
+                {
+                    echo "style = 'display:inline-block'";
+                }
+                else if($_GET["delete"] == "true")
+                {
+                    echo "style = 'display:none'";
+                }
+            }
+        ?>>
+        <!-- Creates the content within the pop up -->
+        <div class="modal-content" >
+            <span class="closeDeleteCustomerForm">&times;</span>
+            <h1 style="left: -8%; position: relative;"> Do you wish to delete the following customer? </h1>
+            <!-- creates the yes and no button and parses the primary key back to be deleted  -->
+            <?php
+                $pk = $_SESSION["user_name"];
+                echo "<h1 style='left: 25%; position: relative;'> $pk </h1>";
+                echo "<form action='customer-delete-script.php' method='POST' event.preventDefault()>
+                      <button style='width: 40%; left: -10%; position: relative;' type='submit' id='$pk' value ='$pk' name='submitDeleteCustomer'>Yes</button>
+                      <button style='width: 40%; left: -10%; position: relative; background-color: red;' type='submit' name='CancelDeleteCustomer'>No</button> </form>";
+            ?>  
+        </div>
+    </div>
+
 
 </body>
 
@@ -545,7 +587,7 @@
 <script src="scripts/customer_popup.js"></script>
 
 <?php
-
+//checks to see if inserting was successful and provides input
 if (isset($_GET["insert"]))
 {
     if ($_GET["insert"] == "true")
@@ -558,15 +600,29 @@ if (isset($_GET["insert"]))
     }
 }
 
+//checks to see if updating was successful and provides input
 if (isset($_GET["update"]))
 {
     if ($_GET["update"] == "true")
     {
         echo "<p class = 'echo' id='tempEcho'>  Record successfuly updated </p>";
     }
-    else if ($_GET["insert"] == "false")
+    else if ($_GET["update"] == "false")
     {
         echo "<p class = 'echo' id='tempEcho'> Record was not updated successfuly </p>";
+    }
+}
+
+//checks to see if deleting was successful and provides input
+if (isset($_GET["delete"]))
+{
+    if ($_GET["delete"] == "true")
+    {
+        echo "<p class = 'echo' id='tempEcho'>  Record successfuly deleted </p>";
+    }
+    else if ($_GET["delete"] == "false")
+    {
+        echo "<p class = 'echo' id='tempEcho'> Record was not deleted successfuly </p>";
     }
 }
 

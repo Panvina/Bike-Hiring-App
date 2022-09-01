@@ -1,34 +1,41 @@
 <!-- All code on this page has been completed by Jake.H 102090870 -->
 <?php
+    //start the session with the database
     session_start();
+    //include database functions
     include_once("backend-connection.php");
     include_once "utils.php";
+    //create the connection with the database
     $conn = new DBConnection("customer_table");
 
+    //created a empty array to hold the fetched data
     $ret = array();
-    //$primaryKey =  $_SESSION["primaryKey"];
+    //fetch the primary key from the displayed data
     $pk = $_POST['updateCustomer'];
-    //$pk = "Jake";
-
-    //'<script>alert("Welcome to Geeks for Geeks")</script>'
-    //echo $pk;
+ 
+    //establish the columns of the database for querying
     $cols = "user_name, name, phone_number, email, street_address, suburb, post_code, licence_number, state";
+    //establish the where condition for the query
     $condition = "user_name='$pk'";
-    $ret = $conn->get($cols, $condition);
-    $ret = $ret[0];
+    //fetch the data and assign it to the array
+    $fetchData = $conn->get($cols, $condition);
+    $fetchData = $fetchData[0];
     
+    //checks to see if the first button is pressed
     if (isset($_POST['updateCustomer']))
   {
-        $_SESSION["user_name"] = $ret["user_name"];
-        $_SESSION["name"] = $ret["name"];
-        $_SESSION["phone_number"] = $ret["phone_number"];
-        $_SESSION["email"] = $ret["email"];
-        $_SESSION["street_address"] = $ret["street_address"];
-        $_SESSION["suburb"] = $ret["suburb"];
-        $_SESSION["post_code"] = $ret["post_code"];
-        $_SESSION["licence_number"] = $ret["licence_number"];
-        $_SESSION["state"] = $ret["state"];
+        //assigns session variables to the fetched array to be used to transfer data between forms
+        $_SESSION["user_name"] = $fetchData["user_name"];
+        $_SESSION["name"] = $fetchData["name"];
+        $_SESSION["phone_number"] = $fetchData["phone_number"];
+        $_SESSION["email"] = $fetchData["email"];
+        $_SESSION["street_address"] = $fetchData["street_address"];
+        $_SESSION["suburb"] = $fetchData["suburb"];
+        $_SESSION["post_code"] = $fetchData["post_code"];
+        $_SESSION["licence_number"] = $fetchData["licence_number"];
+        $_SESSION["state"] = $fetchData["state"];
 
+        //create variables for the session variables due to string errors when querying
         $name = $_SESSION["name"];
         $phoneNumber = $_SESSION["phone_number"];
         $email = $_SESSION["email"];
@@ -38,6 +45,7 @@
         $licenceNumber =  $_SESSION["licence_number"];
         $state = $_SESSION["state"];
 
+        //checks to see if any of the variables is empty then redirects back based on the result
         if (!checkEmptyVariables([$name, $phoneNumber, $email, $streetAddress, $suburb , $postCode, $licenceNumber, $state]))
         {
             header("Location: Customer.php?update=notEmpty");
@@ -50,6 +58,7 @@
         }
    }
    
+   //checks to see if the submit button in the update form has been pressed
    if (isset($_POST["submitUpdateCustomer"]))
    {
     //REASSIGN VARIABLES with post
@@ -200,12 +209,13 @@
             $state = test_input($_POST["state"]);
         }
 
+        //double checks to ensure all variables are not empty then parses the data to be updated. Returns back to the customer page based on the result
         if(!empty($name) && !empty($phoneNumber) && !empty($email) && !empty($streetAddress) && !empty($suburb) && !empty($postCode) && !empty($licenceNumber) && !empty($state))
         {
             if ($conn->update("user_name", "'$pk'", "name, phone_number, email, street_address, suburb, post_code, licence_number, state",
             "$name, $phoneNumber, $email, $streetAddress, $suburb, $postCode, $licenceNumber, $state") == true)
             {
-                $ret = $_POST["true"];
+                
                 header("Location: Customer.php?update=true");
                 exit();
             }

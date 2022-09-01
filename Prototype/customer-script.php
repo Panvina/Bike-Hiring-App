@@ -1,13 +1,18 @@
 <!-- All code on this page has been completed by Jake.H 102090870 -->
 <?php
+    //start the session with the database
     session_start();
+    //include database functions
     include("backend-connection.php");
     include_once "utils.php";
+    //create the connection with the database
     $conn = new DBConnection("customer_table");
 
+    //define the err variables
     $userNameErr = $nameErr = $phoneNumberErr = $emailErr = $streetAddressErr = $suburbErr = $postCodeErr = $licenceNumberErr = $stateErr = "";
     $_SESSION["userNameErr"] = "";
 
+    //checks to see form has opened
     if (isset($_POST['SubmitCustomer']))
     {
         //User name input validation
@@ -175,15 +180,12 @@
             //If successful, redirects back to the customer page 
             if ($conn->insert($cols , $data) == true)
             {
-                //$ret = $_POST["true"];
-                $_SESSION["ret"] = "true";
                 header("Location: Customer.php?insert=true");
                 exit();
             }
             //If unsuccessful, redirects back to the customer page with error
             else
             {
-                $_SESSION["ret"] = "false";
                 header("Location: Customer.php?insert=false");
                 exit();
             }

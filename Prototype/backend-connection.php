@@ -188,10 +188,11 @@
 			$ret = FALSE;
 
 			$query = "DELETE FROM $this->tablename WHERE $pkeyColName=$pkeyValue";
-			//echo $query;
+			echo $query;
 			if ($this->conn->query($query) == TRUE)
 			{
 				echo "Record deleted successfully!";
+				$ret = true;
 			}
 			else
 			{
