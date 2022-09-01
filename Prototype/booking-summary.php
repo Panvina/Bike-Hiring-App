@@ -31,22 +31,30 @@
 
     $userDetail = new PersonDTO($email);
     $userDetail->getDetails();
-    echo "<h1 id='greet-heading'>Hey $email, <br></h1>";?>
-    <div class="section"> 
-        <div class="col" id="col1">
+    $name = $userDetail->getName();
+    $pnum = $userDetail->getPhoneN();
+    $address = $userDetail->getAddress();
+    $email = $userDetail->getEmail();
+    echo "<h1 id='greet-heading'>Hey $name, <br></h1>";?>
+    <?php echo "<div class='section'> 
+        <div class='col' id='col1'>
             <h3>Your Current Booking/s:</h3>
             <p>sdasdas</p>
         </div>
-        <div class="col" id="col2">
+        <div class='col' id='col2'>
             <h3>Your Booking Details:</h3>
-            <div class="text">
-                <div class="text-col"><h4>Name:</h4>
-                    <h4>Address:</h4></div>
-                <div class="text-col"><h4>Phone Number:</h4>
-                    <h4>Email:</h4></div>
+            <div class='text'>
+                <div class='text-col'><h4>Name:</h4>
+                    <p>$name</p><br>
+                    <h4>Address:</h4>
+                    <p>$address</p></div>
+                <div class='text-col'><h4>Phone Number:</h4>
+                    <p>$pnum</p><br>
+                    <h4>Email:</h4>
+                    <p>$email</p></div>
             </div>
         </div>
-    </div>
+    </div>" ?>
     <footer><?php include 'footer.php'?></footer>
 </body>
 </html>
