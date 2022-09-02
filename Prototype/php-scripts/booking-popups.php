@@ -10,6 +10,8 @@
     session_start();
     $_SESSION['id'] = '123';
 
+    print_r($_POST);
+
     // Get booking duration (hours between 0900 to 1700)
     // NOTE: $startTime and $endTime must be properly constrained to between business hours
     function getBookingDuration($startTime, $startDate, $endTime, $endDate)
@@ -114,6 +116,19 @@
 
         return $hourlyRate;
     }
+
+    /**
+     * Convert combobox option to item id
+     * Removes describing strings
+     *
+     */
+    function comboboxArrayToItemIdArray($arrays)
+    {
+        for($i = 0; $i < count($arr); $i++)
+        {
+            $arr[$i] = explode(",", $arr[$i])[0];
+        }
+    }
 ?>
 
 <?php
@@ -144,54 +159,43 @@
 
         $bookingDuration = getBookingDuration($startTime, $startDate, $endTime, $endDate);
 
-        $_SESSION["customer"] = $customer;
-        $_SESSION["startDate"] = $startDate;
-        $_SESSION["startTime"] = $startTime;
-        $_SESSION["endDate"] = $endDate;
-        $_SESSION["endTime"] = $endTime;
-        $_SESSION["pickupLocation"] = $pickUpLocation;
-        $_SESSION["dropOffLocation"] = $dropOffLocation;
-        $_SESSION["bookingDuration"] = $bookingDuration;
+        $_SESSION["addBooking"] = array(
+            "customer"        => $customer,
+            "startDate"       => $startDate,
+            "startTime"       => $startTime,
+            "endDate"         => $endDate,
+            "endTime"         => $endTime,
+            "pickupLocation"  => $pickUpLocation,
+            "dropOffLocation" => $dropOffLocation,
+            "bookingDuration" => $bookingDuration
+        );
 
         // echo "Time Diff from: $startTime, $startDate --> $endTime, $endDate<br>";
         // echo "$bookingDuration hours<br>";
 
         // Validate variables
-        // if (!checkEmptyVariables([$customer, $startDate, $startTime, $endDate, $endTime, $pickUpLocation, $dropOffLocation]))
-        // {
-            header("Location: bookings.php?booking-mode=stage2");
-        // }
-        // else
-        // {
-        //     header("Location: bookings.php?booking-mode=empty");
-        // }
-
-
+        if (!emptyArr([$customer, $startDate, $startTime, $endDate, $endTime, $pickUpLocation, $dropOffLocation]))
+        {
+            header("Location: ..\bookings.php?booking-mode=stage2");
+        }
+        else
+        {
+            header("Location: bookings.php?booking-mode=empty");
+        }
     }
     // Process submit button press for bikes and accessory selection form
     else if (isset($_POST["add-booking-bike-accessory-submit"]))
     {
         // get bikes and accessories from <select multiple> html tag
         // Both contain arrays
-        $bikes        = $_POST["add-booking-bike"];
-        $accessories  = $_POST["add-booking-accessory"];
-
-        // Remove descriptions from bike and accessory selections
-        for($i = 0; $i < count($bikes); $i++)
-        {
-            $bikes[$i] = explode(",", $bikes[$i])[0];
-        }
-
-        for($i = 0; $i < count($accessories); $i++)
-        {
-            $accessories[$i] = explode(",", $accessories[$i])[0];
-        }
+        $bikes        = comboboxArrayToItemIdArray($_POST["add-booking-bike"]);
+        $accessories  = comboboxArrayToItemIdArray($_POST["add-booking-accessory"]);
 
         // verify at least one bike
         if (empty($bikes))
         {
-            header("Location: bookings.php?booking-mode=stage2-invalid");
             echo "empty";
+            header("Location: ..\bookings.php?booking-mode=stage2-invalid");
         }
         else
         {
@@ -199,7 +203,7 @@
             // 1. Get number of hours (done)
             // 2. Get cost per hour of bikes (done)
             // 3. Get cost per hour of accessories (done)
-            $bookingDuration = $_SESSION["bookingDuration"];                // 1.
+            $bookingDuration = $_SESSION["addBooking"]["bookingDuration"];  // 1.
             $bikeHourly = getHourlyRateBikes($bikes);                       // 2.
             $accessoryHourly = 0;
             if (isset($accessories))
@@ -213,27 +217,16 @@
             // insert into booking_table the columns:
             // (cust_id, start_date, start_time, end_date, end_time, duration_of_booking, pick_up_location, drop_off_location, final_price)
             // Retrieve data from session
-            $custId = explode(",", $_SESSION["customer"])[0];
-            $startDate = $_SESSION["startDate"];
-            $startTime = $_SESSION["startTime"];
-            $endDate = $_SESSION["endDate"];
-            $endTime = $_SESSION["endTime"];
-            $pickUpLocation = explode(",", $_SESSION["pickupLocation"])[0];
-            $dropOffLocation = explode(",", $_SESSION["dropOffLocation"])[0];
+            $custId = explode(",", $_SESSION["addBooking"]["customer"])[0];
+            $startDate = $_SESSION["addBooking"]["startDate"];
+            $startTime = $_SESSION["addBooking"]["startTime"];
+            $endDate = $_SESSION["addBooking"]["endDate"];
+            $endTime = $_SESSION["addBooking"]["endTime"];
+            $pickUpLocation = explode(",", $_SESSION["addBooking"]["pickupLocation"])[0];
+            $dropOffLocation = explode(",", $_SESSION["addBooking"]["dropOffLocation"])[0];
 
-            // echo "$custId<br>";
-			// echo "$startDate<br>";
-			// echo "$startTime<br>";
-			// echo "$endDate<br>";
-			// echo "$endTime<br>";
-			// echo "$pickUpLocation<br>";
-			// echo "$dropOffLocation<br>";
-			// echo "$bookingDuration<br>";
-			// echo "$totalPrice<br>";
-			// echo "<br>";
             // booking duration set above
             // total price calculated above
-
             $data = [$custId, "$startDate", "$startTime", "$endDate", "$endTime", $bookingDuration, $pickUpLocation, $dropOffLocation, $totalPrice];
             // echo $data;
             $cols = "cust_id, start_date, start_time, end_date, expected_end_time, duration_of_booking, pick_up_location, drop_off_location, final_price";
@@ -244,9 +237,77 @@
             $conn = new BookingsDBConnection();
             $conn->addBooking($data, $bikes, $accessories);
 
-            header("Location: bookings.php?booking-mode=success");
+            header("Location: ..\bookings.php?booking-mode=success");
+        }
+    }
+    // check for change booking button being clicked
+    else if (isset($_POST["change-booking-btn"]))
+    {
+        // Get booking for ID. Button name is in format: "change,X"
+        // where X denotes the booking id
+        $buttonName = $_POST["change-booking-btn"];
+        $bookingId = explode(",", $buttonName)[1];
+
+        // Retrieve booking
+        $conn = new BookingsDBConnection();
+        $row = $conn->retrieveBookingForChangeBooking($bookingId); // ret from function is always 2D array
+
+        // set session variables
+        $_SESSION["changeBooking"] = array(
+            "custId"      => $row["cust_id"],
+            "custName"    => $row["name"],
+            "startTime"   => $row["start_time"],
+            "endTime"     => $row["expected_end_time"],
+            "startDate"   => $row["start_date"],
+            "endDate"     => $row["end_date"],
+            "pickupId"    => $row["pick_up_location_id"],
+            "pickupName"  => $row["pick_up_location"],
+            "dropoffId"   => $row["drop_off_location_id"],
+            "dropoffName" => $row["drop_off_location"]
+        );
+
+        echo print_r($_SESSION["changeBooking"]);
+
+        header("Location: ..\bookings.php?booking-mode=change");
+    }
+    else if (isset($_POST["change-booking-main-submit"]))
+    {
+        // Select new start/end dates/times -> select all new accessories and bikes.
+        // Same start/end dates/times -> Retrieve current bookings/accessories
+
+        // 1. Verify if changes to date/times have been made.
+        $pickupLocation = explode(": ", $_POST["change-booking-pick-up-location"]);
+        $dropOffLocation = explode(": ", $_POST["change-booking-drop-off-location"]);
+
+        // get original variables and potentially changed variables
+        $preVariables = $_SESSION["changeBooking"];
+        $postVariables = array(
+            "startTime"   => $_POST["change-booking-start-time"],
+            "endTime"     => $_POST["change-booking-end-time"],
+            "startDate"   => $_POST["change-booking-start-date"],
+            "endDate"     => $_POST["change-booking-end-date"]
+        );
+        $keys = array_keys($postVariables);
+
+        $changed = false;
+        for($i = 0; $i < count($keys); $i++)
+        {
+            $key = $keys[$i];
+            $change |= ($preVariables[$key] != $postVariables[$key]);
         }
 
+
+        if ($changed)
+        {
+            header("Location: ..\bookings.php?booking-mode=change-stage2");
+        }
+        else
+        {
+            header("Location: ..\bookings.php?booking-mode=change-stage2");
+        }
+    }
+    else if (isset($_POST["change-booking-bike-accessory-submit"]))
+    {
 
     }
     exit();

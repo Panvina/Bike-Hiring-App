@@ -60,7 +60,7 @@
 		 *
 		 *
 		 */
-		public function getBookingRows()
+		public function getBookingRows($condition=null)
 		{
 			$ret = array();
 
@@ -68,8 +68,8 @@
 				booking_table.booking_id, bike_inventory_table.name as `Bike Name`,
 				customer_table.name, booking_table.start_date, booking_table.start_time,
 				booking_table.end_date, booking_table.expected_end_time,
-				booking_table.duration_of_booking, lt1.name AS `Pick Up`,
-				lt2.name AS `Drop Off`, booking_table.final_price";
+				booking_table.duration_of_booking, lt1.name AS `pick_up_location`,
+				lt2.name AS `drop_off_location`, booking_table.final_price";
 
 			$bookingsTableName = $this->tablename;
 			$bookingBikeTableName = "booking_bike_table";	// Table linking bikes to bookings
@@ -97,6 +97,10 @@
 							LEFT JOIN $locationTableName lt2
     							ON $bookingsTableName.drop_off_location=lt2.location_id";
 
+			if ($condition != null) {
+				$query .= " WHERE $condition";
+			}
+
 			// perform query and verify successful
 			//echo "$query";
 			$res = $this->conn->query($query);
@@ -121,6 +125,65 @@
 			}
 
 			return $ret;
+		}
+
+		/**
+		 *	Retrieve all rows from bookings table, with associated data.
+		 *	USAGE:
+		 *
+		 *
+		 *
+		 */
+		public function retrieveBookingForChangeBooking($bookingId)
+		{
+			$ret = array();
+
+			$cols = "
+				booking_table.booking_id, customer_table.cust_id,
+				customer_table.name, booking_table.start_date, booking_table.start_time,
+				booking_table.end_date, booking_table.expected_end_time,
+				lt1.location_id AS `pick_up_location_id`, lt1.name AS `pick_up_location`,
+				lt2.location_id AS `drop_off_location_id`, lt2.name AS `drop_off_location`";
+
+			$bookingsTableName = $this->tablename;
+			$locationTableName = "location_table";			// Table with drop-off and pick-up locations
+			$custTableName = "customer_table";				// Table with customer details
+
+			$query =   "SELECT $cols
+						FROM $bookingsTableName
+						    LEFT JOIN $custTableName
+						    	ON $bookingsTableName.cust_id = $custTableName.cust_id
+							LEFT JOIN $locationTableName lt1
+								ON $bookingsTableName.pick_up_location=lt1.location_id
+							LEFT JOIN $locationTableName lt2
+    							ON $bookingsTableName.drop_off_location=lt2.location_id
+							WHERE $bookingsTableName.booking_id = $bookingId";
+
+			// perform query and verify successful
+			//echo "$query";
+			$res = $this->conn->query($query);
+			if ($res->num_rows > 0)
+			{
+				// append all rows to return array
+				while($row = $res->fetch_assoc())
+				{
+					array_push($ret, $row);
+					// For testing
+					if (false)
+					{
+						print_r($row);
+						echo "<br>";
+						break;
+					}
+				}
+			}
+			else
+			{
+				$res = null;
+			}
+
+			// return single row as result should be a single row
+			return $ret[0];
 		}
 
 		/**
@@ -156,20 +219,9 @@
 			$end_date = $bookingData[3];
 			$end_time = $bookingData[4];
 			$booking_duration = $bookingData[5];
-			$drop_off_location = $bookingData[6];
-			$pick_up_location = $bookingData[7];
+			$pick_up_location = $bookingData[6];
+			$drop_off_location = $bookingData[7];
 			$final_price = $bookingData[8];
-
-			echo "$cust_id<br>";
-			echo "$start_date<br>";
-			echo "$start_time<br>";
-			echo "$end_date<br>";
-			echo "$end_time<br>";
-			echo "$booking_duration<br>";
-			echo "$drop_off_location<br>";
-			echo "$pick_up_location<br>";
-			echo "$final_price<br>";
-			echo "<br>";
 
 			// Get data for transactions into single strings
 			// Booking data
@@ -221,6 +273,7 @@
 				}
 			}
 
+			// query below does not work.
 			//$query ="START TRANSACTION; $bookingTableQuery $getLastBookingIdQuery $bookingBikeTableQuery $bookingAccessoryTableQuery COMMIT;";
 
 			// NOTE: Multiple queries used, as according to https://stackoverflow.com/a/1307645
@@ -264,6 +317,11 @@
 			}
 
 			return $ret;
+		}
+
+		public function modifyBooking($bookingData, $bikeData, $accessoryData=array())
+		{
+			
 		}
 	}
 ?>

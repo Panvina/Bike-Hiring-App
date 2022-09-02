@@ -2,7 +2,7 @@
 	// Convert a PHP array to HTML select box options (combo boxes)
 	// - arr : PHP array
 	// - primaryKey : array key of id for combo box id
-	function arrayToComboBoxOptions($arr, $primaryKey=0)
+	function arrayToComboBoxOptions($arr, $primaryKey=0, $selectedId=null)
 	{
 		// Get keys for array
 		$keys = array_keys($arr[0]);
@@ -26,7 +26,14 @@
 				// echo "<br>val = $row[$key]<br>";
 			}
 			$option = implode(": ", $option);
-			echo "<option value='$id,$option'>$id: $option</option>";
+			if ($id != $selectedId)
+			{
+				echo "<option value='$id,$option'>$id: $option</option>";
+			}
+			else
+			{
+				echo "<option value='$id,$option' selected='selected'>$id: $option</option>";
+			}
 		}
 	}
 
@@ -44,18 +51,16 @@
         return preg_match("/^[a-zA-Z-' ]*$/",$name);
     }
 
-	// Check if any values within array are empty
-	// Returns true if any variables are empty
-	function checkEmptyVariables($arr)
+	// Performs empty() OR operations for each variable in $arr
+	function emptyArr($arr)
 	{
 		$ret = true;
 
-		for($i = 0; $i < count($arr) && $ret; $i++)
+		for($i = 0; $i < count($arr) && !$ret; $i++)
 		{
-			$ret &= !empty($arr[$i]);
-			// echo "<script></script>";
+			$ret |= empty($arr[$i]);
 		}
 
-		return !$ret;
+		return $ret;
 	}
 ?>

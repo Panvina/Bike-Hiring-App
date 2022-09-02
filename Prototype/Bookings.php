@@ -1,10 +1,20 @@
+
+ <!--
+ Project Name: Inverloch Bike Hire
+ Project Description: A website for hiring bikes. Front-end accompanied
+		by an admin dashboard.
+ File Description: HTML description for bookings page in administrator dashboard.
+ Contributor(s): Dabin Lee @ icelasersparr@gmail.com (PHP), Jake Hipworth (HTML)
+-->
+
+
 <?php
-    include_once "bookings-db.php";
-    include_once "customer-db.php";
-    include_once "locations-db.php";
-    include_once "accessory-inventory-db.php";
-    include_once "bike-inventory-db.php";
-    include_once "utils.php";
+    include_once "php-scripts\bookings-db.php";
+    include_once "php-scripts\customer-db.php";
+    include_once "php-scripts\locations-db.php";
+    include_once "php-scripts\accessory-inventory-db.php";
+    include_once "php-scripts\bike-inventory-db.php";
+    include_once "php-scripts\utils.php";
 
     session_start();
     $_SESSION['id'] = '123';
@@ -42,9 +52,9 @@
             >
             <div class="modal-content">
                 <span class="close-btn">&times;</span>
-                <h2> Add Booking </h2>
+                <h2> Add Booking - Booking Details </h2>
                 <!-- booking form -->
-                <form action="booking-popups.php" method="POST">
+                <form action="php-scripts\booking-popups.php" method="POST">
                     <!-- Select customer -->
                     <label>Customer:</label><br>
                     <select name="add-booking-customer" id="add-booking-customer"><br><br>
@@ -119,8 +129,9 @@
             <!-- Modal content for bikes and accessories -->
             <div class="modal-content">
                 <span class="close-btn">&times;</span>
+                <h2> Add Booking - Bikes and Accessories </h2>
                 <!-- Form for submitting selections to PHP -->
-                <form action="booking-popups.php" method="POST">
+                <form action="php-scripts\booking-popups.php" method="POST">
                     <!-- Bike list -->
                     <p>To select multiple values for either bikes or accessories, hold CTRL while clicking.</p>
                     <label>Bikes</label><br>
@@ -160,6 +171,171 @@
                 </form>
             </div>
         </div>
+
+        <!--
+            Change Booking Popup (main)
+
+            Workflow:
+                Select new start/end dates/times -> select all new accessories and bikes.
+                Same start/end dates/times -> Retrieve current bookings/accessories
+        -->
+        <div id="change-booking-main-modal" class="modal-overlay"
+            <?php
+                $mainModalBookingModes = ["change"];
+                if (!in_array($bookingMode, $mainModalBookingModes))
+                {
+                    echo "style='display: none';";
+                }
+                else
+                {
+                    echo "style='display: block';";
+                }
+            ?>
+            >
+            <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <h2> Modify Booking - Booking Details </h2>
+
+                <?php
+                    // Retrieve booking information to pre-populate form
+                    if (isset($_SESSION["changeBooking"]))
+                    {
+                        // customer data
+                        $custId =      $_SESSION["changeBooking"]["custId"];
+                        $custName =    $_SESSION["changeBooking"]["custName"];
+
+                        // booking time and date
+                        $startTime =   $_SESSION["changeBooking"]["startTime"];
+                        $endTime =     $_SESSION["changeBooking"]["endTime"];
+                        $startDate =   $_SESSION["changeBooking"]["startDate"];
+                        $endDate =     $_SESSION["changeBooking"]["endDate"];
+
+                        // pick-up and drop-off location information
+                        $pickupId =    $_SESSION["changeBooking"]["pickupId"];
+                        $pickupName =  $_SESSION["changeBooking"]["pickupName"];
+                        $dropoffId =   $_SESSION["changeBooking"]["dropoffId"];
+                        $dropoffName = $_SESSION["changeBooking"]["dropoffName"];
+                    }
+                ?>
+
+                <!-- booking form -->
+                <form action="php-scripts\booking-popups.php" method="POST">
+                    <!-- Display customer (non-modifiable) -->
+                    <label>Customer:</label><br>
+                    <select name="add-booking-customer" id="add-booking-customer" disabled>
+                        <?php
+                            // Populate customer combo box with all customers
+                            $conn = new CustomerDBConnection();
+                    		$customerList = $conn->get("cust_id, name");
+
+                    		if ($customerList != null)
+                    		{
+                                arrayToComboBoxOptions($customerList, "cust_id", $custId);
+                    		}
+                        ?>
+                    </select><br><br>
+
+                    <!-- Select start of booking -->
+                    <label>Start Date</label><br>
+                    <input name="change-booking-start-date" id="change-booking-start-date" type="date" value=<?php echo "$startDate"; ?>><br><br>
+                    <label>Start Time</label><br>
+                    <input name="change-booking-start-time" id="change-booking-start-time" type="time" min="09:00" max="17:00" value=<?php echo "$startTime"; ?>><br><br>
+
+                    <!-- Select end of booking -->
+                    <label>End Date</label><br>
+                    <input name="change-booking-end-date" id="change-booking-end-date" type="date" value=<?php echo "$endDate"; ?>><br><br>
+                    <label>End Time</label><br>
+                    <input name="change-booking-end-time" id="change-booking-end-time" type="time" min="09:00" max="17:00" value=<?php echo "$endTime"; ?>><br><br>
+
+                    <!-- Select pickup and dropoff locations -->
+                    <label>Pick-Up Location</label><br>
+                    <select name="change-booking-pick-up-location" id="change-booking-pick-up-location"><br><br>
+                        <?php
+                            // Populate list of pickup locations
+                            $conn = new LocationsDBConnection();
+                            $pickupLocations = $conn->get("location_id, name", "pick_up_location=1");
+
+                            if ($pickupLocations != null)
+                            {
+                                arrayToComboBoxOptions($pickupLocations, "location_id", $pickupId);
+                            }
+                        ?>
+                    </select><br><br>
+                    <label>Drop-off Location</label><br>
+                    <select name="change-booking-drop-off-location" id="change-booking-drop-off-location"><br><br>
+                        <?php
+                            // Populate list of dropoff locations
+                            $pickupLocations = $conn->get("location_id, name", "drop_off_location=1");
+
+                            if ($pickupLocations != null)
+                            {
+                                arrayToComboBoxOptions($pickupLocations, "location_id", $dropoffId);
+                            }
+                        ?>
+                    </select><br><br>
+                    <button type="submit" name="change-booking-main-submit"> Select Bikes </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Form for adding bikes and accessories to bookings -->
+        <div id="change-booking-bikes-modal" class="modal-overlay"
+        <?php
+            if ($bookingMode != "change-stage2")
+            {
+                echo "style='display: none';";
+            }
+            else
+            {
+                echo "style='display: block';";
+            }
+        ?>
+        >
+            <!-- Modal content for bikes and accessories -->
+            <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <h2 >Modify Booking - Bikes and Accessories </h2>
+                <!-- Form for submitting selections to PHP -->
+                <form action="php-scripts\booking-popups.php" method="POST">
+                    <!-- Bike list -->
+                    <p>To select multiple values for either bikes or accessories, hold CTRL while clicking.</p>
+                    <label>Bikes</label><br>
+                    <!-- Get bikes as array (for PHP) -->
+                    <select name="change-booking-bike[]" id="add-booking-bike" multiple><br><br>
+                        <?php
+                            // Get DB connection object
+                            $conn = new BikeInventoryDBConnection();
+
+                            // Populate list of dropoff locations
+                            $bikes = $conn->get("bike_id, name");
+
+                            if ($bikes != null)
+                            {
+                                arrayToComboBoxOptions($bikes, "bike_id");
+                            }
+                        ?>
+                    </select><br><br>
+                    <!-- Accessory list -->
+                    <label>Accessories</label><br>
+                    <!-- Get accessories as array (for PHP) -->
+                    <select name="change-booking-accessory[]" id="add-booking-accessory" multiple><br><br>
+                        <?php
+                            // Get DB connection object
+                            $conn = new AccessoryInventoryDBConnection();
+
+                            // Populate list of dropoff locations
+                            $accessories = $conn->get("accessory_id, name");
+
+                            if ($accessories != null)
+                            {
+                                arrayToComboBoxOptions($accessories, "accessory_id");
+                            }
+                        ?>
+                    </select><br><br>
+                    <button type="submit" name="change-booking-bike-accessory-submit"> Submit Changes </button>
+                </form>
+            </div>
+        </div>
         <!-- Side navigation -->
         <nav>
             <div class = "sideNavigation">
@@ -181,6 +357,11 @@
 
             <!-- Add Booking pop up -->
             <button type="button" id="add-booking-btn">+ Add Booking</button>
+
+            <!-- Add Booking pop up -->
+            <form action="php-scripts\booking-popups.php" method="POST">
+                <button type="submit" name="change-booking-btn" value="change,27">Modify Booking</button>
+            </form>
 
             <!-- List of available bookings -->
             <table class="TableContent">

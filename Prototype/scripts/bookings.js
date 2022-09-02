@@ -1,9 +1,27 @@
+///
+/// Project Name: Inverloch Bike Hire
+/// Project Description: A website for hiring bikes. Front-end accompanied
+///		by an admin dashboard.
+/// File Description: Javascript implementation for admin dashboard bookings page.
+/// Contributor(s): Dabin Lee @ icelasersparr@gmail.com
+///
+
+/**
+ * All bookings in bookings.js consist of two parts.
+ * 1. Select dates and other non-bike/accessory information
+ * 2. Select bikes and accessories for given days
+ */
+
 // Get modals
 var add_booking_main_modal = document.getElementById("add-booking-main-modal");
 var add_booking_bikes_modal = document.getElementById("add-booking-bikes-modal");
 
+var change_booking_main_modal = document.getElementById("change-booking-main-modal");
+var change_booking_bikes_modal = document.getElementById("change-booking-bikes-modal");
+
 // Get popup buttons
 var add_booking_btn = document.getElementById("add-booking-btn");
+var change_booking_btn = document.getElementById("change-booking-btn");
 
 // Get the close-btn <span> elements that closes the modal
 var close_btns = document.getElementsByClassName("close-btn");
@@ -15,6 +33,13 @@ add_booking_btn.onclick = function()
 	hideModal(add_booking_bikes_modal);
 }
 
+// // show main change booking modal
+// change_booking_btn.onclick = function()
+// {
+// 	showModal(change_booking_main_modal);
+// 	hideModal(change_booking_bikes_modal);
+// }
+
 // When the user clicks on a close button (x), close the modal
 for (let i = 0; i < close_btns.length; i++)
 {
@@ -22,6 +47,8 @@ for (let i = 0; i < close_btns.length; i++)
 	{
 		hideModal(add_booking_main_modal);
 		hideModal(add_booking_bikes_modal);
+        hideModal(change_booking_main_modal);
+        hideModal(change_booking_bikes_modal);
 		window.location.replace("bookings.php");
 	}
 }
