@@ -2,6 +2,8 @@
 	// Convert a PHP array to HTML select box options (combo boxes)
 	// - arr : PHP array
 	// - primaryKey : array key of id for combo box id
+	//
+	// Used in Alex's modals
 	function arrayToComboBoxOptions($arr, $primaryKey=0, $selectedId=null)
 	{
 		// Get keys for array
@@ -37,6 +39,22 @@
 		}
 	}
 
+	/**
+     * Convert combobox option to item id
+     * Removes describing strings
+     *
+	 * Used in Alex's modals
+     */
+    function comboboxArrayToItemIdArray($arrays)
+    {
+        for($i = 0; $i < count($arrays); $i++)
+        {
+            $arrays[$i] = explode(",", $arrays[$i])[0];
+        }
+
+		return $arrays;
+    }
+
 	// Validate email
 	// Return true if valid email
 	function validEmail($email)
@@ -59,6 +77,41 @@
 		for($i = 0; $i < count($arr) && !$ret; $i++)
 		{
 			$ret |= empty($arr[$i]);
+		}
+
+		return $ret;
+	}
+
+	// Combine data with columns into single array of pairs
+	function joinDataAndCols($data, $cols)
+	{
+		$ret = array();
+		$lenData = count($data);
+
+		echo "<br><br>TEST ";
+		print_r($data);
+		echo "<br><br>TEST 2";
+		print_r($cols);
+		echo "<br><br>";
+
+		if ($lenData != count($cols))
+		{
+			$ret = null;
+		}
+		else
+		{
+			for($i = 0; $i < $lenData; $i++)
+			{
+				$col = $cols[$i];
+				$dat = $data[$i];
+
+				$str = "";
+				$str .= "$col";
+				$str .= "=";
+				$str .= "'$dat'";
+
+				array_push($ret, $str);
+			}
 		}
 
 		return $ret;

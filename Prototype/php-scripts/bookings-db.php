@@ -1,3 +1,7 @@
+<!--
+
+
+-->
 <?php
 	include_once "backend-connection.php";
 
@@ -231,7 +235,7 @@
 			$bookingTableQuery = "INSERT INTO $this->tablename (cust_id, start_date, start_time, end_date, expected_end_time, duration_of_booking, pick_up_location, drop_off_location, final_price) VALUES ($bookingData); ";
 
 			// query to save last insert id (from booking) as booking id
-			$getLastBookingIdQuery = "SET @booking_id=LAST_INSERT_ID();  ";
+			$getLastBookingIdQuery = "SET @booking_id=LAST_INSERT_ID(); ";
 
 			// construct booking bike table query
 			// need to repeat for count(explode(",", $bike_id))
@@ -249,7 +253,6 @@
 					$bookingBikeTableQuery .= ';';
 				}
 			}
-
 
 			// construct booking bike table query
 			// need to repeat for count(explode(",", $bike_id))
@@ -272,9 +275,6 @@
 					}
 				}
 			}
-
-			// query below does not work.
-			//$query ="START TRANSACTION; $bookingTableQuery $getLastBookingIdQuery $bookingBikeTableQuery $bookingAccessoryTableQuery COMMIT;";
 
 			// NOTE: Multiple queries used, as according to https://stackoverflow.com/a/1307645
 			// PHP's MySQL module does not allow multiple queries. Testing supports this.
@@ -319,9 +319,140 @@
 			return $ret;
 		}
 
-		public function modifyBooking($bookingData, $bikeData, $accessoryData=array())
+		/**
+		 * Modify a booking of id `$bookingId`
+		 * $bookingData is of order: start_date, start_time, end_date, expected_end_time,
+		 *							 duration_of_booking, pick_up_location, drop_off_location,
+		 *							 final_price
+		 *
+		 * 1. start transaction
+		 * 2.
+		 *
+		 */
+		public function modifyBooking($bookingId, $bookingData, $bikeData, $accessoryData=array())
 		{
-			
+			// compile updated data into pairs
+			$updatedData = joinDataAndCols($bookingData, array("start_date", "start_time", "end_date", "expected_end_time", "duration_of_booking", "pick_up_location", "drop_off_location", "final_price"));
+
+			// construct booking bike table query
+			// need to repeat for count(explode(",", $bike_id))
+			echo "<br><br>";
+			print_r($bookingId);
+			echo "<br><br>";
+			print_r($bookingData);
+			echo "<br><br>";
+			print_r($bikeData);
+			echo "<br><br>";
+			print_r($accessoryData);
+			echo "<br><br>Updates: ";
+			print_r($updatedData);
+			echo "<br><br>";
+
+			$bookingBikeTableQuery = "INSERT INTO booking_bike_table (booking_id, bike_id) VALUES";
+			for($i = 0; $i < count($bikeData); $i++)
+			{
+				$bikeId = $bikeData[$i];
+				$bookingBikeTableQuery .= "($bookingId, $bikeId)";
+				if ($i < count($bikeData) - 1)
+				{
+					$bookingBikeTableQuery .= ',';
+				}
+				else
+				{
+					$bookingBikeTableQuery .= ';';
+				}
+			}
+
+			// construct booking bike table query
+			// need to repeat for count(explode(",", $bike_id))
+			$bookingAccessoryTableQuery = "";
+			if (count($accessoryData) > 0)
+			{
+				$bookingAccessoryTableQuery = "INSERT INTO booking_accessory_table (booking_id, accessory_id) VALUES ";
+				for($i = 0; $i < count($accessoryData); $i++)
+				{
+					$accessoryId = $accessoryData[$i];
+					$bookingAccessoryTableQuery .= "($bookingId, $accessoryId) ";
+
+					if ($i < count($accessoryData) - 1)
+					{
+						$bookingAccessoryTableQuery .= ',';
+					}
+					else
+					{
+						$bookingAccessoryTableQuery .= ';';
+					}
+				}
+			}
+
+			/*
+			 * BEGIN QUERIES
+			 */
+			$queries = array();
+			// start transaction
+			array_push($queries, "START TRANSACTION;");
+
+			// edit BookingsTable entry
+			// columns: start date, start time, end date,
+			// end time, pickup location, dropoff location
+			$updatedData = implode(", ", $updatedData);
+			array_push($queries, "UPDATE $this->tablename SET $updatedData WHERE booking_id=$bookingId;");
+
+			// delete all BookingAccessory and BookingBike
+			// table rows with same booking_id
+			array_push($queries, "DELETE FROM booking_bike_table WHERE booking_id=$bookingId;");
+			array_push($queries, "DELETE FROM booking_accessory_table WHERE booking_id=$bookingId;");
+
+			// readd BookingAccessory and BookingBike rows
+			array_push($queries, $bookingBikeTableQuery);
+			array_push($queries, $bookingAccessoryTableQuery);
+
+			// end transaction
+			array_push($queries, "COMMIT;");
+
+			$success = true;
+			for($i = 0; $i < count($queries); $i++)
+			{
+				$query = $queries[$i];
+				echo "$query<br>";
+				$success &= !($this->conn->query($query));
+			}
+
+			return $success;
+		}
+
+		/**
+		 * Delete booking with some bookingId
+		 */
+		function deleteBooking($bookingId)
+		{
+			/*
+			 * BEGIN QUERIES
+			 */
+			$queries = array();
+			// start transaction
+			array_push($queries, "START TRANSACTION;");
+
+			// delete all bookings, BookingAccessory, and BookingBike
+			// table rows with same booking_id
+			array_push($queries, "DELETE FROM booking_bike_table WHERE booking_id=$bookingId;");
+			array_push($queries, "DELETE FROM booking_accessory_table WHERE booking_id=$bookingId;");
+
+			// This must be done last due to foreign key constraints
+			array_push($queries, "DELETE FROM booking_table WHERE booking_id=$bookingId;");
+
+			// end transaction
+			array_push($queries, "COMMIT;");
+
+			$success = true;
+			for($i = 0; $i < count($queries); $i++)
+			{
+				$query = $queries[$i];
+				echo "$query<br>";
+				$success &= !($this->conn->query($query));
+			}
+
+			return $success;
 		}
 	}
 ?>

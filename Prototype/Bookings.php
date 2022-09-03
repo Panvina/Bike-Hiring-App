@@ -301,7 +301,7 @@
                     <p>To select multiple values for either bikes or accessories, hold CTRL while clicking.</p>
                     <label>Bikes</label><br>
                     <!-- Get bikes as array (for PHP) -->
-                    <select name="change-booking-bike[]" id="add-booking-bike" multiple><br><br>
+                    <select name="change-booking-bike[]" id="change-booking-bike" multiple><br><br>
                         <?php
                             // Get DB connection object
                             $conn = new BikeInventoryDBConnection();
@@ -318,7 +318,7 @@
                     <!-- Accessory list -->
                     <label>Accessories</label><br>
                     <!-- Get accessories as array (for PHP) -->
-                    <select name="change-booking-accessory[]" id="add-booking-accessory" multiple><br><br>
+                    <select name="change-booking-accessory[]" id="change-booking-accessory" multiple><br><br>
                         <?php
                             // Get DB connection object
                             $conn = new AccessoryInventoryDBConnection();
@@ -355,13 +355,19 @@
             <img src="img/icons/account-search.png" alt="Customer Search Logo"/>
             <input type="text"  placeholder="Search">
 
-            <!-- Add Booking pop up -->
-            <button type="button" id="add-booking-btn">+ Add Booking</button>
+            <div>
+                <!-- Add Booking pop up -->
+                <button type="button" id="add-booking-btn">+ Add Booking</button>
 
-            <!-- Add Booking pop up -->
-            <form action="php-scripts\booking-popups.php" method="POST">
-                <button type="submit" name="change-booking-btn" value="change,27">Modify Booking</button>
-            </form>
+                <!-- Change Booking pop up -->
+                <form action="php-scripts\booking-popups.php" method="POST">
+                    <button type="submit" name="change-booking-btn" value="change,27">Modify Booking</button>
+                </form>
+                <!-- Delete booking button -->
+                <form action="php-scripts\booking-popups.php" method="POST">
+                    <button type="submit" name="delete-booking-btn" value="delete,27">Delete Booking</button>
+                </form>
+            </div>
 
             <!-- List of available bookings -->
             <table class="TableContent">
