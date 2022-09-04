@@ -6,7 +6,7 @@
     include_once("backend-connection.php");
     include_once "utils.php";
     //create the connection with the database
-    $conn = new DBConnection("customer_table");
+    $conn = new DBConnection("employee_table");
 
     //created a empty array to hold the fetched data
     $fetchData = array();
@@ -14,7 +14,7 @@
     $pk = $_POST['deleteButton'];
 
     //establish the columns of the database for querying
-    $cols = "user_name, name, phone_number, email, street_address, suburb, post_code, licence_number, state";
+    $cols = "user_name, name, phone_number, email, street_address, suburb, post_code, state";
     //establish the where condition for the query
     $condition = "user_name='$pk'";
     //fetch the data and assign it to the array
@@ -29,30 +29,30 @@
         //create variable for the session variable due to string errors when querying
         $pk = $_SESSION["user_name"];
         //redirects back to the form to double check user wants to delete data
-        header("Location: Customer.php?delete=$pk");
+        header("Location: staff.php?delete=$pk");
         exit();
     }
 
     //checks to see if the yes button in the delete form has been pressed
-    if (isset($_POST["submitDeleteCustomer"]))
+    if (isset($_POST["submitDeleteStaff"]))
     {
         //gets the primary key that was used in the row
-        $pk = $_POST["submitDeleteCustomer"];
+        $pk = $_POST["submitDeleteStaff"];
         //deletes the data from the table and checks to see if it was successful
         if ($conn->delete("user_name", "'$pk'") == true)
         {
-            header("Location: Customer.php?delete=true");
+            header("Location: staff.php?delete=true");
         }
         else
         {
-            header("Location: Customer.php?delete=false");
+            header("Location: staff.php?delete=false");
         }
     }
 
     //If the no button was pressed, redirects back to the customer page
-    if (isset($_POST["CancelDeleteCustomer"]))
+    if (isset($_POST["CancelDeleteStaff"]))
     {
-     header("Location: Customer.php?");
+     header("Location: staff.php?");
      exit();
     }
 ?> 

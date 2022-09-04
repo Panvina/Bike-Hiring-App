@@ -214,21 +214,23 @@ nav a {
  }
 
 /* The Close Button */
-.close,
+.Insertclose,
 .updateFormClose,
-.closeDeleteCustomerForm {
+.closeDeleteForm {
   color: #aaa;
   float: right;
   font-size: 28px;
   font-weight: bold;
 }
 
-.close:hover,
-.close:focus,
+.Insertclose:hover,
+.Insertclose:focus,
 .updateFormClose:hover,
 .updateFormClose:focus,
-.closeDeleteCustomerForm:hover,
-.closeDeleteCustomerForm:focus{
+.deleteButton:hover,
+.deleteButton:focus,
+.closeDeleteForm:hover,
+.closeDeleteForm:focus{
   color: black;
   text-decoration: none;
   cursor: pointer;
@@ -244,7 +246,7 @@ nav a {
   padding-top: 5%;
 }
 
-#UpdateCustomer{
+#UpdateButton{
   background-color: darkcyan;
   border: none;
   color: white;
@@ -256,7 +258,7 @@ nav a {
 }
 
 
-.UpdateCustomer, .deleteCustomer{
+.UpdateButton, .deleteButton{
   background-color: darkcyan !important;
   border: none !important;
   color: white!important;
