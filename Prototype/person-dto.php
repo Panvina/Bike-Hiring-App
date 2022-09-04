@@ -5,14 +5,14 @@
     include 'backend-connection.php';
 
     class PersonDTO{
-        public $username="";
-        public $name ="";
-        public $phoneN="";
-        public $email="";
-        public $address="";
-        public $license="";
-        public $state="";
-        public $role="";
+        private $username="";
+        private $name ="";
+        private $phoneN="";
+        private $email="";
+        private $address="";
+        private $license="";
+        private $state="";
+        private $role="";
 
         //if the login is an email, calls authByEmail function.
         function __construct($login){
@@ -67,7 +67,6 @@
 
         //authenticate the user when they log in through the popup on the website. 
         function authenticateUser($pwd){
-            $login =$this->getUsername();
             $id = $this->getUsername();
             $dbCon= new DBConnection();           
             $userID =$dbCon->get('accounts_table', 'user_name');

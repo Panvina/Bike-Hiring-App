@@ -27,8 +27,10 @@
     </div>
     <?php 
     include 'person-dto.php';
+    include 'booking-dto.php';
     $email = $_SESSION["login-email"];
 
+    $bookingDetail = new BookingDTO($email);
     $userDetail = new PersonDTO($email);
     $userDetail->getDetails();
     $name = $userDetail->getName();
@@ -55,6 +57,7 @@
             </div>
         </div>
     </div>" ?>
+    <?php $bookingDetail->getDetails();?> 
     <footer><?php include 'footer.php'?></footer>
 </body>
 </html>
