@@ -1,69 +1,381 @@
 <?php
+    session_start();
     //connection to the database
-    include("backend-connection.php");
-    $conn = new DBConnection("localhost", "root", "", "bike_hiring_system");
-?>
 
+    include_once("backend-connection.php");
+    include_once "utils.php";
+    $conn = new DBConnection("customer_table");
+?>
 
 <!DOCTYPE html>
 <html>
-    <link rel="stylesheet" href="style/Jake_style.css">
-    <head>
-        <!-- Header -->
-        <title> Customers </title>
-        <h1 class="header"> <img src="img/photos/Inverloch_Logo3.png" alt="Inverloch Logo" id="Logo"/> Customers </h1>
-    </head>
-    <body>
-        <!-- Side navigation -->
-        <nav>
-            <div class = "sideNavigation">
-                <a href = "Dashboard.php"> <img src= "img/icons/bulletin-board.png" alt="Dashboard Logo" /> Dashboard </a> <br>
-                <a class="active" href = "Customer.php"> <img src= "img/icons/account-group.png" alt="Customer Logo" />  Customer  </a> <br>
-                <a href= "Inventory.php"> <img src= "img/icons/bicycle.png" alt="Inventory Logo" />  Inventory </a> <br>
-                <a href= "Bookings.php"> <img src= "img/icons/book-open-blank-variant.png" alt="Bookings Logo" /> Bookings </a> <br>
-                <a href= "Block_Out_Date.php"> <img src= "img/icons/calendar.png" alt="Block out date Logo" /> Block Out Dates </a> <br>
-                <a href= "Locations.php"> <img src= "img/icons/earth.png" alt="Locations Logo" /> Locations </a> <br>
-            </div>
-         </nav>
+<link rel="stylesheet" href="style/Jake_style.css">
 
-         
-         <!-- Block of content in center -->
-         <div class="Content">
-           <h1> All Customers</h1>
+<head>
+    <!-- Header -->
+    <title> Customers </title>
+    <h1 class="header"> <img src="img/photos/Inverloch_Logo3.png" alt="Inverloch Logo" id="Logo" /> Customers </h1>
+</head>
 
-           <!-- Search bar with icons --> 
-           <img src="img/icons/account-search.png" alt="Customer Search Logo"/>
-           <input type="text"  placeholder="Search">
-
-           <!-- Add Customer pop up -->
-           <button id="login-launch-btn">+ New Customer</button>
-
-           <div id="login-overlay" class="modal-overlay" >
-                <div class="modal-content">
-
-                </div>
-           </div>
-
-           <!-- List of current customers -->
-           <table class="TableContent">
-                <tr>
-                    <th> Name </th>
-                    <th> Phone Number </th>
-                    <th> Email </th>
-                    <th> Address </th>
-                    <th> Licence Number </th>
-                    <th> Username </th>
-                </tr>
-                <tr>
-                    <td> John Smith </td>
-                    <td> 012345678 </td>
-                    <td> JohnSmith@gmail.com </td>
-                    <td> Johns Address </td>
-                    <td> 0123456 </td>
-                    <td> JohhnySmithy </td>
-                </tr>
-           </table>
+<body>
+    <!-- Side navigation -->
+    <nav>
+        <div class="sideNavigation">
+            <a href="Dashboard.php"> <img src="img/icons/bulletin-board.png" alt="Dashboard Logo" /> Dashboard </a> <br>
+            <a class="active" href="Customer.php"> <img src="img/icons/account-group.png" alt="Customer Logo" />
+                Customer </a> <br>
+            <a href="Inventory.php"> <img src="img/icons/bicycle.png" alt="Inventory Logo" /> Inventory </a> <br>
+            <a href="bookings.php"> <img src="img/icons/book-open-blank-variant.png" alt="Bookings Logo" /> Bookings
+            </a> <br>
+            <a href="Block_Out_Date.php"> <img src="img/icons/calendar.png" alt="Block out date Logo" /> Block Out Dates
+            </a> <br>
+            <a href="Locations.php"> <img src="img/icons/earth.png" alt="Locations Logo" /> Locations </a> <br>
         </div>
+    </nav>
+
+    <!-- Block of content in center -->
+    <div class="Content">
+        <h1> All Customers</h1>
+
+        <!-- Search bar with icons -->
+        <img src="img/icons/account-search.png" alt="Customer Search Logo" />
+        <input type="text" placeholder="Search">
+
+        <!-- Add Customer pop up -->
+       
+        <button id="CustomerPopUp" class="CustomerPopUp">+ New Customer</button>
+
+        <!-- List of current customers -->
+        <table class="TableContent">
+            <tr>
+                <?php
+                    $cols = "user_name, name, phone_number, email, street_address, suburb, post_code, licence_number, state";
+                    $rows = $conn->get($cols);
+     
+                    $tableHeadings = "User Name, Name, Phone Number, Email, Street Address, Suburb, Post Code, Licence Number, State";
+
+                    $cols = explode(',', $cols);
+                    $tableHeadings = explode(',', $tableHeadings);
+
+                    $count = count($cols);
+                    for($x = 0; $x < $count; $x++)
+                    {
+                        $col = trim($tableHeadings[$x]);
+                        echo "<th> $col </th>";
+                    }
+                    echo "<th> Edit </th>"
+                ?> 
+            </tr>
+            <?php       
+                if ($rows == null)
+                {
+                    $rows = array();
+                    $tmp = array();
+                    for($x = 0; $x < count($cols); $x++)
+                    {
+                        array_push($tmp, "null");
+                    }
+                    array_push($rows, $tmp);
+                }
+
+                $keys = array_keys($rows[0]);
+
+                $primaryColumn = "user_name";
         
-    </body>
+                for($x = 0; $x < count($rows); $x++)
+                {
+                    echo "<tr>";
+                    for($y = 0; $y < count($keys); $y++)
+                    {
+                        $row = $rows[$x];
+                        $key = $keys[$y];
+                        $data = $row[$key];
+                        echo "<td> $data </td>";
+
+                        if($key == $primaryColumn)
+                        {
+                            $primaryKey = $data;
+                        }
+                    }
+                    $_SESSION["primaryKey"] = $primaryKey;
+                    echo "<form action='customer-update-script.php' method='POST' event.preventDefault() ><td>  <button type='submit' id= '$primaryKey' class='UpdateCustomer' name='updateCustomer' 
+                    value='$primaryKey'> Update Customer </button> </td> </form>";
+                    echo "</tr>";
+                }
+            ?>
+        </table>
+    </div>
+
+    <!-- Create the initial window for the pop up -->
+    <div id="CustomerModal" class="modal"<?php
+            if(isset($_GET["insert"]))
+            {
+                if ($_GET["insert"] != "true")
+                {
+                    echo "style = 'display:inline-block'";
+                }
+                else if($_GET["update"] == "true")
+                {
+                    echo "style = 'display:none'";
+                }
+            }
+        ?>>
+
+        <!-- Creates the content within the pop up -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+           <!--<form name="createCustomer" action="customer-script.php" method="get" event.preventDefault() onsubmit="return validateForm()> -->
+           <form action="customer-script.php" method="POST" event.preventDefault()>
+                <h1> Create a customer </h1>
+                <div>
+                    <h2> User Name: </h2>
+                    <input type="text" name="userName">
+                    <span class="error"> 
+                        <?php 
+                            if (isset($_GET["insert"]))
+                            {
+                                $userName = $_GET["insert"];
+                                if ($userName == "userNameErr")
+                                {
+                                    echo '<p>* User name cannot be empty</p>';
+                                }
+                            }
+                        ?>
+                    </span>
+                </div>
+                <div>
+                    <h2> Name: </h2>
+                    <input type="text" name="name">
+                    <span class="error"> 
+                        <?php 
+                            if (isset($_GET["insert"]))
+                            {
+                                $name = $_GET["insert"];
+                                if ($name == "nameErr")
+                                {
+                                    echo '<p>* Name cannot be empty</p>';
+                                }
+                            }
+                        ?>
+                    </span>
+                </div>
+                <div>
+                    <h2> Phone Number: </h2>
+                    <input type="text" name="phoneNumber">
+                    <span class="error"> 
+                        <?php 
+                            if (isset($_GET["insert"]))
+                            {
+                                $phoneNumber = $_GET["insert"];
+                                if ($phoneNumber == "phoneNumberErr")
+                                {
+                                    echo '<p>* Phone number cannot be empty</p>';
+                                }
+                            }
+                        ?>
+                    </span>
+                </div>
+                <div>
+                    <h2> Email: </h2>
+                    <input type="text" name="email">
+                    <span class="error"> 
+                        <?php 
+                            if (isset($_GET["insert"]))
+                            {
+                                $email = $_GET["insert"];
+                                if ($email == "emailErr")
+                                {
+                                    echo '<p>* Email cannot be empty</p>';
+                                }
+                            }
+                        ?>
+                    </span>
+                </div>
+                <div>
+                    <h2> Street Address </h2>
+                    <input type="text" name="streetAddress">
+                    <span class="error"> 
+                        <?php 
+                            if (isset($_GET["insert"]))
+                            {
+                                $streetAddress = $_GET["insert"];
+                                if ($streetAddress == "streetAddressErr")
+                                {
+                                    echo '<p>* Street Address cannot be empty</p>';
+                                }
+                            }
+                        ?>
+                    </span>
+                </div>
+                <div>
+                    <h2> Suburb </h2>
+                    <input type="text" name="suburb">
+                    <span class="error"> 
+                        <?php 
+                            if (isset($_GET["insert"]))
+                            {
+                                $suburb = $_GET["insert"];
+                                if ($suburb == "suburbErr")
+                                {
+                                    echo '<p>* Suburb cannot be empty</p>';
+                                }
+                            }
+                        ?>
+                    </span>
+                </div>
+                <div>
+                    <h2> Post Code </h2>
+                    <input type="text" name="postCode">
+                    <span class="error"> 
+                        <?php 
+                            if (isset($_GET["insert"]))
+                            {
+                                $postCode = $_GET["insert"];
+                                if ($postCode == "postCodeErr")
+                                {
+                                    echo '<p>* Post code cannot be empty</p>';
+                                }
+                            }
+                        ?>
+                    </span>
+                </div>
+                <div>
+                    <h2> Licence Number </h2>
+                    <input type="text" name="licenceNumber">
+                    <span class="error"> 
+                        <?php 
+                            if (isset($_GET["insert"]))
+                            {
+                                $licenceNumber = $_GET["insert"];
+                                if ($licenceNumber == "licenceNumberErr")
+                                {
+                                    echo '<p>* Licence number cannot be empty</p>';
+                                }
+                            }
+                        ?>
+                    </span>
+                </div>
+                <div>
+                    <h2> State </h2>
+                    <input type="text" name="state">
+                    <span class="error"> 
+                        <?php 
+                            if (isset($_GET["insert"]))
+                            {
+                                $state = $_GET["insert"];
+                                if ($state == "stateErr")
+                                {
+                                    echo '<p>* State cannot be empty</p>';
+                                }
+                            }
+                        ?>
+                    </span>
+                </div>
+                </br>
+                <div>
+                    <button type="submit" name="SubmitCustomer">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="UpdateCustomerModal" class="modal" <?php
+            if(isset($_GET["update"]))
+            {
+                if ($_GET["update"] == "notEmpty")
+                {
+                    echo "style = 'display:inline-block'";
+                    //unset($_GET[);
+                }
+                else if($_GET["update"] == "empty")
+                {
+                    echo "style = 'display:none'";
+                    //($_GET[);
+                }
+            }
+        ?>>
+
+        <!-- Creates the content within the pop up -->
+        <div class="modal-content" >
+        
+            <span class="updateFormClose">&times;</span>
+            <form action="customer-update-script.php" method="POST" event.preventDefault()>
+
+                <h1> Update a customer </h1>
+                <div>
+                    <h2> User Name: </h2>
+                    <input type="text" name="userName" readonly value = "<?php echo $_SESSION['user_name'];?>">
+                </div>
+                <div>
+                    <h2> Name: </h2>
+                    <input type="text" name="name" value = "<?php echo $_SESSION['name'];?>">
+                </div>
+                <div>
+                    <h2> Phone Number: </h2>
+                    <input type="text" name="phoneNumber" value = "<?php echo $_SESSION['phone_number'];?>">
+                </div>
+                <div>
+                    <h2> Email: </h2>
+                    <input type="text" name="email" value = "<?php echo $_SESSION['email'];?>">
+                </div>
+                <div>
+                    <h2> Street Address </h2>
+                    <input type="text" name="streetAddress" value = "<?php echo $_SESSION['street_address'];?>">
+                </div>
+                <div>
+                    <h2> Suburb </h2>
+                    <input type="text" name="suburb" value = "<?php echo $_SESSION['suburb'];?>">
+                </div>
+                <div>
+                    <h2> Post Code </h2>
+                    <input type="text" name="postCode" value = "<?php echo $_SESSION['post_code'];?>">
+                </div>
+                <div>
+                    <h2> Licence Number </h2>
+                    <input type="text" name="licenceNumber" value = "<?php echo $_SESSION['licence_number'];?>">
+                </div>
+                <div>
+                    <h2> State </h2>
+                    <input type="text" name="state" value = "<?php echo $_SESSION['state'];?>">
+                </div>
+                </br>
+                    <button type="submit" name="submitUpdateCustomer">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+</body>
+
 </html>
+<!-- Link the js file needed for pop up -->
+<script src="scripts/customer_popup.js"></script>
+
+<?php
+
+if (isset($_GET["insert"]))
+{
+    if ($_GET["insert"] == "true")
+    {
+        echo "<p class = 'echo' id='tempEcho'>  Record successfuly created </p>";
+    }
+    else if ($_GET["insert"] == "false")
+    {
+        echo "<p class = 'echo'>  Record was not created successfuly </p>";
+    }
+}
+
+if (isset($_GET["update"]))
+{
+    if ($_GET["update"] == "true")
+    {
+        echo "<p class = 'echo' id='tempEcho'>  Record successfuly updated </p>";
+    }
+    else if ($_GET["insert"] == "false")
+    {
+        echo "<p class = 'echo' id='tempEcho'> Record was not updated successfuly </p>";
+    }
+}
+
+?>
