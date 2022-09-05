@@ -167,7 +167,7 @@
         }
         else
         {
-            header("Location: bookings.php?booking-mode=empty");
+            header("Location: ..\bookings.php?booking-mode=empty");
         }
     }
     // Process submit button press for bikes and accessory selection form

@@ -33,7 +33,7 @@
 		 *		- CustomerID, Start Date, End Date, Start Time, End Time, Duration, Pick-up, Drop-off, and final price
 		 *			- Final Price =
 		 */
-		public function insert($columns="cust_id, start_date, start_time, expected_end_time, end_time, duration_of_booking, pick_up_location, drop_off_location, final_price", $data)
+		public function insert($columns="user_name, start_date, start_time, expected_end_time, end_time, duration_of_booking, pick_up_location, drop_off_location, booking_fee", $data)
 		{
 			$ret = FALSE;
 
@@ -73,7 +73,7 @@
 				customer_table.name, booking_table.start_date, booking_table.start_time,
 				booking_table.end_date, booking_table.expected_end_time,
 				booking_table.duration_of_booking, lt1.name AS `pick_up_location`,
-				lt2.name AS `drop_off_location`, booking_table.final_price";
+				lt2.name AS `drop_off_location`, booking_table.booking_fee";
 
 			$bookingsTableName = $this->tablename;
 			$bookingBikeTableName = "booking_bike_table";	// Table linking bikes to bookings
@@ -95,7 +95,7 @@
 							LEFT JOIN $bikeInvTableName
 						    	ON $bikeInvTableName.bike_id = $bookingBikeTableName.bike_id
 						    LEFT JOIN $custTableName
-						    	ON $bookingsTableName.cust_id = $custTableName.cust_id
+						    	ON $bookingsTableName.user_name = $custTableName.user_name
 							LEFT JOIN $locationTableName lt1
 								ON $bookingsTableName.pick_up_location=lt1.location_id
 							LEFT JOIN $locationTableName lt2
@@ -106,7 +106,7 @@
 			}
 
 			// perform query and verify successful
-			//echo "$query";
+			// echo "$query";
 			$res = $this->conn->query($query);
 			if ($res->num_rows > 0)
 			{
@@ -143,7 +143,7 @@
 			$ret = array();
 
 			$cols = "
-				booking_table.booking_id, customer_table.cust_id,
+				booking_table.booking_id, customer_table.user_name,
 				customer_table.name, booking_table.start_date, booking_table.start_time,
 				booking_table.end_date, booking_table.expected_end_time,
 				lt1.location_id AS `pick_up_location_id`, lt1.name AS `pick_up_location`,
@@ -156,7 +156,7 @@
 			$query =   "SELECT $cols
 						FROM $bookingsTableName
 						    LEFT JOIN $custTableName
-						    	ON $bookingsTableName.cust_id = $custTableName.cust_id
+						    	ON $bookingsTableName.user_name = $custTableName.user_name
 							LEFT JOIN $locationTableName lt1
 								ON $bookingsTableName.pick_up_location=lt1.location_id
 							LEFT JOIN $locationTableName lt2
@@ -193,7 +193,7 @@
 		/**
 		 * TODO: Switch from standard arrays to associative arrays
 		 * Required booking data (in order):
-		 *	- cust_id 			  : Customer ID
+		 *	- user_name			  : Customer ID
 		 *	- start_date		  : Booking start date
 		 *	- start_time		  : Booking start time
 		 *	- end_date			  : Booking end date
@@ -201,7 +201,7 @@
 		 *	- booking_duration	  : Duration of booking (in hours)
 		 *	- pick_up_location	  : Location of pick-up for booking
 		 *	- drop_off_location	  : Location of drop-off for booking
-		 *	- final_price		  : Price of booking (function of duration and bikes/accessories)
+		 *	- booking_fee		  : Price of booking (function of duration and bikes/accessories)
 		 *
 		 * Required bike data (in order):
 		 *	- bike_id[array]	  : Array of bike ids for booking
@@ -217,7 +217,7 @@
 			$ret = false;
 
 			// initialise local variables (purely for readability/semantic reasons)
-			$cust_id = $bookingData[0];
+			$user_name = $bookingData[0];
 			$start_date = $bookingData[1];
 			$start_time = $bookingData[2];
 			$end_date = $bookingData[3];
@@ -225,14 +225,14 @@
 			$booking_duration = $bookingData[5];
 			$pick_up_location = $bookingData[6];
 			$drop_off_location = $bookingData[7];
-			$final_price = $bookingData[8];
+			$booking_fee = $bookingData[8];
 
 			// Get data for transactions into single strings
 			// Booking data
-			$bookingData = "$cust_id, '$start_date', '$start_time', '$end_date', '$end_time', $booking_duration, $pick_up_location, $drop_off_location, $final_price";
+			$bookingData = "$user_name, '$start_date', '$start_time', '$end_date', '$end_time', $booking_duration, $pick_up_location, $drop_off_location, $booking_fee";
 
 			// construct booking table query
-			$bookingTableQuery = "INSERT INTO $this->tablename (cust_id, start_date, start_time, end_date, expected_end_time, duration_of_booking, pick_up_location, drop_off_location, final_price) VALUES ($bookingData); ";
+			$bookingTableQuery = "INSERT INTO $this->tablename (user_name, start_date, start_time, end_date, expected_end_time, duration_of_booking, pick_up_location, drop_off_location, booking_fee) VALUES ($bookingData); ";
 
 			// query to save last insert id (from booking) as booking id
 			$getLastBookingIdQuery = "SET @booking_id=LAST_INSERT_ID(); ";
@@ -323,7 +323,7 @@
 		 * Modify a booking of id `$bookingId`
 		 * $bookingData is of order: start_date, start_time, end_date, expected_end_time,
 		 *							 duration_of_booking, pick_up_location, drop_off_location,
-		 *							 final_price
+		 *							 booking_fee
 		 *
 		 * 1. start transaction
 		 * 2.
@@ -332,7 +332,7 @@
 		public function modifyBooking($bookingId, $bookingData, $bikeData, $accessoryData=array())
 		{
 			// compile updated data into pairs
-			$updatedData = joinDataAndCols($bookingData, array("start_date", "start_time", "end_date", "expected_end_time", "duration_of_booking", "pick_up_location", "drop_off_location", "final_price"));
+			$updatedData = joinDataAndCols($bookingData, array("start_date", "start_time", "end_date", "expected_end_time", "duration_of_booking", "pick_up_location", "drop_off_location", "booking_fee"));
 
 			// construct booking bike table query
 			// need to repeat for count(explode(",", $bike_id))
