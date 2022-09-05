@@ -188,7 +188,7 @@ Contributor(s): Dabin Lee @ icelasersparr@gmail.com
 
 			// Get data for transactions into single strings
 			// Booking data
-			$bookingData = "$user_name, '$start_date', '$start_time', '$end_date', '$end_time', $booking_duration, $pick_up_location, $drop_off_location, $booking_fee";
+			$bookingData = "'$user_name', '$start_date', '$start_time', '$end_date', '$end_time', $booking_duration, $pick_up_location, $drop_off_location, $booking_fee";
 
 			// construct booking table query
 			$bookingTableQuery = "INSERT INTO $this->tablename (user_name, start_date, start_time, end_date, expected_end_time, duration_of_booking, pick_up_location, drop_off_location, booking_fee) VALUES ($bookingData); ";
@@ -245,6 +245,7 @@ Contributor(s): Dabin Lee @ icelasersparr@gmail.com
 			}
 
 			// execute booking_table query
+			echo "<br>$bookingTableQuery<br>";
 			if ($this->conn->query($bookingTableQuery) == TRUE)
 			{
 				$ret = TRUE;
