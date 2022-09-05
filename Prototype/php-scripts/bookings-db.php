@@ -1,6 +1,9 @@
 <!--
-
-
+Project Name: Inverloch Bike Hire
+Project Description: A website for hiring bikes. Front-end accompanied
+	   by an admin dashboard.
+File Description: interface for interacting with bookings table.
+Contributor(s): Dabin Lee @ icelasersparr@gmail.com
 -->
 <?php
 	include_once "backend-connection.php";
@@ -19,49 +22,8 @@
 		}
 
 		/**
-		 *	INSERT method
-		 *	Parameters:
-		 *		- tablename : name of table (e.g. 'bike_types')
-		 *		- colnames : columns to fill from table (e.g. 'id, name, address')
-		 *		- data : conditional on which rows to retrieve (e.g. '"val1", "val2", "val3"')
-		 *
-		 *	Return:
-		 * 		- Return if insert was successful
-		 *
-		 *	To insert a new row, need to first create a booking_table row:
-		 *		Requirements:
-		 *		- CustomerID, Start Date, End Date, Start Time, End Time, Duration, Pick-up, Drop-off, and final price
-		 *			- Final Price =
-		 */
-		public function insert($columns="user_name, start_date, start_time, expected_end_time, end_time, duration_of_booking, pick_up_location, drop_off_location, booking_fee", $data)
-		{
-			$ret = FALSE;
-
-			$dataLen = explode(',', $data);
-			$colLen = explode(',', $columns);
-
-			if ($dataLen != $colLen)
-			{
-				$query = "INSERT INTO $this->tablename ($columns) VALUES ($data)";
-				echo $query;
-				if ($this->conn->query($query) == TRUE)
-				{
-					$ret = TRUE;
-				}
-			}
-			else
-			{
-				echo "Data value count is incorrect.";
-			}
-
-			return $ret;
-		}
-
-		/**
 		 *	Retrieve all rows from bookings table, with associated data.
-		 *	USAGE:
-		 *
-		 *
+		 *	condition is simply appended to the end of the
 		 *
 		 */
 		public function getBookingRows($condition=null)
@@ -132,11 +94,8 @@
 		}
 
 		/**
-		 *	Retrieve all rows from bookings table, with associated data.
-		 *	USAGE:
-		 *
-		 *
-		 *
+		 * Retrieve all rows from bookings table, with associated data for some
+		 * bookingID
 		 */
 		public function retrieveBookingForChangeBooking($bookingId)
 		{
@@ -279,32 +238,6 @@
 			// NOTE: Multiple queries used, as according to https://stackoverflow.com/a/1307645
 			// PHP's MySQL module does not allow multiple queries. Testing supports this.
 
-			echo "<br>";
-			echo "START TRANSACTION;";
-
-			echo "<br>";
-			echo "<br>";
-
-			echo "$bookingTableQuery";
-			echo "<br>";
-			echo "<br>";
-
-			echo "$getLastBookingIdQuery";
-			echo "<br>";
-			echo "<br>";
-
-			echo "$bookingBikeTableQuery";
-			echo "<br>";
-			echo "<br>";
-
-			echo "$bookingAccessoryTableQuery";
-			echo "<br>";
-			echo "<br>";
-
-			echo "COMMIT;";
-			echo "<br>";
-			echo "<br>";
-
 			// Begin transaction
 			if ($this->conn->query("START TRANSACTION;") == TRUE)
 			{
@@ -350,10 +283,6 @@
 		 * $bookingData is of order: start_date, start_time, end_date, expected_end_time,
 		 *							 duration_of_booking, pick_up_location, drop_off_location,
 		 *							 booking_fee
-		 *
-		 * 1. start transaction
-		 * 2.
-		 *
 		 */
 		public function modifyBooking($bookingId, $bookingData, $bikeData, $accessoryData=array())
 		{
@@ -362,18 +291,6 @@
 
 			// construct booking bike table query
 			// need to repeat for count(explode(",", $bike_id))
-			echo "<br><br>";
-			print_r($bookingId);
-			echo "<br><br>";
-			print_r($bookingData);
-			echo "<br><br>";
-			print_r($bikeData);
-			echo "<br><br>";
-			print_r($accessoryData);
-			echo "<br><br>Updates: ";
-			print_r($updatedData);
-			echo "<br><br>";
-
 			$bookingBikeTableQuery = "INSERT INTO booking_bike_table (booking_id, bike_id) VALUES";
 			for($i = 0; $i < count($bikeData); $i++)
 			{

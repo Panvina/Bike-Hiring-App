@@ -1,9 +1,11 @@
 <?php
-	// Convert a PHP array to HTML select box options (combo boxes)
-	// - arr : PHP array
-	// - primaryKey : array key of id for combo box id
-	//
-	// Used in Alex's modals
+	/**
+	 * Convert a PHP array to HTML select box options (combo boxes)
+	 * - arr : PHP array
+	 * - primaryKey : array key of id for combo box id
+	 *
+	 * Used in Alex's modals
+	 */
 	function arrayToComboBoxOptions($arr, $primaryKey=0, $selectedId=null)
 	{
 		// Get keys for array
@@ -55,21 +57,27 @@
 		return $arrays;
     }
 
-	// Validate email
-	// Return true if valid email
+	/**
+	 * Validate email. Uses PHP email filter
+	 */
 	function validEmail($email)
     {
         return filter_var($email, FILTER_VALIDATE_EMAIL);
     }
 
-	// Validate name
-	// Return true if it is a valid name
+	/**
+	 * Validate name argument with regex
+	 * Ensures that name is alphabetical, has a dash,
+	 * has an apostrophe, or a space
+	 */
     function validName($name)
     {
         return preg_match("/^[a-zA-Z-' ]*$/",$name);
     }
 
-	// Performs empty() OR operations for each variable in $arr
+	/**
+	 * Performs empty() OR operations for each variable in $arr
+	 */
 	function emptyArr($arr)
 	{
 		$ret = false;
@@ -82,17 +90,14 @@
 		return $ret;
 	}
 
-	// Combine data with columns into single array of pairs
+	/**
+	 * Combine data with columns into single array of pairs
+	 * e.g. [0, 1, 2, 3], [col1, col2, col3, col4] => ['col1=0, col2=1, col3=2, col4=3']
+	 */
 	function joinDataAndCols($data, $cols)
 	{
 		$ret = array();
 		$lenData = count($data);
-
-		echo "<br><br>TEST ";
-		print_r($data);
-		echo "<br><br>TEST 2";
-		print_r($cols);
-		echo "<br><br>";
 
 		if ($lenData != count($cols))
 		{

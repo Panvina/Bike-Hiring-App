@@ -1,19 +1,25 @@
-//  Resources:
-//      https://www.w3schools.com/php/php_form_url_email.asp
-
+<!--
+Project Name: Inverloch Bike Hire
+Project Description: A website for hiring bikes. Front-end accompanied
+       by an admin dashboard.
+File Description: PHP handler for bookings page.
+Contributor(s): Dabin Lee @ icelasersparr@gmail.com
+-->
 <?php
     include_once "utils.php";
     include_once "accessory-inventory-db.php";
     include_once "bookings-db.php";
     include_once "bike-inventory-db.php";
 
+    // get session data
     session_start();
     $_SESSION['id'] = '123';
 
-    print_r($_POST);
-
-    // Get booking duration (hours between 0900 to 1700)
-    // NOTE: $startTime and $endTime must be properly constrained to between business hours
+    /**
+     * Get booking duration (hours between 0900 to 1700)
+     * NOTE: $startTime and $endTime must be properly constrained to between business hours
+     * Inputs are direct from form POST outputs
+     */
     function getBookingDuration($startTime, $startDate, $endTime, $endDate)
     {
         $hours = 0.0;
@@ -41,18 +47,21 @@
         return $hours;
     }
 
-    // Get hourly rate for an array of bikes (format = [bikeId1,stuff, bikeId2,stuff])
+    /**
+     * Get hourly rate for an array of bikes (format = [bikeId1,stuff, bikeId2,stuff])
+     * Input is POST from form
+     */
     function getHourlyRateBikes($bikes)
     {
         $hourlyRate = 0.0;
-        $conn = new BikeInventoryDBConnection();
+        $bikeConn = new BikeInventoryDBConnection();
 
         // columns to retrieve from SQL query to bike_inventory_table
         $colsToRetrieve = "price_ph";
         // initialise conditional statement
         $condition = "";
 
-        // loop through all bikes in array
+        // construct conditional to retrieve relevant bikes from DB
         for($i = 0; $i < count($bikes); $i ++)
         {
             $bikeId = explode(",", $bikes[$i])[0];
@@ -67,9 +76,9 @@
         }
 
         // GET bike pricing information
-        $rows = $conn->get($colsToRetrieve, $condition);
+        $rows = $bikeConn->get($colsToRetrieve, $condition);
 
-        // Add total pricing per hour
+        // sum pricing per hour
         for($i = 0; $i < count($rows); $i++)
         {
             $bikeRate = $rows[$i]["price_ph"];
@@ -79,7 +88,10 @@
         return $hourlyRate;
     }
 
-    // Get hourly rate for an array of accessories (format = [accessoryId1,stuff, accessoryId2,stuff])
+    /**
+     * Get hourly rate for an array of accessories (format = [accessoryId1,stuff, accessoryId2,stuff])
+     * Input is POST from form
+     */
     function getHourlyRateAccessories($accessories)
     {
         $hourlyRate = 0.0;
@@ -90,7 +102,7 @@
         // initialise conditional statement
         $condition = "";
 
-        // loop through all bikes in array
+        // construct query condition for GET function for accessories
         for($i = 0; $i < count($accessories); $i ++)
         {
             $accessoryId = explode(",", $accessories[$i])[0];
@@ -104,10 +116,10 @@
             }
         }
 
-        // GET bike pricing information
+        // GET accessory pricing information
         $rows = $conn->get($colsToRetrieve, $condition);
 
-        // Add total pricing per hour
+        // Sum total pricing per hour
         for($i = 0; $i < count($rows); $i++)
         {
             $accessoryRate = $rows[$i]["price_ph"];
@@ -119,21 +131,20 @@
 ?>
 
 <?php
-    /**
-     * 1. Get the following fields
-     *      - Customer name
-     *      - Start and end datetimes
-     *      - pickup and dropoff locations
-     * 2. Calculate booking duration
-     * 3. Save above data (via session)
-     * 4. Select bikes (via return to bike selection window)
-     * 5. Select accessories (via return to accessory selection window)
-     * 6. Collate hourly rate of every bike and accessory
-     * 7. Calculate final cost
-     * 8. INSERT into DB
-     */
+    // Add booking form submission variables
+    $addBookingInfoSubmit = isset($_POST["add-booking-main-submit"]);
+    $addBookingBikesSubmit = isset($_POST["add-booking-bike-accessory-submit"]);
+
+    // Change booking form submission variables
+    $changeBookingInitSubmit = isset($_POST["change-booking-btn"]);
+    $changeBookingInfoSubmit = isset($_POST["change-booking-main-submit"]);
+    $changeBookingBikesSubmit = isset($_POST["change-booking-bike-accessory-submit"]);
+
+    // Delete booking button
+    $deleteBookingSubmit = isset($_POST["delete-booking-btn"]);
+
     // Verify button for add booking is pressed
-    if (isset($_POST["add-booking-main-submit"]))
+    if ($addBookingInfoSubmit)
     {
         // Get variables
         $customer        = $_POST["add-booking-customer"];
@@ -144,8 +155,10 @@
         $pickUpLocation  = $_POST["add-booking-pick-up-location"];
         $dropOffLocation = $_POST["add-booking-drop-off-location"];
 
+        // calculate duration of booking
         $bookingDuration = getBookingDuration($startTime, $startDate, $endTime, $endDate);
 
+        // add booking details to session
         $_SESSION["addBooking"] = array(
             "customer"        => $customer,
             "startDate"       => $startDate,
@@ -157,35 +170,16 @@
             "bookingDuration" => $bookingDuration
         );
 
-        // echo "Time Diff from: $startTime, $startDate --> $endTime, $endDate<br>";
-        // echo "$bookingDuration hours<br>";
+        // NOTE: DEBUGGING
+        // $keys = array_keys($_POST);
+        // for($i = 0; $i < count($keys); $i++)
+        // {
+        //     $key = $keys[$i];
+        //     echo "<br><br>";
+        //     echo "$key: $_POST[$key]";
+        // }
 
-        // Validate variables
-        // echo "<br><br>";
-        // echo "1: $customer";
-        // echo "<br><br>";
-        // echo "2: $startDate";
-        // echo "<br><br>";
-        // echo "3: $startTime";
-        // echo "<br><br>";
-        // echo "4: $endDate";
-        // echo "<br><br>";
-        // echo "5: $endTime";
-        // echo "<br><br>";
-        // echo "6: $pickUpLocation";
-        // echo "<br><br>";
-        // echo "7: $dropOffLocation";
-        // echo "<br><br>";
-
-        $keys = array_keys($_POST);
-        for($i = 0; $i < count($keys); $i++)
-        {
-            $key = $keys[$i];
-            echo "<br><br>";
-            echo "$key: $_POST[$key]";
-        }
-
-        // exit();
+        // ensure all variables have values
         if (!emptyArr([$customer, $startDate, $startTime, $endDate, $endTime, $pickUpLocation, $dropOffLocation]))
         {
             header("Location: ..\bookings.php?booking-mode=stage2");
@@ -196,7 +190,7 @@
         }
     }
     // Process submit button press for bikes and accessory selection form
-    else if (isset($_POST["add-booking-bike-accessory-submit"]))
+    else if ($addBookingBikesSubmit)
     {
         // get bikes and accessories from <select multiple> html tag
         // Both contain arrays
@@ -211,24 +205,19 @@
         }
         else
         {
-            // calculate cost
-            // 1. Get number of hours (done)
-            // 2. Get cost per hour of bikes (done)
-            // 3. Get cost per hour of accessories (done)
-            $bookingDuration = $_SESSION["addBooking"]["bookingDuration"];  // 1.
-            $bikeHourly = getHourlyRateBikes($bikes);                       // 2.
-            $accessoryHourly = 0;
-            if (isset($accessories))
-            {
-                $accessoryHourly = getHourlyRateAccessories($accessories);  // 3.
-            }
+            // retrieve booking duration from addBooking session variables
+            $bookingDuration = $_SESSION["addBooking"]["bookingDuration"];
+
+            // calculate hourly rate for bikes
+            $bikeHourly = getHourlyRateBikes($bikes);
+
+            // calculate hourly rate for accessories
+            $accessoryHourly = isset($accessories ? getHourlyRateAccessories($accessories) : 0;
 
             // calculate total price of booking (at time of booking)
             $totalPrice = round($bookingDuration * ($bikeHourly + $accessoryHourly), 2);
 
-            // insert into booking_table the columns:
-            // (cust_id, start_date, start_time, end_date, end_time, duration_of_booking, pick_up_location, drop_off_location, final_price)
-            // Retrieve data from session
+            // Retrieve data from session variables from previous form
             $custId = explode(",", $_SESSION["addBooking"]["customer"])[0];
             $startDate = $_SESSION["addBooking"]["startDate"];
             $startTime = $_SESSION["addBooking"]["startTime"];
@@ -237,15 +226,11 @@
             $pickUpLocation = explode(",", $_SESSION["addBooking"]["pickupLocation"])[0];
             $dropOffLocation = explode(",", $_SESSION["addBooking"]["dropOffLocation"])[0];
 
-            // booking duration set above
-            // total price calculated above
+            // Prepare data and columns for adding booking
             $data = [$custId, "$startDate", "$startTime", "$endDate", "$endTime", $bookingDuration, $pickUpLocation, $dropOffLocation, $totalPrice];
-            // echo $data;
             $cols = "cust_id, start_date, start_time, end_date, expected_end_time, duration_of_booking, pick_up_location, drop_off_location, final_price";
 
-            // // perform INSERT operation into Bookings
-            // $conn = new BookingsDBConnection();
-            // $conn->insert($cols, $data);
+            // perform insertion
             $conn = new BookingsDBConnection();
             $conn->addBooking($data, $bikes, $accessories);
 
@@ -253,20 +238,20 @@
         }
     }
     // check for change booking button being clicked
-    else if (isset($_POST["change-booking-btn"]))
+    else if ($changeBookingInitSubmit)
     {
         // Get booking for ID. Button name is in format: "change,X"
         // where X denotes the booking id
         $buttonName = $_POST["change-booking-btn"];
         $bookingId = explode(",", $buttonName)[1];
 
-        // Retrieve booking
+        // Retrieve booking for given booking id
         $conn = new BookingsDBConnection();
         $row = $conn->retrieveBookingForChangeBooking($bookingId); // ret from function is always 2D array
 
         // set session variables
-        $_SESSION["changeBooking"] += array(
-            "bookingId"   => $bookingId,         // Need this, as it will be overwritten
+        $_SESSION["changeBooking"] = array(
+            "bookingId"   => $bookingId,         // Need this, as it will be overwritten otherwise by this assignment
             "custId"      => $row["cust_id"],
             "custName"    => $row["name"],
             "startTime"   => $row["start_time"],
@@ -279,19 +264,11 @@
             "dropoffName" => $row["drop_off_location"]
         );
 
-        // echo "<br><br><br>";
-        // echo print_r($_SESSION["changeBooking"]);
-        // echo "<br><br><br>";
-        // exit();
-
         header("Location: ..\bookings.php?booking-mode=change");
     }
-    else if (isset($_POST["change-booking-main-submit"]))
+    else if ($changeBookingInfoSubmit)
     {
-        // Select new start/end dates/times -> select all new accessories and bikes.
-        // Same start/end dates/times -> Retrieve current bookings/accessories
-
-        // 1. Verify if changes to date/times have been made.
+        // Verify if changes to date/times have been made. TODO: May not need this with current workflow
         $pickupLocation = explode(": ", $_POST["change-booking-pick-up-location"]);
         $dropOffLocation = explode(": ", $_POST["change-booking-drop-off-location"]);
 
@@ -305,15 +282,16 @@
             "pickupStr"  => $_POST["change-booking-pick-up-location"],
             "dropoffStr" => $_POST["change-booking-drop-off-location"]
         );
-        $keys = array_keys($postVariables);
+        // $keys = array_keys($postVariables);
 
-        $changed = false;
-        for($i = 0; $i < count($keys); $i++)
-        {
-            $key = $keys[$i];
-            $change |= ($preVariables[$key] != $postVariables[$key]);
-        }
+        // $changed = false;
+        // for($i = 0; $i < count($keys); $i++)
+        // {
+        //     $key = $keys[$i];
+        //     $change |= ($preVariables[$key] != $postVariables[$key]);
+        // }
 
+        // save data into session for next form
         $_SESSION["changeBooking"]["startDate"] = $_POST["change-booking-start-date"];
         $_SESSION["changeBooking"]["startTime"] = $_POST["change-booking-start-time"];
         $_SESSION["changeBooking"]["endDate"] = $_POST["change-booking-end-date"];
@@ -321,6 +299,7 @@
         $_SESSION["changeBooking"]["pickupId"] = explode(": ", $_POST["change-booking-pick-up-location"])[0];
         $_SESSION["changeBooking"]["dropoffId"] = explode(": ", $_POST["change-booking-drop-off-location"])[0];
 
+        // TODO: May not need this
         if ($changed)
         {
             header("Location: ..\bookings.php?booking-mode=change-stage2");
@@ -330,8 +309,9 @@
             header("Location: ..\bookings.php?booking-mode=change-stage2");
         }
     }
-    else if (isset($_POST["change-booking-bike-accessory-submit"]))
+    else if ($changeBookingBikesSubmit)
     {
+        // retrieve bikes and accessories selected from form
         $bikes        = comboboxArrayToItemIdArray($_POST["change-booking-bike"]);
         $accessories  = comboboxArrayToItemIdArray($_POST["change-booking-accessory"]);
 
@@ -344,8 +324,7 @@
         }
         else
         {
-            echo "<br><br>";
-            print_r($_SESSION["changeBooking"]);
+            // retrieve data from previous form
             $custId      = $_SESSION["changeBooking"]["custId"];
             $custName    = $_SESSION["changeBooking"]["custName"];
             $startTime   = $_SESSION["changeBooking"]["startTime"];
@@ -376,11 +355,10 @@
             $conn = new BookingsDBConnection();
             $res = $conn->modifyBooking($bookingId, $bookingData, $bikes, $accessories);
 
-            // exit();
             header("Location: ..\bookings.php");
         }
     }
-    else if (isset($_POST["delete-booking-btn"]))
+    else if ($deleteBookingSubmit)
     {
         // get booking id to delete
         $buttonName = $_POST["delete-booking-btn"];
@@ -390,7 +368,6 @@
         $conn = new BookingsDBConnection();
         $res = $conn->deleteBooking($bookingId);
 
-        // exit();
         header("Location: ..\bookings.php");
     }
     exit();
