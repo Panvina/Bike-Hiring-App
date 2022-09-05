@@ -1,25 +1,16 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title> Locations </title>
-		<h1 class="header"> <img src="img/photos/Inverloch_Logo3.png" alt="Inverloch Logo" id="Logo"/> Locations </h1>
+    <head>
+        <title> Locations </title>
+        <h1 class="header"> <img src="img/photos/Inverloch_Logo3.png" alt="Inverloch Logo" id="Logo"/> Locations </h1>
 		
 		<script src="scripts/FormOpenOrClose.js"></script>
-		<script>
-				/* When the user clicks on the button, 
-toggle between hiding and showing the dropdown content */
-			function myFunction() {
-				document.getElementById("myDropdown").classList.toggle("show");
-			}
-</script>
-		<link rel="stylesheet" href="style/Jake_Location_style.css">
-		<link rel="stylesheet" href="style/LocationPop.css">
-		<link rel="stylesheet" href="style/dropdownboxcss.css">
+		<link rel="stylesheet" href="style/Jake_Location_style.css"><!--
+		<link rel="stylesheet" href="style/LocationPop.css">-->
+		<link rel="stylesheet" href="style/LocationPop2.css">
 		<?php
-		include("Reusable.php");
 		include("backend-connection.php");
-		
-		//setting up and connecting to DB
+		$note = "Test: ";
 		$host = "localhost";
 		$user = "root";
 		$pwd = "";
@@ -31,81 +22,40 @@ toggle between hiding and showing the dropdown content */
 			 "$sql_db") 
 			or die
 			('Failed to connect to server');
-		?>
-		
-	</head>
-	<body>
-		<nav>
-			<!--Navigation area-->
-			<div class = "sideNavigation">
-				<a href = "Dashboard.php"> <img src= "img/icons/bulletin-board.png" alt="Dashboard Logo" /> Dashboard </a> <br>
-				<a href = "Customer.php"> <img src= "img/icons/account-group.png" alt="Customer Logo" />  Customer  </a> <br>
-				<a href= "Inventory.php"> <img src= "img/icons/bicycle.png" alt="Inventory Logo" />  Inventory </a> <br>
-				<a href= "Bookings.php"> <img src= "img/icons/book-open-blank-variant.png" alt="Bookings Logo" /> Bookings </a> <br>
-				<a href= "Block_Out_Date.php"> <img src= "img/icons/calendar.png" alt="Block out date Logo" /> Block Out Dates </a> <br>
-				<a class="active" href= "Locations.php"> <img src= "img/icons/earth.png" alt="Locations Logo" /> Locations </a> <br>
-			</div>
-		</nav>
-		
-		<div class="Content">
-			<h1> Pick-Up & Drop-Off Locations </h1>
+		if (!$conn)
+		{
+			$note .= "Connection Failed";
+		}
+		else
+		{
+			$note .= "Connection Passed";
 			
-			<!-- Trigger/Open The PopUp -->
-			<button id="myBtn" style="left: 0%"  class="open-button" type="button">+ Add Location</button>
-			
-			<!-- The PopUp -->
-			<div id="myModal" class="modal">
-				
-				<!-- PopUp content -->
-				<div class="modal-content">
-					<span class="close">&times;</span>
-					<form action="AddLocations.php" class="form-container" method="post">
-						<p>
-						<h1>Add Location</h1>
-						</p>
-					<label for="nameInput"><b>Name:</b></label>
-					<input type="text" placeholder="Enter Name" name="nameInput" id ="nameInput" class="inputlocation" required>
-					<br/>
-					<label for="addressInput"><b>Address:</b></label>
-					<input type="text" placeholder="Enter Address" name="addressInput" id="addressInput" class="inputlocation" required>
-					<br/>
-					<label for="suburbInput"><b>Suburb:</b></label>
-					<input type="text" placeholder="Enter Suburb" name="suburbInput" id="suburbInput" class="inputlocation" required>
-					<br/>
-					<label for="postcodeInput"><b>Postcode:</b></label>
-					<input type="text" placeholder="Enter Postcode" name="postcodeInput" id="postcodeInput" class="inputlocation" maxlength="4" required>
-					
-					<label for="postcodeInput"><b>Drop Off:</b></label> 
-					<input type='checkbox' class='CheckBox' name="dropOffInput" id="dropOffInput"/>
-					
-					<label for="postcodeInput"><b>Pick Up:</b></label> 
-					<input type='checkbox' class='CheckBox' name="pickUpInput" id="pickUpInput"/>
-					<br/>
-					<button type="submit" name="submitLocation" id="submitLocation" class="btn, inputlocation">submit</button>
-					</form>
-			</div>
-		</div>
-		<table class="TableContent">
-			<tr>
-				<th> Name </th>
-				<th> Address </th>
-				<th> Drop-Off </th>
-				<th> Pick-Up </th>
-				<th> Query </th>
-			</tr>
-			<?php
-			//this to select all items from the table before showing it
-			$query = "SELECT * FROM location_table";
-			$result = mysqli_query($conn,$query);
-			if(!$result)
-			{//showing if query has failed
-				echo "<tr>";
-				echo "<td>Query</td>";
-				echo "<td> Has Failed you </td>";
-				echo "<td> <input type='checkbox' class='CheckBox'> </td>";
-				echo "<td> <input type='checkbox' class='CheckBox'> </td>";
-				echo "<td> - - - </td>";
-				echo"</tr>";
+		}
+		
+		$query = "SELECT `Name`, `Address`, `Suburb`, `Post Code`, `Drop Off Location`, `Pick Up Location` FROM location_table";
+		$result = mysqli_query($conn,$query);
+		if(!$result)
+		{
+			$note .= ", Query failed";
+		}
+		else
+		{
+			$note .= ", Query Succeed";
+		}
+		
+//						@mysqli_select_db($conn,"$sql_db");
+//		$conn = new DBConnection("$host",
+//								 "$user",
+//								 "$pwd",
+//								"$sql_db");
+		
+		function checkValue($value)
+		{
+			$results = "";
+//			echo "TestValue: $value <br/>";
+			if($value=="1")
+			{
+				$results = "checked";
 			}
 			
 			return $results;
@@ -118,7 +68,6 @@ toggle between hiding and showing the dropdown content */
             <div class = "sideNavigation">
                 <a href = "Dashboard.php"> <img src= "img/icons/bulletin-board.png" alt="Dashboard Logo" /> Dashboard </a> <br>
                 <a href = "Customer.php"> <img src= "img/icons/account-group.png" alt="Customer Logo" />  Customer  </a> <br>
-				<a href="staff.php"> <img src="img/icons/staff.png" alt="Staff Logo" /> Staff </a> <br>
                 <a href= "Inventory.php"> <img src= "img/icons/bicycle.png" alt="Inventory Logo" />  Inventory </a> <br>
                 <a href= "bookings.php"> <img src= "img/icons/book-open-blank-variant.png" alt="Bookings Logo" /> Bookings </a> <br>
                 <a href= "Block_Out_Date.php"> <img src= "img/icons/calendar.png" alt="Block out date Logo" /> Block Out Dates </a> <br>
@@ -186,80 +135,55 @@ toggle between hiding and showing the dropdown content */
 				<?php
 				if(!$result)
 					{
-						//grabbing and putting all the data into variables or putting them together
-						$fulladdress = "";
-						$LID = $record['LocationID'];
-						$name = $record['Name'];
-						$name = sanitise_input($name);
-						$address = $record['Address'];
-						$address = sanitise_input($address);
-						$suburb = $record['Suburb'];
-						$suburb = sanitise_input($suburb);
-						$postcode = $record['Post Code'];
-						$postcode = sanitise_input($postcode);
-						$dropOff = $record['Drop Off Location'];
-						$pickUp = $record['Pick Up Location'];
-						$fulladdress = "$address,  $suburb, $postcode, Vic, Australia";
-						
-						//checking the values from database and turning it into checked so it can be shown on the interface
-						$pickUpResult= checkValue($pickUp);
-						$dropOffResult= checkValue($dropOff);
-						
-						//This is showing each data from database on the website interface
-						echo "<form method='POST' action='UpdateLocations.php'>";
-						echo "<tr>";
-						echo "<td>{$name}<input type='hidden' id='LID' name='LID' value='{$LID}'><br/>";
-						echo "</td>";
-						echo "<td> {$fulladdress} </td>";
-						echo "<td> <input type='checkbox' class='CheckBox' id='dropOffBox' name='dropOffBox' $dropOffResult> </td>";
-						echo "<td> <input type='checkbox' class='CheckBox' id='pickUpBox' name='pickUpBox' $pickUpResult> </td>";
-						echo "<td>
-						<div class='dropdown'>
-							<button class='dropbtn' disabled>...</button>
-							<div class='dropdown-content'>
-								<button type='submit' name='deleteLocation' id='deleteLocation' class='btn'>Delete</button><br/>
-								<button type='submit' name='updateLocation' id='updateLocation' class='btn'>Update</button>
-							</div>
-						</div>
-						
-						</td>";
-						
-						
-						echo"</tr>";
-						echo "</form>";
-						
-						$record = mysqli_fetch_assoc($result);//this is to move onto the next data
-					}
-				}
-				else
-				{//showing if there is no data
 					echo "<tr>";
-					echo "<td>Data</td>";
-					echo "<td> Does not Exist </td>";
+					echo "<td>Query</td>";
+					echo "<td> Has Failed you </td>";
+                    echo "<td> <input type='checkbox' class='CheckBox'> </td>";
 					echo "<td> <input type='checkbox' class='CheckBox'> </td>";
-					echo "<td> <input type='checkbox' class='CheckBox'> </td>";
-					echo "<td> - - - </td>";
+					echo "<td> All </td>";
 					echo"</tr>";
-				}
-			}
-			mysqli_close ($conn);
-			?>
-		</table>
-		</div>
-	<style>
+					}
+					else
+					{
+						$record = mysqli_fetch_array($result);
+						if($record)
+						{
+							while ($record)
+							{
+								$fulladdress = "";
+								$address = $record['Address'];
+								$suburb = $record['Suburb'];
+								$postcode = $record['Post Code'];
+								$dropOff = $record['Drop Off Location'];
+								$pickUp = $record['Pick Up Location'];
+								$fulladdress = "$address,  $suburb, $postcode, Vic, Australia";
+								
+								$pickUpResult= checkValue($dropOff);
+								$dropOffResult= checkValue($pickUp);
+//								echo "$postcode<br/>";
+								echo "<tr>";
+								echo "<td>{$record['Name']}<br/>";
+								
+/*								echo("PickUp: $pickUpResult<br/>");
+								echo("DropOff: $dropOffResult<br/>");*/
+								echo "</td>";
+								echo "<td> {$fulladdress} </td>";
+								echo "<td> <input type='checkbox' class='CheckBox' $pickUpResult> </td>";
+								echo "<td> <input type='checkbox' class='CheckBox' $dropOffResult> </td>";
+								echo "<td> - - - </td>";
+								echo"</tr>";
+								
+								$record = mysqli_fetch_assoc($result);
+							}
+						}
+						
+						
+						
+					}
+				mysqli_close ($conn);
+				?>
+            </table>
+        </div>
 
-</style>
-
-<!--  <h2>Hoverable Dropdown</h2>
-  <p>Move the mouse over the button to open the dropdown menu.</p>
-
-  <div class="dropdown">
-    <button class="dropbtn">Dropdown</button>
-    <div class="dropdown-content">
-        <button type='submit' name='deleteLocation' id='deleteLocation' class='btn'>Delete</button><br/>
-        <button type='submit' name='updateLocation' id='updateLocation' class='btn'>Update</button>
-    </div>
-  </div>-->
-
-	</body>
+    </body>
 </html>

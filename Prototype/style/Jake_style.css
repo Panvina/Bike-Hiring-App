@@ -83,7 +83,8 @@ body{
 .Content button{
   display: inline-block;
   margin-top: 2%;
-  left: 67%;
+  float: right;
+  left: 25%;
   position: relative;
   background-color: darkcyan;
   border: none;
@@ -213,23 +214,21 @@ nav a {
  }
 
 /* The Close Button */
-.Insertclose,
+.close,
 .updateFormClose,
-.closeDeleteForm {
+.closeDeleteCustomerForm {
   color: #aaa;
   float: right;
   font-size: 28px;
   font-weight: bold;
 }
 
-.Insertclose:hover,
-.Insertclose:focus,
+.close:hover,
+.close:focus,
 .updateFormClose:hover,
 .updateFormClose:focus,
-.deleteButton:hover,
-.deleteButton:focus,
-.closeDeleteForm:hover,
-.closeDeleteForm:focus{
+.closeDeleteCustomerForm:hover,
+.closeDeleteCustomerForm:focus{
   color: black;
   text-decoration: none;
   cursor: pointer;
@@ -245,7 +244,7 @@ nav a {
   padding-top: 5%;
 }
 
-#UpdateButton{
+#UpdateCustomer{
   background-color: darkcyan;
   border: none;
   color: white;
@@ -257,7 +256,7 @@ nav a {
 }
 
 
-.UpdateButton, .deleteButton{
+.UpdateCustomer, .deleteCustomer{
   background-color: darkcyan !important;
   border: none !important;
   color: white!important;
@@ -316,3 +315,27 @@ nav a {
 .dropdown:hover .dropdown-content {display: block;}
 
 .dropdown:hover .dropbtn {background-color: #3e8e41;}
+
+
+#UpdateItem{
+  background-color: darkcyan;
+  border: none;
+  color: white;
+  font-size: 20px;
+  border: solid white;
+  border-width: thin;
+  cursor: pointer;
+  left: -10%;
+}
+
+
+.UpdateItem, .DeleteItem{
+  background-color: darkcyan !important;
+  border: none !important;
+  color: white!important;
+  font-size: 20px!important;
+  border: solid white!important;
+  border-width: thin!important;
+  cursor: pointer!important;
+  left: -2%!important;
+}

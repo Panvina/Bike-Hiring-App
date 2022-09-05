@@ -1,5 +1,5 @@
 // Get the modal
-var customerInsertModal = document.getElementById("CustomerModal");
+var modal = document.getElementById("CustomerModal");
 var updateModal = document.getElementById("UpdateCustomerModal");
 var deleteModal = document.getElementById("DeleteCustomerModal");
 
@@ -9,14 +9,14 @@ var updateBtn = document.getElementsByClassName("UpdateCustomer");
 var deleteBtn = document.getElementsByClassName("deleteCustomer");
 
 // Get the <span> element that closes the modal
-var span = document.getElementsByClassName("Insertclose")[0];
+var span = document.getElementsByClassName("close")[0];
 var updateSpan = document.getElementsByClassName("updateFormClose")[0];
-var deleteSpan = document.getElementsByClassName("closeDeleteForm")[0];
+var deleteSpan = document.getElementsByClassName("closeDeleteCustomerForm")[0];
 var noDeleteButton = document.getElementById("CancelDeleteCustomer");
 
 // When the user clicks on the button, open the modal
 btn.onclick = function() {
-  customerInsertModal.style.display = "block";
+  modal.style.display = "block";
 }
 
 for (var i = 0; i < updateBtn.length; i++)
@@ -35,7 +35,7 @@ for (var i = 0; i < deleteBtn.length; i++)
 
 // When the user clicks on <span> (x), close the modal
 span.onclick = function() {
-  customerInsertModal.style.display = "none";
+  modal.style.display = "none";
   window.location.replace("Customer.php");
   $_SESSION["ret"] = null;
 }
@@ -56,12 +56,12 @@ deleteSpan.onclick = function() {
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
-  if (event.target == customerInsertModal) {span.onclick = function() {
-    customerInsertModal.style.display = "none";
+  if (event.target == modal) {span.onclick = function() {
+  modal.style.display = "none";
   window.location.replace("Customer.php");
   $_SESSION["ret"] = null;
 }
-    customerInsertModal.style.display = "none";
+    modal.style.display = "none";
     window.location.replace("Customer.php");
   }
   else if(event.target == updateModal){

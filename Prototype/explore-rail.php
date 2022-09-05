@@ -104,19 +104,6 @@
             <!-- separator  -->
             <div class="location-container-separator">
             </div>
-
-            <div class='SubExploreMainCont'>  
-            <div class='SubExploreImg'><img style= 'height: 100%; width: 100%; 'src="./img/photos/1.jpg" alt="About Us"/></div>
-                <div class='SubExploreTxt'><h1 id="SubExploreHeader">FEELING ADVENTUROUS?</h1>
-                    <div class='SubExploreDesc'><p>Explore the rail trails next!</p>
-                        <a href = "explore-rail.php"><button class="button">Discover More</button></a>
-                    </div>  
-                </div>
-            </div>
-
-            <!-- separator  -->
-            <div class="location-container-separator">
-            </div>
         </div>
         <footer><?php include 'footer.php'?></footer>
     </body>

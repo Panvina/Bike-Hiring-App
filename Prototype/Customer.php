@@ -25,7 +25,6 @@
             <a href="Dashboard.php"> <img src="img/icons/bulletin-board.png" alt="Dashboard Logo" /> Dashboard </a> <br>
             <a class="active" href="Customer.php"> <img src="img/icons/account-group.png" alt="Customer Logo" />
                 Customer </a> <br>
-            <a href="staff.php"> <img src="img/icons/staff.png" alt="Staff Logo" /> Staff </a> <br>    
             <a href="Inventory.php"> <img src="img/icons/bicycle.png" alt="Inventory Logo" /> Inventory </a> <br>
             <a href="bookings.php"> <img src="img/icons/book-open-blank-variant.png" alt="Bookings Logo" /> Bookings
             </a> <br>
@@ -38,6 +37,10 @@
     <!-- Block of content in center -->
     <div class="Content">
         <h1> All Customers</h1>
+
+        <!-- Search bar with icons -->
+        <img src="img/icons/account-search.png" alt="Customer Search Logo" />
+        <input type="text" placeholder="Search">
 
         <!-- Add Customer pop up -->
        
@@ -108,9 +111,9 @@
                         <div class='dropdown'>
                             <button class='dropbtn' disabled>...</button>
                             <div class='dropdown-content'>
-                                <form action='customer-update-script.php' method='POST' event.preventDefault() > <button type='submit' id= '$primaryKey' class='UpdateButton' name='UpdateButton' 
+                                <form action='customer-update-script.php' method='POST' event.preventDefault() > <button type='submit' id= '$primaryKey' class='UpdateCustomer' name='updateCustomer' 
                                 value='$primaryKey'> Update Customer </button> </form>
-                                <form action='customer-delete-script.php' method='POST' event.preventDefault()> <button type='submit' name='deleteButton' id='$primaryKey' class='deleteButton' 
+                                <form action='customer-delete-script.php' method='POST' event.preventDefault()> <button type='submit' name='deleteCustomer' id='$primaryKey' class='deleteCustomer' 
                                 value = '$primaryKey'>Delete Customer</button> </form>
                             </div>
                         </div>
@@ -140,7 +143,7 @@
 
         <!-- Creates the content within the pop up -->
         <div class="modal-content">
-            <span class="Insertclose">&times;</span>
+            <span class="close">&times;</span>
             <form action="customer-script.php" method="POST" event.preventDefault()>
                 <h1> Create a customer </h1>
                 <div>
@@ -563,12 +566,12 @@
         ?>>
         <!-- Creates the content within the pop up -->
         <div class="modal-content" >
-            <span class="closeDeleteForm">&times;</span>
+            <span class="closeDeleteCustomerForm">&times;</span>
             <h1 style="left: -8%; position: relative;"> Do you wish to delete the following customer? </h1>
             <!-- creates the yes and no button and parses the primary key back to be deleted  -->
             <?php
                 $pk = $_SESSION["user_name"];
-                echo "<h1 style='left: 20%; position: relative;'> $pk </h1>";
+                echo "<h1 style='left: 25%; position: relative;'> $pk </h1>";
                 echo "<form action='customer-delete-script.php' method='POST' event.preventDefault()>
                       <button style='width: 40%; left: -10%; position: relative;' type='submit' id='$pk' value ='$pk' name='submitDeleteCustomer'>Yes</button>
                       <button style='width: 40%; left: -10%; position: relative; background-color: red;' type='submit' name='CancelDeleteCustomer'>No</button> </form>";
