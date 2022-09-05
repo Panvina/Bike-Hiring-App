@@ -316,3 +316,27 @@ nav a {
 .dropdown:hover .dropdown-content {display: block;}
 
 .dropdown:hover .dropbtn {background-color: #3e8e41;}
+
+/* Aadeshs custom button styling */
+#UpdateItem{
+  background-color: darkcyan;
+  border: none;
+  color: white;
+  font-size: 20px;
+  border: solid white;
+  border-width: thin;
+  cursor: pointer;
+  left: -10%;
+}
+
+
+.UpdateItem, .DeleteItem{
+  background-color: darkcyan !important;
+  border: none !important;
+  color: white!important;
+  font-size: 20px!important;
+  border: solid white!important;
+  border-width: thin!important;
+  cursor: pointer!important;
+  left: -2%!important;
+}

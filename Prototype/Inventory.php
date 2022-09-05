@@ -339,7 +339,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                                                     }
                                                     ?>>
         <div class="modal-content">
-            <span class="closeDeleteCustomerForm">&times;</span>
+            <span class="closeDeleteForm">&times;</span>
             <h1 style="left: -8%; position: relative;"> Do you wish to delete the item? </h1>
             <form action="inventory-deletescript.php" method="post" event.preventDefault()>
                 <div>
