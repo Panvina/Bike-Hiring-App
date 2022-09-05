@@ -6,7 +6,7 @@
     include_once("backend-connection.php");
     include_once "utils.php";
     //create the connection with the database
-    $conn = new DBConnection("customer_table");
+    $conn = new DBConnection("employee_table");
 ?>
 <!DOCTYPE html>
 <html>
@@ -14,8 +14,8 @@
 
 <head>
     <!-- Header -->
-    <title> Customers </title>
-    <h1 class="header"> <img src="img/photos/Inverloch_Logo3.png" alt="Inverloch Logo" id="Logo" /> Customers </h1>
+    <title> Staff </title>
+    <h1 class="header"> <img src="img/photos/Inverloch_Logo3.png" alt="Inverloch Logo" id="Logo" /> Staff </h1>
 </head>
 
 <body>
@@ -23,9 +23,9 @@
     <nav>
         <div class="sideNavigation">
             <a href="Dashboard.php"> <img src="img/icons/bulletin-board.png" alt="Dashboard Logo" /> Dashboard </a> <br>
-            <a class="active" href="Customer.php"> <img src="img/icons/account-group.png" alt="Customer Logo" />
-                Customer </a> <br>
-            <a href="staff.php"> <img src="img/icons/staff.png" alt="Staff Logo" /> Staff </a> <br>    
+            <a href="Customer.php"> <img src="img/icons/account-group.png" alt="Customer Logo" /> Customer </a> <br>
+            <a class="active" href="staff.php"> <img src="img/icons/staff.png" alt="Staff Logo" />
+            Staff </a> <br>    
             <a href="Inventory.php"> <img src="img/icons/bicycle.png" alt="Inventory Logo" /> Inventory </a> <br>
             <a href="bookings.php"> <img src="img/icons/book-open-blank-variant.png" alt="Bookings Logo" /> Bookings
             </a> <br>
@@ -37,11 +37,11 @@
 
     <!-- Block of content in center -->
     <div class="Content">
-        <h1> All Customers</h1>
+        <h1> All Staff</h1>
 
         <!-- Add Customer pop up -->
        
-        <button id="CustomerPopUp" class="CustomerPopUp">+ New Customer</button>
+        <button id="staffInsertPopUp">+ New staff member</button>
 
         <!-- List of current customers -->
         <table class="TableContent">
@@ -49,12 +49,12 @@
                 <?php
                     //Fetch data done by Alex, altered by Jake for customer table
                     //establishes the collumns in the table to be used in the query
-                    $cols = "user_name, name, phone_number, email, street_address, suburb, post_code, licence_number, state";
+                    $cols = "user_name, name, phone_number, email, street_address, suburb, post_code, state";
                     //get the data from the table
                     $rows = $conn->get($cols);
 
                     //establish the headings that will be used to display the data in the table
-                    $tableHeadings = "User Name, Name, Phone Number, Email, Street Address, Suburb, Post Code, Licence Number, State";
+                    $tableHeadings = "User Name, Name, Phone Number, Email, Street Address, Suburb, Post Code, State";
 
                     //data validation to remove ',' for querying and displaying data in the table
                     $cols = explode(',', $cols);
@@ -108,9 +108,9 @@
                         <div class='dropdown'>
                             <button class='dropbtn' disabled>...</button>
                             <div class='dropdown-content'>
-                                <form action='customer-update-script.php' method='POST' event.preventDefault() > <button type='submit' id= '$primaryKey' class='UpdateButton' name='UpdateButton' 
+                                <form action='staff-update-script.php' method='POST' event.preventDefault() > <button type='submit' id= '$primaryKey' class='UpdateButton' name='UpdateButton' 
                                 value='$primaryKey'> Update Customer </button> </form>
-                                <form action='customer-delete-script.php' method='POST' event.preventDefault()> <button type='submit' name='deleteButton' id='$primaryKey' class='deleteButton' 
+                                <form action='staff-delete-script.php' method='POST' event.preventDefault()> <button type='submit' name='deleteButton' id='$primaryKey' class='deleteButton' 
                                 value = '$primaryKey'>Delete Customer</button> </form>
                             </div>
                         </div>
@@ -123,7 +123,7 @@
     </div>
 
     <!-- Create the initial window for the pop up -->
-    <div id="CustomerModal" class="modal"<?php
+    <div id="staffInsertModal" class="modal"<?php
             //checks to see if there was any errors and if there was, it will continue to display the modal
             if(isset($_GET["insert"]))
             {
@@ -141,8 +141,8 @@
         <!-- Creates the content within the pop up -->
         <div class="modal-content">
             <span class="Insertclose">&times;</span>
-            <form action="customer-script.php" method="POST" event.preventDefault()>
-                <h1> Create a customer </h1>
+            <form action="staff-insert-script.php" method="POST" event.preventDefault()>
+                <h1> Create a staff member </h1>
                 <div>
                     <!-- User name input validation, checks based on error and displays accurate error message -->
                     <h2> User Name: </h2>
@@ -293,27 +293,6 @@
                     </span>
                 </div>
                 <div>
-                    <!-- Licence number input validation, checks based on error and displays accurate error message -->
-                    <h2> Licence Number </h2>
-                    <input type="text" name="licenceNumber">
-                    <span class="error"> 
-                        <?php 
-                            if (isset($_GET["insert"]))
-                            {
-                                $licenceNumber = $_GET["insert"];
-                                if ($licenceNumber == "licenceNumberEmptyErr")
-                                {
-                                    echo '<p class = "error">* Licence number cannot be empty</p>';
-                                }
-                                else if ($licenceNumber == "licenceNumberValidErr")
-                                {
-                                    echo '<p class = "error">* Licence number must be 9 numbers </p>';
-                                }
-                            }
-                        ?>
-                    </span>
-                </div>
-                <div>
                     <!-- State input validation, checks based on error and displays accurate error message -->
                     <h2> State </h2>
                     <input type="text" name="state">
@@ -336,14 +315,14 @@
                 </div>
                 </br>
                 <div>
-                    <button type="submit" name="SubmitCustomer">Submit</button>
+                    <button type="submit" name="SubmitStaff">Submit</button>
                 </div>
             </form>
         </div>
     </div>
 
      <!-- Create the initial window for the pop up -->
-    <div id="UpdateCustomerModal" class="modal" <?php
+    <div id="UpdateStaffModal" class="modal" <?php
             //checks to see if there was any errors and if there was, it will continue to display the modal
             if(isset($_GET["update"]))
             {
@@ -362,7 +341,7 @@
         <div class="modal-content" >
         
             <span class="updateFormClose">&times;</span>
-            <form action="customer-update-script.php" method="POST" event.preventDefault()>
+            <form action="staff-update-script.php" method="POST" event.preventDefault()>
 
                 <h1> Update a customer </h1>
                 <div>
@@ -497,27 +476,6 @@
                     </span>
                 </div>
                 <div>
-                    <!-- Licence Number input validation, checks based on error and displays accurate error message -->
-                    <h2> Licence Number </h2>
-                    <input type="text" name="licenceNumber" value = "<?php echo $_SESSION['licence_number'];?>">
-                    <span class="error"> 
-                        <?php 
-                            if (isset($_GET["update"]))
-                            {
-                                $licenceNumber = $_GET["update"];
-                                if ($licenceNumber == "licenceNumberEmptyErr")
-                                {
-                                    echo '<p class = "error">* Licence number cannot be empty</p>';
-                                }
-                                else if ($licenceNumber == "licenceNumberValidErr")
-                                {
-                                    echo '<p class = "error">* Licence number must be 9 numbers </p>';
-                                }
-                            }
-                        ?>
-                    </span>
-                </div>
-                <div>
                     <!-- State input validation, checks based on error and displays accurate error message -->
                     <h2> State </h2>
                     <input type="text" name="state" value = "<?php echo $_SESSION['state'];?>">
@@ -539,14 +497,14 @@
                     </span>
                 </div>
                 </br>
-                    <button type="submit" name="submitUpdateCustomer">Submit</button>
+                    <button type="submit" name="submitUpdateStaff">Submit</button>
                 </div>
             </form>
         </div>
     </div>
 
     <!-- Create the initial window for the pop up -->                        
-    <div id="DeleteCustomerModal" class="modal" 
+    <div id="DeleteStaffModal" class="modal" 
         <?php
             //Used to redirect back to the form once the first button has been pressed
             if(isset($_GET["delete"]))
@@ -568,10 +526,10 @@
             <!-- creates the yes and no button and parses the primary key back to be deleted  -->
             <?php
                 $pk = $_SESSION["user_name"];
-                echo "<h1 style='left: 20%; position: relative;'> $pk </h1>";
-                echo "<form action='customer-delete-script.php' method='POST' event.preventDefault()>
-                      <button style='width: 40%; left: -10%; position: relative;' type='submit' id='$pk' value ='$pk' name='submitDeleteCustomer'>Yes</button>
-                      <button style='width: 40%; left: -10%; position: relative; background-color: red;' type='submit' name='CancelDeleteCustomer'>No</button> </form>";
+                echo "<h1 style='left: 25%; position: relative;'> $pk </h1>";
+                echo "<form action='staff-delete-script.php' method='POST' event.preventDefault()>
+                      <button style='width: 40%; left: -10%; position: relative;' type='submit' id='$pk' value ='$pk' name='submitDeleteStaff'>Yes</button>
+                      <button style='width: 40%; left: -10%; position: relative; background-color: red;' type='submit' name='CancelDeleteStaff'>No</button> </form>";
             ?>  
         </div>
     </div>
@@ -581,7 +539,7 @@
 
 </html>
 <!-- Link the js file needed for pop up -->
-<script src="scripts/customer_popup.js"></script>
+<script src="scripts/staff-popup.js"></script>
 
 <?php
 //checks to see if inserting was successful and provides input

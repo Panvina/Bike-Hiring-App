@@ -1,4 +1,5 @@
 @charset "utf-8";
+/* This document was created by Jake.H 102090870 */
 /* CSS Document */
 body{
   background-color: #eaf7f6;
@@ -51,7 +52,7 @@ body{
   background-color: white;
   margin: 0 auto;
   width: 64.5%;
-  height: 1300px;
+  height: 1300px auto;
   float: left;
   display: inline-block;
 }
@@ -82,8 +83,7 @@ body{
 .Content button{
   display: inline-block;
   margin-top: 2%;
-  float: right;
-  left: 25%;
+  left: 67%;
   position: relative;
   background-color: darkcyan;
   border: none;
@@ -213,18 +213,23 @@ nav a {
  }
 
 /* The Close Button */
-.close,
-.updateFormClose {
+.Insertclose,
+.updateFormClose,
+.closeDeleteForm {
   color: #aaa;
   float: right;
   font-size: 28px;
   font-weight: bold;
 }
 
-.close:hover,
-.close:focus,
+.Insertclose:hover,
+.Insertclose:focus,
 .updateFormClose:hover,
-.updateFormClose:focus{
+.updateFormClose:focus,
+.deleteButton:hover,
+.deleteButton:focus,
+.closeDeleteForm:hover,
+.closeDeleteForm:focus{
   color: black;
   text-decoration: none;
   cursor: pointer;
@@ -240,7 +245,7 @@ nav a {
   padding-top: 5%;
 }
 
-#UpdateCustomer{
+#UpdateButton{
   background-color: darkcyan;
   border: none;
   color: white;
@@ -252,7 +257,7 @@ nav a {
 }
 
 
-.UpdateCustomer{
+.UpdateButton, .deleteButton{
   background-color: darkcyan !important;
   border: none !important;
   color: white!important;
@@ -260,5 +265,54 @@ nav a {
   border: solid white!important;
   border-width: thin!important;
   cursor: pointer!important;
-  left: -10%!important;
+  left: -2%!important;
 }
+
+.error {
+  color: red;
+  
+}
+
+/* Repurposed clemeants CSS to current style */
+.dropbtn {
+ background-color: darkcyan !important;
+  border: none !important;
+  color: white!important;
+  font-size: 20px!important;
+  border: solid white!important;
+  border-width: thin!important;
+  cursor: pointer!important;
+  left: 3%!important;
+}
+
+/* Clements drop down box css styling */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Clements drop down box css styling */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  min-height: 100px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Clements drop down box css styling */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Clements drop down box css styling */
+.dropdown-content a:hover {background-color: #ddd;}
+
+.dropdown:hover .dropdown-content {display: block;}
+
+.dropdown:hover .dropbtn {background-color: #3e8e41;}

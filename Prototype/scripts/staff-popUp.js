@@ -1,22 +1,22 @@
 // Get the modal
-var customerInsertModal = document.getElementById("CustomerModal");
-var updateModal = document.getElementById("UpdateCustomerModal");
-var deleteModal = document.getElementById("DeleteCustomerModal");
+var staffInsertModal = document.getElementById("staffInsertModal");
+var updateModal = document.getElementById("UpdateStaffModal");
+var deleteModal = document.getElementById("DeleteStaffModal");
 
 // Get the button that opens the modal
-var btn = document.getElementById("CustomerPopUp");
-var updateBtn = document.getElementsByClassName("UpdateCustomer");
-var deleteBtn = document.getElementsByClassName("deleteCustomer");
+var insertBtn = document.getElementById("staffInsertPopUp");
+var updateBtn = document.getElementsByClassName("UpdateButton");
+var deleteBtn = document.getElementsByClassName("deleteButton");
 
 // Get the <span> element that closes the modal
-var span = document.getElementsByClassName("Insertclose")[0];
+var staffInsertSpan = document.getElementsByClassName("Insertclose")[0];
 var updateSpan = document.getElementsByClassName("updateFormClose")[0];
 var deleteSpan = document.getElementsByClassName("closeDeleteForm")[0];
 var noDeleteButton = document.getElementById("CancelDeleteCustomer");
 
 // When the user clicks on the button, open the modal
-btn.onclick = function() {
-  customerInsertModal.style.display = "block";
+insertBtn.onclick = function() {
+    staffInsertModal.style.display = "block";
 }
 
 for (var i = 0; i < updateBtn.length; i++)
@@ -34,21 +34,21 @@ for (var i = 0; i < deleteBtn.length; i++)
 }
 
 // When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-  customerInsertModal.style.display = "none";
-  window.location.replace("Customer.php");
+staffInsertSpan.onclick = function() {
+  staffInsertModal.style.display = "none";
+  window.location.replace("staff.php");
   $_SESSION["ret"] = null;
 }
 
 updateSpan.onclick = function() {
   updateModal.style.display = "none";
-  window.location.replace("Customer.php");
+  window.location.replace("staff.php");
   $_SESSION["ret"] = null;
 }
 
 deleteSpan.onclick = function() {
   deleteModal.style.display = "none";
-  window.location.replace("Customer.php");
+  window.location.replace("staff.php");
   $_SESSION["ret"] = null;
 }
 
@@ -56,20 +56,20 @@ deleteSpan.onclick = function() {
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
-  if (event.target == customerInsertModal) {span.onclick = function() {
-    customerInsertModal.style.display = "none";
-  window.location.replace("Customer.php");
+  if (event.target == staffInsertModal) {staffInsertSpan.onclick = function() {
+    staffInsertModal.style.display = "none";
+  window.location.replace("staff.php");
   $_SESSION["ret"] = null;
 }
-    customerInsertModal.style.display = "none";
-    window.location.replace("Customer.php");
+    staffInsertModal.style.display = "none";
+    window.location.replace("staff.php");
   }
   else if(event.target == updateModal){
     updateModal.style.display = "none";
-    window.location.replace("Customer.php");
+    window.location.replace("staff.php");
   }
   else if(event.target == deleteModal){
     deleteModal.style.display = "none";
-    window.location.replace("Customer.php");
+    window.location.replace("staff.php");
   }
 }
