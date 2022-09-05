@@ -39,10 +39,6 @@
     <div class="Content">
         <h1> All Staff</h1>
 
-        <!-- Search bar with icons -->
-        <img src="img/icons/account-search.png" alt="Customer Search Logo" />
-        <input type="text" placeholder="Search">
-
         <!-- Add Customer pop up -->
        
         <button id="staffInsertPopUp">+ New staff member</button>

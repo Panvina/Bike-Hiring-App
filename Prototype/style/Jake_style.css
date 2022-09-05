@@ -83,8 +83,7 @@ body{
 .Content button{
   display: inline-block;
   margin-top: 2%;
-  float: right;
-  left: 25%;
+  left: 67%;
   position: relative;
   background-color: darkcyan;
   border: none;

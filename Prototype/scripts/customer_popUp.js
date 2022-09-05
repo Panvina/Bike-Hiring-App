@@ -9,9 +9,9 @@ var updateBtn = document.getElementsByClassName("UpdateCustomer");
 var deleteBtn = document.getElementsByClassName("deleteCustomer");
 
 // Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
+var span = document.getElementsByClassName("Insertclose")[0];
 var updateSpan = document.getElementsByClassName("updateFormClose")[0];
-var deleteSpan = document.getElementsByClassName("closeDeleteCustomerForm")[0];
+var deleteSpan = document.getElementsByClassName("closeDeleteForm")[0];
 var noDeleteButton = document.getElementById("CancelDeleteCustomer");
 
 // When the user clicks on the button, open the modal

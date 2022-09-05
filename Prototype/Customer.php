@@ -39,10 +39,6 @@
     <div class="Content">
         <h1> All Customers</h1>
 
-        <!-- Search bar with icons -->
-        <img src="img/icons/account-search.png" alt="Customer Search Logo" />
-        <input type="text" placeholder="Search">
-
         <!-- Add Customer pop up -->
        
         <button id="CustomerPopUp" class="CustomerPopUp">+ New Customer</button>
@@ -572,7 +568,7 @@
             <!-- creates the yes and no button and parses the primary key back to be deleted  -->
             <?php
                 $pk = $_SESSION["user_name"];
-                echo "<h1 style='left: 25%; position: relative;'> $pk </h1>";
+                echo "<h1 style='left: 20%; position: relative;'> $pk </h1>";
                 echo "<form action='customer-delete-script.php' method='POST' event.preventDefault()>
                       <button style='width: 40%; left: -10%; position: relative;' type='submit' id='$pk' value ='$pk' name='submitDeleteCustomer'>Yes</button>
                       <button style='width: 40%; left: -10%; position: relative; background-color: red;' type='submit' name='CancelDeleteCustomer'>No</button> </form>";
