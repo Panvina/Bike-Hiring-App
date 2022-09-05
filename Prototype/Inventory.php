@@ -343,9 +343,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
             <h1 style="left: -8%; position: relative;"> Do you wish to delete the item? </h1>
             <form action="inventory-deletescript.php" method="post" event.preventDefault()>
                 <div>
-                    <div syle="position: relative;">
                     <h2>BikeID</h2>
-                    </div>
                     <?php
                     $primaryKey = $_SESSION["bike_id"];
                     echo "<h1 style='left: 25%; position: relative;'> $primaryKey </h1>";

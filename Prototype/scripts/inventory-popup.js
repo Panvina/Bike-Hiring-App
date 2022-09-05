@@ -14,7 +14,7 @@ var deleteBtn = document.getElementsByClassName("DeleteItem");
 // Getting the close buttons for each modal
 var closeBtn = document.getElementsByClassName("close")[0];
 var updateCloseBtn = document.getElementsByClassName("updateFormClose")[0];
-var deleteCloseBtn = document.getElementsByClassName("closeDeleteCustomerForm")[0];
+var deleteCloseBtn = document.getElementsByClassName("closeDeleteForm")[0];
 
 // Opening the modals based on button click
 addBtn.onclick = function(){
