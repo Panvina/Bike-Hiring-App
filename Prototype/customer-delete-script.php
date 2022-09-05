@@ -11,7 +11,7 @@
     //created a empty array to hold the fetched data
     $fetchData = array();
     //fetch the primary key from the displayed data
-    $pk = $_POST['deleteCustomer'];
+    $pk = $_POST['deleteButton'];
 
     //establish the columns of the database for querying
     $cols = "user_name, name, phone_number, email, street_address, suburb, post_code, licence_number, state";
@@ -22,7 +22,7 @@
     $fetchData = $fetchData[0];
 
     //checks to see if the first button is pressed
-    if (isset($_POST['deleteCustomer']))
+    if (isset($_POST['deleteButton']))
     {
         //assigns session variable to the fetched array to be used to transfer data between forms
         $_SESSION["user_name"] = $fetchData["user_name"];

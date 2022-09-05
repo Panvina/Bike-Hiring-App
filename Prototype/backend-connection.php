@@ -241,7 +241,6 @@
 				$query .= " WHERE $condition";
 			}
 
-			echo '<br>';
 			//echo $query;
 			$res = $this->conn->query($query);
 			if ($res->num_rows > 0)
