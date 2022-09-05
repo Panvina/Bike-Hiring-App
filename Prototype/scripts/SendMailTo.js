@@ -4,6 +4,7 @@
 
 //idea from https://futurestud.io/tutorials/split-a-string-into-a-list-of-lines-in-javascript-or-node-js#:~:text=You%20can%20split%20a%20long,in%20other%20languages%3A%20%5Cn%20.
 //protection from https://stackoverflow.com/questions/20855482/preventing-html-and-script-injections-in-javascript
+//This is to make sure that any input is valid and not an attack. 
 function lines(text) {  
 	text = text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
   return text.split('\n')
@@ -14,15 +15,19 @@ function sendmail()
 	var errMsg = "";
 	var result = true;
 	
+	//this is to retrieve values from the form
 	var name = document.getElementById("name").value.trim();
 	var emailin = document.getElementById("email").value.trim();
 	var subject = document.getElementById("subject").value;
 	var message = document.getElementById("msg").value;
 	var emailto = "s103076376@gmail.com";
 	
+	//This is to validate email when needed
 	var emailvalidate =
   /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 	var LinesArray;
+	
+	//This is to validate name
 	if(name == ""){
 		errMsg += "The First Name cannot be empty.\n";
 	} else if(!name.match(/^[A-Za-z]{1,25}$/)){
@@ -30,6 +35,7 @@ function sendmail()
 		result=false;
 	}
 	
+	//this is to validate email
 	if(emailin == ""){
 		errMsg += "The email cannot be empty. \n";
 		result=false;
@@ -42,6 +48,7 @@ function sendmail()
 		result=false;
 	}
 	
+	//this is to make sure the message is valid and put them into one string so it can work in MailTo Form
 	var fullmessage = "";
 	if(message == ""){
 		errMsg += "The message cannot be empty. \n";
@@ -58,32 +65,34 @@ function sendmail()
 		}
 	}
 	
+	//check if there is any errors
 	if (errMsg != ""){
 		alert (errMsg);
 		result = false;
 	}
 	
-	
+	//this is to put message together fully with the sender and email.
 	var completemessage="";
 	//https://stackoverflow.com/questions/22765834/insert-a-line-break-in-mailto-body making new lines
 	completemessage=fullmessage + "%0D%0ASender: " +name+"%0D%0AEmail: "+emailin; 
 	
+	//to send the email to the reciever
 	if (result){
 		var sendcompletemail = "mailto:" +emailto+"?subject="+subject+"&body="+completemessage;
 		window.location.href = sendcompletemail;
 	}
-	
 	return result;
 }
 
 function init()
 {
+	//this is to initiate the email form after it recieve data from contactus
 	if (document.URL.includes("contactus"))
 	{
 		var emailform = document.getElementById("emailform");
 		emailform.onsubmit  = sendmail;
 	}
-	
+	//this is for collapsibles to be working right when you enter the website
 		collapsibles();
 }
 

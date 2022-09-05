@@ -212,7 +212,7 @@ font-size: 25px;
     object-fit: cover;
 }
 
-/*Explore page Container alignment styling*/
+/*Main Explore page Container alignment styling*/
 .ExploreMainCont{
     /* background-color: blue; */
     height: 360px;
@@ -249,6 +249,50 @@ font-size: 25px;
     font-size: 18px;
     color: #172026;
 }
+
+/*Sub Explore page Container alignment styling*/
+.SubExploreMainCont{
+    /* background-color: blue; */
+    height: 400px;
+    display: grid;
+    grid-template-columns:65% 35%;
+    width: 77%;
+    margin: 0 auto;   
+    overflow:visible;
+}
+
+.SubExploreImg{
+    overflow:hidden ;
+    height: 100%;
+}
+.SubExploreTxt{
+    background-color: #eaf7f6;
+    height: 100%;
+    overflow:auto;
+}
+
+#SubExploreHeader{
+    /* font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif,sans-serif; */
+    font-size: 35px;
+    color: #172026;
+    padding-left: 30px;
+    padding-top: 50px;
+    text-align: center;
+}
+
+.SubExploreDesc{
+    /* background-color: red; */
+    padding-top: 5px;
+    padding-right: 10px;
+    padding-left: 28px;
+    line-height: 1.9;
+    text-align: center;
+    /* font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif,sans-serif; */
+    font-size: 18px;
+    color: #172026;
+}
+
+
 
 .hidden
 {
