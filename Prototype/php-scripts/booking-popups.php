@@ -212,7 +212,7 @@ Contributor(s): Dabin Lee @ icelasersparr@gmail.com
             $bikeHourly = getHourlyRateBikes($bikes);
 
             // calculate hourly rate for accessories
-            $accessoryHourly = isset($accessories ? getHourlyRateAccessories($accessories) : 0;
+            $accessoryHourly = isset($accessories) ? getHourlyRateAccessories($accessories) : 0;
 
             // calculate total price of booking (at time of booking)
             $totalPrice = round($bookingDuration * ($bikeHourly + $accessoryHourly), 2);

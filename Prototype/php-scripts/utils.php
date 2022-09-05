@@ -1,3 +1,13 @@
+<!--
+Project Name: Inverloch Bike Hire
+Project Description: A website for hiring bikes. Front-end accompanied
+	   by an admin dashboard.
+File Description: Utility functions for the project
+Contributor(s):
+	- Dabin Lee @ icelasersparr@gmail.com
+	- Jake Hipworth @ 102090870@student.swin.edu.au
+-->
+
 <?php
 	/**
 	 * Convert a PHP array to HTML select box options (combo boxes)
@@ -99,12 +109,14 @@
 		$ret = array();
 		$lenData = count($data);
 
+		// incorrect length check
 		if ($lenData != count($cols))
 		{
 			$ret = null;
 		}
 		else
 		{
+			// reformat each corresponding data value and column to: "col=data"
 			for($i = 0; $i < $lenData; $i++)
 			{
 				$col = $cols[$i];
@@ -115,6 +127,7 @@
 				$str .= "=";
 				$str .= "'$dat'";
 
+				// append to array
 				array_push($ret, $str);
 			}
 		}
