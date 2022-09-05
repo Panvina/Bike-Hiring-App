@@ -279,6 +279,32 @@
 			// NOTE: Multiple queries used, as according to https://stackoverflow.com/a/1307645
 			// PHP's MySQL module does not allow multiple queries. Testing supports this.
 
+			echo "<br>";
+			echo "START TRANSACTION;";
+
+			echo "<br>";
+			echo "<br>";
+
+			echo "$bookingTableQuery";
+			echo "<br>";
+			echo "<br>";
+
+			echo "$getLastBookingIdQuery";
+			echo "<br>";
+			echo "<br>";
+
+			echo "$bookingBikeTableQuery";
+			echo "<br>";
+			echo "<br>";
+
+			echo "$bookingAccessoryTableQuery";
+			echo "<br>";
+			echo "<br>";
+
+			echo "COMMIT;";
+			echo "<br>";
+			echo "<br>";
+
 			// Begin transaction
 			if ($this->conn->query("START TRANSACTION;") == TRUE)
 			{

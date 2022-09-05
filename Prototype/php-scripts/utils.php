@@ -72,7 +72,7 @@
 	// Performs empty() OR operations for each variable in $arr
 	function emptyArr($arr)
 	{
-		$ret = true;
+		$ret = false;
 
 		for($i = 0; $i < count($arr) && !$ret; $i++)
 		{

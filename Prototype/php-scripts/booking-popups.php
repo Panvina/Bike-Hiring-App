@@ -161,6 +161,31 @@
         // echo "$bookingDuration hours<br>";
 
         // Validate variables
+        // echo "<br><br>";
+        // echo "1: $customer";
+        // echo "<br><br>";
+        // echo "2: $startDate";
+        // echo "<br><br>";
+        // echo "3: $startTime";
+        // echo "<br><br>";
+        // echo "4: $endDate";
+        // echo "<br><br>";
+        // echo "5: $endTime";
+        // echo "<br><br>";
+        // echo "6: $pickUpLocation";
+        // echo "<br><br>";
+        // echo "7: $dropOffLocation";
+        // echo "<br><br>";
+
+        $keys = array_keys($_POST);
+        for($i = 0; $i < count($keys); $i++)
+        {
+            $key = $keys[$i];
+            echo "<br><br>";
+            echo "$key: $_POST[$key]";
+        }
+
+        // exit();
         if (!emptyArr([$customer, $startDate, $startTime, $endDate, $endTime, $pickUpLocation, $dropOffLocation]))
         {
             header("Location: ..\bookings.php?booking-mode=stage2");
