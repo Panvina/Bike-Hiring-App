@@ -26,6 +26,7 @@
             <a class="active" href="Customer.php"> <img src="img/icons/account-group.png" alt="Customer Logo" />
                 Customer </a> <br>
             <a href="staff.php"> <img src="img/icons/staff.png" alt="Staff Logo" /> Staff </a> <br>    
+            <a href="accounts.php"> <img src="img/icons/account.png" alt="Account logo"/> Accounts </a> <br> 
             <a href="Inventory.php"> <img src="img/icons/bicycle.png" alt="Inventory Logo" /> Inventory </a> <br>
             <a href="bookings.php"> <img src="img/icons/book-open-blank-variant.png" alt="Bookings Logo" /> Bookings
             </a> <br>
@@ -40,7 +41,6 @@
         <h1> All Customers</h1>
 
         <!-- Add Customer pop up -->
-       
         <button id="CustomerPopUp" class="CustomerPopUp">+ New Customer</button>
 
         <!-- List of current customers -->

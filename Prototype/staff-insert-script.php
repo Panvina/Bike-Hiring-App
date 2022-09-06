@@ -29,7 +29,7 @@
         else 
         {
             //cleans the input and assigns the variable for inserting
-            $userName = test_input($_POST["userName"]);
+            $userName = "EM-" + test_input($_POST["userName"]);
 
         }
         //------------------------------------------------------
@@ -156,13 +156,13 @@
         if(!empty($userName) && !empty($name) && !empty($phoneNumber) && !empty($email) && !empty($streetAddress) && !empty($suburb) && !empty($postCode) && !empty($state))
         {
             //defines the SQL query
-            $cols = "user_name, name, phone_number, email, street_address, suburb, post_code, state";
+            $cols = "user_name, name, phone_number, email, address, suburb, post_code, state";
             $data = "'$userName', '$name', '$phoneNumber', '$email', '$streetAddress', '$suburb', '$postCode', '$state'";
 
             //Inserts the data into the database and checks if it was successful
             //If successful, redirects back to the customer page 
             if ($conn->insert($cols , $data) == true)
-            {
+            { 
                 header("Location: staff.php?insert=true");
                 exit();
             }

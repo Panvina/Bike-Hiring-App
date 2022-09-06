@@ -25,7 +25,8 @@
             <a href="Dashboard.php"> <img src="img/icons/bulletin-board.png" alt="Dashboard Logo" /> Dashboard </a> <br>
             <a href="Customer.php"> <img src="img/icons/account-group.png" alt="Customer Logo" /> Customer </a> <br>
             <a class="active" href="staff.php"> <img src="img/icons/staff.png" alt="Staff Logo" />
-            Staff </a> <br>    
+            Staff </a> <br>
+            <a href="accounts.php"> <img src="img/icons/account.png" alt="Account logo"/> Accounts </a> <br>     
             <a href="Inventory.php"> <img src="img/icons/bicycle.png" alt="Inventory Logo" /> Inventory </a> <br>
             <a href="bookings.php"> <img src="img/icons/book-open-blank-variant.png" alt="Bookings Logo" /> Bookings
             </a> <br>
@@ -49,7 +50,7 @@
                 <?php
                     //Fetch data done by Alex, altered by Jake for customer table
                     //establishes the collumns in the table to be used in the query
-                    $cols = "user_name, name, phone_number, email, street_address, suburb, post_code, state";
+                    $cols = "user_name, name, phone_number, email, address, suburb, post_code, state";
                     //get the data from the table
                     $rows = $conn->get($cols);
 

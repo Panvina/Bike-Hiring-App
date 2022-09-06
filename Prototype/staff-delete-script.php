@@ -14,7 +14,7 @@
     $pk = $_POST['deleteButton'];
 
     //establish the columns of the database for querying
-    $cols = "user_name, name, phone_number, email, street_address, suburb, post_code, state";
+    $cols = "user_name, name, phone_number, email, address, suburb, post_code, state";
     //establish the where condition for the query
     $condition = "user_name='$pk'";
     //fetch the data and assign it to the array

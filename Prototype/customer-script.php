@@ -11,6 +11,7 @@
     //define the err variables
     $userNameErr = $nameErr = $phoneNumberErr = $emailErr = $streetAddressErr = $suburbErr = $postCodeErr = $licenceNumberErr = $stateErr = "";
     $_SESSION["userNameErr"] = "";
+    //$customerPrefix = "CU"; 
 
     //checks to see form has opened
     if (isset($_POST['SubmitCustomer']))
@@ -29,7 +30,7 @@
         else 
         {
             //cleans the input and assigns the variable for inserting
-            $userName = test_input($_POST["userName"]);
+            $userName =  "CU-" . test_input($_POST["userName"]);
 
         }
         //------------------------------------------------------
