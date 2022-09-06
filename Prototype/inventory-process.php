@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'backend-connection.php';
+include 'php-scripts/backend-connection.php';
 $conn = new mysqli("localhost", "root", "", "bike_hiring_system") or die(mysqli_error($mysqli));
 
 

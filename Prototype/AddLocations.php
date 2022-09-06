@@ -1,7 +1,6 @@
 <!doctype html>
 <?php
-include("backend-connection.php");
-include("Reusable.php");
+include("php-scripts/Reusable.php");
 
 //this area is where the data is retrieved
 $nameInput = $_POST["nameInput"];
@@ -79,7 +78,7 @@ else
 	)";
 	$result = mysqli_query($conn,$query);
 	if($result){//create table successful
-		$query = "INSERT INTO `location_table` (`Name`, `Address`, `Suburb`, `Post Code`, `Drop Off Location`, `Pick Up Location`) VALUES ( '$nameInput', '$addressInput', '$suburbInput', '$postcodeInput', '$dropoffValue', '$pickupValue'); ";
+		$query = "INSERT INTO `location_table` (`name`, `address`, `suburb`, `post_code`, `drop_off_location`, `pick_up_location`) VALUES ( '$nameInput', '$addressInput', '$suburbInput', '$postcodeInput', '$dropoffValue', '$pickupValue'); ";
 		$insert_result = mysqli_query ($conn, $query);
 		if($insert_result){//insert successful
 			$db_msg .= ", Success Insert";

@@ -3,8 +3,8 @@
     //start the session with the database
     session_start();
     //include database functions
-    include_once("backend-connection.php");
-    include_once "utils.php";
+    include_once("php-scripts/backend-connection.php");
+    include_once "php-scripts/utils.php";
     //create the connection with the database
     $conn = new DBConnection("employee_table");
 ?>

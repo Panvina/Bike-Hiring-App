@@ -3,7 +3,7 @@ session_start();
 
 date_default_timezone_set('Australia/Melbourne');
 
-include_once("backend-connection.php");
+include_once("php-scripts/backend-connection.php");
 
 //Linking utility functions associated with inventory
 include("inventory-util.php");

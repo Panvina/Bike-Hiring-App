@@ -16,8 +16,7 @@ toggle between hiding and showing the dropdown content */
 		<link rel="stylesheet" href="style/LocationPop.css">
 		<link rel="stylesheet" href="style/dropdownboxcss.css">
 		<?php
-		include("Reusable.php");
-		include("backend-connection.php");
+		include("php-scripts/Reusable.php");
 		
 		//setting up and connecting to DB
 		$host = "localhost";
@@ -95,7 +94,7 @@ toggle between hiding and showing the dropdown content */
 			</tr>
 			<?php
 			//this to select all items from the table before showing it
-			$query = "SELECT * FROM location_table";
+			$query = "SELECT * FROM `location_table`";
 			$result = mysqli_query($conn,$query);
 			if(!$result)
 			{//showing if query has failed
@@ -116,17 +115,17 @@ toggle between hiding and showing the dropdown content */
 					{
 						//grabbing and putting all the data into variables or putting them together
 						$fulladdress = "";
-						$LID = $record['LocationID'];
-						$name = $record['Name'];
+						$LID = $record['location_id'];
+						$name = $record['name'];
 						$name = sanitise_input($name);
-						$address = $record['Address'];
+						$address = $record['address'];
 						$address = sanitise_input($address);
-						$suburb = $record['Suburb'];
+						$suburb = $record['suburb'];
 						$suburb = sanitise_input($suburb);
-						$postcode = $record['Post Code'];
+						$postcode = $record['post_code'];
 						$postcode = sanitise_input($postcode);
-						$dropOff = $record['Drop Off Location'];
-						$pickUp = $record['Pick Up Location'];
+						$dropOff = $record['drop_off_location'];
+						$pickUp = $record['pick_up_location'];
 						$fulladdress = "$address,  $suburb, $postcode, Vic, Australia";
 						
 						//checking the values from database and turning it into checked so it can be shown on the interface
