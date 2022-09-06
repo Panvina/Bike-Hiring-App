@@ -102,12 +102,13 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                 // Fetch bike type data from the bike_type_table
                 $accessorytype = $row["accessory_type_id"];
                 $accessoryTypeInventory = $conn->query("SELECT name FROM accessory_type_table WHERE accessory_type_id=$accessorytype")->fetch_assoc();
-         
-                $primaryKey = $row["accessory_id"];
-                $_SESSION["primaryKey"] = $primaryKey;
-
+                
                 // Booking availbility check for bikes
                 $bookingStatus = accessory_availability_check($row["accessory_id"]);
+
+                // Setting the primary key value based on table's primary key
+                $primaryKey = $row["accessory_id"];
+                $_SESSION["primaryKey"] = $primaryKey;
                 
             ?>
                 <tr>
@@ -153,7 +154,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
     ?>
     <div id="AddAccessoryModal" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
+            <span class="Insertclose">&times;</span>
             <form action="accessory-addscript.php" method="post">
                 <div>
                     <h2>Accessory ID</h2>
