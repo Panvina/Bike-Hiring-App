@@ -1,4 +1,19 @@
 
-.add-booking-overlay {
+form
+{
+	margin:0px;
+	padding:0px;
+	display: inline;
+}
 
+.dropdown-element
+{
+	background-color: black;
+    border: none;
+    color: white;
+    font-size: 20px;
+    border: solid white;
+    border-width: thin;
+    cursor: pointer;
+    left: -10%;
 }

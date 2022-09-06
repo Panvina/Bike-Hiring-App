@@ -29,6 +29,7 @@
 <!DOCTYPE html>
 <html>
     <link rel="stylesheet" href="style/Jake_style.css">
+    <link rel="stylesheet" href="style/bookings_page.css">
     <link rel="stylesheet" href="style/popup.css">
     <head>
         <!-- Header -->
@@ -341,7 +342,7 @@
             <div class = "sideNavigation">
                 <a href = "Dashboard.php"> <img src= "img/icons/bulletin-board.png" alt="Dashboard Logo" /> Dashboard </a> <br>
                 <a href = "Customer.php"> <img src= "img/icons/account-group.png" alt="Customer Logo" />  Customer  </a> <br>
-                <a href="staff.php"> <img src="img/icons/staff.png" alt="Staff Logo" /> Staff </a> <br>   
+                <a href="staff.php"> <img src="img/icons/staff.png" alt="Staff Logo" /> Staff </a> <br>
                 <a href= "Inventory.php"> <img src= "img/icons/bicycle.png" alt="Inventory Logo" />  Inventory </a> <br>
                 <a class="active" href= "Bookings.php"> <img src= "img/icons/book-open-blank-variant.png" alt="Bookings Logo" /> Bookings </a> <br>
                 <a href= "Block_Out_Date.php"> <img src= "img/icons/calendar.png" alt="Block out date Logo" /> Block Out Dates </a> <br>
@@ -360,14 +361,12 @@
                 <!-- Add Booking pop up -->
                 <button type="button" id="add-booking-btn">+ Add Booking</button>
 
-                <!-- Change Booking pop up -->
-                <form action="php-scripts\booking-popups.php" method="POST">
+                <!-- <form action="php-scripts\booking-popups.php" method="POST">
                     <button type="submit" name="change-booking-btn" value="change,27">Modify Booking</button>
                 </form>
-                <!-- Delete booking button -->
                 <form action="php-scripts\booking-popups.php" method="POST">
                     <button type="submit" name="delete-booking-btn" value="delete,27">Delete Booking</button>
-                </form>
+                </form> -->
             </div>
 
             <!-- List of available bookings -->
@@ -391,46 +390,68 @@
                             $col = trim($cols[$x]);
                             echo "<th> $col </th>";
                         }
+                        echo "<th> Edit </th>";
                     ?>
                 </tr>
 
                 <!-- Populate table data rows -->
                 <?php
                     // create new DB connection and fetch rows
-                   $conn = new BookingsDBConnection();
-                   $rows = $conn->getBookingRows();
+                    $conn = new BookingsDBConnection();
+                    $rows = $conn->getBookingRows();
 
-                   // if no rows are returned, create a null row as a placeholder
-                   if ($rows == null)
-                   {
-                       $rows = array();
-                       $tmp = array();
-                       for($x = 0; $x < count($cols); $x++)
-                       {
-                           array_push($tmp, "null");
-                       }
-                       array_push($rows, $tmp);
-                   }
+                    // if no rows are returned, create a null row as a placeholder
+                    if ($rows == null)
+                    {
+                        $rows = array();
+                        $tmp = array();
+                        for($x = 0; $x < count($cols); $x++)
+                        {
+                            array_push($tmp, "null");
+                        }
+                        array_push($rows, $tmp);
+                    }
 
-                   // get keys for each row
-                   // at least one row exists due to if-statement above
-                   $keys = array_keys($rows[0]);
-                   for($x = 0; $x < count($rows); $x++)
-                   {
-                       // create data row
-                       echo "<tr>";
-                       for($y = 0; $y < count($keys); $y++)
-                       {
-                           // get row and key
-                           $row = $rows[$x];
-                           $key = $keys[$y];
+                    // get keys for each row
+                    // at least one row exists due to if-statement above
+                    $keys = array_keys($rows[0]);
+                    for($x = 0; $x < count($rows); $x++)
+                    {
+                        // create data row
+                        echo "<tr>";
+                        $bookingId = 0;
+                        for($y = 0; $y < count($keys); $y++)
+                        {
+                            // get row and key
+                            $row = $rows[$x];
+                            $key = $keys[$y];
 
-                           // retrieve data from above row for given key
-                           $data = $row[$key];
-                           echo "<td> $data </td>";
-                       }
-                       echo "</tr>";
-                   }
+                            // retrieve data from above row for given key
+                            $data = $row[$key];
+
+                            if ($key == "booking_id")
+                            {
+                                $bookingId = $data;
+                            }
+                            echo "<td> $data </td>";
+                        }
+                        echo "
+                            <td>
+                                <div class='dropdown'>
+                                    <button class='dropbtn' disabled>...</button>
+                                    <div class='dropdown-content'>
+                                        <form action='php-scripts/booking-popups.php' method='POST'>
+                                            <button type='submit' name='change-booking-btn' value='change,$bookingId' class='dropdown-element'> Update </button>
+                                        </form>
+                                        <form action='php-scripts/booking-popups.php' method='POST'>
+                                            <button type='submit' name='delete-booking-btn' value='delete,$bookingId' class='dropdown-element'> Delete </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </td>
+                        ";
+                        echo "</tr>";
+                    }
                 ?>
             </table>
         </div>
