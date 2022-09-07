@@ -134,6 +134,15 @@ Contributor(s):
 
 		return $ret;
 	}
+	
+	//ref: https://stackoverflow.com/questions/12018245/regular-expression-to-validate-username
+	//Validates user name and returns true if its valid
+	//Checks to see if username has the following criteria:
+	//1. Only contains alphanumeric characters excluding underscore and dots
+	//2. A underscore and dot cannot be used at the start, end or used together
+	//3. The underscore and dots cannot be used multple times
+	//4. Number of characters must be between 8 and 20 characters 
+	function validUserName($userName)
 	{
 		//return preg_match("/[a-z0-9_\-A-Z]{3,16}/",$userName);
 		return preg_match("/^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/",$userName);
