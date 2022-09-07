@@ -596,6 +596,10 @@ if (isset($_GET["insert"]))
     {
         echo "<p class = 'echo'>  Record was not created successfuly </p>";
     }
+    else if ($_GET["insert"] == "duplicatePrimaryKey")
+    {
+        echo "<p class = 'echo'> Primary Key is already taken </p>";
+    }
 }
 
 //checks to see if updating was successful and provides input

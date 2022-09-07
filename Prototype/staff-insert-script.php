@@ -29,7 +29,7 @@
         else 
         {
             //cleans the input and assigns the variable for inserting
-            $userName = "EM-" + test_input($_POST["userName"]);
+            $userName = "EM-" . test_input($_POST["userName"]);
 
         }
         //------------------------------------------------------

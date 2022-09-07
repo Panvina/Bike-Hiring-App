@@ -4,9 +4,10 @@
     session_start();
     //include database functions
     include "php-scripts\backend-connection.php";
+    include "php-scripts\customer-db.php";
     include_once "php-scripts\utils.php";
     //create the connection with the database
-    $conn = new DBConnection("customer_table");
+    $conn = new CustomerDBConnection("customer_table");
 
     //define the err variables
     $userNameErr = $nameErr = $phoneNumberErr = $emailErr = $streetAddressErr = $suburbErr = $postCodeErr = $licenceNumberErr = $stateErr = "";
@@ -169,27 +170,57 @@
             //cleans the input and assigns the variable for inserting
             $state = test_input($_POST["state"]);
         }
-    
+
         //Double checks to ensure no field is empty
         if(!empty($userName) && !empty($name) && !empty($phoneNumber) && !empty($email) && !empty($streetAddress) && !empty($suburb) && !empty($postCode) && !empty($licenceNumber) && !empty($state))
         {
-            //defines the SQL query
-            $cols = "user_name, name, phone_number, email, street_address, suburb, post_code, licence_number, state";
-            $data = "'$userName', '$name', '$phoneNumber', '$email', '$streetAddress', '$suburb', '$postCode', '$licenceNumber', '$state'";
 
-            //Inserts the data into the database and checks if it was successful
-            //If successful, redirects back to the customer page 
-            if ($conn->insert($cols , $data) == true)
+            $ret = false;
+            //defines the SQL query for the customer table
+            $customerCols = "user_name, name, phone_number, email, street_address, suburb, post_code, licence_number, state";
+            $customerData = "'$userName', '$name', '$phoneNumber', '$email', '$streetAddress', '$suburb', '$postCode', '$licenceNumber', '$state'";
+            $customerQuery = "INSERT INTO customer_table ($customerCols) VALUES ($customerData)";
+
+            $accountCols = "user_name, role_id, password";
+            $accountPassword = randomPassword();
+            $accountData = "'$userName', 3, '$accountPassword'";
+            $accountQuery = "INSERT INTO accounts_table (user_name, role_id, password) VALUES ($accountData)";
+            
+            if ($conn->checkMultipleUserName($userName) == false)
             {
-                header("Location: Customer.php?insert=true");
-                exit();
+
+                $conn->runQuery("START TRANSACTION;");
+			
+                //Inserts the data into the database and checks if it was successful
+
+                if ($conn->runQuery($customerQuery) == false)
+                {
+                    header("Location: Customer.php?insert=false");
+                    exit();
+                    //header("Location: Customer.php?insert=true");
+                }
+                else if ($conn->runQuery($accountQuery) == false)
+                {
+                    header("Location: Customer.php?insert=false");
+                    exit();
+                }
+                else
+                {
+                    // commit changes to database
+                    $conn->runQuery("COMMIT;");
+                    header("Location: Customer.php?insert=true");
+                    exit();
+                }   
             }
-            //If unsuccessful, redirects back to the customer page with error
             else
             {
-                header("Location: Customer.php?insert=false");
+                header("Location: Customer.php?insert=duplicatePrimaryKey");
                 exit();
             }
+           
+        
         }
+
     }
+
 ?>

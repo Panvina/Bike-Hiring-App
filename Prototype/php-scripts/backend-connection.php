@@ -261,6 +261,40 @@
 
 			return $ret;
 		}
+
+		//Jake.H accepts a query and runs the query in the database
+		public function runQuery($query)
+		{
+			$ret = false;
+
+			if ($this->conn->query($query) == TRUE)
+			{
+				$ret = TRUE;
+			}
+
+			return $ret;
+		}
+
+		//Jake.H
+		public function checkMultipleUserName($username)
+		{
+			$ret = false;
+			$customerTable = "customer_table";
+			$employeeTable = "employee_table";
+			$fetchedUserName = substr($username, 3);
+
+			$query = "SELECT customer_table.user_name FROM customer_table UNION ALL SELECT employee_table.user_name FROM employee_table
+			where user_name = $fetchedUserName";
+
+			$res = $this->conn->query($query);
+			if ($res->num_rows >= 1)
+			{
+				$ret = true;
+			}
+
+			return $ret;
+		}
+		
 	}
 
 	// change this variable to true to perform test
