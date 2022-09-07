@@ -4,6 +4,7 @@
 
 function sendbooking()
 {	
+	var result = true;
 	//this is to retrieve values from the form or in this case, having default values
 	var bikeType = "Merida Big 7";
 	var name = "John Smith";
@@ -37,10 +38,8 @@ function sendbooking()
 	; 
 	
 	//to send the email to the reciever
-	if (result){
 		var sendcompletemail = "mailto:" +emailto+"?subject="+subject+"&body="+completemessage;
 		window.location.href = sendcompletemail;
-	}
 	return result;
 }
 
