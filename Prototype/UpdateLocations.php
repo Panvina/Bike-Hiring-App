@@ -1,6 +1,5 @@
 <?php
-include("Reusable.php");
-include("backend-connection.php");
+include("php-scripts/Reusable.php");
 
 //Retrieving data
 $LID = $_POST["LID"];
@@ -45,7 +44,7 @@ else
 	//the two isset is to see which function button is clicked
 	if(isset($_POST["deleteLocation"]))//delete a location that is not important
 	{
-		$query = "DELETE FROM `location_table` WHERE `location_table`.`LocationID` = $LID;";
+		$query = "DELETE FROM `location_table` WHERE `location_table`.`location_id` = $LID;";
 		$result = mysqli_query($conn,$query);
 		if($result){//Data Deleted Successfully
 			header("location:Locations.php");
@@ -58,7 +57,7 @@ else
 	
 	if(isset($_POST["updateLocation"]))//updating the checkboxes send
 	{
-		$query = "UPDATE `location_table` SET `Drop Off Location` = '$dropoffValue', `Pick Up Location` = '$pickupValue' WHERE `location_table`.`LocationID` = $LID;";
+		$query = "UPDATE `location_table` SET `drop_off_location` = '$dropoffValue', `pick_up_location` = '$pickupValue' WHERE `location_table`.`location_id` = $LID;";
 		$result = mysqli_query($conn,$query);
 		if($result)
 		{//Data Updated Successfully

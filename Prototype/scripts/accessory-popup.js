@@ -12,7 +12,7 @@ var updateBtn = document.getElementsByClassName("UpdateItem");
 var deleteBtn = document.getElementsByClassName("DeleteItem");
 
 // Getting the close buttons for each modal
-var closeBtn = document.getElementsByClassName("close")[0];
+var closeBtn = document.getElementsByClassName("Insertclose")[0];
 var updateCloseBtn = document.getElementsByClassName("updateFormClose")[0];
 var deleteCloseBtn = document.getElementsByClassName("closeDeleteForm")[0];
 

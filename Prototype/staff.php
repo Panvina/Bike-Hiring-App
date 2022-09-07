@@ -3,8 +3,8 @@
     //start the session with the database
     session_start();
     //include database functions
-    include_once("backend-connection.php");
-    include_once "utils.php";
+    include_once("php-scripts/backend-connection.php");
+    include_once "php-scripts/utils.php";
     //create the connection with the database
     $conn = new DBConnection("employee_table");
 ?>
@@ -28,6 +28,7 @@
             Staff </a> <br>
             <a href="accounts.php"> <img src="img/icons/account.png" alt="Account logo"/> Accounts </a> <br>     
             <a href="Inventory.php"> <img src="img/icons/bicycle.png" alt="Inventory Logo" /> Inventory </a> <br>
+            <a href="Accessory.php"> <img src="img/icons/accessories.png" alt="Accessory Logo" /> Accessories </a> <br>
             <a href="bookings.php"> <img src="img/icons/book-open-blank-variant.png" alt="Bookings Logo" /> Bookings
             </a> <br>
             <a href="Block_Out_Date.php"> <img src="img/icons/calendar.png" alt="Block out date Logo" /> Block Out Dates

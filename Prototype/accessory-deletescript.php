@@ -1,7 +1,7 @@
 <?php
     session_start();
-    include_once("backend-connection.php");
-    include_once "utils.php";
+    include_once("php-scripts/backend-connection.php");
+    include_once "php-scripts/utils.php";
     $conn = new mysqli("localhost", "root", "", "bike_hiring_system") or die(mysqli_error($mysqli));
 
     if (isset($_POST['deleteItem']))

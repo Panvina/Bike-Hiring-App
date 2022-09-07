@@ -168,7 +168,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 
         <!-- Content within popup -->
         <div class="modal-content">
-            <span class="close">&times;</span>
+            <span class="Insertclose">&times;</span>
             <form action="inventory-addscript.php" method="post">
                 <div>
                     <h2>BikeID</h2>
