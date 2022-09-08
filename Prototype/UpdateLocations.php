@@ -1,7 +1,16 @@
+<!--
+Project Name: Inverloch Bike Hire
+Project Description: A website for hiring bikes. Front-end accompanied
+	   by an admin dashboard.
+File Description: This is to either update or delete location data
+Contributor:
+	- Clement Cheung @ 103076376@student.swin.edu.au
+-->
+<!-- This page is completely done by Clement -->
 <?php
 include("php-scripts/Reusable.php");
 
-//Retrieving data
+//Retrieving data from the table from Locations.php
 $LID = $_POST["LID"];
 $LID = sanitise_input($LID);
 $dropoffInput = $_POST["dropOffBox"];
@@ -19,7 +28,7 @@ if(isset($_POST["updateLocation"]))
 	echo "<h2>True Update</h2>";
 }
 
-//connection related items
+//connection to database
 $host = "localhost";
 $user = "root";
 $pwd = "";
@@ -44,6 +53,7 @@ else
 	//the two isset is to see which function button is clicked
 	if(isset($_POST["deleteLocation"]))//delete a location that is not important
 	{
+		//this query is to delete the location data that the admin want to remove
 		$query = "DELETE FROM `location_table` WHERE `location_table`.`location_id` = $LID;";
 		$result = mysqli_query($conn,$query);
 		if($result){//Data Deleted Successfully
@@ -57,6 +67,7 @@ else
 	
 	if(isset($_POST["updateLocation"]))//updating the checkboxes send
 	{
+		//this query is to update the location data that the admin want to update
 		$query = "UPDATE `location_table` SET `drop_off_location` = '$dropoffValue', `pick_up_location` = '$pickupValue' WHERE `location_table`.`location_id` = $LID;";
 		$result = mysqli_query($conn,$query);
 		if($result)

@@ -1,16 +1,22 @@
 // JavaScript Document
+// Project Name: Inverloch Bike Hire
+// Project Description: A website for hiring bikes. Front-end accompanied by an admin dashboard.
+// File Description: This page is to send an contactus email from the customer's email to the bike hire email about any enquiries
+// Contributor:
+// 	- Clement Cheung @ 103076376@student.swin.edu.au
 
+// This page is completely done by Clement
 "use strict";
 
+//This is a security function to make sure that any input, especially hacking code is changed into a safe code. 
 //idea from https://futurestud.io/tutorials/split-a-string-into-a-list-of-lines-in-javascript-or-node-js#:~:text=You%20can%20split%20a%20long,in%20other%20languages%3A%20%5Cn%20.
 //protection from https://stackoverflow.com/questions/20855482/preventing-html-and-script-injections-in-javascript
-//This is to make sure that any input is valid and not an attack. 
 function lines(text) {  
 	text = text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
   return text.split('\n')
 }
 
-function sendmail()
+function sendmail() //this function is to both retrieve, manage data and then send email
 {
 	var errMsg = "";
 	var result = true;
@@ -84,19 +90,6 @@ function sendmail()
 	return result;
 }
 
-function init()
-{
-	//this is to initiate the email form after it recieve data from contactus
-	if (document.URL.includes("contactus"))
-	{
-		var emailform = document.getElementById("emailform");
-		emailform.onsubmit  = sendmail;
-	}
-	//this is for collapsibles to be working right when you enter the website
-		collapsibles();
-}
-
-window.onload = init;
 
 //this is operational and for the animation dropdown
 function collapsibles()
@@ -116,3 +109,17 @@ function collapsibles()
 	}
 }
 
+
+function init()
+{
+	//this is to initiate the email form after it recieve data from contactus
+	if (document.URL.includes("contactus"))
+	{
+		var emailform = document.getElementById("emailform");
+		emailform.onsubmit  = sendmail;
+	}
+	//this is for collapsibles to be working right when you enter the website
+		collapsibles();
+}
+
+window.onload = init;

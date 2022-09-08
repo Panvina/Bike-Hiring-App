@@ -1,9 +1,16 @@
 @charset "utf-8";
 /* CSS Document */
+/* Project Name: Inverloch Bike Hire
+Project Description: A website for hiring bikes. Front-end accompanied by an admin dashboard.
+Contributor:
+ 	- Clement Cheung @ 103076376@student.swin.edu.au
 
-/*code from https://www.liquidlight.co.uk/blog/create-an-event-schedule-with-html-table/*/
-body {
-/*  display: flex;*/
+This page is completely done by Clement */
+
+/*initial code from https://www.liquidlight.co.uk/blog/create-an-event-schedule-with-html-table/*/
+
+/* Currently under construction */
+body { 
   align-items: center;
   justify-content: center;
   min-height: 100vh;
@@ -11,7 +18,7 @@ body {
   font-family: -system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-/*Thi is to keep it in the container and have a proper setup of where data can be put in*/
+/*This is to keep it in the container and have a proper setup of where data can be put in*/
 .scheduleContainer {
   display: grid;
   grid-gap: 0.2rem;

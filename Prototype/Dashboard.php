@@ -1,3 +1,13 @@
+<!--
+Project Name: Inverloch Bike Hire
+Project Description: A website for hiring bikes. Front-end accompanied
+	   by an admin dashboard.
+File Description: Show both the functions and locations information
+Contributor(s):
+	- Clement Cheung @ 103076376@student.swin.edu.au
+	- Vina Touch @ 101928802@student.swin.edu.au
+	- Jake Hipworth @ 102090870@student.swin.edu.au (Navigation section and Styles)
+-->
 <!DOCTYPE html>
 <html>
     <link rel="stylesheet" href="style/Jake_style.css">

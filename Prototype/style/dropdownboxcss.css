@@ -1,10 +1,18 @@
 @charset "utf-8";
 /* CSS Document */
+/* Project Name: Inverloch Bike Hire
+Project Description: A website for hiring bikes. Front-end accompanied by an admin dashboard.
+Contributor:
+ 	- Clement Cheung @ 103076376@student.swin.edu.au
+*/
+
+
+  /* This is so the two options, Update and Delete would appear 
+  from an action button which is located on the last collum of the location table */
 .dropbtn {
   background-color: #04AA6D;
   color: white;
   padding: 3px;
-/*  font-size: 16px;*/
   border: none;
 }
 

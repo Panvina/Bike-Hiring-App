@@ -1,3 +1,13 @@
+<!--
+Project Name: Inverloch Bike Hire
+Project Description: A website for hiring bikes. Front-end accompanied
+	   by an admin dashboard.
+File Description: reusable functions for the project
+Contributor:
+	- Clement Cheung @ 103076376@student.swin.edu.au
+	- Vina Touch @ 101928802@student.swin.edu.au
+	- Aadesh Jagannathan @ 102072344@student.swin.edu.au
+-->
 <!doctype html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 	<head>
@@ -14,9 +24,11 @@
 
 	<body>
 		<header>	
+			<!-- This is done by Vina where the header includes the logo of the company and links to other pages-->
 			<?php include 'header.php'?>
     </header>
 		<main>
+			<!-- The banner is created by aadesh and implemented the BreadCrumbs program in -->
 			<div class="banner">
 				<div id="bannertext">
 					<h1>CONTACT US</h1>
@@ -32,15 +44,20 @@
 						</ul>
 				</div>
 			</div>
+
+			<!-- From ths onwards, this is done by Clement -->
+			<!-- This is for people to see the page and can jump to FAQ quickly if needed -->
 			<div id="headercomment" class="contactmargin">
 				<h2> For questions, bookings or just to chat about eBikes, contact us today. <br/>
 					Or Check Our <a href="#faq">FAQ'S</a>.</h2>
 			</div>
+			<!-- This is the contact information of the company from here onwards - Clement -->
 			<div id="contactUsInfo" class="contactmargin">
 				<div id="contactbox">
 					<div class="Contactbox" id="Conactbox1">
 						<div id="contactInfo" class="textcentral">
 							<h2>CONTACT INFORMATION</h2>
+							
 							<p> We are a 'Click &amp; Collect' Service. Book a location and pick-up time online and your bike/s will be waiting for you.</p>
 							<table width="100%" border="0">
 								<tbody>
@@ -61,7 +78,8 @@
 										</td>
 										<td>
 											<p>INVERLOCH BIKE HIRE&nbsp;<br>
-												invenlochbikes@gmail.com<br>
+											<a href="invenlochbikes@gmail.com">invenlochbikes@gmail.com</a>
+												<br>
 												Mob:0455 896 240
 											</p>
 										</td>
@@ -71,7 +89,7 @@
 							<p>We look foward to hearing from you.&nbsp;</p>
 						</div>
 					</div>
-<!--					This is a contact us form-->
+					<!-- This is a contact us form where if someone fill the form out and then send it, it will work, done by Clement -->
 					<div class="Contactbox" id="Conactbox2">
 						<form action="contactus.php" method="post" id="emailform" name="emailform" class="textcentral">
 							<p>
@@ -100,6 +118,7 @@
 				</div>
 			</div>
 			
+			<!-- The class="collapsibles" are using buttons function so when click, the dropbox can open or close. and this section is done by Clement -->
 			<div id="faqfloat">
 				<div id="faq" class="contactmargin">
 					<h2>FAQ'S</h2>
@@ -107,7 +126,6 @@
 						<em>If you can't find the answer to your questions bellow, feel free to get in touch.</em>
 					</p>
 					<div id="mainfaq"> 
-<!--						The class="collapsibles" are using buttons function so when click, the dropbox can open or close.-->
 						<button type="button" class="collapsible">Do I need a license to ride on an eBike?</button>
 						<div class="content">
 							<p>For most electric bikes, you do not need a licence of anykind to use.</p>
@@ -161,6 +179,7 @@
 			</div>
 		</main>
 	<footer>	
+			<!-- This is done by Vina where it is the footer of the page-->
     <?php include 'footer.php'?>
   </footer>
 

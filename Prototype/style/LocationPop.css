@@ -1,16 +1,16 @@
 @charset "utf-8";
 /* CSS Document */
+/* Project Name: Inverloch Bike Hire
+Project Description: A website for hiring bikes. Front-end accompanied by an admin dashboard.
+Contributor:
+ 	- Clement Cheung @ 103076376@student.swin.edu.au
+	*/
+	/* This is to have the pop out pannels able to pop out easily */
 body 
 {
 	font-family: Arial, Helvetica, sans-serif;
 }
 
-/*
-#myBtn
-{
-left: 0%;
-}
-*/
 /* The Modal (background) */
 .modal {
 	display: none; /* Hidden by default */
