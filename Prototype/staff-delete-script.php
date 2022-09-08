@@ -36,17 +36,33 @@
     //checks to see if the yes button in the delete form has been pressed
     if (isset($_POST["submitDeleteStaff"]))
     {
-        //gets the primary key that was used in the row
+        //gets the primary key from the row selected
         $pk = $_POST["submitDeleteStaff"];
-        //deletes the data from the table and checks to see if it was successful
-        if ($conn->delete("user_name", "'$pk'") == true)
-        {
-            header("Location: staff.php?delete=true");
-        }
-        else
+        //creates the query to delete the same row in the account table
+        $accountQuery = "DELETE FROM accounts_table WHERE user_name = '$pk'";
+    
+        //starts the transaction for the query for database security
+        $conn->runQuery("START TRANSACTION;");
+
+        //deletes the staff from the employee table
+        if ($conn->delete("user_name", "'$pk'") == false)
         {
             header("Location: staff.php?delete=false");
         }
+        //deletes the staff from the accounts table
+        else if ($conn->runQuery($accountQuery) == false)
+        {
+           header("Location: staff.php?delete=false");
+            exit();
+        }
+        //goes back to the staff page with a error
+        else
+        {
+            // commit changes to database
+            $conn->runQuery("COMMIT;");
+            header("Location: staff.php?delete=true");
+            exit();
+        }          
     }
 
     //If the no button was pressed, redirects back to the customer page

@@ -189,7 +189,7 @@
             $state = test_input($_POST["state"]);
         }
 
-        //double checks to ensure all variables are not empty then parses the data to be updated. Returns back to the customer page based on the result
+        //double checks to ensure all variables are not empty then parses the data to be updated. Returns back to the staff page based on the result
         if(!empty($name) && !empty($phoneNumber) && !empty($email) && !empty($streetAddress) && !empty($suburb) && !empty($postCode) && !empty($state))
         {
             if ($conn->update("user_name", "'$pk'", "name, phone_number, email, address, suburb, post_code, state",

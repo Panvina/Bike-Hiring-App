@@ -135,6 +135,21 @@ Contributor(s):
 		return $ret;
 	}
 	
+	// Check if any values within array are empty
+	// Returns true if any variables are empty
+	function checkEmptyVariables($arr)
+	{
+		$ret = true;
+
+		for($i = 0; $i < count($arr) && $ret; $i++)
+		{
+			$ret &= !empty($arr[$i]);
+			// echo "<script></script>";
+		}
+
+		return !$ret;
+	}
+	
 	//ref: https://stackoverflow.com/questions/12018245/regular-expression-to-validate-username
 	//Validates user name and returns true if its valid
 	//Checks to see if username has the following criteria:

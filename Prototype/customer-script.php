@@ -175,7 +175,6 @@
         if(!empty($userName) && !empty($name) && !empty($phoneNumber) && !empty($email) && !empty($streetAddress) && !empty($suburb) && !empty($postCode) && !empty($licenceNumber) && !empty($state))
         {
 
-            $ret = false;
             //defines the SQL query for the customer table
             $customerCols = "user_name, name, phone_number, email, street_address, suburb, post_code, licence_number, state";
             $customerData = "'$userName', '$name', '$phoneNumber', '$email', '$streetAddress', '$suburb', '$postCode', '$licenceNumber', '$state'";
@@ -183,41 +182,33 @@
 
             $accountCols = "user_name, role_id, password";
             $accountPassword = randomPassword();
-            $accountData = "'$userName', 3, '$accountPassword'";
+            $hashedAccountPassword = sha1($accountPassword);
+            $accountData = "'$userName', 3, '$hashedAccountPassword'";
             $accountQuery = "INSERT INTO accounts_table (user_name, role_id, password) VALUES ($accountData)";
             
-            if ($conn->checkMultipleUserName($userName) == false)
+        
+            $conn->runQuery("START TRANSACTION;");
+        
+            //Inserts the data into the database and checks if it was successful
+
+            if ($conn->runQuery($customerQuery) == false)
             {
-
-                $conn->runQuery("START TRANSACTION;");
-			
-                //Inserts the data into the database and checks if it was successful
-
-                if ($conn->runQuery($customerQuery) == false)
-                {
-                    header("Location: Customer.php?insert=false");
-                    exit();
-                    //header("Location: Customer.php?insert=true");
-                }
-                else if ($conn->runQuery($accountQuery) == false)
-                {
-                    header("Location: Customer.php?insert=false");
-                    exit();
-                }
-                else
-                {
-                    // commit changes to database
-                    $conn->runQuery("COMMIT;");
-                    header("Location: Customer.php?insert=true");
-                    exit();
-                }   
+                header("Location: Customer.php?insert=false");
+                exit();
+                //header("Location: Customer.php?insert=true");
+            }
+            else if ($conn->runQuery($accountQuery) == false)
+            {
+                header("Location: Customer.php?insert=false");
+                exit();
             }
             else
             {
-                header("Location: Customer.php?insert=duplicatePrimaryKey");
+                // commit changes to database
+                $conn->runQuery("COMMIT;");
+                header("Location: Customer.php?insert=true");
                 exit();
-            }
-           
+            }          
         
         }
 

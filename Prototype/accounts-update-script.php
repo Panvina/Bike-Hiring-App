@@ -3,8 +3,8 @@
     //start the session with the database
     session_start();
     //include database functions
-    include_once("backend-connection.php");
-    include_once "utils.php";
+    include_once "php-scripts\bike-inventory-db.php";
+    include_once "php-scripts\utils.php";
     //create the connection with the database
     $conn = new DBConnection("accounts_table");
 
@@ -43,6 +43,19 @@
             header("Location: accounts.php?update=empty");
             exit();
         }
+
+        // //checks to see if the username is valid and matches the pattern
+        // if (!validUserName($password) )
+        // {
+        //     header("Location: accounts.php?update=passwordValidErr");
+        //     exit();
+        // }  
+        // else 
+        // {
+        //     //cleans the input and assigns the variable for inserting
+        //     $password =  test_input($password);
+
+        // }
    }
    
    //checks to see if the submit button in the update form has been pressed
@@ -52,12 +65,29 @@
         $pk = $_POST["userName"];
         $roleID = $_POST["role_id"];
         $password = $_POST["password"];
+
+        if (empty($password)) 
+        {
+            header("Location: accounts.php?update=passwordEmptyErr");
+            exit();
+        }
+        //checks to see if the username is valid and matches the pattern
+        else if (!validUserName($password)) 
+        {
+            header("Location: accounts.php?update=passwordValidErr");
+            exit();
+        }  
+        else 
+        {
+           //cleans the input and assigns the variable for inserting. Then hashes the password for security purposes
+           $password = test_input($password);
+           $hashedAccountPassword = sha1($password);
+        }
        
-        //double checks to ensure all variables are not empty then parses the data to be updated. Returns back to the customer page based on the result
+        //double checks to ensure all variables are not empty then parses the data to be updated. Returns back to the account page based on the result
         if(!empty($roleID) && !empty($password))
         {
-            if ($conn->update("user_name", "'$pk'", "",
-            "") == true)
+            if ($conn->update("user_name", "'$pk'", "role_id, password","$roleID, $hashedAccountPassword") == true)
             {
                 header("Location: accounts.php?update=true");
                 exit();

@@ -104,9 +104,9 @@
                         <div class='dropdown'>
                             <button class='dropbtn' disabled>...</button>
                             <div class='dropdown-content'>
-                                <form action='accounts-update-script.php' method='POST' event.preventDefault() > <button type='submit' id= '$primaryKey' class='UpdateButton' name='UpdateButton' 
+                                <form action='accounts-update-script.php' method='POST' event.preventDefault() > <button type='submit' id= '$primaryKey' class='AccountUpdateButton' name='UpdateButton' 
                                 value='$primaryKey'> Update Account </button> </form>
-                                <form action='customer-delete-script.php' method='POST' event.preventDefault()> <button type='submit' name='deleteButton' id='$primaryKey' class='deleteButton' 
+                                <form action='account-delete-script.php' method='POST' event.preventDefault()> <button type='submit' name='deleteButton' id='$primaryKey' class='deleteButton' 
                                 value = '$primaryKey'>Delete Customer</button> </form>
                             </div>
                         </div>
@@ -149,21 +149,10 @@
                 <div>
                     <!-- Name input validation, checks based on error and displays accurate error message -->
                     <h2> roleID: </h2>
-                    <input type="text" name="role_id" value = "<?php echo $_SESSION['role_id'];?>">
+                    <input type="text" name="role_id" readonly value = "<?php echo $_SESSION['role_id'];?>">
                     <span class="error"> 
                         <?php 
-                            // if (isset($_GET["update"]))
-                            // {
-                            //     $name = $_GET["update"];
-                            //     if ($name == "nameEmptyErr")
-                            //     {
-                            //         echo '<p class = "error">* Name cannot be empty</p>';
-                            //     }
-                            //     else if ($name == "nameValidErr")
-                            //     {
-                            //         echo '<p class = "error">* Name is not in a valid format</p>';
-                            //     }
-                            // }
+                         
                         ?>
                     </span>
                 </div>
@@ -171,21 +160,23 @@
                 <div>
                     <!-- Name input validation, checks based on error and displays accurate error message -->
                     <h2> Password: </h2>
-                    <input type="text" name="password" value = "<?php echo $_SESSION['password'];?>">
+                    <input type="password" name="password" value = "">
                     <span class="error"> 
                         <?php 
-                            // if (isset($_GET["update"]))
-                            // {
-                            //     $name = $_GET["update"];
-                            //     if ($name == "nameEmptyErr")
-                            //     {
-                            //         echo '<p class = "error">* Name cannot be empty</p>';
-                            //     }
-                            //     else if ($name == "nameValidErr")
-                            //     {
-                            //         echo '<p class = "error">* Name is not in a valid format</p>';
-                            //     }
-                            // }
+                            if (isset($_GET["update"]))
+                            {
+                                $password = $_GET["update"];
+                                if ($password == "passwordValidErr")
+                                {
+                                    echo '<p class = "error">* 1. password must be 8-20 characters </br>
+                                    2. Not have any special characters besides / and . </br>
+                                    3. / and . must not be used at the start, end, used together or used multiple times </br> </p>';
+                                }
+                                else if ($password == "passwordEmptyErr")
+                                {
+                                    echo '<p class = "error">* password must not be empty</p>';
+                                }
+                            }
                         ?>
                     </span>
                 </div>
@@ -221,9 +212,9 @@
             <?php
                 $pk = $_SESSION["user_name"];
                 echo "<h1 style='left: 20%; position: relative;'> $pk </h1>";
-                echo "<form action='customer-delete-script.php' method='POST' event.preventDefault()>
-                      <button style='width: 40%; left: -10%; position: relative;' type='submit' id='$pk' value ='$pk' name='submitDeleteCustomer'>Yes</button>
-                      <button style='width: 40%; left: -10%; position: relative; background-color: red;' type='submit' name='CancelDeleteCustomer'>No</button> </form>";
+                echo "<form action='account-delete-script.php' method='POST' event.preventDefault()>
+                      <button style='width: 40%; left: -10%; position: relative;' type='submit' id='$pk' value ='$pk' name='submitDeleteAccount'>Yes</button>
+                      <button style='width: 40%; left: -10%; position: relative; background-color: red;' type='submit' name='CancelDeleteAccount'>No</button> </form>";
             ?>  
         </div>
     </div>

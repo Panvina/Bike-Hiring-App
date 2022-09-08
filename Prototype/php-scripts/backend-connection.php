@@ -152,6 +152,7 @@
 			if ($this->conn->query($query) == TRUE)
 			{
 				echo "Record deleted successfully!";
+				$ret = true;
 			}
 			else
 			{
