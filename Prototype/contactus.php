@@ -78,7 +78,7 @@ Contributor:
 										</td>
 										<td>
 											<p>INVERLOCH BIKE HIRE&nbsp;<br>
-											<a href="invenlochbikes@gmail.com">invenlochbikes@gmail.com</a>
+											<a href="mailto:invenlochbikes@gmail.com">invenlochbikes@gmail.com</a>
 												<br>
 												Mob:0455 896 240
 											</p>
