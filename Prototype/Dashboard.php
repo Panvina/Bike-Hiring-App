@@ -33,7 +33,7 @@ Contributor(s):
         <!-- Block of content in center -->
         <div class="Content">
             <div style="display: inline-block;">
-                <label class="Date" for="dDate"> Tuesday 10th May 2022 </label>
+                <label class="Date" for="dDate"> Tuesd	ay 10th May 2022 </label>
                 <img id="rightArrow" src="img/icons/arrow-right-bold.png"/>
                 <img id="calendar" src="img/icons/calendar-blank.png"/>
                 <img id="leftArrow" src="img/icons/arrow-left-bold.png"/>
@@ -68,55 +68,46 @@ Contributor(s):
             <br>
 
             <!-- Current bookings section -->
-            <h1 style="line-height: 100px;"><strong> Current Bookings: </strong></h1>
-                  <!--            keeping the schedule inside it-->
-                              <div class="scheduleContainer">
-                              <!-- TIMES -->
-<!--
-                    <div class="time start-800">8:00</div>
-                    <div class="time start-830">8:30</div>
--->
-                    <div class="time start-900">9:00</div>
-                    <div class="time start-930">9:30</div>
-                    <div class="time start-1000">10:00</div>
-                    <div class="time start-1030">10:30</div>
-                    <div class="time start-1100">11:00</div>
-                    <div class="time start-1130">11:30</div>
-                    <div class="time start-1200">12:00</div>
-                    <div class="time start-1230">12:30</div>
-                    <div class="time start-1300">13:00</div>
-                    <div class="time start-1330">13:30</div>
-                    <div class="time start-1400">14:00</div>
-                    <div class="time start-1430">14:30</div>
-                    <div class="time start-1500">15:00</div>
-                    <div class="time start-1530">15:30</div>
-                    <div class="time start-1600">16:00</div>
-                    <div class="time start-1630">16:30</div>
-                    <div class="time start-1700">17:00</div>
-                    <div class="time start-1730">17:30</div>
-                    <div class="time start-1800">18:00</div>
-                    <div class="time start-1830">18:30</div>
-                    <div class="time start-1900">19:00</div>
-                  <!--
-                    <div class="time start-1930">19:30</div>
-                    <div class="time start-2000">20:00</div>
-                    <div class="time start-2030">20:30</div>
-                    <div class="time start-2100">21:00</div>
-                    <div class="time start-2130">21:30</div>
-                  -->
-				  <!-- EVENTS -->
-<!--				  <div class="event stage-earth start-1030 end-1030 length-2">Speaker 6 <span>Earth Stage</span></div>-->
-								  
-				  <div class="event stage-bike start-900 end-1100 length-1">Danny</div>
-				  <div class="event stage-bike start-900 end-1200 length-1">Meika</div>
-				  <div class="event stage-bike start-1100 end-1400 length-1">Jessica</div>
-				  <div class="event stage-bike start-1100 end-1200 length-1">Daniel</div>
-				  <div class="event stage-bike start-1200 end-1500 length-1">Callum</div>
-				  <div class="event stage-bike start-1400 end-1700 length-1">Rob</div>
+            <h1 style="line-height: 50px;"><strong> Current Bookings: </strong></h1>
+			<!--keeping the schedule inside it-->
+			<div class="scheduleContainer">
+				<!-- TIMES -->
+				<div class="time start-900">9:00</div>
+				<div class="time start-930">9:30</div>
+				<div class="time start-1000">10:00</div>
+				<div class="time start-1030">10:30</div>
+				<div class="time start-1100">11:00</div>
+				<div class="time start-1130">11:30</div>
+				<div class="time start-1200">12:00</div>
+				<div class="time start-1230">12:30</div>
+				<div class="time start-1300">13:00</div>
+				<div class="time start-1330">13:30</div>
+				<div class="time start-1400">14:00</div>
+				<div class="time start-1430">14:30</div>
+				<div class="time start-1500">15:00</div>
+				<div class="time start-1530">15:30</div>
+				<div class="time start-1600">16:00</div>
+				<div class="time start-1630">16:30</div>
+				<div class="time start-1700">17:00</div>
+                  
+				<!-- EVENTS -->								  
+				<div class="event stage-bike start-900 end-1100 length-2">Danny</div>
+				<div class="event stage-bike start-1200 end-1230 length-2">John</div>
+				<div class="event stage-bike start-1200 end-1500 length-2">Callum</div>
+				<div class="event stage-bike start-900 end-1130 length-2">Jonothan</div>
+				<div class="event stage-bike start-900 end-1630 length-1">Joshua</div>
+				<div class="event stage-bike start-1300 end-1500 length-2">Bill</div>
+				<div class="event stage-bike start-930 end-1200 length-2">Meika</div>
+				<div class="event stage-bike start-1300 end-1400 length-2">Roger</div>
+				<div class="event stage-bike start-1030 end-1200 length-2">Daniel</div>
+				<div class="event stage-bike start-1100 end-1330 length-2">Jane</div>
+				<div class="event stage-bike start-900 end-1030 length-2">Carmen</div>
+				<div class="event stage-bike start-1330 end-1530 length-2">Ash</div>
+				<div class="event stage-bike start-1100 end-1400 length-2">Jessica</div>
+				<div class="event stage-bike start-1430 end-1700 length-2">Rob</div>
+				<div class="event stage-bike start-1500 end-1630 length-3">Steve</div>
+				<div class="event stage-bike start-1000 end-1200 length-2">Cynthia</div>
 			</div>
-            <div>
-
-            </div>
         </div>
 
     </body>
