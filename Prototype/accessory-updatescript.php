@@ -1,7 +1,7 @@
 <?php
     session_start();
-    include_once("php-scripts/backend-connection.php");
-    include_once "php-scripts/utils.php";
+    include_once("php-scripts\backend-connection.php");
+    include ("php-scripts/utils.php");
     $conn = new mysqli("localhost", "root", "", "bike_hiring_system") or die(mysqli_error($mysqli));
     $ret = array();
   
@@ -29,7 +29,8 @@
         $price = $_SESSION['price_ph'];
         $safetyInspect = $_SESSION['safety_inspect'];
 
-        if (!checkEmptyVariables([$name, $accessoryTypeId, $price, $safetyInspect]))
+        header("location:Accessory.php?update=notEmpty");
+        /* if (!checkEmptyVariables([$name, $accessoryTypeId, $price, $safetyInspect]))
         {
             header("Location: Accessory.php?update=notEmpty");
             exit();
@@ -38,7 +39,7 @@
         {
             header("Location: Accessory.php?update=empty");
             exit();
-        } 
+        }  */
    }
    
    if (isset($_POST["submitUpdateItem"]))

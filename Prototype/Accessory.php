@@ -59,8 +59,10 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
         <div class="sideNavigation">
             <a href="Dashboard.php"> <img src="img/icons/bulletin-board.png" alt="Dashboard Logo" /> Dashboard </a> <br>
             <a href="Customer.php"> <img src="img/icons/account-group.png" alt="Customer Logo" /> Customer </a> <br>
+            <a href="staff.php"> <img src="img/icons/staff.png" alt="Staff Logo" /> Staff </a> <br>
             <a href="Inventory.php"> <img src="img/icons/bicycle.png" alt="Inventory Logo" /> Inventory </a> <br>
             <a class="active" href="Accessory.php"> <img src="img/icons/accessories.png" alt="Inventory Logo" /> Accessories </a> <br>
+            <a href="BikeTypes.php"> <img src="img/icons/biketypes.png" alt="Bike Types Logo" /> Bike Types </a> <br>
             <a href="bookings.php"> <img src="img/icons/book-open-blank-variant.png" alt="Bookings Logo" /> Bookings </a> <br>
             <a href="Block_Out_Date.php"> <img src="img/icons/calendar.png" alt="Block out date Logo" /> Block Out Dates </a> <br>
             <a href="Locations.php"> <img src="img/icons/earth.png" alt="Locations Logo" /> Locations </a> <br>
@@ -71,12 +73,8 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
     <div class="Content">
         <h1> All Items </h1>
 
-        <!-- Search bar with icons -->
-        <img src="img/icons/magnify.png" alt="Search Logo" />
-        <input type="text" placeholder="Search">
-
         <!-- Add Item pop up -->
-        <button type="button" id="addItem">+ Add Item</button>
+        <button type="button" id="addItem">+ Add Accessory</button>
 
         <!-- List of available bookings -->
         <table class="TableContent">
@@ -276,7 +274,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                                                     }
                                                     ?>>
         <div class="modal-content">
-            <span class="closeDeleteCustomerForm">&times;</span>
+            <span class="closeDeleteForm">&times;</span>
             <h1 style="left: -8%; position: relative;"> Do you wish to delete the item? </h1>
             <form action="accessory-deletescript.php" method="post" event.preventDefault()>
                 <div>
