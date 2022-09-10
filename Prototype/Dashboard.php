@@ -1,3 +1,11 @@
+<?php
+    session_start();
+
+    include_once "php-scripts/backend-connection.php";
+    include_once "php-scripts/utils.php";
+    include_once "php-scripts/dashboard-script.php";
+?>
+
 <!DOCTYPE html>
 <html>
     <link rel="stylesheet" href="style/Jake_style.css">
@@ -22,7 +30,20 @@
         <!-- Block of content in center -->
         <div class="Content">
             <div style="display: inline-block;">
-                <label class="Date" for="dDate"> Tuesday 10th May 2022 </label>
+                <label class="Date" for="dDate">
+                    <?php
+                        $date = getCurrentDate();
+                        if (isset($_GET["date"]))
+                        {
+                            // use specified date
+                            $date = $_GET["date"];
+                        }
+
+                        $dateStr = getFormattedDate($date);
+
+                        echo "$dateStr";
+                    ?>
+                </label>
                 <img id="rightArrow" src="img/icons/arrow-right-bold.png"/>
                 <img id="calendar" src="img/icons/calendar-blank.png"/>
                 <img id="leftArrow" src="img/icons/arrow-left-bold.png"/>

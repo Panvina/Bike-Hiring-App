@@ -134,4 +134,66 @@ Contributor(s):
 
 		return $ret;
 	}
+
+	/**
+	 * Dabin
+	 * Adapted from https://stackoverflow.com/questions/12030810/php-date-validation
+	 * Validate that $date is a date in the $format provided
+	 */
+	function validDate($date, $format)
+	{
+		$tmpDate = DateTime::createFromFormat($format, $date);
+		$validDate = $tmpDate && $tmpDate->format($format) === $date;
+
+		return $validDate;
+	}
+
+	/**
+	 * Dabin
+	 * Adapted from https://stackoverflow.com/questions/470617/how-do-i-get-the-current-date-and-time-in-php
+	 * Retrieve current date from server. If locale is specified, uses the datetime for given locale instead.
+	 */
+	function getCurrentDate($locale=null) {
+		if ($locale != null)
+		{
+			date_default_timezone_set($locale);
+		}
+
+		$datetime = date('d-m-Y');
+		return $datetime;
+	}
+
+	function intToDayOfWeek($day)
+	{
+		$ret = "";
+		switch($day)
+		{
+			case 1:
+				$ret = "Monday";
+				break;
+			case 2:
+				$ret = "Tuesday";
+				break;
+			case 3:
+				$ret = "Wednesday";
+				break;
+			case 4:
+				$ret = "Thursday";
+				break;
+			case 5:
+				$ret = "Friday";
+				break;
+			case 6:
+				$ret = "Saturday";
+				break;
+			case 7:
+				$ret = "Sunday";
+				break;
+			default:
+				$ret = "ERROR";
+				break;
+		}
+
+		return $ret;
+	}
 ?>
