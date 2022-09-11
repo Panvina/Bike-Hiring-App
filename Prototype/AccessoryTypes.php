@@ -20,8 +20,8 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 
 <head>
     <!-- header -->
-    <title> Bike Types </title>
-    <h1 class="header"> <img src="img/photos/Inverloch_Logo3.png" alt="Inverloch Logo" id="Logo" /> Bike Types </h1>
+    <title> Accessory Types </title>
+    <h1 class="header"> <img src="img/photos/Inverloch_Logo3.png" alt="Inverloch Logo" id="Logo" /> Accessory Types </h1>
 </head>
 
 <body>
@@ -62,8 +62,8 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
             <a href="staff.php"> <img src="img/icons/staff.png" alt="Staff Logo" /> Staff </a> <br>
             <a href="Inventory.php"> <img src="img/icons/bicycle.png" alt="Inventory Logo" /> Inventory </a> <br>
             <a href="Accessory.php"> <img src="img/icons/accessories.png" alt="Inventory Logo" /> Accessories </a> <br>
-            <a class="active" href="BikeTypes.php"> <img src="img/icons/biketypes.png" alt="Bike Types Logo" /> Bike Types </a> <br>
-            <a href="AccessoryTypes.php"> <img src="img/icons/accessorytypes.png" alt="Bike Types Logo" /> Accessory Types </a> <br>
+            <a href="BikeTypes.php"> <img src="img/icons/biketypes.png" alt="Bike Types Logo" /> Bike Types </a> <br>
+            <a class="active" href="AccessoryTypes.php"> <img src="img/icons/accessorytypes.png" alt="Bike Types Logo" /> Accessory Types </a> <br>
             <a href="bookings.php"> <img src="img/icons/book-open-blank-variant.png" alt="Bookings Logo" /> Bookings </a> <br>
             <a href="Block_Out_Date.php"> <img src="img/icons/calendar.png" alt="Block out date Logo" /> Block Out Dates </a> <br>
             <a href="Locations.php"> <img src="img/icons/earth.png" alt="Locations Logo" /> Locations </a> <br>
@@ -75,18 +75,18 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
         <h1> All Items </h1>
 
         <!-- Add Item pop up -->
-        <button type="button" id="AddItem">+ Add Bike</button>
+        <button type="button" id="AddItem">+ Add Accessory</button>
 
         <!-- List of available bookings -->
         <table class="TableContent">
             <?php
-            // Fetching all column data from the bike type table
-            $accessoryType = $conn->query("SELECT * FROM bike_type_table");
+            // Fetching all column data from the Accessory type table
+            $accessoryType = $conn->query("SELECT * FROM accessory_type_table");
 
             echo "
                     <tr>
-                        <th> Bike Type ID </th>
-                        <th> Bike Type Name </th>
+                        <th> Accessory Type ID </th>
+                        <th> Accessory Type Name </th>
                         <th> Description </th>
                         <th> Action </th>
                     </tr>";
@@ -94,12 +94,12 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
             while ($row = $accessoryType->fetch_assoc()) {
 
                 // Setting the primary key value based on table's primary key
-                $primaryKey = $row["bike_type_id"];
+                $primaryKey = $row["accessory_type_id"];
                 $_SESSION["primaryKey"] = $primaryKey;
                 
             ?>
                 <tr>
-                    <td><?php echo $row["bike_type_id"]; ?></td>
+                    <td><?php echo $row["accessory_type_id"]; ?></td>
                     <td><?php echo $row["name"]; ?></td>
                     <td><?php echo $row["description"]; ?></td>  
                     <td>
@@ -108,9 +108,9 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                         <div class='dropdown'>
                         <button class='dropbtn' disabled>...</button>
                             <div class='dropdown-content'>
-                            <form action='biketype-modifyscript.php' method='POST' event.preventDefault() > <button type='submit' id= '$primaryKey' class='UpdateItem' name='updateItem' 
+                            <form action='accessorytype-modifyscript.php' method='POST' event.preventDefault() > <button type='submit' id= '$primaryKey' class='UpdateItem' name='updateItem' 
                                 value='$primaryKey'> Update </button> </form>
-                            <form action='biketype-modifyscript.php' method='POST' event.preventDefault()> <button type='submit' id='$primaryKey' name='deleteItem' class='DeleteItem' 
+                            <form action='accessorytype-modifyscript.php' method='POST' event.preventDefault()> <button type='submit' id='$primaryKey' name='deleteItem' class='DeleteItem' 
                                 value = '$primaryKey'> Delete </button> </form>
                             </div>
                         </div>";
@@ -124,32 +124,32 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
         </table>
     </div>
 
-    <div id="AddBikeModal" class="modal">
+    <div id="AddAccessoryModal" class="modal">
         <div class="modal-content">
             <span class="Insertclose">&times;</span>
-            <form action="biketype-addscript.php" method="post">
+            <form action="accessorytype-addscript.php" method="post">
                 <div>
-                    <h2>Bike Type ID</h2>
-                    <input placeholder="ID of Bike Type..." type="text" name="bikeId">
+                    <h2>Accessory Type ID</h2>
+                    <input placeholder="ID of Accessory Type..." type="text" name="accessoryId">
                 </div>
                 <div>
-                    <h2>Bike Type Name</h2>
-                    <input placeholder="Name of Bike Type..." type="text" name="name">
+                    <h2>Accessory Type Name</h2>
+                    <input placeholder="Name of Accessory Type..." type="text" name="name">
                 </div>
                 <div>
                     <h2>Description</h2>
-                    <textarea iplaceholder="Description about the type of bike..." name="description"></textarea>
+                    <textarea iplaceholder="Description about the type of Accessory..." name="description"></textarea>
                 </div>
             
             <div>
-                    <button type="submit" name="AddItem">Add Bike</button>
+                    <button type="submit" name="AddItem">Add Accessory</button>
             </div>
             </form> 
         </div>
     </div>
 
     <!-- Modal to update inventory records (In progress) -->
-    <div id="UpdateBikeModal" class="modal" <?php
+    <div id="UpdateAccessoryModal" class="modal" <?php
 
                                                     if (isset($_GET["update"])) {
                                                         if ($_GET["update"] != "true") {
@@ -161,30 +161,30 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                                                     ?>>
         <div class="modal-content">
             <span class="updateFormClose">&times;</span>
-            <form action="biketype-modifyscript.php" method="post" event.preventDefault()>
+            <form action="accessorytype-modifyscript.php" method="post" event.preventDefault()>
                 <div>
-                    <h2>Bike Type ID</h2>
-                    <input placeholder="ID of the Accessory..." type="text" name="bikeId" readonly value="<?php echo $_SESSION['bike_type_id'] ?>">
+                    <h2>Accessory Type ID</h2>
+                    <input placeholder="ID of the Accessory..." type="text" name="accessoryId" readonly value="<?php echo $_SESSION['accessory_type_id'] ?>">
                 </div>
 
                 <div>
                     <h2>Name</h2>
-                    <input placeholder="Name of Bike Type..." type="text" name="name" value="<?php echo $_SESSION['name'] ?>">
+                    <input placeholder="Name of Accessory Type..." type="text" name="name" value="<?php echo $_SESSION['name'] ?>">
                 </div>
                 <div>
                     <h2>Description</h2>
-                    <textarea iplaceholder="Description about the bike type..." name="description"><?php echo $_SESSION['description'] ?></textarea>
+                    <textarea iplaceholder="Description about the Accessory type..." name="description"><?php echo $_SESSION['description'] ?></textarea>
                 </div>
 
                 <div>
-                    <button type="submit" name="submitUpdateItem">Update Bike</button>
+                    <button type="submit" name="submitUpdateItem">Update Accessory</button>
                 </div>
             </form>
         </div>
     </div>
     
     <!-- Modal to delete inventory records -->
-    <div id="DeleteBikeModal" class="modal" <?php
+    <div id="DeleteAccessoryModal" class="modal" <?php
 
                                                     if (isset($_GET["delete"])) {
                                                         if ($_GET["delete"] != "true") {
@@ -196,14 +196,14 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                                                     ?>>
         <div class="modal-content">
             <span class="closeDeleteForm">&times;</span>
-            <h1 style="left: -8%; position: relative;"> Do you wish to delete the bike type? </h1>
-            <form action="biketype-modifyscript.php" method="post" event.preventDefault()>
+            <h1 style="left: -8%; position: relative;"> Do you wish to delete the accessory type? </h1>
+            <form action="accessorytype-modifyscript.php" method="post" event.preventDefault()>
                 <div>
-                    <h2>Bike Type ID</h2>
+                    <h2>Accessory Type ID</h2>
                     <?php
-                    $primaryKey = $_SESSION["bike_type_id"];
+                    $primaryKey = $_SESSION["accessory_type_id"];
                     echo "<h1 style='left: 25%; position: relative;'> $primaryKey </h1>";
-                    echo "<form action='biketype-modifyscript.php' method='POST' event.preventDefault()>
+                    echo "<form action='accessorytype-modifyscript.php' method='POST' event.preventDefault()>
                       <button style='width: 40%; left: -10%; position: relative;' type='submit' id='$primaryKey' value ='$primaryKey' name='submitDeleteItem'>Yes</button>
                       <button style='width: 40%; left: -10%; position: relative; background-color: red;' type='submit' name='cancelDeleteItem'>No</button> </form>";
                     ?>
@@ -213,6 +213,6 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 
 
 </body>
-<script src="scripts/biketypes-popup.js"></script>
+<script src="scripts/accessorytypes-popup.js"></script>
 
 </html>

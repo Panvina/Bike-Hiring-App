@@ -63,6 +63,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
             <a href="Inventory.php"> <img src="img/icons/bicycle.png" alt="Inventory Logo" /> Inventory </a> <br>
             <a class="active" href="Accessory.php"> <img src="img/icons/accessories.png" alt="Inventory Logo" /> Accessories </a> <br>
             <a href="BikeTypes.php"> <img src="img/icons/biketypes.png" alt="Bike Types Logo" /> Bike Types </a> <br>
+            <a href="AccessoryTypes.php"> <img src="img/icons/accessorytypes.png" alt="Bike Types Logo" /> Accessory Types </a> <br>
             <a href="bookings.php"> <img src="img/icons/book-open-blank-variant.png" alt="Bookings Logo" /> Bookings </a> <br>
             <a href="Block_Out_Date.php"> <img src="img/icons/calendar.png" alt="Block out date Logo" /> Block Out Dates </a> <br>
             <a href="Locations.php"> <img src="img/icons/earth.png" alt="Locations Logo" /> Locations </a> <br>
@@ -185,13 +186,22 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     <input placeholder="Price per hour..." type="text" name="price">
                 </div>
 
-                <div>
+                <!-- <div>
                     <h2>Safety Inspect</h2>
                     <select placeholder="Safety status..." name="safetyInspect" type="submit">
                         <option>Inspection status</option>
                         <option value="1">Yes</option>
                         <option value="0">No</option>
                     </select>
+                </div> -->
+
+                <div>
+                    <h2>Safety Inspect</h2>
+                    <label class="switch"  style='left: 10px; bottom:5px;' >
+                    <input type="hidden" name="safetyInspect" value="0">
+                    <input type="checkbox" name="safetyInspect" value="1">
+                    <span class="slider round"></span>
+                    </label>
                 </div>
             
             <div>
