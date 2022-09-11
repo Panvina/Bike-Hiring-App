@@ -1,5 +1,12 @@
 // JavaScript Document
+// Project Name: Inverloch Bike Hire
+// Project Description: A website for hiring bikes. Front-end accompanied by an admin dashboard.
+// File Description: This page is to send a confirmation email
+// Contributor:
+// 	- Clement Cheung @ 103076376@student.swin.edu.au
 
+
+// This page is completely done by Clement
 "use strict";
 
 function sendbooking()

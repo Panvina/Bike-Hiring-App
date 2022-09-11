@@ -1,3 +1,12 @@
+<!--
+Project Name: Inverloch Bike Hire
+Project Description: A website for hiring bikes. Front-end accompanied
+	   by an admin dashboard.
+File Description: Show both the functions and locations information
+Contributor(s):
+	- Clement Cheung @ 103076376@student.swin.edu.au
+	- Jake Hipworth @ 102090870@student.swin.edu.au (Navigation section and Styles)
+-->
 <!DOCTYPE html>
 <html>
 	<head>
@@ -7,7 +16,7 @@
 		<script src="scripts/FormOpenOrClose.js"></script>
 		<script>
 				/* When the user clicks on the button, 
-toggle between hiding and showing the dropdown content */
+toggle between hiding and showing the dropdown content - By Clement */
 			function myFunction() {
 				document.getElementById("myDropdown").classList.toggle("show");
 			}
@@ -16,8 +25,9 @@ toggle between hiding and showing the dropdown content */
 		<link rel="stylesheet" href="style/LocationPop.css">
 		<link rel="stylesheet" href="style/dropdownboxcss.css">
 		<?php
-		include("Reusable.php");
-		include("backend-connection.php");
+		// Setting up Database and connecting to reusable file where there are functions which can be reused
+		// Section coded by Clement
+		include("php-scripts/Reusable.php");
 		
 		//setting up and connecting to DB
 		$host = "localhost";
@@ -36,18 +46,20 @@ toggle between hiding and showing the dropdown content */
 	</head>
 	<body>
 		<nav>
-			<!--Navigation area-->
+			<!--Navigation area Done by Jake-->
 			<div class = "sideNavigation">
 				<a href = "Dashboard.php"> <img src= "img/icons/bulletin-board.png" alt="Dashboard Logo" /> Dashboard </a> <br>
 				<a href = "Customer.php"> <img src= "img/icons/account-group.png" alt="Customer Logo" />  Customer  </a> <br>
 				<a href= "Inventory.php"> <img src= "img/icons/bicycle.png" alt="Inventory Logo" />  Inventory </a> <br>
+				<a href="Accessory.php"> <img src="img/icons/accessories.png" alt="Inventory Logo" /> Accessories </a> <br>
 				<a href= "Bookings.php"> <img src= "img/icons/book-open-blank-variant.png" alt="Bookings Logo" /> Bookings </a> <br>
 				<a href= "Block_Out_Date.php"> <img src= "img/icons/calendar.png" alt="Block out date Logo" /> Block Out Dates </a> <br>
 				<a class="active" href= "Locations.php"> <img src= "img/icons/earth.png" alt="Locations Logo" /> Locations </a> <br>
 			</div>
 		</nav>
 		
-		<div class="Content">
+		<!-- This section is done by Clement and it is for Adding Locations and have it pop up when clicking a button.  -->
+		<div class="Content"> 
 			<h1> Pick-Up & Drop-Off Locations </h1>
 			
 			<!-- Trigger/Open The PopUp -->
@@ -85,6 +97,7 @@ toggle between hiding and showing the dropdown content */
 					</form>
 			</div>
 		</div>
+		<!-- This section is done by Clement it is to show the locations form the database along with two buttons for Updating and Deleting  -->
 		<table class="TableContent">
 			<tr>
 				<th> Name </th>
@@ -95,7 +108,7 @@ toggle between hiding and showing the dropdown content */
 			</tr>
 			<?php
 			//this to select all items from the table before showing it
-			$query = "SELECT * FROM location_table";
+			$query = "SELECT * FROM `location_table`";
 			$result = mysqli_query($conn,$query);
 			if(!$result)
 			{//showing if query has failed
@@ -116,17 +129,17 @@ toggle between hiding and showing the dropdown content */
 					{
 						//grabbing and putting all the data into variables or putting them together
 						$fulladdress = "";
-						$LID = $record['LocationID'];
-						$name = $record['Name'];
+						$LID = $record['location_id'];
+						$name = $record['name'];
 						$name = sanitise_input($name);
-						$address = $record['Address'];
+						$address = $record['address'];
 						$address = sanitise_input($address);
-						$suburb = $record['Suburb'];
+						$suburb = $record['suburb'];
 						$suburb = sanitise_input($suburb);
-						$postcode = $record['Post Code'];
+						$postcode = $record['post_code'];
 						$postcode = sanitise_input($postcode);
-						$dropOff = $record['Drop Off Location'];
-						$pickUp = $record['Pick Up Location'];
+						$dropOff = $record['drop_off_location'];
+						$pickUp = $record['pick_up_location'];
 						$fulladdress = "$address,  $suburb, $postcode, Vic, Australia";
 						
 						//checking the values from database and turning it into checked so it can be shown on the interface
@@ -174,20 +187,6 @@ toggle between hiding and showing the dropdown content */
 			?>
 		</table>
 		</div>
-	<style>
-
-</style>
-
-<!--  <h2>Hoverable Dropdown</h2>
-  <p>Move the mouse over the button to open the dropdown menu.</p>
-
-  <div class="dropdown">
-    <button class="dropbtn">Dropdown</button>
-    <div class="dropdown-content">
-        <button type='submit' name='deleteLocation' id='deleteLocation' class='btn'>Delete</button><br/>
-        <button type='submit' name='updateLocation' id='updateLocation' class='btn'>Update</button>
-    </div>
-  </div>-->
 
 	</body>
 </html>

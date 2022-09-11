@@ -1,0 +1,311 @@
+@charset "utf-8";
+/* CSS Document */
+/* Project Name: Inverloch Bike Hire
+Project Description: A website for hiring bikes. Front-end accompanied by an admin dashboard.
+Contributor:
+ 	- Clement Cheung @ 103076376@student.swin.edu.au
+
+This page is completely done by Clement */
+/*initial code from https://www.liquidlight.co.uk/blog/create-an-event-schedule-with-html-table/*/
+body {
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 4rem 0;
+}
+/*This is to keep it in the container and have a proper setup of where data can be put in*/
+.scheduleContainer {
+  display: grid;
+  grid-gap: 0.2rem;
+  /*	background-color: #d3d3d3;*/
+  border-radius: 2rem;
+  /*	This is to change the collumns of the table*/
+  grid-template-columns: auto repeat(auto, 1fr);
+  /*	This is to change the rows of the table and add 4 to the number of rows needed*/
+  grid-template-rows: repeat(auto, 1fr);
+  margin-bottom: 2rem;
+  grid-template-areas:
+    "time800 stage"
+    "time830 stage"
+    "time900 stage"
+    "time930 stage"
+    "time1000 stage"
+    "time1030 stage"
+    "time1100 stage"
+    "time1130 stage"
+    "time1200 stage"
+    "time1230 stage"
+    "time1300 stage"
+    "time1330 stage"
+    "time1400 stage"
+    "time1430 stage"
+    "time1500 stage"
+    "time1530 stage"
+    "time1600 stage"
+    "time1630 stage"
+    "time1700 stage";
+}
+/**
+ * Time 
+* basically setting up rows
+ */
+.time {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  font-size: 1.2rem;
+  border-top: thin dotted #ccc;
+  height: 100%;
+  padding: 0 0.5rem;
+}
+.time.start-900 {
+  grid-area: time900;
+}
+.time.start-930 {
+  grid-area: time930;
+}
+.time.start-1000 {
+  grid-area: time1000;
+}
+.time.start-1030 {
+  grid-area: time1030;
+}
+.time.start-1100 {
+  grid-area: time1100;
+}
+.time.start-1130 {
+  grid-area: time1130;
+}
+.time.start-1200 {
+  grid-area: time1200;
+}
+.time.start-1230 {
+  grid-area: time1230;
+}
+.time.start-1300 {
+  grid-area: time1300;
+}
+.time.start-1330 {
+  grid-area: time1330;
+}
+.time.start-1400 {
+  grid-area: time1400;
+}
+.time.start-1430 {
+  grid-area: time1430;
+}
+.time.start-1500 {
+  grid-area: time1500;
+}
+.time.start-1530 {
+  grid-area: time1530;
+}
+.time.start-1600 {
+  grid-area: time1600;
+}
+.time.start-1630 {
+  grid-area: time1630;
+}
+.time.start-1700 {
+  grid-area: time1700;
+}
+.time[class*="30"]:not(.start-1300) {
+  font-size: 1.2rem;
+  color: #ccc;
+}
+/**
+ * Event
+* Setting up when an event is enter into the fields type of thing
+ */
+.event {
+  display: flex;
+  justify-content: center;
+  /*  flex-direction: column;*/
+  flex-direction: row;
+  padding: 0.5rem 1rem;
+  background-color: orange;
+  border-radius: 0.8em;
+  border: 0.25em solid #000000;
+  font-size: 1.2rem;
+  font-weight: bold;
+  line-height: 1.4;
+}
+.event span {
+  display: block;
+  width: 100%;
+  font-size: 1.2em;
+  font-weight: normal;
+}
+/*Booking starting time*/
+.event.start-900 {
+  grid-row-start: time900;
+}
+.event.start-930 {
+  grid-row-start: time930;
+}
+.event.start-1000 {
+  grid-row-start: time1000;
+}
+.event.start-1030 {
+  grid-row-start: time1030;
+}
+.event.start-1100 {
+  grid-row-start: time1100;
+}
+.event.start-1130 {
+  grid-row-start: time1130;
+}
+.event.start-1200 {
+  grid-row-start: time1200;
+}
+.event.start-1230 {
+  grid-row-start: time1230;
+}
+.event.start-1300 {
+  grid-row-start: time1300;
+}
+.event.start-1330 {
+  grid-row-start: time1330;
+}
+.event.start-1400 {
+  grid-row-start: time1400;
+}
+.event.start-1430 {
+  grid-row-start: time1430;
+}
+.event.start-1500 {
+  grid-row-start: time1500;
+}
+.event.start-1530 {
+  grid-row-start: time1530;
+}
+.event.start-1600 {
+  grid-row-start: time1600;
+}
+.event.start-1630 {
+  grid-row-start: time1630;
+}
+.event.start-1700 {
+  grid-row-start: time1700;
+}
+
+/*Booking end time*/
+.event.end-900 {
+  grid-row-end: time900;
+}
+.event.end-930 {
+  grid-row-end: time930;
+}
+.event.end-1000 {
+  grid-row-end: time1000;
+}
+.event.end-1030 {
+  grid-row-end: time1030;
+}
+.event.end-1100 {
+  grid-row-end: time1100;
+}
+.event.end-1130 {
+  grid-row-end: time1130;
+}
+.event.end-1200 {
+  grid-row-end: time1200;
+}
+.event.end-1230 {
+  grid-row-end: time1230;
+}
+.event.end-1300 {
+  grid-row-end: time1300;
+}
+.event.end-1330 {
+  grid-row-end: time1330;
+}
+.event.end-1400 {
+  grid-row-end: time1400;
+}
+.event.end-1430 {
+  grid-row-end: time1430;
+}
+.event.end-1500 {
+  grid-row-end: time1500;
+}
+.event.end-1530 {
+  grid-row-end: time1530;
+}
+.event.end-1600 {
+  grid-row-end: time1600;
+}
+.event.end-1630 {
+  grid-row-end: time1630;
+}
+.event.end-1700 {
+  grid-row-end: time1700;
+}
+
+/*This is setting the length of each item*/
+.event.length-1 {
+  grid-column-end: span 1;
+}
+.event.length-2 {
+  grid-column-end: span 2;
+}
+.event.length-3 {
+  grid-column-end: span 3;
+}
+.event.length-4 {
+  grid-column-end: span 4;
+}
+.event.length-5 {
+  grid-column-end: span 5;
+}
+.event.length-6 {
+  grid-column-end: span 6;
+}
+.event.length-7 {
+  grid-column-end: span 7;
+}
+.event.length-8 {
+  grid-column-end: span 8;
+}
+.event.length-9 {
+  grid-column-end: span 9;
+}
+.event.length-10 {
+  grid-column-end: span 10;
+}
+.event.length-11 {
+  grid-column-end: span 11;
+}
+.event.length-12 {
+  grid-column-end: span 12;
+}
+.event.length-13 {
+  grid-column-end: span 13;
+}
+.event.length-14 {
+  grid-column-end: span 14;
+}
+.event.length-15 {
+  grid-column-end: span 15;
+}
+.event.length-16 {
+  grid-column-end: span 16;
+}
+
+/*This is to set the color to each items and each color represent different stages of booking*/
+.event.stage-booked {
+  background-color: forestgreen;
+  color: white;
+}
+.event.stage-confirm {
+  background-color: darkblue;
+  color: white;
+}
+.event.stage-checkedOut {
+  background-color: red;
+  color: white;
+}
+.event.stage-provisional {
+  background-color: black;
+  color: white;
+}
