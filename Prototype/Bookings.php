@@ -28,11 +28,11 @@
                         <?php
                             // Populate customer combo box with all customers
                             $conn = new CustomerDBConnection();
-                    		$customerList = $conn->get("cust_id, name");
+                    		$customerList = $conn->get("user_name, name");
 
                     		if ($customerList != null)
                     		{
-                                arrayToComboBoxOptions($customerList, "cust_id");
+                                arrayToComboBoxOptions($customerList, "user_name");
                     		}
                         ?>
                     </select><br><br>

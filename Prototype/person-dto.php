@@ -51,8 +51,8 @@
         //get details of the user logging in
         function getDetails($login=""){
             $login = $this->getUsername();
-            $dbCon = new DBConnection();
-            $detail = $dbCon->get('customer_table','*',("user_name = '$login'"));
+            $dbCon = new DBConnection('customer_table');
+            $detail = $dbCon->get('*',("user_name = '$login'"));
             
             //converting multidimensional array into a 1D array. 
             $oneDiArray = array_reduce($detail, 'array_merge', array());
@@ -68,14 +68,14 @@
         //authenticate the user when they log in through the popup on the website. 
         function authenticateUser($pwd){
             $id = $this->getUsername();
-            $dbCon= new DBConnection();           
-            $userID =$dbCon->get('accounts_table', 'user_name');
+            $dbCon= new DBConnection('accounts_table');           
+            $userID =$dbCon->get('user_name');
             $auth = "no user found"; 
             for($i=0; $i< count($userID); $i++){        //loop through the result array
                 $userToString = implode(" ",$userID[$i]);       //convert array to string
-                $userPwd = $dbCon->get('accounts_table', 'password', ("user_name = '$userToString'"));        
+                $userPwd = $dbCon->get('password', ("user_name = '$userToString'"));        
                 if ($userToString == $id &&  implode('',$userPwd[0]) == $pwd){      //allow access only if the userID and the password match the ones in the database
-                    $roleID = $dbCon->get('accounts_table', 'role_id', ("user_name = '$userToString'"));   //fetch the role assigned to the user
+                    $roleID = $dbCon->get('role_id', ("user_name = '$userToString'"));   //fetch the role assigned to the user
                     if (implode('',$roleID[0]) == "3"){     //convert an array of array into string
                         return $auth = "3";
                     }else{
@@ -88,12 +88,12 @@
 
         //if the user input their email instead of the user ID
         function authByEmail($email){
-            $dbCon= new DBConnection();           
-            $data =$dbCon->get('customer_table', 'email');
+            $dbCon= new DBConnection('customer_table');           
+            $data =$dbCon->get('email');
             for($i=0; $i< count($data); $i++){        //loop through the result array
                 $dataToString = implode(" ",$data[$i]);       //convert array to string
                 if ($email == $dataToString){      //if the input email matches the one found in customer_table in the database
-                    $username =$dbCon->get('customer_table', 'user_name', ("email = '$dataToString'"));     //get the user_name where the email is
+                    $username =$dbCon->get('user_name', ("email = '$dataToString'"));     //get the user_name where the email is
                     $this->username = implode("",$username[0]);
                 }
             }
