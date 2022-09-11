@@ -186,11 +186,11 @@ Contributor(s):
 			case 6:
 				$ret = "Saturday";
 				break;
-			case 7:
+			case 0:
 				$ret = "Sunday";
 				break;
 			default:
-				$ret = "ERROR";
+				$ret = "ERROR $day ERROR: ";
 				break;
 		}
 

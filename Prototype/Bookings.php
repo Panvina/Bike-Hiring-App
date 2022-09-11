@@ -26,8 +26,6 @@
     }
 ?>
 
-<!DOCTYPE html>
-<html>
     <link rel="stylesheet" href="style/Jake_style.css">
     <link rel="stylesheet" href="style/bookings_page.css">
     <link rel="stylesheet" href="style/popup.css">
@@ -375,7 +373,8 @@
                     <!-- Populate table header -->
                     <?php
                         // Declare columns and create array
-                        $cols = "Booking ID,Bike Name,Customer Name,Start Date,Start Time,End Date,End Time,Duration,Pick Up,Drop Off,Price($)";
+                        $conn = new BookingsDBConnection();
+                        $cols = $conn->getBookingDisplayColumns();
                         $cols = explode(',', $cols);
 
                         // Get number of columns
@@ -397,7 +396,6 @@
                 <!-- Populate table data rows -->
                 <?php
                     // create new DB connection and fetch rows
-                    $conn = new BookingsDBConnection();
                     $rows = $conn->getBookingRows();
 
                     // if no rows are returned, create a null row as a placeholder

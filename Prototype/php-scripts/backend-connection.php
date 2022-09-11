@@ -177,6 +177,7 @@
 			$ret = array();
 
 			$query = "SELECT $colnames FROM $this->tablename";
+
 			if ($condition)
 			{
 				$query .= " WHERE $condition";
