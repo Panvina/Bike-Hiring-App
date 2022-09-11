@@ -1,156 +1,129 @@
 @charset "utf-8";
 /* CSS Document */
-.errors{
-    color: #FF0004;
-	
+/* Project Name: Inverloch Bike Hire
+Project Description: A website for hiring bikes. Front-end accompanied by an admin dashboard.
+Contributor:
+ 	- Clement Cheung @ 103076376@student.swin.edu.au
+
+This page is completely done by Clement */
+/* If any errors appears, this is used for error messages */
+.errors {
+  color: #FF0004;
 }
-
 /*These are for contact.us page*/
-
-		
-		/*Contact Us Page info*/
-		/*This is mainly setting up the looks of the page*/
-		.contactmargin
-		{
-			display: block;
-			width: 70%;
-			margin-left: auto;
-			margin-right: auto;
-		}
-		#headercomment{
-			text-align: right;
-			text-decoration-color: black;
-		}
-		#headercomment a {
-			text-decoration: none;
-			color: #000000;
-			font-weight: bolder;
-		}
-		
-		#headercomment h2 
-		{
-			font-weight:lighter;
-		}
-		#contactInfo p, #contactInfo table
-		{
-    font-size: 15px;
-    table-layout: auto;
-    word-wrap: normal;
-		}
-		/*Decoratintg the buttons*/
-		.submitbutton
-		{
-			background-color: #172026;
-			color:  white;
-			border: 0px;
-			flaot: left;
-			font-size: 15px;
-			width: 30%;
-		}
-		
-		
-		/*Idea from https://www.w3schools.com/howto/howto_css_equal_height.asp*/
-		#Conactbox1/*This is mainly a box containing contact info*/
-		{
-			background-color: #aaecd0;
-			float: left;
-			
-		}
-		#Conactbox2/*This is mainly a box containing the fourm*/
-		{
-			background-color: #ebf7f7;
-			float: left;
-		}
-		.Contactbox/*This is mainly to hold data of both containers*/
-		{
-			flex: 10;
-			/*display: table-cell;
-			width: 50%;
-			height: 33em ;*/
-		}
-		
-		#contactbox /*This contains both Contact information and fourm of the contianer*/
-		{
-			display: flex;
-				width:100%;
-		}
-		.textcentral /*This mainly aline the text in the containers*/
-		{
-			margin: auto;
-			width: 70%;
-			padding: 5%;
-		}
-		
-		#faq /*Mainly set to make it seperate from the container above*/
-		{
-			float:none;
-		}
-		/*this makes all the imputs to the correct length and remove any outlines*/
-		.fourmsize
-		{
-        border-top-style: hidden;
-        border-right-style: hidden;
-        border-left-style: hidden;
-        border-bottom-style: hidden;
-			width: 100%;
-		}
-		label
-		{
-			font-weight: bold;
-		}
-		
-		
-		
-		/*These code is going to be moved to CSS in a later date
+/*Contact Us Page info*/
+/*This is mainly setting up the looks of the page*/
+.contactmargin {
+  display: block;
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+}
+#headercomment {
+  text-align: right;
+  text-decoration-color: black;
+}
+#headercomment a {
+  text-decoration: none;
+  color: #000000;
+  font-weight: bolder;
+}
+#headercomment h2 {
+  font-weight: lighter;
+}
+#contactInfo p, #contactInfo table {
+  font-size: 15px;
+  table-layout: auto;
+  word-wrap: normal;
+}
+/*Decoratintg the buttons*/
+.submitbutton {
+  background-color: #172026;
+  color: white;
+  border: 0px;
+  flaot: left;
+  font-size: 15px;
+  width: 30%;
+}
+/*Idea from https://www.w3schools.com/howto/howto_css_equal_height.asp*/
+#Conactbox1 /*This is mainly a box containing contact info*/ {
+  background-color: #aaecd0;
+  float: left;
+}
+#Conactbox2 /*This is mainly a box containing the fourm*/ {
+  background-color: #ebf7f7;
+  float: left;
+}
+.Contactbox /*This is mainly to hold data of both containers*/ {
+  flex: 10;
+}
+#contactbox /*This contains both Contact information and fourm of the contianer*/ {
+  display: flex;
+  width: 100%;
+}
+.textcentral /*This mainly aline the text in the containers*/ {
+  margin: auto;
+  width: 70%;
+  padding: 5%;
+}
+#faq /*Mainly set to make it seperate from the container above*/ {
+  float: none;
+}
+/*this makes all the imputs to the correct length and remove any outlines*/
+.fourmsize {
+  border-top-style: hidden;
+  border-right-style: hidden;
+  border-left-style: hidden;
+  border-bottom-style: hidden;
+  width: 100%;
+}
+label {
+  font-weight: bold;
+}
+/*These code is going to be moved to CSS in a later date
 		code from: https://www.w3schools.com/howto/howto_js_collapsible.asp
 		*/
-		/* Style the button that is used to open and close the collapsible content */
-		.collapsible {
-			background-color: #eee;
-			color: #444;
-			cursor: pointer;
-			padding: 18px;
-			border: none;
-			text-align: left;
-			outline: none;
-		}
-
-		.collapsible, .content
-		{
-			border-top: 2px solid black;
-			width: 100%;
-			font-size: 18px;
-		}
-		/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
-		.active, .collapsible:hover {
-			background-color: #ccc;
-		}
-		
-		/*This is mainly to make it more responsive*/
-		/* Style the collapsible content. Note: hidden by default */
-		.content {
-		  padding: 0 ;
-		  background-color: white;
-		  max-height: 0px;
-		  overflow: hidden;
-		  transition: max-height 0.2s ease-out;
-		}
-
-		.imgpadding
-		{
-			text-align:center;
-			padding-right: 1em;
-			padding-bottom: 20%;
-		}
-
-		@media only screen and (max-width: 900px) {
-		  .Contactbox {
-			display: block;
-			width: 100%;
-			  height: auto;
-		  }
-			#contactbox
-			{
-				display: block;
-			}
-		}
+/* Style the button that is used to open and close the collapsible content */
+.collapsible {
+  background-color: #eee;
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  border: none;
+  text-align: left;
+  outline: none;
+}
+.collapsible, .content {
+  border-top: 2px solid black;
+  width: 100%;
+  font-size: 18px;
+}
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+.active, .collapsible:hover {
+  background-color: #ccc;
+}
+/*This is mainly to make it more responsive*/
+/* Style the collapsible content. Note: hidden by default */
+.content {
+  padding: 0;
+  background-color: white;
+  max-height: 0px;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+}
+.imgpadding {
+  text-align: center;
+  padding-right: 1em;
+  padding-bottom: 20%;
+}
+/* This is to make sure that on smaller screens, the contact us information still can be seen */
+@media only screen and (max-width: 900px) {
+  .Contactbox {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  #contactbox {
+    display: block;
+  }
+}

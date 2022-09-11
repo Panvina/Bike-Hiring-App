@@ -1,9 +1,18 @@
 @charset "utf-8";
 /* CSS Document */
+/* Project Name: Inverloch Bike Hire
+Project Description: A website for hiring bikes. Front-end accompanied by an admin dashboard.
+Contributor:
+ 	- Clement Cheung @ 103076376@student.swin.edu.au
+	- Jake Hipworth @ 102090870@student.swin.edu.au*/
+  
+
+/* Worked on by Jake */
 body{
   background-color: #eaf7f6;
 }
 
+/* Worked on by Jake */
 .sideNavigation{
   width: 16.5%;
   margin: auto;
@@ -12,10 +21,12 @@ body{
   font-size: 40px;
 }
 
+/* Worked on by Jake */
 .sideNavigation a {
   color: black;
 }
 
+/* Worked on by Jake */
 .sideNavigation a.active {
   background-color: white;
   color: #00b7b1;
@@ -23,6 +34,7 @@ body{
   width: 17%;
 }
 
+/* Worked on by Jake */
 .sideNavigation a:hover {
   background-color: white;
   color: #00b7b1;
@@ -30,6 +42,7 @@ body{
   width: 17%;
 }
 
+/* Worked on by Jake */
 .header{
   font-size: 40px;
   text-align: center;
@@ -37,6 +50,7 @@ body{
   line-height: 3;
 }
 
+/* Worked on by Jake */
 #Logo{
   height: 180px;
   float: left;
@@ -45,6 +59,8 @@ body{
   left: 0px;
 }
 
+/* Worked on by Jake  */
+/* Modified by Clement */
 .Content{
   padding-left: 175px;
   padding-right: 175px;
@@ -56,6 +72,8 @@ body{
   display: inline-block;
 }
 
+ /* Worked on by Jake  */
+/* Modified by Clement */
 .Content input[type=text] {
   font-size: 20px;
   display: block;
@@ -66,9 +84,13 @@ body{
   height: 2%;
 }
 
+/* Worked on by Jake */
 .Content h1{
   display: inline-block;
 }
+
+/* Worked on by Jake  */
+/* Modified by Clemenmt */
 
 .Content img{
   display: inline-block;
@@ -78,6 +100,8 @@ body{
   left: -25%;
 }
 
+/* Worked on by Jake */
+/* Modified by Clement */
 .Content button{
   display: inline-block;
   margin-top: 2%;
@@ -93,6 +117,7 @@ body{
   border-width: thin;
 }
 
+/* Worked on by Jake */
 .Date{
   font-size: 20px;
   
@@ -100,18 +125,22 @@ body{
   position: absolute;
 }
 
+/* Worked on by Jake */
 .Content #rightArrow{
   left: 212%;
 }
 
+/* Worked on by Jake */
 .Content #leftArrow{
   left: -75%;
 }
 
+/* Worked on by Jake */
 .Content #calendar{
   left: -70%;
 }
 
+/* Worked on by Jake */
 .Headings{
   font-size: 30px;
   text-align: center;
@@ -119,6 +148,7 @@ body{
   padding-inline: 8%;
 }
 
+/* Worked on by Jake */
 .DashboardInformationContainer{
   display:inline-block;
   width: 100%; 
@@ -129,6 +159,7 @@ body{
   
 }
 
+/* Worked on by Jake */
 .DashboardInformation{
   width: auto;
   height: auto;
@@ -139,27 +170,32 @@ body{
   
 }
 
+/* Worked on by Jake */
 nav a {
   text-decoration: none;
 }
 
+/* Worked on by Jake */
 .TableContent{
   border-collapse: collapse;
   width: 100%;
 }
 
+/* Worked on by Jake */
 .TableContent th, td{
   text-align: center;
   border: 2px solid black;
   padding: 8px;
 }
 
+/* Worked on by Jake */
 .CheckBox{
   height: 25px;
   width: 25px;
   accent-color: black;
 }
 
+/* Worked on by Jake */
 .CheckBox:hover{
   cursor: pointer;
 }
