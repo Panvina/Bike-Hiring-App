@@ -66,7 +66,7 @@ Contributor(s):
                 </div>
             </div>
             <br>
-
+			<!--This calendar section is done by Clement where it is showing the current bookings as an event scheduler and it is hard code since it is to demonstrate the potential type of thing-->
             <!-- Current bookings section -->
             <h1 style="line-height: 50px;"><strong> Current Bookings: </strong></h1>
 			<!--keeping the schedule inside it-->
@@ -90,23 +90,34 @@ Contributor(s):
 				<div class="time start-1630">16:30</div>
 				<div class="time start-1700">17:00</div>
                   
-				<!-- EVENTS -->								  
-				<div class="event stage-bike start-900 end-1100 length-2">Danny</div>
-				<div class="event stage-bike start-1200 end-1230 length-2">John</div>
-				<div class="event stage-bike start-1200 end-1500 length-2">Callum</div>
-				<div class="event stage-bike start-900 end-1130 length-2">Jonothan</div>
-				<div class="event stage-bike start-900 end-1630 length-1">Joshua</div>
-				<div class="event stage-bike start-1300 end-1500 length-2">Bill</div>
-				<div class="event stage-bike start-930 end-1200 length-2">Meika</div>
-				<div class="event stage-bike start-1300 end-1400 length-2">Roger</div>
-				<div class="event stage-bike start-1030 end-1200 length-2">Daniel</div>
-				<div class="event stage-bike start-1100 end-1330 length-2">Jane</div>
-				<div class="event stage-bike start-900 end-1030 length-2">Carmen</div>
-				<div class="event stage-bike start-1330 end-1530 length-2">Ash</div>
-				<div class="event stage-bike start-1100 end-1400 length-2">Jessica</div>
-				<div class="event stage-bike start-1430 end-1700 length-2">Rob</div>
-				<div class="event stage-bike start-1500 end-1630 length-3">Steve</div>
-				<div class="event stage-bike start-1000 end-1200 length-2">Cynthia</div>
+				<!-- EVENTS -->				
+				<!--Given the scenario where there is a lot of booking on this day-->
+				<div class="event stage-checkedOut start-900 end-1100 length-1">Danny</div>
+				<div class="event stage-provisional start-1200 end-1230 length-2">John</div>
+				<div class="event stage-checkedOut start-900 end-1130 length-1">Jonothan</div>
+				<div class="event stage-checkedOut start-900 end-1630 length-1">Joshua</div>
+				<div class="event stage-confirm start-1200 end-1500 length-1">Callum</div>
+				<div class="event stage-booked start-1300 end-1500 length-1">Bill</div>
+				<div class="event stage-checkedOut start-930 end-1200 length-1">Meika</div>
+				<div class="event stage-booked start-1300 end-1400 length-1">Roger</div>
+				<div class="event stage-confirm start-1030 end-1200 length-1">Daniel</div>
+				<div class="event stage-booked start-1100 end-1330 length-1">Jane</div>
+				<div class="event stage-checkedOut start-900 end-1030 length-1">Carmen</div>
+				<div class="event stage-booked start-1330 end-1530 length-1">Ash</div>
+				<div class="event stage-confirm start-1100 end-1400 length-1">Jessica</div>
+				<div class="event stage-provisional start-1430 end-1700 length-1">Rob</div>
+				<div class="event stage-confirm start-1500 end-1630 length-2">Steve</div>
+				<div class="event stage-provisional start-1000 end-1200 length-1">Cynthia</div>
+				
+				<!--Given if there is not much bookings-->
+<!--
+				<div class="event stage-checkedOut start-1000 end-1200 length-16">Cynthia</div>
+				<div class="event stage-booked start-1430 end-1700 length-8">Rob</div>
+				<div class="event stage-provisional start-1500 end-1630 length-8">Steve</div>
+				<div class="event stage-confirm start-1230 end-1430 length-8">Bill</div>
+-->
+
+				
 			</div>
         </div>
 
