@@ -7,23 +7,33 @@ Contributor:
 
 This page is completely done by Clement */
 /*initial code from https://www.liquidlight.co.uk/blog/create-an-event-schedule-with-html-table/*/
-body {
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  padding: 4rem 0;
+
+/*This is to make sure that if it does overflow, it can keep data inside the area */
+pre {
+  max-width: 100%;
+  overflow:scroll;
+
+}
+/*This is to put a background of the calendar bookings*/
+.background
+{
+	background-color: #d3d3d3;
+	height: 80%;
+  border-radius: 5rem;
+	margin-bottom: 2rem;
 }
 /*This is to keep it in the container and have a proper setup of where data can be put in*/
 .scheduleContainer {
   display: grid;
   grid-gap: 0.2rem;
-  /*	background-color: #d3d3d3;*/
-  border-radius: 2rem;
-  /*	This is to change the collumns of the table*/
-  grid-template-columns: auto repeat(auto, 1fr);
-  /*	This is to change the rows of the table and add 4 to the number of rows needed*/
-  grid-template-rows: repeat(auto, 1fr);
-  margin-bottom: 2rem;
+  /*	This is to change the collumns and its size of the table*/
+  grid-template-columns: repeat(auto-fit, 1fr);
+  /*	This is to change the rows and its size of the table with the two 0s to clear some data out*/
+  grid-template-rows: 0 0 repeat(18, 1fr);
+	
+  
+/*	This is to give spacing on the right and bottom so time can show clearer*/
+	padding: 1rem 2rem 0rem 0.5rem;
   grid-template-areas:
     "time800 stage"
     "time830 stage"
@@ -49,14 +59,18 @@ body {
  * Time 
 * basically setting up rows
  */
-.time {
+.time, .keys {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  font-size: 1.2rem;
-  border-top: thin dotted #ccc;
+  padding: 0rem;
+padding-right: 0.5rem;
+}
+.time
+{
   height: 100%;
-  padding: 0 0.5rem;
+  font-size: 1.25rem;
+  font-weight: bold;
+  border-top: thin dotted #2E2E2E;
 }
 .time.start-900 {
   grid-area: time900;
@@ -110,8 +124,7 @@ body {
   grid-area: time1700;
 }
 .time[class*="30"]:not(.start-1300) {
-  font-size: 1.2rem;
-  color: #ccc;
+  color: #464646;
 }
 /**
  * Event
@@ -120,21 +133,20 @@ body {
 .event {
   display: flex;
   justify-content: center;
-  /*  flex-direction: column;*/
+/*	if using row, it position data to top of the grid
+	if using collumns, it positions data middle of its grid*/
+/*    flex-direction: column;*/
   flex-direction: row;
-  padding: 0.5rem 1rem;
-  background-color: orange;
-  border-radius: 0.8em;
-  border: 0.25em solid #000000;
-  font-size: 1.2rem;
-  font-weight: bold;
-  line-height: 1.4;
+  padding: 0.5rem 0.5rem;
+  background-color: forestgreen;
+  border-radius: 0.5em;
+  border: 0.2em solid #000000;
+  font-size: 1rem;
+  line-height: 1.25;
 }
 .event span {
   display: block;
   width: 100%;
-  font-size: 1.2em;
-  font-weight: normal;
 }
 /*Booking starting time*/
 .event.start-900 {
@@ -246,51 +258,7 @@ body {
 .event.length-1 {
   grid-column-end: span 1;
 }
-.event.length-2 {
-  grid-column-end: span 2;
-}
-.event.length-3 {
-  grid-column-end: span 3;
-}
-.event.length-4 {
-  grid-column-end: span 4;
-}
-.event.length-5 {
-  grid-column-end: span 5;
-}
-.event.length-6 {
-  grid-column-end: span 6;
-}
-.event.length-7 {
-  grid-column-end: span 7;
-}
-.event.length-8 {
-  grid-column-end: span 8;
-}
-.event.length-9 {
-  grid-column-end: span 9;
-}
-.event.length-10 {
-  grid-column-end: span 10;
-}
-.event.length-11 {
-  grid-column-end: span 11;
-}
-.event.length-12 {
-  grid-column-end: span 12;
-}
-.event.length-13 {
-  grid-column-end: span 13;
-}
-.event.length-14 {
-  grid-column-end: span 14;
-}
-.event.length-15 {
-  grid-column-end: span 15;
-}
-.event.length-16 {
-  grid-column-end: span 16;
-}
+
 
 /*This is to set the color to each items and each color represent different stages of booking*/
 .event.stage-booked {
@@ -309,3 +277,31 @@ body {
   background-color: black;
   color: white;
 }
+
+/*This is to show what keys is used to show the current status of item*/
+.keyContainer {
+  display: grid;
+  grid-gap: 0.2rem;
+  border-radius: 2rem;
+  /*	This is to change the collumns of the table*/
+  grid-template-columns: 5% 24% 24% 24% 24%;
+  /*This is to make sure that it fits on one row*/
+  grid-template-rows: repeat(1, 1fr);
+	
+/*This is to make sure the alinemane is cleaner*/
+	padding: 0rem 2rem 0rem 0.5rem;
+  margin-bottom: 0rem;
+  grid-template-areas:
+    "keys stage"
+}
+.keys
+{
+  font-size: 1.5rem;
+  font-weight: bold;
+  justify-content: flex-end;
+}
+.event.key
+{
+	margin-bottom: 0.25rem;
+}
+
