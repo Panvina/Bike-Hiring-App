@@ -126,10 +126,12 @@ padding-right: 0.5rem;
 .time[class*="30"]:not(.start-1300) {
   color: #464646;
 }
+
 /**
  * Event
 * Setting up when an event is enter into the fields type of thing
  */
+
 .event {
   display: flex;
   justify-content: center;
@@ -144,10 +146,12 @@ padding-right: 0.5rem;
   font-size: 1rem;
   line-height: 1.25;
 }
+
 .event span {
   display: block;
   width: 100%;
 }
+
 /*Booking starting time*/
 .event.start-900 {
   grid-row-start: time900;
@@ -259,8 +263,7 @@ padding-right: 0.5rem;
   grid-column-end: span 1;
 }
 
-
-/*This is to set the color to each items and each color represent different stages of booking*/
+/*This is to set the color to each items and each color represent different statuses of the booking*/
 .event.stage-booked {
   background-color: forestgreen;
   color: white;
@@ -278,28 +281,32 @@ padding-right: 0.5rem;
   color: white;
 }
 
-/*This is to show what keys is used to show the current status of item*/
+/*This is to show the key index of the current status of the booking*/
 .keyContainer {
   display: grid;
   grid-gap: 0.2rem;
   border-radius: 2rem;
-  /*	This is to change the collumns of the table*/
+  /*This is to make sure the 5 collumns of the grid is distriuted properly*/
   grid-template-columns: 5% 24% 24% 24% 24%;
   /*This is to make sure that it fits on one row*/
   grid-template-rows: repeat(1, 1fr);
 	
-/*This is to make sure the alinemane is cleaner*/
+/*This is to make sure the key index is clean*/
 	padding: 0rem 2rem 0rem 0.5rem;
   margin-bottom: 0rem;
   grid-template-areas:
     "keys stage"
 }
+
+/*This is keep the title of key index title as readale*/
 .keys
 {
   font-size: 1.5rem;
   font-weight: bold;
   justify-content: flex-end;
 }
+
+/*This is to give it some spacing between it and the calendar data*/
 .event.key
 {
 	margin-bottom: 0.25rem;

@@ -69,6 +69,8 @@ Contributor(s):
 			<!--This calendar section is done by Clement where it is showing the current bookings as an event scheduler and it is hard code since it is to demonstrate the potential type of thing-->
             <!-- Current bookings section -->
             <h1 style="line-height: 50px;"><strong> Current Bookings: </strong></h1>
+
+            <!-- This is the key index to show the admins/users of what the color relating to the status of the ooking -->
 			<div class="keyContainer"><div class="keys">Key:</div> 
 				<div class="event stage-booked length-1 key">Booked</div>
 				<div class="event stage-confirm length-1 key">Confirm</div>
@@ -76,10 +78,11 @@ Contributor(s):
 				<div class="event stage-provisional length-1 key">Provisional</div>
 				
 			</div>
-			<div class="background">
-			<pre>
-			<!--keeping the schedule inside it-->
-			<div class="scheduleContainer">
+            
+            <div class="background">
+                <pre>
+                    <!--keeping the schedule inside it-->
+                    <div class="scheduleContainer">
 				<!-- TIMES -->
 				<div class="time start-900">9:00</div>
 				<div class="time start-930">9:30</div>
@@ -101,6 +104,7 @@ Contributor(s):
                   
 				<!-- EVENTS -->				
 				<!--This is to sort in order of time start so the it can be shown cleanly-->
+                <!-- From this line below, in the div area, the code can be changed from soft to hard code -->
 				
 				
 				<!--Given the scenario where there is a lot of booking on this day-->
@@ -168,14 +172,7 @@ Contributor(s):
 				<div class="event stage-confirm start-1630 end-1700 length-1">Dean<br/>16:30-<br/>17:00</div>
 				
 
-
-				<!--Given if there is not much bookings-->
-<!--
-				<div class="event stage-checkedOut start-1000 end-1200 length-4">Cynthia<br/>10:00AM-<br/>12:00PM</div>
-				<div class="event stage-booked start-1430 end-1700 length-2">Rob<br/>2:30-<br/>5:00PM</div>
-				<div class="event stage-provisional start-1500 end-1630 length-2">Steve<br/>3:00-<br/>4:30PM</div>
-				<div class="event stage-confirm start-1230 end-1430 length-2">Bill<br/>12:30-<br/>2:30PM</div>
--->
+                <!-- From this line onwards, do not change the code, but can reformat it if needed -->
 			</div>
         </pre>
 		</div></div>
