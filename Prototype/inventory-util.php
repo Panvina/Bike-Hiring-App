@@ -1,4 +1,5 @@
 <?php
+/* Code completed by Aadesh Jagannathan - 102072344*/
     date_default_timezone_set('Australia/Melbourne');
     // Print Safety Inspection based on 0 or 1 values  
     function safety_check($val){
@@ -90,3 +91,22 @@
         }
 
     }
+
+    function test_input($data)
+    {
+        $data = trim($data);
+        $data = stripcslashes($data);
+        $data = htmlspecialchars($data);
+
+        return $data;
+    }
+
+    function validName($name)
+    {
+        return preg_match("/^[a-zA-Z-' ]*$/",$name);
+    }
+	function validId($id)
+	{
+		return preg_match("/^[0-9]{0,2}$/",$id);
+	}
+?>

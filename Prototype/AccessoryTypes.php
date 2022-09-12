@@ -31,7 +31,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
         if ($_GET["insert"] == "true") {
             echo "<p class = 'echo' id='tempEcho'>  Record successfully created! </p>";
         } else if ($_GET["insert"] == "false") {
-            echo "<p class = 'echo'>  Record was not created successfully! </p>";
+            echo "<p class = 'echo'>  Record was not created! </p>";
         }
     }
 
@@ -124,21 +124,75 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
         </table>
     </div>
 
-    <div id="AddAccessoryModal" class="modal">
+    <div id="AddAccessoryModal" class="modal"<?php
+            // Ensures modal stays open when "insert" is set to print errors
+            if(isset($_GET["insert"]))
+            {
+                if ($_GET["insert"] != "true")
+                {
+                    echo "style = 'display:inline-block'";
+                }
+                else if($_GET["insert"] == "true")
+                {
+                    echo "style = 'display:none'";
+                }
+            }
+        ?>>
         <div class="modal-content">
             <span class="Insertclose">&times;</span>
             <form action="accessorytype-addscript.php" method="post">
                 <div>
+                    <span class="error"> 
+                        <?php 
+                            if (isset($_GET["insert"]))
+                            {
+                                if ($_GET["insert"] == "empty")
+                                {
+                                    echo '<p class = "error">* Please enter data in the fields!</p>';
+                                }
+                            }
+                        ?>
+                    </span>
+                </div>
+                <div>
                     <h2>Accessory Type ID</h2>
-                    <input placeholder="ID of Accessory Type..." type="text" name="accessoryId">
+                    <input placeholder="ID of accessory type..." type="text" name="accessoryId">
                 </div>
                 <div>
                     <h2>Accessory Type Name</h2>
-                    <input placeholder="Name of Accessory Type..." type="text" name="name">
+                    <input placeholder="Name of accessory type..." type="text" name="name">
+                    <span class="error"> 
+                        <?php 
+                            if (isset($_GET["insert"]))
+                            {
+                                $name = $_GET["insert"];
+                                if ($name == "emptyName")
+                                {
+                                    echo '<p class = "error">* Please fill the name field!</p>';
+                                }
+                                else if ($name == "invalidName")
+                                {
+                                    echo '<p class = "error">* Name has to only contain alphabets! </p>';
+                                }
+                            }
+                        ?>
+                    </span>
                 </div>
                 <div>
                     <h2>Description</h2>
-                    <textarea iplaceholder="Description about the type of Accessory..." name="description"></textarea>
+                    <textarea placeholder="Description about the type of accessory..." name="description"></textarea>
+                    <span class="error"> 
+                        <?php 
+                            if (isset($_GET["insert"]))
+                            {
+                                $description = $_GET["insert"];
+                                if ($description == "emptyDescription")
+                                {
+                                    echo '<p class = "error">* Please fill the description field!</p>';
+                                }
+                            }
+                        ?>
+                    </span>
                 </div>
             
             <div>
@@ -163,17 +217,58 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
             <span class="updateFormClose">&times;</span>
             <form action="accessorytype-modifyscript.php" method="post" event.preventDefault()>
                 <div>
+                <span class="error"> 
+                        <?php 
+                            if (isset($_GET["update"]))
+                            {
+                                if ($_GET["update"] == "empty")
+                                {
+                                    echo '<p class = "error">* Please do not leave the fields empty!</p>';
+                                }
+                            }
+                        ?>
+                    </span>
+                </div>
+                <div>
                     <h2>Accessory Type ID</h2>
-                    <input placeholder="ID of the Accessory..." type="text" name="accessoryId" readonly value="<?php echo $_SESSION['accessory_type_id'] ?>">
+                    <input placeholder="ID of the accessory..." type="text" name="accessoryId" readonly value="<?php echo $_SESSION['accessory_type_id'] ?>">
                 </div>
 
                 <div>
                     <h2>Name</h2>
-                    <input placeholder="Name of Accessory Type..." type="text" name="name" value="<?php echo $_SESSION['name'] ?>">
+                    <input placeholder="Name of accessory type..." type="text" name="name" value="<?php echo $_SESSION['name'] ?>">
+                    <span class="error"> 
+                        <?php 
+                            if (isset($_GET["update"]))
+                            {
+                                $name = $_GET["update"];
+                                if ($name == "emptyName")
+                                {
+                                    echo '<p class = "error">* Please fill the name field!</p>';
+                                }
+                                else if ($name == "invalidName")
+                                {
+                                    echo '<p class = "error">* Name has to only contain alphabets! </p>';
+                                }
+                            }
+                        ?>
+                    </span>
                 </div>
                 <div>
                     <h2>Description</h2>
-                    <textarea iplaceholder="Description about the Accessory type..." name="description"><?php echo $_SESSION['description'] ?></textarea>
+                    <textarea placeholder="Description about the accessory type..." name="description"><?php echo $_SESSION['description'] ?></textarea>
+                    <span class="error"> 
+                        <?php 
+                            if (isset($_GET["update"]))
+                            {
+                                $description = $_GET["update"];
+                                if ($description == "emptyDescription")
+                                {
+                                    echo '<p class = "error">* Please fill the description field!</p>';
+                                }
+                            }
+                        ?>
+                    </span>
                 </div>
 
                 <div>

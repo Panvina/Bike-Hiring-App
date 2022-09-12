@@ -6,7 +6,7 @@ date_default_timezone_set('Australia/Melbourne');
 include_once("php-scripts/backend-connection.php");
 
 //Linking utility functions associated with inventory
-include("inventory-util.php");
+include("php-scripts/utils.php");
 
 
 
@@ -123,11 +123,38 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
             ?>
         </table>
     </div>
-
-    <div id="AddBikeModal" class="modal">
+    
+    <!-- Modal to add inventory records -->
+    <div id="AddBikeModal" class="modal"<?php
+            // Ensures modal stays open when "insert" is set to print errors
+            if(isset($_GET["insert"]))
+            {
+                if ($_GET["insert"] != "true")
+                {
+                    echo "style = 'display:inline-block'";
+                }
+                else if($_GET["insert"] == "true")
+                {
+                    echo "style = 'display:none'";
+                }
+            }
+        ?>>
         <div class="modal-content">
             <span class="Insertclose">&times;</span>
             <form action="biketype-addscript.php" method="post">
+                <div>
+                <span class="error"> 
+                        <?php 
+                            if (isset($_GET["insert"]))
+                            {
+                                if ($_GET["insert"] == "empty")
+                                {
+                                    echo '<p class = "error">* Please enter data in the fields!</p>';
+                                }
+                            }
+                        ?>
+                    </span>
+                </div>
                 <div>
                     <h2>Bike Type ID</h2>
                     <input placeholder="ID of Bike Type..." type="text" name="bikeId">
@@ -135,10 +162,38 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                 <div>
                     <h2>Bike Type Name</h2>
                     <input placeholder="Name of Bike Type..." type="text" name="name">
+                    <span class="error"> 
+                        <?php 
+                            if (isset($_GET["insert"]))
+                            {
+                                $name = $_GET["insert"];
+                                if ($name == "emptyName")
+                                {
+                                    echo '<p class = "error">* Please fill the name field!</p>';
+                                }
+                                else if ($name == "invalidName")
+                                {
+                                    echo '<p class = "error">* Name has to only contain alphabets! </p>';
+                                }
+                            }
+                        ?>
+                    </span>
                 </div>
                 <div>
                     <h2>Description</h2>
-                    <textarea iplaceholder="Description about the type of bike..." name="description"></textarea>
+                    <textarea placeholder="Description about the type of bike..." name="description"></textarea>
+                    <span class="error"> 
+                        <?php 
+                            if (isset($_GET["insert"]))
+                            {
+                                $description = $_GET["insert"];
+                                if ($description == "emptyDescription")
+                                {
+                                    echo '<p class = "error">* Please fill the description field!</p>';
+                                }
+                            }
+                        ?>
+                    </span>
                 </div>
             
             <div>
@@ -148,9 +203,9 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
         </div>
     </div>
 
-    <!-- Modal to update inventory records (In progress) -->
+    <!-- Modal to update inventory records -->
     <div id="UpdateBikeModal" class="modal" <?php
-
+     // Ensures modal stays open when "update" is set to print errors
                                                     if (isset($_GET["update"])) {
                                                         if ($_GET["update"] != "true") {
                                                             echo "style = 'display:inline-block;'";
@@ -162,6 +217,19 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
         <div class="modal-content">
             <span class="updateFormClose">&times;</span>
             <form action="biketype-modifyscript.php" method="post" event.preventDefault()>
+            <div>
+                <span class="error"> 
+                        <?php 
+                            if (isset($_GET["update"]))
+                            {
+                                if ($_GET["update"] == "empty")
+                                {
+                                    echo '<p class = "error">* Please do not leave the fields empty!</p>';
+                                }
+                            }
+                        ?>
+                    </span>
+                </div>
                 <div>
                     <h2>Bike Type ID</h2>
                     <input placeholder="ID of the Accessory..." type="text" name="bikeId" readonly value="<?php echo $_SESSION['bike_type_id'] ?>">
@@ -170,10 +238,38 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                 <div>
                     <h2>Name</h2>
                     <input placeholder="Name of Bike Type..." type="text" name="name" value="<?php echo $_SESSION['name'] ?>">
+                    <span class="error"> 
+                        <?php 
+                            if (isset($_GET["update"]))
+                            {
+                                $name = $_GET["update"];
+                                if ($name == "emptyName")
+                                {
+                                    echo '<p class = "error">* Please fill the name field!</p>';
+                                }
+                                else if ($name == "invalidName")
+                                {
+                                    echo '<p class = "error">* Name has to only contain alphabets! </p>';
+                                }
+                            }
+                        ?>
+                    </span>
                 </div>
                 <div>
                     <h2>Description</h2>
                     <textarea iplaceholder="Description about the bike type..." name="description"><?php echo $_SESSION['description'] ?></textarea>
+                    <span class="error"> 
+                        <?php 
+                            if (isset($_GET["update"]))
+                            {
+                                $description = $_GET["update"];
+                                if ($description == "emptyDescription")
+                                {
+                                    echo '<p class = "error">* Please fill the description field!</p>';
+                                }
+                            }
+                        ?>
+                    </span>
                 </div>
 
                 <div>
@@ -185,7 +281,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
     
     <!-- Modal to delete inventory records -->
     <div id="DeleteBikeModal" class="modal" <?php
-
+         // Ensures modal stays open when "delete" is set to print errors
                                                     if (isset($_GET["delete"])) {
                                                         if ($_GET["delete"] != "true") {
                                                             echo "style = 'display:inline-block;'";
