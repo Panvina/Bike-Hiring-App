@@ -21,6 +21,9 @@ Contributor(s): Dabin Lee @ icelasersparr@gmail.com
 			$this->getConn();
 		}
 
+		/**
+		 * Get column names for display purposes.
+		 */
 		public function getBookingDisplayColumns()
 		{
 			$cols = "Booking ID,Bike Name,Customer Name,Start Date,Start Time,End Date,End Time,Duration,Pick Up,Drop Off,Price($)";
@@ -73,6 +76,8 @@ Contributor(s): Dabin Lee @ icelasersparr@gmail.com
 			if ($condition) {
 				$query .= " WHERE $condition";
 			}
+
+			$query .= " ORDER BY $bookingsTableName.start_date, $bookingsTableName.start_time";
 
 			// perform query and verify successful
 			// echo "$query";
@@ -272,9 +277,12 @@ Contributor(s): Dabin Lee @ icelasersparr@gmail.com
 
 			// execute booking_accessory_table query
 			echo $bookingAccessoryTableQuery;
-			if ($this->conn->query($bookingAccessoryTableQuery) == TRUE)
+			if ($bookingAccessoryTableQuery != "")
 			{
-				$ret = TRUE;
+				if ($this->conn->query($bookingAccessoryTableQuery) == TRUE)
+				{
+					$ret = TRUE;
+				}
 			}
 
 			// commit changes to database

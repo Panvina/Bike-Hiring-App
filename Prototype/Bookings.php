@@ -20,9 +20,13 @@
     $_SESSION['id'] = '123';
 
     $bookingMode = "none";
+    $errorCode = "none";
+    $errorText = "";
     if (isset($_GET["booking-mode"]))
     {
-        $bookingMode = $_GET["booking-mode"];
+        $bookingErrorData = explode('-', $_GET["booking-mode"]);
+        $bookingMode = $bookingErrorData[0];
+        $errorCode = $bookingErrorData[1];
     }
 ?>
 
@@ -38,14 +42,13 @@
         <!-- Booking Popup (main) -->
         <div id="add-booking-main-modal" class="modal-overlay"
             <?php
-                $mainModalBookingModes = ["invalid"];
-                if (!in_array($bookingMode, $mainModalBookingModes))
+                if ($bookingMode == "add1")
                 {
-                    echo "style='display: none';";
+                    echo "style='display: block';";
                 }
                 else
                 {
-                    echo "style='display: block';";
+                    echo "style='display: none';";
                 }
             ?>
             >
@@ -55,6 +58,7 @@
                 <!-- booking form -->
                 <form action="php-scripts\booking-popups.php" method="POST">
                     <!-- Select customer -->
+                    <br>
                     <label>Customer:</label><br>
                     <select name="add-booking-customer" id="add-booking-customer"><br><br>
                         <?php
@@ -62,24 +66,65 @@
                             $conn = new CustomerDBConnection();
                     		$customerList = $conn->get("user_name, name");
 
+                            $selectedId = null;
+                            if (isset($_SESSION["addBooking"]))
+                            {
+                                // get selected customer id
+                                $selected = explode(',', $_SESSION["addBooking"]["customer"])[0];
+                            }
                     		if ($customerList != null)
                     		{
-                                arrayToComboBoxOptions($customerList, "user_name");
+                                arrayToComboBoxOptions($customerList, "user_name", $selected);
                     		}
                         ?>
                     </select><br><br>
 
                     <!-- Select start of booking -->
                     <label>Start Date</label><br>
-                    <input name="add-booking-start-date" id="add-booking-start-date" type="date"><br><br>
+                    <input name="add-booking-start-date" id="add-booking-start-date" type="date"
+                        <?php
+                            if (isset($_SESSION["addBooking"]))
+                            {
+                                // get selected start date
+                                $bookingStartDateValue = $_SESSION["addBooking"]["startDate"];
+                                echo "value='$bookingStartDateValue'";
+                            }
+                        ?>
+                    ><br><br>
                     <label>Start Time</label><br>
-                    <input name="add-booking-start-time" id="add-booking-start-time" type="time" min="09:00" max="17:00"><br><br>
-
+                    <input name="add-booking-start-time" id="add-booking-start-time" type="time" min="09:00" max="17:00"
+                        <?php
+                            if (isset($_SESSION["addBooking"]))
+                            {
+                                // get selected start date
+                                $bookingStartTimeValue = $_SESSION["addBooking"]["startTime"];
+                                echo "value='$bookingStartTimeValue'";
+                            }
+                        ?>
+                    ><br><br>
                     <!-- Select end of booking -->
                     <label>End Date</label><br>
-                    <input name="add-booking-end-date" id="add-booking-end-date" type="date"><br><br>
+                        <input name="add-booking-end-date" id="add-booking-end-date" type="date"
+                        <?php
+                            if (isset($_SESSION["addBooking"]))
+                            {
+                                // get selected start date
+                                $bookingEndDateValue = $_SESSION["addBooking"]["endDate"];
+                                echo "value='$bookingEndDateValue'";
+                            }
+                        ?>
+                    ><br><br>
                     <label>End Time</label><br>
-                    <input name="add-booking-end-time" id="add-booking-end-time" type="time" min="09:00" max="17:00"><br><br>
+                    <input name="add-booking-end-time" id="add-booking-end-time" type="time" min="09:00" max="17:00"
+                        <?php
+                            if (isset($_SESSION["addBooking"]))
+                            {
+                                // get selected start date
+                                $bookingEndTimeValue = $_SESSION["addBooking"]["endTime"];
+                                echo "value='$bookingEndTimeValue'";
+                            }
+                        ?>
+                    ><br><br>
 
                     <!-- Select pickup and dropoff locations -->
                     <label>Pick-Up Location</label><br>
@@ -89,9 +134,15 @@
                             $conn = new LocationsDBConnection();
                             $pickupLocations = $conn->get("location_id, name", "pick_up_location=1");
 
+                            $selectedId = null;
+                            if (isset($_SESSION["addBooking"]))
+                            {
+                                // get selected customer id
+                                $selected = explode(',', $_SESSION["addBooking"]["pickupLocation"])[0];
+                            }
                             if ($pickupLocations != null)
                             {
-                                arrayToComboBoxOptions($pickupLocations, "location_id");
+                                arrayToComboBoxOptions($pickupLocations, "location_id", $selectedId);
                             }
                         ?>
                     </select><br><br>
@@ -99,11 +150,17 @@
                     <select name="add-booking-drop-off-location" id="add-booking-drop-off-location"><br><br>
                         <?php
                             // Populate list of dropoff locations
-                            $pickupLocations = $conn->get("location_id, name", "drop_off_location=1");
+                            $dropoffLocations = $conn->get("location_id, name", "drop_off_location=1");
 
-                            if ($pickupLocations != null)
+                            $selectedId = null;
+                            if (isset($_SESSION["addBooking"]))
                             {
-                                arrayToComboBoxOptions($pickupLocations, "location_id");
+                                // get selected customer id
+                                $selected = explode(',', $_SESSION["addBooking"]["pickupLocation"])[0];
+                            }
+                            if ($dropoffLocations != null)
+                            {
+                                arrayToComboBoxOptions($dropoffLocations, "location_id", $selectedId);
                             }
                         ?>
                     </select><br><br>
@@ -115,13 +172,13 @@
         <!-- Form for adding bikes and accessories to bookings -->
         <div id="add-booking-bikes-modal" class="modal-overlay"
         <?php
-            if ($bookingMode != "stage2")
+            if ($bookingMode == "add2" && $errorCode != "success")
             {
-                echo "style='display: none';";
+                echo "style='display: block';";
             }
             else
             {
-                echo "style='display: block';";
+                echo "style='display: none';";
             }
         ?>
         >
@@ -140,7 +197,7 @@
                             // Get DB connection object
                             $conn = new BikeInventoryDBConnection();
 
-                            // Populate list of dropoff locations
+                            // Populate list of bikes
                             $bikes = $conn->get("bike_id, name");
 
                             if ($bikes != null)
@@ -157,7 +214,7 @@
                             // Get DB connection object
                             $conn = new AccessoryInventoryDBConnection();
 
-                            // Populate list of dropoff locations
+                            // Populate list of accessories
                             $accessories = $conn->get("accessory_id, name");
 
                             if ($accessories != null)
@@ -180,21 +237,19 @@
         -->
         <div id="change-booking-main-modal" class="modal-overlay"
             <?php
-                $mainModalBookingModes = ["change"];
-                if (!in_array($bookingMode, $mainModalBookingModes))
+                if ($bookingMode == "change1")
                 {
-                    echo "style='display: none';";
+                    echo "style='display: block';";
                 }
                 else
                 {
-                    echo "style='display: block';";
+                    echo "style='display: none';";
                 }
             ?>
             >
             <div class="modal-content">
                 <span class="close-btn">&times;</span>
                 <h2> Modify Booking - Booking Details </h2>
-
                 <?php
                     // Retrieve booking information to pre-populate form
                     if (isset($_SESSION["changeBooking"]))
@@ -220,6 +275,7 @@
                 <!-- booking form -->
                 <form action="php-scripts\booking-popups.php" method="POST">
                     <!-- Display customer (non-modifiable) -->
+                    <br>
                     <label>Customer:</label><br>
                     <select name="add-booking-customer" id="add-booking-customer" disabled>
                         <?php
@@ -280,13 +336,13 @@
         <!-- Form for adding bikes and accessories to bookings -->
         <div id="change-booking-bikes-modal" class="modal-overlay"
         <?php
-            if ($bookingMode != "change-stage2")
+            if ($bookingMode == "change2" && $errorCode != "success")
             {
-                echo "style='display: none';";
+                echo "style='display: block';";
             }
             else
             {
-                echo "style='display: block';";
+                echo "style='display: none';";
             }
         ?>
         >

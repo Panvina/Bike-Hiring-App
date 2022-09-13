@@ -22,10 +22,11 @@ Contributor(s):
 		$keys = array_keys($arr[0]);
 		for($i = 0; $i < count($arr); $i++)
 		{
-			$row = $arr[$i];
-			$option = array();
+			$row = $arr[$i];	// get row
+			$option = array();	// reset option to construct combobox option
 			$id = $i;
 
+			// retrieve data from rows and put into options
 			for($j = 0; $j < count($keys); $j++)
 			{
 				$key = $keys[$j];
@@ -37,8 +38,9 @@ Contributor(s):
 				{
 					array_push($option, $row[$key]);
 				}
-				// echo "<br>val = $row[$key]<br>";
 			}
+
+			// construct combo box option details
 			$option = implode(": ", $option);
 			if ($id != $selectedId)
 			{
@@ -59,10 +61,17 @@ Contributor(s):
      */
     function comboboxArrayToItemIdArray($arrays)
     {
-        for($i = 0; $i < count($arrays); $i++)
-        {
-            $arrays[$i] = explode(",", $arrays[$i])[0];
-        }
+		if (empty($arrays))
+		{
+			$arrays = array();
+		}
+		else
+	    {
+			for($i = 0; $i < count($arrays); $i++)
+	        {
+	            $arrays[$i] = explode(",", $arrays[$i])[0];
+	        }
+		}
 
 		return $arrays;
     }
@@ -87,14 +96,15 @@ Contributor(s):
 
 	/**
 	 * Performs empty() OR operations for each variable in $arr
+	 * Returns true if anything in the array is empty.
 	 */
 	function emptyArr($arr)
 	{
 		$ret = false;
 
-		for($i = 0; $i < count($arr) && !$ret; $i++)
+		for($i = 0; $i < count($arr); $i++)
 		{
-			$ret |= empty($arr[$i]);
+			$ret |= (empty($arr[$i]) || $arr[$i] == "");
 		}
 
 		return $ret;
