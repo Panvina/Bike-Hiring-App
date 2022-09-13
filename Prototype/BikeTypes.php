@@ -146,7 +146,8 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                 <span class="error"> 
                         <?php 
                             if (isset($_GET["insert"]))
-                            {
+                            {   
+                                //Checks and prints an error if all fields are empty in the form 
                                 if ($_GET["insert"] == "empty")
                                 {
                                     echo '<p class = "error">* Please enter data in the fields!</p>';
@@ -156,8 +157,8 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     </span>
                 </div>
                 <div>
-                    <h2>Bike Type ID</h2>
-                    <input placeholder="ID of Bike Type..." type="text" name="bikeId">
+                    <!-- <h2>Bike Type ID</h2> -->
+                    <input placeholder="ID of Bike Type..." type="hidden" name="bikeId">
                 </div>
                 <div>
                     <h2>Bike Type Name</h2>
@@ -166,11 +167,13 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                         <?php 
                             if (isset($_GET["insert"]))
                             {
+                                //Checks and prints an error if the name field empty 
                                 $name = $_GET["insert"];
                                 if ($name == "emptyName")
                                 {
                                     echo '<p class = "error">* Please fill the name field!</p>';
                                 }
+                                //Checks and prints an error if the name entered is invalid
                                 else if ($name == "invalidName")
                                 {
                                     echo '<p class = "error">* Name has to only contain alphabets! </p>';
@@ -186,6 +189,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                         <?php 
                             if (isset($_GET["insert"]))
                             {
+                                //Checks and prints an error if the description field empty 
                                 $description = $_GET["insert"];
                                 if ($description == "emptyDescription")
                                 {
@@ -217,9 +221,10 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
         <div class="modal-content">
             <span class="updateFormClose">&times;</span>
             <form action="biketype-modifyscript.php" method="post" event.preventDefault()>
-            <div>
+                <div>
                 <span class="error"> 
                         <?php 
+                            //Checks and prints an error if all fields are empty in the form 
                             if (isset($_GET["update"]))
                             {
                                 if ($_GET["update"] == "empty")
@@ -243,10 +248,12 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                             if (isset($_GET["update"]))
                             {
                                 $name = $_GET["update"];
+                                //Checks and prints an error if the name field empty 
                                 if ($name == "emptyName")
                                 {
                                     echo '<p class = "error">* Please fill the name field!</p>';
                                 }
+                                //Checks and prints an error if the name entered is invalid
                                 else if ($name == "invalidName")
                                 {
                                     echo '<p class = "error">* Name has to only contain alphabets! </p>';
@@ -263,6 +270,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                             if (isset($_GET["update"]))
                             {
                                 $description = $_GET["update"];
+                                //Checks and prints an error if the description field empty 
                                 if ($description == "emptyDescription")
                                 {
                                     echo '<p class = "error">* Please fill the description field!</p>';

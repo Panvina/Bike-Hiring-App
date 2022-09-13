@@ -5,6 +5,7 @@ date_default_timezone_set('Australia/Melbourne');
 
 include_once("php-scripts/backend-connection.php");
 
+
 //Linking utility functions associated with inventory
 include("inventory-util.php");
 
@@ -97,13 +98,21 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
             while ($row = $accessoryInventory->fetch_assoc()) {
                 // Print Safety Inspection based on 0 or 1 values        
                 $safetyStatus = safety_check($row["safety_inspect"]);
-
+                
                 // Fetch bike type data from the bike_type_table
                 $accessorytype = $row["accessory_type_id"];
                 $accessoryTypeInventory = $conn->query("SELECT name FROM accessory_type_table WHERE accessory_type_id=$accessorytype")->fetch_assoc();
                 
                 // Booking availbility check for bikes
                 $bookingStatus = accessory_availability_check($row["accessory_id"]);
+
+                //Set the availability status colour based on the availability status
+                $availabilityStatusColour = "#000000";
+                $availabilityStatusColour = availabilityStatusColour($bookingStatus);
+
+                //Set the availability status colour based on the availability status
+                $safetyStatusColour = "#000000";
+                $safetyStatusColour = safetyStatusColour($safetyStatus);
 
                 // Setting the primary key value based on table's primary key
                 $primaryKey = $row["accessory_id"];
@@ -115,8 +124,10 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     <td><?php echo $row["name"]; ?></td>
                     <td><?php echo $accessoryTypeInventory["name"]; ?></td>
                     <td><?php echo $row["price_ph"]; ?></td>
-                    <td><?php echo $bookingStatus; ?></td>
-                    <td><?php echo $safetyStatus; ?></td>              
+                    <!--<td><//?php echo "<span style=\"color: $availabilityStatusColour\">$bookingStatus</span>" ?></td>
+                    <td><//?php echo "<span style=\"color: $safetyStatusColour\">$safetyStatus</span>" ?></td> -->       
+                    <?php echo "<td style=\"background-color:$availabilityStatusColour\"> <span style=\"font-weight:bold\">$bookingStatus</span></td>";?>
+                    <?php echo "<td style=\"background-color:$safetyStatusColour\"> <span style=\"font-weight:bold\">$safetyStatus</span></td>";?> 
                     <td>
                         <?php
                         echo "
@@ -151,24 +162,65 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
         $accessoryTypeOption = mysqli_fetch_all($accessoryType, MYSQLI_ASSOC);
     }
     ?>
-    <div id="AddAccessoryModal" class="modal">
+    <div id="AddAccessoryModal" class="modal"<?php
+            // Ensures modal stays open when "insert" is set to print errors
+            if(isset($_GET["insert"]))
+            {
+                if ($_GET["insert"] != "true")
+                {
+                    echo "style = 'display:inline-block'";
+                }
+                else if($_GET["insert"] == "true")
+                {
+                    echo "style = 'display:none'";
+                }
+            }
+        ?>>
         <div class="modal-content">
             <span class="Insertclose">&times;</span>
             <form action="accessory-addscript.php" method="post">
                 <div>
-                    <h2>Accessory ID</h2>
-                    <input placeholder="ID of the Accessory..." type="text" name="accessoryId">
+                <span class="error"> 
+                        <?php 
+                            if (isset($_GET["insert"]))
+                            {
+                                if ($_GET["insert"] == "empty")
+                                {
+                                    echo '<p class = "error">* Please enter data in the fields!</p>';
+                                }
+                            }
+                        ?>
+                    </span>
                 </div>
-
+                <div>
+                    <!-- <h2>Accessory ID</h2> -->
+                    <input placeholder="ID of the Accessory..." type="hidden" name="accessoryId">
+                </div>
                 <div>
                     <h2>Name</h2>
                     <input placeholder="Accessory's name..." type="text" name="name">
+                    <span class="error"> 
+                        <?php 
+                            if (isset($_GET["insert"]))
+                            {
+                                $name = $_GET["insert"];
+                                if ($name == "emptyName")
+                                {
+                                    echo '<p class = "error">* Please fill the name field!</p>';
+                                }
+                                else if ($name == "invalidName")
+                                {
+                                    echo '<p class = "error">* Name has to only contain alphabets! </p>';
+                                }
+                            }
+                        ?>
+                    </span>
                 </div>
 
                 <div>
                     <h2>Accessory Type ID</h2>
                     <select placeholder="Accessory's Type..." name="accessoryTypeId" type="submit">
-                        <option>Select bike type</option>
+                        <option value ="">Select accessory type</option>
                         <?php
                         foreach ($accessoryTypeOption as $option) {
                         ?>
@@ -179,11 +231,39 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                         }
                         ?>
                     </select>
+                    <span class="error"> 
+                        <?php 
+                            if (isset($_GET["insert"]))
+                            {
+                                $accessoryTypeId = $_GET["insert"];
+                                if ($accessoryTypeId == "emptyType")
+                                {
+                                    echo '<p class = "error">* Please select an accessory type!</p>';
+                                }
+                            }
+                        ?>
+                    </span>
                 </div>
 
                 <div>
                     <h2>Price p/h</h2>
                     <input placeholder="Price per hour..." type="text" name="price">
+                    <span class="error">
+                    <?php 
+                            if (isset($_GET["insert"]))
+                            {
+                                $price = $_GET["insert"];
+                                if ($price == "emptyPrice")
+                                {
+                                    echo '<p class = "error">* Please fill the price field!</p>';
+                                }
+                                else if ($price == "invalidPrice")
+                                {
+                                    echo '<p class = "error">* Price can only contain integers or decimals! </p>';
+                                }
+                            }
+                     ?>
+                    <span>
                 </div>
 
                 <!-- <div>
@@ -196,7 +276,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                 </div> -->
 
                 <div>
-                    <h2>Safety Inspect</h2>
+                    <h2>Safety Status</h2>
                     <label class="switch"  style='left: 10px; bottom:5px;' >
                     <input type="hidden" name="safetyInspect" value="0">
                     <input type="checkbox" name="safetyInspect" value="1">
@@ -226,13 +306,42 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
             <span class="updateFormClose">&times;</span>
             <form action="accessory-updatescript.php" method="post" event.preventDefault()>
                 <div>
-                    <h2>BikeID</h2>
+                <span class="error"> 
+                        <?php 
+                            if (isset($_GET["update"]))
+                            {
+                                if ($_GET["update"] == "empty")
+                                {
+                                    echo '<p class = "error">* Please enter data in the fields!</p>';
+                                }
+                            }
+                        ?>
+                    </span>
+                </div>
+                <div>
+                    <h2>Accessory ID</h2>
                     <input placeholder="ID of the Accessory..." type="text" name="accessoryId" readonly value="<?php echo $_SESSION['accessory_id'] ?>">
                 </div>
 
                 <div>
                     <h2>Name</h2>
                     <input placeholder="Accessory's name..." type="text" name="name" value="<?php echo $_SESSION['name'] ?>">
+                    <span class="error"> 
+                        <?php 
+                            if (isset($_GET["update"]))
+                            {
+                                $name = $_GET["update"];
+                                if ($name == "emptyName")
+                                {
+                                    echo '<p class = "error">* Please fill the name field!</p>';
+                                }
+                                else if ($name == "invalidName")
+                                {
+                                    echo '<p class = "error">* Name has to only contain alphabets! </p>';
+                                }
+                            }
+                        ?>
+                    </span>
                 </div>
 
                 <div>
@@ -249,20 +358,53 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                         }
                         ?>
                     </select>
+                    <span class="error"> 
+                        <?php 
+                            if (isset($_GET["update"]))
+                            {
+                                $accessoryTypeId = $_GET["update"];
+                                if ($accessoryTypeId == "emptyType")
+                                {
+                                    echo '<p class = "error">* Please select an accessory type!</p>';
+                                }
+                            }
+                        ?>
+                    </span>
                 </div>
 
                 <div>
                     <h2>Price p/h</h2>
                     <input placeholder="Price per hour..." type="text" name="price" value="<?php echo $_SESSION['price_ph'] ?>">
+                    <?php 
+                            if (isset($_GET["update"]))
+                            {
+                                $price = $_GET["update"];
+                                if ($price == "emptyPrice")
+                                {
+                                    echo '<p class = "error">* Please fill the price field!</p>';
+                                }
+                                else if ($price == "invalidPrice")
+                                {
+                                    echo '<p class = "error">* Price can only contain integers or decimals! </p>';
+                                }
+                            }
+                        ?>
                 </div>
 
                 <div>
-                    <h2>Safety Inspect</h2>
-                    <select placeholder="Safety status..." name="safetyInspect" type="text" value="<?php echo $_SESSION['safety_inspect'] ?>">
-                        <option selected=selected><?php echo safety_check($_SESSION['safety_inspect']); ?></option>
+                    <!-- <h2>Safety Inspect</h2>
+                    <select placeholder="Safety status..." name="safetyInspect" type="text" value="<//?php echo $_SESSION['safety_inspect'] ?>">
+                        <option selected=selected><//?php echo safety_check($_SESSION['safety_inspect']); ?></option>
                         <option value="1">Yes</option>
                         <option value="0">No</option>
-                    </select>
+                    </select> -->
+        
+                    <h2>Safety Status</h2>
+                    <label class="switch"  style='left: 10px; bottom:5px;' >
+                    <input type="hidden" name="safetyInspect" value="0">
+                    <input type="checkbox" name="safetyInspect" value="1" <?php echo ($_SESSION['safety_inspect']==1 ? 'checked' : '');?>>
+                    <span class="slider round"></span>
+                    </label>
                 </div>
 
                 <div>

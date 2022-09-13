@@ -155,8 +155,8 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     </span>
                 </div>
                 <div>
-                    <h2>Accessory Type ID</h2>
-                    <input placeholder="ID of accessory type..." type="text" name="accessoryId">
+                    <!-- <h2>Accessory Type ID</h2> -->
+                    <input placeholder="ID of accessory type..." type="hidden" name="accessoryId">
                 </div>
                 <div>
                     <h2>Accessory Type Name</h2>
