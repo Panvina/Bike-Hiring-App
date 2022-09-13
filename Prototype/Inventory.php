@@ -96,7 +96,6 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                         <th> Safety Check </th>
                         <th> Description </th>
                         <th> Action </th>
-                        <th> Action </th>
                     </tr>";
 
             // Printing data of all table columns by fetching from database
@@ -132,9 +131,9 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     <?php echo "<td style=\"background-color:$availabilityStatusColour\"> <span style=\"font-weight:bold\">$bookingStatus</span></td>";?>
                     <?php echo "<td style=\"background-color:$safetyStatusColour\"> <span style=\"font-weight:bold\">$safetyStatus</span></td>";?>
                     <td><?php echo $row["description"]; ?></td>
-                    <td>
-                        <a href="inventory-process.php?delete=<?php echo $row["bike_id"]; ?>">Delete</a>
-                    </td>
+                   <!--  <td>
+                        <a href="inventory-process.php?delete=<//?php echo $row["bike_id"]; ?>">Delete</a>
+                    </td> -->
                     <td>
                         <!--Buttons added to the table to update and delete records-->
                         <?php

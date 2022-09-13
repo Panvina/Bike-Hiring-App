@@ -20,7 +20,17 @@ function bike_availability_check($id)
     $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
     //Checking if the bike's id is not present in the booking table
     $booking = $conn->query("SELECT * FROM booking_bike_table WHERE bike_id= $id");
-    if ($booking->num_rows == 0) {
+    //Checking if bike id is present in the damaged items table
+    $query = "SELECT * FROM damaged_items_table WHERE bike_id= $id";
+    $result = mysqli_query($conn, $query);
+    $row = mysqli_fetch_assoc($result);
+    //Print broken status if item is broken after booking
+    if (isset($row['bike_id'])) 
+    {
+        return "Broken";
+    }
+    //Print available status if item is not present in the bookings table
+    else if ($booking->num_rows == 0) {
         return "Available";
     } else {
         //Retrieving the bike's allocated booking id from the booking table
@@ -38,9 +48,6 @@ function bike_availability_check($id)
         }
         //Checking if the end date of the booking is before today
         elseif (strtotime(date("Y-m-d")) > strtotime($bookingDT["end_date"])) {
-            //updates safety status if the bike is in a booking
-            $query = ("UPDATE bike_inventory_table SET `safety_inspect`='$safetyStatus' WHERE bike_id= $id");
-            $results = mysqli_query($conn,$query);
             return "Available";
         } else {
             //Checking if the end time of booking has passed
@@ -69,11 +76,11 @@ function accessory_availability_check($id)
     //$damaged = $conn->query("SELECT * FROM damaged_items_table WHERE item_id= $id");
 
     //Checking if accessory id is present in the damaged items table
-    $query = "SELECT * FROM damaged_items_table WHERE item_id= $id";
+    $query = "SELECT * FROM damaged_items_table WHERE accessory_id= $id";
     $result = mysqli_query($conn, $query);
     $row = mysqli_fetch_assoc($result);
     //Print broken status if item is broken after booking
-    if (isset($row['item_id'])) 
+    if (isset($row['accessory_id'])) 
     {
         return "Broken";
     }
@@ -99,9 +106,6 @@ function accessory_availability_check($id)
         }
         //Checking if the end date of the booking is before today
         elseif (strtotime(date("Y-m-d")) > strtotime($bookingDT["end_date"])) {
-            //updates safety status if the bike is in a booking
-            $query = ("UPDATE accessory_inventory_table SET `safety_inspect`='$safetyStatus' WHERE accessory_id= $id");
-            $results = mysqli_query($conn,$query);    
             return "Available";
         } else {
             //Checking if the end time of booking has passed
