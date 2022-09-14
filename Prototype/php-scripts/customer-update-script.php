@@ -3,8 +3,8 @@
     //start the session with the database
     session_start();
     //include database functions
-    include_once("php-scripts/backend-connection.php");
-    include_once "php-scripts/utils.php";
+    include_once("backend-connection.php");
+    include_once "utils.php";
     //create the connection with the database
     $conn = new DBConnection("customer_table");
 
@@ -48,12 +48,12 @@
         //checks to see if any of the variables is empty then redirects back based on the result
         if (!checkEmptyVariables([$name, $phoneNumber, $email, $streetAddress, $suburb , $postCode, $licenceNumber, $state]))
         {
-            header("Location: Customer.php?update=notEmpty");
+            header("Location: ../Customer.php?update=notEmpty");
             exit();
         }
         else
         {
-            header("Location: Customer.php?update=empty");
+            header("Location: ../Customer.php?update=empty");
             exit();
         }
    }
@@ -77,12 +77,12 @@
         //checks to see if input is empty
         if (empty($_POST["name"])) 
         {
-           header("Location: Customer.php?update=nameEmptyErr");
+           header("Location: ../Customer.php?update=nameEmptyErr");
         }
         //checks to see if the name is valid and matches the pattern
         else if (!validName($_POST["name"])) 
         {
-            header("Location: Customer.php?update=nameValidErr");
+            header("Location: ../Customer.php?update=nameValidErr");
         } 
         else 
         {
@@ -94,12 +94,12 @@
         //checks to see if input is empty
         if (empty($_POST["phoneNumber"]))
         {
-            header("Location: Customer.php?update=phoneNumberEmptyErr");
+            header("Location: ../Customer.php?update=phoneNumberEmptyErr");
         } 
         //checks to see if the mobile number is valid and matches the pattern
         else if (!validMobileNumber($_POST["phoneNumber"])) 
         {
-            header("Location: Customer.php?update=phoneValidErr");
+            header("Location: ../Customer.php?update=phoneValidErr");
         } 
         else 
         {
@@ -110,12 +110,12 @@
         //Email input validation
         //checks to see if input is empty
         if (empty($_POST["email"])) {
-            header("Location: Customer.php?update=emailEmptyErr");
+            header("Location: ../Customer.php?update=emailEmptyErr");
         }
         //checks to see if the email is valid and matches the pattern
         else if (!validEmail($_POST["email"])) 
         {
-            header("Location: Customer.php?update=emailValidErr");
+            header("Location: ../Customer.php?update=emailValidErr");
         }
         else 
         {
@@ -127,13 +127,13 @@
         //checks to see if input is empty
         if (empty($_POST["streetAddress"])) 
         {
-            header("Location: Customer.php?update=streetAddressEmptyErr");
+            header("Location: ../Customer.php?update=streetAddressEmptyErr");
         }
         //checks to see if the address is valid and matches the pattern
         else if (!validAddress($_POST["streetAddress"])) 
         {
             //cleans the input and assigns the variable for inserting
-            header("Location: Customer.php?update=streetAddressValidErr");
+            header("Location: ../Customer.php?update=streetAddressValidErr");
         } 
         else 
         {
@@ -145,12 +145,12 @@
         //checks to see if input is empty
         if (empty($_POST["suburb"])) 
         {
-            header("Location: Customer.php?update=suburbEmptyErr");
+            header("Location: ../Customer.php?update=suburbEmptyErr");
         }
         //checks to see if the suburb is valid and matches the pattern
         else if (!validName($_POST["suburb"])) 
         {
-            header("Location: Customer.php?update=suburbValidErr");
+            header("Location: ../Customer.php?update=suburbValidErr");
         } 
         else 
         {
@@ -162,12 +162,12 @@
         //checks to see if input is empty
         if (empty($_POST["postCode"])) 
         {
-            header("Location: Customer.php?update=postCodeEmptyErr");
+            header("Location: ../Customer.php?update=postCodeEmptyErr");
         }
         //checks to see if the postcode is valid and matches the pattern
         else if (!validPostCode($_POST["postCode"])) 
         {
-            header("Location: Customer.php?update=postCodeValidErr");
+            header("Location: ../Customer.php?update=postCodeValidErr");
         }  
         else 
         {
@@ -179,12 +179,12 @@
         //checks to see if input is empty
         if (empty($_POST["licenceNumber"])) 
         {
-            header("Location: Customer.php?update=licenceNumberEmptyErr");
+            header("Location: ../Customer.php?update=licenceNumberEmptyErr");
         } 
         //checks to see if the licence number is valid and matches the pattern
         else if (!validLicenceNumber($_POST["licenceNumber"])) 
         {
-            header("Location: Customer.php?update=licenceNumberValidErr");
+            header("Location: ../Customer.php?update=licenceNumberValidErr");
         }  
         else 
         {
@@ -196,12 +196,12 @@
         //checks to see if input is empty
         if (empty($_POST["state"])) 
         {
-            header("Location: Customer.php?update=stateEmptyErr");
+            header("Location: ../Customer.php?update=stateEmptyErr");
         } 
         //checks to see if the state is valid and matches the pattern
         else if (!validState($_POST["state"])) 
         {
-            header("Location: Customer.php?update=stateValidErr");
+            header("Location: ../Customer.php?update=stateValidErr");
         }  
         else 
         {
@@ -216,12 +216,12 @@
             "$name, $phoneNumber, $email, $streetAddress, $suburb, $postCode, $licenceNumber, $state") == true)
             {
                 
-                header("Location: Customer.php?update=true");
+                header("Location: ../Customer.php?update=true");
                 exit();
             }
             else
             {
-                header("Location: Customer.php?update=false");
+                header("Location: ../Customer.php?update=false");
                 exit();
             }
         }   

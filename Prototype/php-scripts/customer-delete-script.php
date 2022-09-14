@@ -3,9 +3,9 @@
     //start the session with the database
     session_start();
     //include database functions
-    include_once("php-scripts/backend-connection.php");
-    include "php-scripts\customer-db.php";
-    include_once "php-scripts/utils.php";
+    include_once("backend-connection.php");
+    include "customer-db.php";
+    include_once "utils.php";
     //create the connection with the database
     $conn = new DBConnection("customer_table");
 
@@ -30,7 +30,7 @@
         //create variable for the session variable due to string errors when querying
         $pk = $_SESSION["user_name"];
         //redirects back to the form to double check user wants to delete data
-        header("Location: Customer.php?delete=$pk");
+        header("Location: ../Customer.php?delete=$pk");
         exit();
     }
 
@@ -49,12 +49,12 @@
         //deletes the customer from the customer table
         if ($conn->delete("user_name", "'$pk'") == false)
         {
-            header("Location: Customer.php?delete=false");
+            header("Location: ../Customer.php?delete=false");
         }
         //deletes the customer from the accounts table
         else if ($conn->runQuery($accountQuery) == false)
         {
-           header("Location: Customer.php?delete=false");
+           header("Location: ../Customer.php?delete=false");
             exit();
         }
         //goes back to the customer page with a error
@@ -62,7 +62,7 @@
         {
             // commit changes to database
             $conn->runQuery("COMMIT;");
-            header("Location: Customer.php?delete=true");
+            header("Location: ../Customer.php?delete=true");
             exit();
         }          
 
@@ -71,7 +71,7 @@
     //If the no button was pressed, redirects back to the customer page
     if (isset($_POST["CancelDeleteCustomer"]))
     {
-     header("Location: Customer.php?");
+     header("Location: ../Customer.php?");
      exit();
     }
 ?> 

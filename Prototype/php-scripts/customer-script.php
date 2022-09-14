@@ -3,9 +3,9 @@
     //start the session with the database
     session_start();
     //include database functions
-    include "php-scripts\backend-connection.php";
-    include "php-scripts\customer-db.php";
-    include_once "php-scripts\utils.php";
+    include "backend-connection.php";
+    include "customer-db.php";
+    include_once "utils.php";
     //create the connection with the database
     $conn = new CustomerDBConnection("customer_table");
 
@@ -21,12 +21,12 @@
         //checks to see if input is empty
         if (empty($_POST["userName"])) 
         {
-            header("Location: Customer.php?insert=userNameEmptyErr");
+            header("Location: ../Customer.php?insert=userNameEmptyErr");
         }
         //checks to see if the username is valid and matches the pattern
         else if (!validUserName($_POST["userName"])) 
         {
-            header("Location: Customer.php?insert=userNameValidErr");
+            header("Location: ../Customer.php?insert=userNameValidErr");
         }  
         else 
         {
@@ -39,12 +39,12 @@
         //checks to see if input is empty
         if (empty($_POST["name"])) 
         {
-           header("Location: Customer.php?insert=nameEmptyErr");
+           header("Location: ../Customer.php?insert=nameEmptyErr");
         }
         //checks to see if the name is valid and matches the pattern
         else if (!validName($_POST["name"])) 
         {
-            header("Location: Customer.php?insert=nameValidErr");
+            header("Location: ../Customer.php?insert=nameValidErr");
         } 
         else 
         {
@@ -56,12 +56,12 @@
         //checks to see if input is empty
         if (empty($_POST["phoneNumber"]))
         {
-            header("Location: Customer.php?insert=phoneNumberEmptyErr");
+            header("Location: ../Customer.php?insert=phoneNumberEmptyErr");
         } 
         //checks to see if the mobile number is valid and matches the pattern
         else if (!validMobileNumber($_POST["phoneNumber"])) 
         {
-            header("Location: Customer.php?insert=phoneValidErr");
+            header("Location: ../Customer.php?insert=phoneValidErr");
         } 
         else 
         {
@@ -72,12 +72,12 @@
         //Email input validation
         //checks to see if input is empty
         if (empty($_POST["email"])) {
-            header("Location: Customer.php?insert=emailEmptyErr");
+            header("Location: ../Customer.php?insert=emailEmptyErr");
         }
         //checks to see if the email is valid and matches the pattern
         else if (!validEmail($_POST["email"])) 
         {
-            header("Location: Customer.php?insert=emailValidErr");
+            header("Location: ../Customer.php?insert=emailValidErr");
         }
         else 
         {
@@ -89,13 +89,13 @@
         //checks to see if input is empty
         if (empty($_POST["streetAddress"])) 
         {
-            header("Location: Customer.php?insert=streetAddressEmptyErr");
+            header("Location: ../Customer.php?insert=streetAddressEmptyErr");
         }
         //checks to see if the address is valid and matches the pattern
         else if (!validAddress($_POST["streetAddress"])) 
         {
             //cleans the input and assigns the variable for inserting
-            header("Location: Customer.php?insert=streetAddressValidErr");
+            header("Location: ../Customer.php?insert=streetAddressValidErr");
         } 
         else 
         {
@@ -107,12 +107,12 @@
         //checks to see if input is empty
         if (empty($_POST["suburb"])) 
         {
-            header("Location: Customer.php?insert=suburbEmptyErr");
+            header("Location: ../Customer.php?insert=suburbEmptyErr");
         }
         //checks to see if the suburb is valid and matches the pattern
         else if (!validName($_POST["suburb"])) 
         {
-            header("Location: Customer.php?insert=suburbValidErr");
+            header("Location: ../Customer.php?insert=suburbValidErr");
         } 
         else 
         {
@@ -124,12 +124,12 @@
         //checks to see if input is empty
         if (empty($_POST["postCode"])) 
         {
-            header("Location: Customer.php?insert=postCodeEmptyErr");
+            header("Location: ../Customer.php?insert=postCodeEmptyErr");
         }
         //checks to see if the postcode is valid and matches the pattern
         else if (!validPostCode($_POST["postCode"])) 
         {
-            header("Location: Customer.php?insert=postCodeValidErr");
+            header("Location: ../Customer.php?insert=postCodeValidErr");
         }  
         else 
         {
@@ -141,12 +141,12 @@
         //checks to see if input is empty
         if (empty($_POST["licenceNumber"])) 
         {
-            header("Location: Customer.php?insert=licenceNumberEmptyErr");
+            header("Location: ../Customer.php?insert=licenceNumberEmptyErr");
         } 
         //checks to see if the licence number is valid and matches the pattern
         else if (!validLicenceNumber($_POST["licenceNumber"])) 
         {
-            header("Location: Customer.php?insert=licenceNumberValidErr");
+            header("Location: ../Customer.php?insert=licenceNumberValidErr");
         }  
         else 
         {
@@ -158,12 +158,12 @@
         //checks to see if input is empty
         if (empty($_POST["state"])) 
         {
-            header("Location: Customer.php?insert=stateEmptyErr");
+            header("Location: ../Customer.php?insert=stateEmptyErr");
         } 
         //checks to see if the state is valid and matches the pattern
         else if (!validState($_POST["state"])) 
         {
-            header("Location: Customer.php?insert=stateValidErr");
+            header("Location: ../Customer.php?insert=stateValidErr");
         }  
         else 
         {
@@ -193,20 +193,20 @@
 
             if ($conn->runQuery($customerQuery) == false)
             {
-                header("Location: Customer.php?insert=false");
+                header("Location: ../Customer.php?insert=false");
                 exit();
                 //header("Location: Customer.php?insert=true");
             }
             else if ($conn->runQuery($accountQuery) == false)
             {
-                header("Location: Customer.php?insert=false");
+                header("Location: ../Customer.php?insert=false");
                 exit();
             }
             else
             {
                 // commit changes to database
                 $conn->runQuery("COMMIT;");
-                header("Location: Customer.php?insert=true");
+                header("Location: ../Customer.php?insert=true");
                 exit();
             }          
         

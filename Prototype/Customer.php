@@ -116,9 +116,9 @@
                         <div class='dropdown'>
                             <button class='dropbtn' disabled>...</button>
                             <div class='dropdown-content'>
-                                <form action='customer-update-script.php' method='POST' event.preventDefault() > <button type='submit' id= '$primaryKey' class='UpdateButton' name='UpdateButton' 
+                                <form action='php-scripts/customer-update-script.php' method='POST' event.preventDefault() > <button type='submit' id= '$primaryKey' class='UpdateButton' name='UpdateButton' 
                                 value='$primaryKey'> Update Customer </button> </form>
-                                <form action='customer-delete-script.php' method='POST' event.preventDefault()> <button type='submit' name='deleteButton' id='$primaryKey' class='deleteButton' 
+                                <form action='php-scripts/customer-delete-script.php' method='POST' event.preventDefault()> <button type='submit' name='deleteButton' id='$primaryKey' class='deleteButton' 
                                 value = '$primaryKey'>Delete Customer</button> </form>
                             </div>
                         </div>
@@ -149,7 +149,7 @@
         <!-- Creates the content within the pop up -->
         <div class="modal-content">
             <span class="Insertclose">&times;</span>
-            <form action="customer-script.php" method="POST" event.preventDefault()>
+            <form action="php-scripts/customer-script.php" method="POST" event.preventDefault()>
                 <h1> Create a customer </h1>
                 <div>
                     <!-- User name input validation, checks based on error and displays accurate error message -->
@@ -370,7 +370,7 @@
         <div class="modal-content" >
         
             <span class="updateFormClose">&times;</span>
-            <form action="customer-update-script.php" method="POST" event.preventDefault()>
+            <form action="php-scripts/customer-update-script.php" method="POST" event.preventDefault()>
 
                 <h1> Update a customer </h1>
                 <div>
@@ -577,7 +577,7 @@
             <?php
                 $pk = $_SESSION["user_name"];
                 echo "<h1 style='left: 20%; position: relative;'> $pk </h1>";
-                echo "<form action='customer-delete-script.php' method='POST' event.preventDefault()>
+                echo "<form action='php-scripts/customer-delete-script.php' method='POST' event.preventDefault()>
                       <button style='width: 40%; left: -10%; position: relative;' type='submit' id='$pk' value ='$pk' name='submitDeleteCustomer'>Yes</button>
                       <button style='width: 40%; left: -10%; position: relative; background-color: red;' type='submit' name='CancelDeleteCustomer'>No</button> </form>";
             ?>  
