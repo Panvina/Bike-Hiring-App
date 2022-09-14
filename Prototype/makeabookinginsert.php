@@ -150,26 +150,26 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 			// PHP's MySQL module does not allow multiple queries. Testing supports this.
 
 			// Begin transaction
-			if ($this->conn->query("START TRANSACTION;") == TRUE)
+			if ($conn->query("START TRANSACTION;") == TRUE)
 			{
 				$ret = TRUE;
 			}
 
 			// execute booking_table query
 			echo "<br>$bookingTableQuery<br>";
-			if ($this->conn->query($bookingTableQuery) == TRUE)
+			if ($conn->query($bookingTableQuery) == TRUE)
 			{
 				$ret = TRUE;
 			}
 
 			// retrieve primary key of previously executed query
-			if ($this->conn->query($getLastBookingIdQuery) == TRUE)
+			if ($conn->query($getLastBookingIdQuery) == TRUE)
 			{
 				$ret = TRUE;
 			}
 
 			// execute booking_bike_table query
-			if ($this->conn->query($bookingBikeTableQuery) == TRUE)
+			if ($conn->query($bookingBikeTableQuery) == TRUE)
 			{
 				$ret = TRUE;
 			}
@@ -178,14 +178,14 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 			echo $bookingAccessoryTableQuery;
 			if ($bookingAccessoryTableQuery != "")
 			{
-				if ($this->conn->query($bookingAccessoryTableQuery) == TRUE)
+				if ($conn->query($bookingAccessoryTableQuery) == TRUE)
 				{
 					$ret = TRUE;
 				}
 			}
 
 			// commit changes to database
-			if ($this->conn->query("COMMIT;") == TRUE)
+			if ($conn->query("COMMIT;") == TRUE)
 			{
 				$ret = TRUE;
 			}
