@@ -9,6 +9,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 ?>
 
 <?php
+	//get form data
 	$userName =  $_REQUEST['userName'];
 	$startDateValue = $_REQUEST['startDateValue'];
 	$endDateValue = $_REQUEST['endDateValue'];
@@ -85,21 +86,31 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 		        <?php
 			    // Fetching all column data from the bike type table
 			    $bikeType = $conn->query("SELECT * FROM bike_type_table");
+			    //make array of bike types
 			    $bikeTypeArray = array();
+			    //loop through bike types
 			    while ($row = $bikeType->fetch_assoc()) {
 			        $bikeTypeId = $row["bike_type_id"];
 			        $bikeTypeArrayItem = "bike" . $bikeTypeId;
+			        //add each bike type to array + "bike" ie bike40 for example
 			        array_push($bikeTypeArray, $bikeTypeArrayItem);
 			    }
+			    //make array of bike value variables from form
 			   	$bikeVariableArray = array();
 			    foreach($bikeTypeArray as $bikeTypeArray){
+			    	//loop through all avaialble bike types
 					    if (isset($_REQUEST[$bikeTypeArray])){
+					    	//check if form has submitted bike type
 						array_push($bikeVariableArray, $bikeTypeArray);
+						//add bike value to bike value variable array
 					    }
 				}
 				foreach($bikeVariableArray as $bikeVariableArray){
+					//loop through array of submitted bike variables
 					$quantityGet = $bikeVariableArray . "quantity";
+					//get quanitity per bike from form
 					$bikeQuantity =  $_REQUEST[$quantityGet];
+					//dislay results
 					echo "<p><strong>Bike:" . $bikeVariableArray . "</strong></p>";
 					echo "<p><strong>Quantity:" . $bikeQuantity . "</strong></p>";
 				}	
@@ -107,19 +118,25 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 			    <?php
 			    // Fetching all column data from the accessory type table
 			    $accessoryType = $conn->query("SELECT * FROM accessory_type_table");
+			    //make array of accessory types
 			    $accessoryTypeArray = array();
 			    while ($row = $accessoryType->fetch_assoc()) {
 			    	$accessoryTypeId = $row["accessory_type_id"];
 			    	$accessoryTypeArrayItem = "accessory" . $accessoryTypeId;
+			    	//add all available accessories to type array
 			        array_push($accessoryTypeArray, $accessoryTypeArrayItem);
 			    }
+			    //make array of accessorry  values from form
 			    $accessoryVariableArray = array();
 			    foreach($accessoryTypeArray as $accessoryTypeArray){
+			    	//loop through available accessory types
 					    if (isset($_REQUEST[$accessoryTypeArray])){
+					    	//if accessory submitted in form add to accessory value array
 						array_push($accessoryVariableArray, $accessoryTypeArray);
 					    }
 				}
 				foreach($accessoryVariableArray as $accessoryVariableArray){
+					//loop through submitted accessories and display
 		    		echo "<p><strong>Accessory:" . $accessoryVariableArray . "</strong></p>";
 				}	
 			    ?>
