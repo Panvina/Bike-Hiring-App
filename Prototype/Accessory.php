@@ -3,7 +3,7 @@ session_start();
 if(!isset($_SESSION["login-type"]) || $_SESSION["login-type"] == "customer"){
     header("location: index.php?Error403:AccessDenied");
     exit;
-}?>
+}
 
 date_default_timezone_set('Australia/Melbourne');
 
