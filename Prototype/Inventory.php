@@ -5,6 +5,10 @@
 
 // Enabling session
 session_start();
+if(!isset($_SESSION["login-type"]) || $_SESSION["login-type"] == "customer"){
+    header("location: index.php?Error403:AccessDenied");
+    exit;
+}
 // Setting the timezone to local timezone to compare booking availabilities
 date_default_timezone_set('Australia/Melbourne');
 
@@ -61,7 +65,8 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
         <div class="sideNavigation">
             <a href="Dashboard.php"> <img src="img/icons/bulletin-board.png" alt="Dashboard Logo" /> Dashboard </a> <br>
             <a href="Customer.php"> <img src="img/icons/account-group.png" alt="Customer Logo" /> Customer </a> <br>
-            <a href="staff.php"> <img src="img/icons/staff.png" alt="Staff Logo" /> Staff </a> <br>
+            <?php if ($_SESSION["login-type"] == "owner"){
+                        echo "<a href='staff.php'> <img src='img/icons/staff.png' alt='Staff Logo' /> Staff </a> <br>";} ?> 
             <a class="active" href="Inventory.php"> <img src="img/icons/bicycle.png" alt="Inventory Logo" /> Inventory </a> <br>
             <a href="Accessory.php"> <img src="img/icons/accessories.png" alt="Inventory Logo" /> Accessories </a> <br>
             <a href="BikeTypes.php"> <img src="img/icons/biketypes.png" alt="Bike Types Logo" /> Bike Types </a> <br>

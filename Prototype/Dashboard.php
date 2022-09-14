@@ -10,7 +10,13 @@ Contributor(s):
 	- Dabin Lee @ icelasersparr@gmail.com
 -->
 <?php
-    session_start();
+    if(!isset($_SESSION)){ 
+        session_start();     
+    }
+    if(!isset($_SESSION["login-type"]) || $_SESSION["login-type"] == "customer"){
+        header("location: index.php?Error403:AccessDenied");
+        exit;
+    }
 
     include_once "php-scripts/backend-connection.php";
     include_once "php-scripts/utils.php";
@@ -44,8 +50,9 @@ Contributor(s):
             <div class = "sideNavigation">
                 <a class="active" href= "Dashboard.php"> <img src= "img/icons/bulletin-board.png" alt="Dashboard Logo" /> Dashboard </a> <br>
                 <a href = "Customer.php"> <img src= "img/icons/account-group.png" alt="Customer Logo" />  Customer  </a> <br>
-                <a href="staff.php"> <img src="img/icons/staff.png" alt="Staff Logo" /> Staff </a> <br>
-                <a href="accounts.php"> <img src="img/icons/account.png" alt="Account logo"/> Accounts </a> <br> 
+                <?php if ($_SESSION["login-type"] == "owner"){
+                        echo "<a href='staff.php'> <img src='img/icons/staff.png' alt='Staff Logo' /> Staff </a> <br>";} ?>
+                <a href="accounts.php"> <img src="img/icons/account.png" alt="Account logo"/> Accounts </a> <br>
                 <a href= "Inventory.php"> <img src= "img/icons/bicycle.png" alt="Inventory Logo" />  Inventory </a> <br>
                 <a href="Accessory.php"> <img src="img/icons/accessories.png" alt="Inventory Logo" /> Accessories </a> <br>
                 <a href="BikeTypes.php"> <img src="img/icons/biketypes.png" alt="Bike Types Logo" /> Bike Types </a> <br>

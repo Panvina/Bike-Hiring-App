@@ -407,7 +407,7 @@ Contributor(s): Dabin Lee @ icelasersparr@gmail.com
 			for($i = 0; $i < count($queries); $i++)
 			{
 				$query = $queries[$i];
-				echo "$query<br>";
+				//echo "$query<br>";
 				$success &= !($this->conn->query($query));
 			}
 

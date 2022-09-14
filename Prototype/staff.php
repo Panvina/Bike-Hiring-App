@@ -1,7 +1,13 @@
 <!-- All code on this page has been completed by Jake.H 102090870 -->
 <?php
     //start the session with the database
-    session_start();
+    if(!isset($_SESSION)){ 
+        session_start();     
+    }
+    if(!isset($_SESSION["login-type"]) || $_SESSION["login-type"] == "customer"){
+        header("location: index.php?Error403:AccessDenied");
+        exit;
+    }
     //include database functions
     include_once "php-scripts\utils.php";
     include_once "php-scripts\bike-inventory-db.php";

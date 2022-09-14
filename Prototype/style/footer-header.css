@@ -1,3 +1,5 @@
+/*Styling the header and the footer of the pages*/
+
 footer{
     background: #eaf7f6;
 }
@@ -50,8 +52,9 @@ nav.mainNav li{
     
 }
 
-a {
+#menu a {
     text-decoration: none;
+    color:inherit;
 }
 
 #menu a:hover{

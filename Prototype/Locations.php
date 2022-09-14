@@ -1,3 +1,16 @@
+<!--
+Project Name: Inverloch Bike Hire
+Project Description: A website for hiring bikes. Front-end accompanied
+	   by an admin dashboard.
+File Description: Show both the functions and locations information
+Contributor(s):
+	- Clement Cheung @ 103076376@student.swin.edu.au
+	- Jake Hipworth @ 102090870@student.swin.edu.au (Navigation section and Styles)
+-->
+<?php if(!isset($_SESSION)){ 
+        session_start();     
+    }
+	?>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -39,6 +52,8 @@ toggle between hiding and showing the dropdown content */
 			<div class = "sideNavigation">
 				<a href = "Dashboard.php"> <img src= "img/icons/bulletin-board.png" alt="Dashboard Logo" /> Dashboard </a> <br>
 				<a href = "Customer.php"> <img src= "img/icons/account-group.png" alt="Customer Logo" />  Customer  </a> <br>
+				<?php if ($_SESSION["login-type"] == "owner"){
+                        echo "<a href='staff.php'> <img src='img/icons/staff.png' alt='Staff Logo' /> Staff </a> <br>";} ?>
 				<a href= "Inventory.php"> <img src= "img/icons/bicycle.png" alt="Inventory Logo" />  Inventory </a> <br>
 				<a href="Accessory.php"> <img src="img/icons/accessories.png" alt="Inventory Logo" /> Accessories </a> <br>
 				<a href="BikeTypes.php"> <img src="img/icons/biketypes.png" alt="Bike Types Logo" /> Bike Types </a> <br>

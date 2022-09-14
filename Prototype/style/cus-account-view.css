@@ -1,0 +1,42 @@
+/*Styling the customer account page*/
+#greet-heading{
+    padding-top: 20px;
+    margin-left: 5em;
+    padding-left: 2.5em;
+}
+.section {
+    display: flex;
+  }
+  
+  .col {
+    flex: 50%;
+    float: left;
+    padding: 10px;
+    margin-bottom: 30px;
+  }
+  #col1{
+    margin-left: 15em;
+    padding-left: 28px;
+    flex-basis: 75%;
+    background-color:  #eaf7f6; 
+    border-radius: 5px;
+    overflow-y: hidden;
+  }
+  #col2{
+    margin-right: 15em;
+    padding-left: 28px;
+    margin-left: 2em;
+    background-color:#eaf7f6; 
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+  
+  }
+
+  .text{
+    display: flex;
+  }
+
+.text-col{
+  flex: 50%;
+    float: left;
+}
