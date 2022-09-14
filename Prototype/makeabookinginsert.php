@@ -9,29 +9,195 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 ?>
 
 <?php
-	//get form data
-	$userName =  $_REQUEST['userName'];
-	$startDateValue = $_REQUEST['startDateValue'];
-	$endDateValue = $_REQUEST['endDateValue'];
-	$startTimeValue =  $_REQUEST['pickupTimeValue'];
-	$endTimeValue =  $_REQUEST['dropoffTimeValue'];
-	$durationValue = 0; //will make function to calculate
-	$pickupLocationValue = $_REQUEST['pickupLocationValue'];
-	$dropoffLocationValue = $_REQUEST['dropoffLocationValue'];
-	$totalPriceInput = 0.0;// will make function to calculate
-		// Performing insert query execution
-	/*
-		$sql = "INSERT INTO booking_table (user_name, start_date, end_date, start_time, expected_end_time, duration_of_booking, pick_up_location, drop_off_location, booking_fee) VALUES ('$userName', '$startDateValue','$endDateValue','$startTimeValue','$endTimeValue', '$durationValue', 'pickupLocationValue', 'dropoffLocationValue', 'totalPriceInput')";
-	if(mysqli_query($conn, $sql)){
-	} else{
-	// Echo error if failed query fails
-	    echo "ERROR: $sql. " 
-	        . mysqli_error($conn);
+    // Fetching all column data from the bike type table
+    $bikeType = $conn->query("SELECT * FROM bike_type_table");
+    //make array of bike types
+    $bikeTypeArray = array();
+    //loop through bike types
+    while ($row = $bikeType->fetch_assoc()) {
+        $bikeTypeId = $row["bike_type_id"];
+        //$bikeTypeArrayItem = "bike" . $bikeTypeId;
+        //array_push($bikeTypeArray, $bikeTypeArrayItem);
+        //add each bike type to array + "bike" ie bike40 for example
+        array_push($bikeTypeArray, $bikeTypeId);
+    }
+    //make array of bike value variables from form
+   	$bikeVariableArray = array();
+    foreach($bikeTypeArray as $bikeTypeArray){
+    	//loop through all avaialble bike types
+		    if (isset($_REQUEST[$bikeTypeArray])){
+		    	//check if form has submitted bike type
+			array_push($bikeVariableArray, $bikeTypeArray);
+			//add bike value to bike value variable array
+		    }
 	}
-	// Close connection
-	mysqli_close($conn);
+	/*
+	foreach($bikeVariableArray as $bikeVariableArray){
+		//loop through array of submitted bike variables
+		$quantityGet = $bikeVariableArray . "quantity";
+		//get quanitity per bike from form
+		$bikeQuantity =  $_REQUEST[$quantityGet];
+		//dislay results
+		echo "<p><strong>Bike:" . $bikeVariableArray . "</strong></p>";
+		echo "<p><strong>Quantity:" . $bikeQuantity . "</strong></p>";
+	}	
 	*/
+
+
+
+    // Fetching all column data from the accessory type table
+    $accessoryType = $conn->query("SELECT * FROM accessory_type_table");
+    //make array of accessory types
+    $accessoryTypeArray = array();
+    while ($row = $accessoryType->fetch_assoc()) {
+    	$accessoryTypeId = $row["accessory_type_id"];
+    	//$accessoryTypeArrayItem = "accessory" . $accessoryTypeId;
+    	//add all available accessories to type array
+        array_push($accessoryTypeArray, $accessoryTypeId);
+    }
+    //make array of accessorry  values from form
+    $accessoryVariableArray = array();
+    foreach($accessoryTypeArray as $accessoryTypeArray){
+    	//loop through available accessory types
+		    if (isset($_REQUEST[$accessoryTypeArray])){
+		    	//if accessory submitted in form add to accessory value array
+			array_push($accessoryVariableArray, $accessoryTypeArray);
+		    }
+	}
+	foreach($accessoryVariableArray as $accessoryVariableArray){
+		//loop through submitted accessories and display
+		//echo "<p><strong>Accessory:" . $accessoryVariableArray . "</strong></p>";
+	}	
+
+
+	$ret = false;
+
+
+			//get form data
+	/*
+			$userName =  $_REQUEST['userName'];
+			$startDateValue = $_REQUEST['startDateValue'];
+			$endDateValue = $_REQUEST['endDateValue'];
+			$startTimeValue =  $_REQUEST['pickupTimeValue'];
+			$endTimeValue =  $_REQUEST['dropoffTimeValue'];
+			$durationValue = 0; //will make function to calculate
+			$pickupLocationValue = $_REQUEST['pickupLocationValue'];
+			$dropoffLocationValue = $_REQUEST['dropoffLocationValue'];
+			$totalPriceInput = 0.0;// will make function to calculate
+			*/
+
+			// initialise local variables (purely for readability/semantic reasons)
+			$user_name = $_REQUEST['userName'];
+			$start_date = $_REQUEST['startDateValue'];
+			$start_time = $_REQUEST['pickupTimeValue'];
+			$end_date = $_REQUEST['endDateValue'];
+			$end_time = $_REQUEST['dropoffTimeValue'];
+			$booking_duration = 0;
+			$pick_up_location = $_REQUEST['pickupLocationValue'];
+			$drop_off_location = $_REQUEST['dropoffLocationValue'];
+			$booking_fee = 0.0;
+
+			// Get data for transactions into single strings
+			// Booking data
+			$bookingData = "'$user_name', '$start_date', '$start_time', '$end_date', '$end_time', $booking_duration, $pick_up_location, $drop_off_location, $booking_fee";
+
+			// construct booking table query
+			$bookingTableQuery = "INSERT INTO booking_table (user_name, start_date, start_time, end_date, expected_end_time, duration_of_booking, pick_up_location, drop_off_location, booking_fee) VALUES ($bookingData); ";
+
+			// query to save last insert id (from booking) as booking id
+			$getLastBookingIdQuery = "SET @booking_id=LAST_INSERT_ID(); ";
+
+			// construct booking bike table query
+			// need to repeat for count(explode(",", $bike_id))
+			$bookingBikeTableQuery = "INSERT INTO booking_bike_table (booking_id, bike_id) VALUES";
+			for($i = 0; $i < count($bikeVariableArray); $i++)
+			{
+				$bikeId = $bikeVariableArray[$i];
+				$bookingBikeTableQuery .= "(@booking_id, $bikeId)";
+				if ($i < count($bikeVariableArray) - 1)
+				{
+					$bookingBikeTableQuery .= ',';
+				}
+				else
+				{
+					$bookingBikeTableQuery .= ';';
+				}
+			}
+
+			// construct booking bike table query
+			// need to repeat for count(explode(",", $bike_id)) accessoryVariableArray
+			$bookingAccessoryTableQuery = "";
+			if (count($accessoryVariableArray) > 0)
+			{
+				$bookingAccessoryTableQuery = "INSERT INTO booking_accessory_table (booking_id, accessory_id) VALUES ";
+				for($i = 0; $i < count($accessoryVariableArray); $i++)
+				{
+					$accessoryId = $accessoryVariableArray[$i];
+					$bookingAccessoryTableQuery .= "(@booking_id, $accessoryId) ";
+
+					if ($i < count($accessoryVariableArray) - 1)
+					{
+						$bookingAccessoryTableQuery .= ',';
+					}
+					else
+					{
+						$bookingAccessoryTableQuery .= ';';
+					}
+				}
+			}
+
+			// NOTE: Multiple queries used, as according to https://stackoverflow.com/a/1307645
+			// PHP's MySQL module does not allow multiple queries. Testing supports this.
+
+			// Begin transaction
+			if ($conn->query("START TRANSACTION;") == TRUE)
+			{
+				$ret = TRUE;
+			}
+
+			// execute booking_table query
+			echo "<br>$bookingTableQuery<br>";
+			if ($conn->query($bookingTableQuery) == TRUE)
+			{
+				$ret = TRUE;
+			}
+
+			// retrieve primary key of previously executed query
+			if ($conn->query($getLastBookingIdQuery) == TRUE)
+			{
+				$ret = TRUE;
+			}
+
+			// execute booking_bike_table query
+			if ($conn->query($bookingBikeTableQuery) == TRUE)
+			{
+				$ret = TRUE;
+			}
+
+			// execute booking_accessory_table query
+			echo $bookingAccessoryTableQuery;
+			if ($bookingAccessoryTableQuery != "")
+			{
+				if ($conn->query($bookingAccessoryTableQuery) == TRUE)
+				{
+					$ret = TRUE;
+				}
+			}
+
+			// commit changes to database
+			if ($conn->query("COMMIT;") == TRUE)
+			{
+				$ret = TRUE;
+			}
+
+			return $ret;
+
 	?>
+
+
+
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -138,9 +304,17 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 				foreach($accessoryVariableArray as $accessoryVariableArray){
 					//loop through submitted accessories and display
 		    		echo "<p><strong>Accessory:" . $accessoryVariableArray . "</strong></p>";
-				}	
+				}
+
+
+				header("Location: makeabooking.php");
+
+
+
 			    ?>
 		       	<h2><strong>Enjoy the ride!</strong></h2>
+		       	<br>
+
             </div>
             <div id="dualColumn2">
 		        
@@ -157,5 +331,8 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 	<?php include 'footer.php' ?>
 <script type="text/javascript">
 </script>	
+
+
+
 </body>
 </html>
