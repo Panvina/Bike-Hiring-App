@@ -74,6 +74,7 @@ body{
 
  /* Worked on by Jake  */
 /* Modified by Clement */
+/*check this one*/
 .Content input[type=text] {
   font-size: 20px;
   display: block;
@@ -200,3 +201,240 @@ nav a {
   cursor: pointer;
 }
 
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+  margin: 5% auto; /* 15% from the top and centered */
+  margin-left: 45%;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 20%; /* Could be more or less, depending on screen size */
+  background-color: #eaf7f6;
+}
+
+.modal-content h2, input[type=text]{
+ display:inline-block;
+ text-align: center;
+}
+
+.modal-content h1{
+  display:inline-block;
+  text-align: center;
+  margin-left: 15%;
+ }
+
+.modal-content button{
+  display:inline-block;
+  text-align: center;
+  margin-left: 40%;
+  background-color: darkcyan;
+  border: none;
+  color: white;
+  font-size: 25px;
+  border: solid white;
+  border-width: thin;
+  cursor: pointer;
+ }
+
+/* The Close Button */
+.Insertclose,
+.updateFormClose,
+.closeDeleteForm {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.Insertclose:hover,
+.Insertclose:focus,
+.updateFormClose:hover,
+.updateFormClose:focus,
+.UpdateButton:hover,
+.UpdateButton:focus,
+.deleteButton:hover,
+.deleteButton:focus,
+.closeDeleteForm:hover,
+.closeDeleteForm:focus{
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.echo{
+  color: red;
+  font-size: 25px;
+  margin-left: 45%;
+  position: absolute;
+  z-index: 1; left: 0;
+  top: 0;
+  padding-top: 5%;
+}
+
+.UpdateButton, .deleteButton{
+  background-color: darkcyan !important;
+  border: none !important;
+  color: white!important;
+  font-size: 20px!important;
+  border: solid white!important;
+  border-width: thin!important;
+  cursor: pointer!important;
+  left: -2%!important;
+}
+
+.AccountUpdateButton{
+  background-color: darkcyan !important;
+  border: none !important;
+  color: white!important;
+  font-size: 21px!important;
+  border: solid white!important;
+  border-width: thin!important;
+  cursor: pointer!important;
+  left: -2%!important;
+}
+
+.error {
+  color: red;
+
+}
+
+/* Repurposed clemeants CSS to current style */
+.dropbtn {
+ background-color: darkcyan !important;
+  border: none !important;
+  color: white!important;
+  font-size: 20px!important;
+  border: solid white!important;
+  border-width: thin!important;
+  cursor: pointer!important;
+  left: 3%!important;
+}
+
+/* Clements drop down box css styling */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Clements drop down box css styling */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  min-height: 100px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Clements drop down box css styling */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Clements drop down box css styling */
+.dropdown-content a:hover {background-color: #ddd;}
+
+.dropdown:hover .dropdown-content {display: block;}
+
+.dropdown:hover .dropbtn {background-color: #3e8e41;}
+
+/* Aadesh's custom button styling */
+#UpdateItem{
+  background-color: darkcyan;
+  border: none;
+  color: white;
+  font-size: 20px;
+  border: solid white;
+  border-width: thin;
+  cursor: pointer;
+  left: -10%;
+}
+
+
+.UpdateItem, .DeleteItem{
+  background-color: darkcyan !important;
+  border: none !important;
+  color: white!important;
+  font-size: 20px!important;
+  border: solid white!important;
+  border-width: thin!important;
+  cursor: pointer!important;
+  left: -2%!important;
+}
+
+/* Aadesh's custom switch styling */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 54px;
+  height: 28px;
+}
+
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgb(252, 93, 93);
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #80ee6a;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #80ee6a;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
