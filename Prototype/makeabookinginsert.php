@@ -304,7 +304,13 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 				foreach($accessoryVariableArray as $accessoryVariableArray){
 					//loop through submitted accessories and display
 		    		echo "<p><strong>Accessory:" . $accessoryVariableArray . "</strong></p>";
-				}	
+				}
+
+
+				header("Location: makeabooking.php");
+
+
+
 			    ?>
 		       	<h2><strong>Enjoy the ride!</strong></h2>
 		       	<br>
