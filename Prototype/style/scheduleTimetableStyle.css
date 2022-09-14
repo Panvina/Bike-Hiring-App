@@ -30,8 +30,8 @@ pre {
   grid-template-columns: repeat(auto-fit, 1fr);
   /*	This is to change the rows and its size of the table with the two 0s to clear some data out*/
   grid-template-rows: 0 0 repeat(18, 1fr);
-	
-  
+
+
 /*	This is to give spacing on the right and bottom so time can show clearer*/
 	padding: 1rem 2rem 0rem 0.5rem;
   grid-template-areas:
@@ -56,7 +56,7 @@ pre {
     "time1700 stage";
 }
 /**
- * Time 
+ * Time
 * basically setting up rows
  */
 .time, .keys {
@@ -290,7 +290,7 @@ padding-right: 0.5rem;
   grid-template-columns: 5% 24% 24% 24% 24%;
   /*This is to make sure that it fits on one row*/
   grid-template-rows: repeat(1, 1fr);
-	
+
 /*This is to make sure the key index is clean*/
 	padding: 0rem 2rem 0rem 0.5rem;
   margin-bottom: 0rem;
@@ -311,4 +311,3 @@ padding-right: 0.5rem;
 {
 	margin-bottom: 0.25rem;
 }
-

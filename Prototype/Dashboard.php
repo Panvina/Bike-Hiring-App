@@ -137,168 +137,142 @@ Contributor(s):
             <!--This calendar section is done by Clement where it is showing the current bookings as an event scheduler and it is hard code since it is to demonstrate the potential type of thing-->
             <!-- Current bookings section -->
             <h1 style="line-height: 50px;"><strong> Current Bookings: </strong></h1>
-			<div class="keyContainer"><div class="keys">Key:</div> 
+			<div class="keyContainer"><div class="keys">Key:</div>
 				<div class="event stage-booked length-1 key">Booked</div>
 				<div class="event stage-confirm length-1 key">Confirm</div>
 				<div class="event stage-checkedOut length-1 key">Checkout</div>
 				<div class="event stage-provisional length-1 key">Provisional</div>
-				
+
 			</div>
 			<div class="background">
-			<pre>
-			<!--keeping the schedule inside it-->
-			<div class="scheduleContainer">
-				<!-- TIMES -->
-				<div class="time start-900">9:00</div>
-				<div class="time start-930">9:30</div>
-				<div class="time start-1000">10:00</div>
-				<div class="time start-1030">10:30</div>
-				<div class="time start-1100">11:00</div>
-				<div class="time start-1130">11:30</div>
-				<div class="time start-1200">12:00</div>
-				<div class="time start-1230">12:30</div>
-				<div class="time start-1300">13:00</div>
-				<div class="time start-1330">13:30</div>
-				<div class="time start-1400">14:00</div>
-				<div class="time start-1430">14:30</div>
-				<div class="time start-1500">15:00</div>
-				<div class="time start-1530">15:30</div>
-				<div class="time start-1600">16:00</div>
-				<div class="time start-1630">16:30</div>
-				<div class="time start-1700">17:00</div>
-                  
-				<!-- EVENTS -->				
-				<!--This is to sort in order of time start so the it can be shown cleanly-->
-				
-				
-				<!--Given the scenario where there is a lot of booking on this day-->
-				<div class="event stage-checkedOut start-900 end-1700 length-1">Joshua<br/>9:00-<br/>17:00</div>
-				<div class="event stage-checkedOut start-900 end-930 length-1">Josh<br/>9:00-<br/>9:30</div>
-				<div class="event stage-provisional start-900 end-1000 length-1">Cynthia<br/>9:00-<br/>10:00</div>
-				<div class="event stage-checkedOut start-900 end-1030 length-1">Carmen<br/>9:00-<br/>10:30</div>
-				<div class="event stage-checkedOut start-900 end-1100 length-1">Danny<br/>9:00-<br/>11:00</div>
-				<div class="event stage-checkedOut start-900 end-1130 length-1">David<br/>9:00-<br/>11:30</div>
-				<div class="event stage-checkedOut start-900 end-1130 length-1">Jonothan<br/>9:00-<br/>11:30</div>
-				<div class="event stage-checkedOut start-900 end-1700 length-1">Joshua<br/>9:00-<br/>17:00</div>
-				<div class="event stage-checkedOut start-900 end-930 length-1">Josh<br/>9:00-<br/>9:30</div>
-				<div class="event stage-provisional start-900 end-1000 length-1">Cynthia<br/>9:00-<br/>10:00</div>
-				<div class="event stage-checkedOut start-900 end-1030 length-1">Carmen<br/>9:00-<br/>10:30</div>
-				<div class="event stage-checkedOut start-900 end-1100 length-1">Danny<br/>9:00-<br/>11:00</div>
-				<div class="event stage-checkedOut start-900 end-1130 length-1">David<br/>9:00-<br/>11:30</div>
-				<div class="event stage-checkedOut start-900 end-1130 length-1">Jonothan<br/>9:00-<br/>11:30</div>
-				<div class="event stage-provisional start-1330 end-1400 length-1">Mike<br/>13:30-<br/>14:00</div>
-				<div class="event stage-checkedOut start-930 end-1200 length-1">Meika<br/>9:30-<br/>12:00</div>
-				<div class="event stage-checkedOut start-930 end-1200 length-1">Meika<br/>9:30-<br/>12:00</div>
-				<div class="event stage-checkedOut start-1000 end-1030 length-1">Rick<br/>10:00-<br/>10:30</div>
-				<div class="event stage-confirm start-1030 end-1200 length-1">Daniel<br/>10:30-<br/>12:00</div>
-				<div class="event stage-checkedOut start-1000 end-1030 length-1">Rick<br/>10:00-<br/>10:30</div>
-				<div class="event stage-confirm start-1030 end-1200 length-1">Daniel<br/>10:30-<br/>12:00</div>
-				<div class="event stage-confirm start-1100 end-1400 length-1">Jessica<br/>11:00-<br/>14:00</div>
-				<div class="event stage-confirm start-1100 end-1400 length-1">Jessica<br/>11:00-<br/>14:00</div>
-				<div class="event stage-booked start-1430 end-1630 length-1">Jane<br/>14:30-<br/>16:30</div>
-				<div class="event stage-confirm start-1200 end-1300 length-1">Duncan<br/>12:00-<br/>13:00</div>
-				<div class="event stage-provisional start-1200 end-1230 length-1">John<br/>12:00-<br/>12:30</div>
-				<div class="event stage-confirm start-1230 end-1300 length-1">Albert<br/>12:30-<br/>13:00</div>
-				<div class="event stage-provisional start-1200 end-1230 length-1">Billy<br/>12:00-<br/>12:30</div>
-				<div class="event stage-confirm start-1200 end-1300 length-1">Duncan<br/>12:00-<br/>13:00</div>
-				<div class="event stage-provisional start-1200 end-1230 length-1">John<br/>12:00-<br/>12:30</div>
-				<div class="event stage-confirm start-1230 end-1300 length-1">Albert<br/>12:30-<br/>13:00</div>
-				<div class="event stage-provisional start-1200 end-1230 length-1">Billy<br/>12:00-<br/>12:30</div>
-				<div class="event stage-booked start-1300 end-1500 length-1">Bill<br/>13:00-<br/>15:00</div>
-				<div class="event stage-booked start-1300 end-1400 length-1">Roger<br/>13:00-<br/>14:00</div>
-				<div class="event stage-booked start-1300 end-1330 length-1">Daniella<br/>13:00-<br/>14:30</div>
-				<div class="event stage-booked start-1300 end-1400 length-1">Courtney<br/>13:00-<br/>14:00</div>
-				<div class="event stage-confirm start-1300 end-1500 length-1">Callum<br/>13:00-<br/>15:00</div>
-				<div class="event stage-booked start-1300 end-1500 length-1">Bill<br/>13:00-<br/>15:00</div>
-				<div class="event stage-booked start-1300 end-1400 length-1">Roger<br/>13:00-<br/>14:00</div>
-				<div class="event stage-booked start-1300 end-1330 length-1">Daniella<br/>13:00-<br/>14:30</div>
-				<div class="event stage-booked start-1300 end-1400 length-1">Courtney<br/>13:00-<br/>14:00</div>
-				<div class="event stage-confirm start-1300 end-1500 length-1">Callum<br/>13:00-<br/>15:00</div>
-				<div class="event stage-booked start-1330 end-1530 length-1">Ash<br/>13:30-<br/>15:30</div>
-				<div class="event stage-confirm start-1330 end-1400 length-1">Mike<br/>13:30-<br/>14:00</div>
-				<div class="event stage-booked start-1330 end-1530 length-1">Ash<br/>13:30-<br/>15:30</div>
-				<div class="event stage-booked start-1400 end-1500 length-1">Donald<br/>14:00-<br/>15:00</div>
-				<div class="event stage-booked start-1400 end-1500 length-1">Donald<br/>14:00-<br/>15:00</div>
-				<div class="event stage-confirm start-1430 end-1630 length-1">Morty<br/>14:30-<br/>16:30</div>
-				<div class="event stage-booked start-1430 end-1530 length-1">Trent<br/>14:30-<br/>15:30</div>
-				<div class="event stage-provisional start-1430 end-1700 length-1">Rob<br/>14:30-<br/>17:00</div>
-				<div class="event stage-confirm start-1430 end-1630 length-1">Morty<br/>14:30-<br/>16:30</div>
-				<div class="event stage-booked start-1430 end-1530 length-1">Trent<br/>14:30-<br/>15:30</div>
-				<div class="event stage-provisional start-1430 end-1700 length-1">Rob<br/>14:30-<br/>17:00</div>
-				<div class="event stage-booked start-1430 end-1630 length-1">Jane<br/>14:30-<br/>16:30</div>
-				<div class="event stage-provisional start-1530 end-1630 length-1">Bobby<br/>15:30-<br/>16:30</div>
-				<div class="event stage-provisional start-1530 end-1700 length-1">Dave<br/>15:30-<br/>17:00</div>
-				<div class="event stage-confirm start-1600 end-1630 length-1">Steve<br/>16:00-<br/>16:30</div>
-				<div class="event stage-confirm start-1630 end-1700 length-1">Dean<br/>16:30-<br/>17:00</div>
-				<div class="event stage-provisional start-1530 end-1630 length-1">Bobby<br/>15:30-<br/>16:30</div>
-				<div class="event stage-provisional start-1530 end-1700 length-1">Dave<br/>15:30-<br/>17:00</div>
-				<div class="event stage-confirm start-1600 end-1630 length-1">Steve<br/>16:00-<br/>16:30</div>
-				<div class="event stage-confirm start-1630 end-1700 length-1">Dean<br/>16:30-<br/>17:00</div>
-			</div>
-        </pre>
-				
-		</div>
-<!--
-            <div>
-                <table>
+    			<pre>
+    			<!--keeping the schedule inside it-->
+    			<div class="scheduleContainer">
+    				<!-- TIMES -->
+    				<div class="time start-900">9:00</div>
+    				<div class="time start-930">9:30</div>
+    				<div class="time start-1000">10:00</div>
+    				<div class="time start-1030">10:30</div>
+    				<div class="time start-1100">11:00</div>
+    				<div class="time start-1130">11:30</div>
+    				<div class="time start-1200">12:00</div>
+    				<div class="time start-1230">12:30</div>
+    				<div class="time start-1300">13:00</div>
+    				<div class="time start-1330">13:30</div>
+    				<div class="time start-1400">14:00</div>
+    				<div class="time start-1430">14:30</div>
+    				<div class="time start-1500">15:00</div>
+    				<div class="time start-1530">15:30</div>
+    				<div class="time start-1600">16:00</div>
+    				<div class="time start-1630">16:30</div>
+    				<div class="time start-1700">17:00</div>
+
+    				<!-- EVENTS -->
+    				<!--This is to sort in order of time start so the it can be shown cleanly-->
+
+
+    				<!--Given the scenario where there is a lot of booking on this day-->
                     <?php
-                        $conn = new BookingsDBConnection();
-                        // Print table header
-                        // Declare columns and create array
-                        $cols = $conn->getBookingDisplayColumns();
-                        $cols = explode(',', $cols);
-
-                        // Get number of columns
-                        $count = count($cols);
-
-                        // Print data as a HTML table header
-                        for($x = 0; $x < $count; $x++)
+                        function intTimeToStringTime($hours, $minutes)
                         {
-                            $col = trim($cols[$x]);
-                            echo "<th> $col </th>";
+                            $leadingZeroHour = "";
+                            // if ($hours < 10)
+                            // {
+                            //     $leadingZeroHour = "0";
+                            // }
+
+                            $leadingZeroMinute = "";
+                            if ($minutes < 10)
+                            {
+                                $leadingZeroMinute = "0";
+                            }
+
+                            $hours = "$leadingZeroHour$hours";
+                            $minutes = "$leadingZeroMinute$minutes";
+
+                            $ret = "$hours:$minutes";
+                            return $ret;
                         }
 
-                        // create new DB connection and fetch rows
+                        function constraintToThirty($time)
+                        {
+                            $hours = (int)(substr($time, 0, 2));
+                            $minutes = (int)(substr($time, 3, 2));
+
+                            if ($minutes < 15)
+                            {
+                                // round XX:14 or less down to XX:00
+                                $minutes = 0;
+                            }
+                            else if ($minutes >= 15 && $minutes < 45)
+                            {
+                                // round (XX:15 - XX:44) to XX:30
+                                $minutes = 30;
+                            }
+                            else
+                            {
+                                // round XX:45 or above to XX+1:00
+                                $hours++;
+                                $minutes = 0;
+                            }
+
+                            $ret = intTimeToStringTime($hours, $minutes);
+
+                            return $ret;
+                        }
+
+                        $conn = new BookingsDBConnection();
+
+                        // create new DB connection and fetch rows for a given date
                         $ymdDate = DateTime::createFromFormat("d-m-Y", $date);
                         $strDate = $ymdDate->format("Y-m-d");
                         $rows = $conn->getBookingRows("start_date='$strDate'");
 
-                        // if no rows are returned, create a null row as a placeholder
-                        if (count($rows) == 0)
+                        $numRows = count($rows);
+                        // print bookings
+                        for($i = 0; $i < $numRows; $i++)
                         {
-                            $rows = array();
-                            $tmp = array();
-                            for($x = 0; $x < count($cols); $x++)
-                            {
-                                array_push($tmp, "null");
-                            }
-                            array_push($rows, $tmp);
-                        }
+                            echo "";
+                            // get current row
+                            $row = $rows[$i];
 
-                        // get keys for each row
-                        // at least one row exists due to if-statement above
-                        $keys = array_keys($rows[0]);
-                        for($x = 0; $x < count($rows); $x++)
-                        {
-                            // create data row
-                            echo "<tr>";
-                            for($y = 0; $y < count($keys); $y++)
-                            {
-                                // get row and key
-                                $row = $rows[$x];
-                                $key = $keys[$y];
+                            $startTime = constraintToThirty($row["start_time"]);
+                            $endTime = constraintToThirty($row["expected_end_time"]);
+                            $startDate = $row["start_date"];
+                            $endDate = $row["end_date"];
 
-                                // retrieve data from above row for given key
-                                $data = $row[$key];
-                                echo "<td> $data </td>";
+                            if ($startDate != $endDate)
+                            {
+                                $endTime = "17:00";
                             }
-                            echo "</tr>";
+                            else if ($startTime == $endTime)
+                            {
+                                $endTimeHour = (int)substr($endTime, 0, 2);
+                                $endTimeMinute = (int)substr($endTime, 3, 2);
+
+                                if ($endTimeMinute == 0)
+                                {
+                                    $endTimeMinute = 30;
+                                }
+                                else
+                                {
+                                    $endTimeMinute = 0;
+                                    $endTimeHour++;
+                                }
+
+                                $endTime = intTimeToStringTime($endTimeHour, $endTimeMinute);
+                            }
+                            $custName = $row['name'];
+
+                            $startTimeNoColon = str_replace(":", "", $startTime);
+                            $endTimeNoColon = str_replace(":", "", $endTime);
+                            echo "<div class='event stage-provisional start-$startTimeNoColon end-$endTimeNoColon length-1'>$custName<br/>$startTime-<br/>$endTime</div>";
                         }
                     ?>
-                </table>
-            </div>
--->
-        </div>
+    				
+    			</div>
+            </pre>
+		</div>
 
     </body>
     <script>
