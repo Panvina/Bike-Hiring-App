@@ -109,9 +109,9 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                         <div class='dropdown'>
                         <button class='dropbtn' disabled>...</button>
                             <div class='dropdown-content'>
-                            <form action='biketype-modifyscript.php' method='POST' event.preventDefault() > <button type='submit' id= '$primaryKey' class='UpdateItem' name='updateItem' 
+                            <form action='php-scripts/biketype-modifyscript.php' method='POST' event.preventDefault() > <button type='submit' id= '$primaryKey' class='UpdateItem' name='updateItem' 
                                 value='$primaryKey'> Update </button> </form>
-                            <form action='biketype-modifyscript.php' method='POST' event.preventDefault()> <button type='submit' id='$primaryKey' name='deleteItem' class='DeleteItem' 
+                            <form action='php-scripts/biketype-modifyscript.php' method='POST' event.preventDefault()> <button type='submit' id='$primaryKey' name='deleteItem' class='DeleteItem' 
                                 value = '$primaryKey'> Delete </button> </form>
                             </div>
                         </div>";
@@ -142,7 +142,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
         ?>>
         <div class="modal-content">
             <span class="Insertclose">&times;</span>
-            <form action="biketype-addscript.php" method="post">
+            <form action="php-scripts/biketype-addscript.php" method="post">
                 <div>
                 <span class="error"> 
                         <?php 
@@ -221,7 +221,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                                                     ?>>
         <div class="modal-content">
             <span class="updateFormClose">&times;</span>
-            <form action="biketype-modifyscript.php" method="post" event.preventDefault()>
+            <form action="php-scripts/biketype-modifyscript.php" method="post" event.preventDefault()>
                 <div>
                 <span class="error"> 
                         <?php 
@@ -302,13 +302,13 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
         <div class="modal-content">
             <span class="closeDeleteForm">&times;</span>
             <h1 style="left: -8%; position: relative;"> Do you wish to delete the bike type? </h1>
-            <form action="biketype-modifyscript.php" method="post" event.preventDefault()>
+            <form action="php-scripts/biketype-modifyscript.php" method="post" event.preventDefault()>
                 <div>
                     <h2>Bike Type ID</h2>
                     <?php
                     $primaryKey = $_SESSION["bike_type_id"];
                     echo "<h1 style='left: 25%; position: relative;'> $primaryKey </h1>";
-                    echo "<form action='biketype-modifyscript.php' method='POST' event.preventDefault()>
+                    echo "<form action='php-scripts/biketype-modifyscript.php' method='POST' event.preventDefault()>
                       <button style='width: 40%; left: -10%; position: relative;' type='submit' id='$primaryKey' value ='$primaryKey' name='submitDeleteItem'>Yes</button>
                       <button style='width: 40%; left: -10%; position: relative; background-color: red;' type='submit' name='cancelDeleteItem'>No</button> </form>";
                     ?>

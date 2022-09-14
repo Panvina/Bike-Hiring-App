@@ -1,8 +1,8 @@
 <?php
 /* Code completed by Aadesh Jagannathan - 102072344*/
     session_start();
-    include_once("php-scripts\backend-connection.php");
-    //include ("php-scripts/utils.php");
+    include_once("backend-connection.php");
+    //include ("utils.php");
     include("inventory-util.php");
     $conn = new mysqli("localhost", "root", "", "bike_hiring_system") or die(mysqli_error($mysqli));
     $ret = array();
@@ -27,15 +27,15 @@
         $name = $_SESSION['name'];
         $description = $_SESSION['description'];
 
-        header("location:BikeTypes.php?update=notEmpty");
+        header("location:../BikeTypes.php?update=notEmpty");
         /* if (!checkEmptyVariables([$name, $accessoryTypeId, $price, $safetyInspect]))
         {
-            header("Location: Accessory.php?update=notEmpty");
+            header("Location: ../Accessory.php?update=notEmpty");
             exit();
         }
         else
         {
-            header("Location: Accessory.php?update=empty");
+            header("Location: ../Accessory.php?update=empty");
             exit();
         }  */
    }
@@ -51,22 +51,22 @@
         //Check if all fields are empty
         if(empty($_POST["name"]) && empty($_POST["description"]))
         {
-            header("Location: BikeTypes.php?update=empty");
+            header("Location: ../BikeTypes.php?update=empty");
         }
         //Check if only the name field is empty
         else if (empty($_POST["name"])) 
         {
-           header("Location: BikeTypes.php?update=emptyName");
+           header("Location: ../BikeTypes.php?update=emptyName");
         }
         //Check if only the description field is empty
         else if (empty($_POST["description"])) 
         {
-           header("Location: BikeTypes.php?update=emptyDescription");
+           header("Location: ../BikeTypes.php?update=emptyDescription");
         }
         //Check if the name field has only alphabets
         else if (!validName($_POST["name"])) 
         {
-            header("Location: BikeTypes.php?update=invalidName");
+            header("Location: ../BikeTypes.php?update=invalidName");
         } 
         else 
         {
@@ -93,11 +93,11 @@
         //Check to see if query has been successful
         if($conn = true)
         {
-        header("location:BikeTypes.php?update=true");    
+        header("location:../BikeTypes.php?update=true");    
         }
         else
         {
-        header("location:BikeTypes.php?update=false");   
+        header("location:../BikeTypes.php?update=false");   
         }
         }
    }
@@ -116,7 +116,7 @@
        $_SESSION["bike_type_id"] = $fetchData["bike_type_id"];
        $primaryKey = $_SESSION["bike_type_id"];
 
-       header("Location: BikeTypes.php?delete=$primaryKey");
+       header("Location: ../BikeTypes.php?delete=$primaryKey");
        exit();
    }
 
@@ -126,12 +126,12 @@
        $primaryKey = $_POST["submitDeleteItem"];
        $query = "DELETE FROM bike_type_table WHERE bike_type_id=$primaryKey";
        $results = mysqli_query($conn, $query);
-       header("Location: BikeTypes.php?delete=true");
+       header("Location: ../BikeTypes.php?delete=true");
    }
 
    if (isset($_POST["cancelDeleteItem"]))
    {
-    header("Location: BikeTypes.php");
+    header("Location: ../BikeTypes.php");
     exit();
    }
         
