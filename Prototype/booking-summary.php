@@ -1,3 +1,17 @@
+<?php
+    if(!isset($_SESSION)){ 
+        session_start();     
+    }
+    if(!isset($_SESSION["login-type"]) || $_SESSION["login-type"] != "customer"){
+        header("location: index.php?Error403:AccessDenied");
+        exit;
+    }else{
+        if(isset($_SESSION["user-details"]) && $_SESSION["user-details"] == "no"){
+        header("location: no-user-details.php");
+        exit;
+        }
+    } 
+?>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -7,7 +21,7 @@
     <title>Booking Summary</title>
 </head>
 <body>
-    <header><?php include 'header.php'?></header>
+    <header><?php include_once 'header.php'?></header>
     <div id = "main">
         <div class="banner">
             <div id="bannertext">
@@ -29,10 +43,12 @@
     include 'person-dto.php';
     include 'booking-dto.php';
     $email = $_SESSION["login-email"];
-
+    if (isset($_POST['cancelBookingID'])){
+        $cancelBookingID = $_POST['cancelBookingID'];
+        $bookingDBConn = new BookingsDBConnection();
+        $bookingDBConn->deleteBooking($cancelBookingID);
+    }
     $bookingDetail = new BookingDTO($email);
-
-
     $userDetail = new PersonDTO($email);
     $userDetail->getDetails();
     $name = $userDetail->getName();
@@ -50,17 +66,16 @@
             <h3>Your Booking Details:</h3>
             <div class='text'>
                 <div class='text-col2'><h4>Name:</h4>
-                    <?php echo "<p>$name</p><br>
+                    <?php echo "<p class='beforeUpdate'>$name</p><br>
                     <h4>Address:</h4>
-                    <p>$address</p></div>
+                    <p class='beforeUpdate'>$address</p></div>
                 <div class='text-col'><h4>Phone Number:</h4>
-                    <p>$pnum</p><br>
+                    <p class='beforeUpdate'>$pnum</p><br>
                     <h4>Email:</h4>
-                    <p>$email</p></div>" ?>
+                    <p class='beforeUpdate'>$email</p></div>" ?>
             </div>
         </div>
     </div>
-    <?php ?> 
     <footer><?php include 'footer.php'?></footer>
 </body>
 </html>

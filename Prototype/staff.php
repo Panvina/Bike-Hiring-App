@@ -1,7 +1,13 @@
 <!-- All code on this page has been completed by Jake.H 102090870 -->
 <?php
     //start the session with the database
-    session_start();
+    if(!isset($_SESSION)){ 
+        session_start();     
+    }
+    if(!isset($_SESSION["login-type"]) || $_SESSION["login-type"] == "customer"){
+        header("location: index.php?Error403:AccessDenied");
+        exit;
+    }
     //include database functions
     include_once("php-scripts/backend-connection.php");
     include_once "php-scripts/utils.php";
@@ -23,9 +29,7 @@
     <nav>
         <div class="sideNavigation">
             <a href="Dashboard.php"> <img src="img/icons/bulletin-board.png" alt="Dashboard Logo" /> Dashboard </a> <br>
-            <a href="Customer.php"> <img src="img/icons/account-group.png" alt="Customer Logo" /> Customer </a> <br>
-            <a class="active" href="staff.php"> <img src="img/icons/staff.png" alt="Staff Logo" />
-            Staff </a> <br>    
+            <a href="Customer.php"> <img src="img/icons/account-group.png" alt="Customer Logo" /> Customer </a> <br>  
             <a href="Inventory.php"> <img src="img/icons/bicycle.png" alt="Inventory Logo" /> Inventory </a> <br>
             <a href="Accessory.php"> <img src="img/icons/accessories.png" alt="Accessory Logo" /> Accessories </a> <br>
             <a href="bookings.php"> <img src="img/icons/book-open-blank-variant.png" alt="Bookings Logo" /> Bookings
@@ -33,6 +37,8 @@
             <a href="Block_Out_Date.php"> <img src="img/icons/calendar.png" alt="Block out date Logo" /> Block Out Dates
             </a> <br>
             <a href="Locations.php"> <img src="img/icons/earth.png" alt="Locations Logo" /> Locations </a> <br>
+            <a class="active" href="staff.php"> <img src="img/icons/staff.png" alt="Staff Logo" />
+            Staff </a> <br>  
         </div>
     </nav>
 

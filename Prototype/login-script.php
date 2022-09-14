@@ -1,22 +1,11 @@
-//  Resources:
-//      https://www.w3schools.com/php/php_form_url_email.asp
-<?php
-    include 'person-dto.php';?>
-
+<!-- This file is set up by Alex, futher developed by Vina Touch !--> 
 <?php
     session_start();
+    include 'person-dto.php';
+    ?>
+    
+<?php
     $_SESSION['id'] = '123';
-
-    function validEmail($email)
-    {
-        return filter_var($email, FILTER_VALIDATE_EMAIL);
-    }
-
-    function validName($name)
-    {
-        return !preg_match("/^[a-zA-Z-' ]*$/",$name);
-    }
-
     if (isset($_POST["login-submit"]))
     {
         // Get variables
@@ -28,26 +17,38 @@
         // Validate variables
         if (empty($email) || empty($pwd))
         {
-            header("Location: login.php?login=empty");
+            header("Location: index.php?login=empty");
             exit();
         }
-        // elseif (!validEmail($email))
-        // {
-        //     header("Location: login.php?login=email");
-        //     exit();
-        // }
+
         else
         {
-            $roleObj = new PersonDTO($email);
-            $role = $roleObj->authenticateUser($pwd);    
+            $newUser = new PersonDTO($email);
+            $role = $newUser->authenticateUser($pwd);  
+            $newUser->getDetails();
+            $license = $newUser->getLicense();  
             if($role == "3"){
-                header("Location: booking-summary.php?Customerlogin=$email");
+                $_SESSION['login-type'] = 'customer';
+                if ($license == "null"){
+                    $_SESSION["user-details"] = "no";
+                    $_SESSION['cusID'] = $email;
+                    header("Location: no-user-details.php");
+                    exit();
+                }else{
+                    $_SESSION["user-details"] = "yes";
+                    header("Location: booking-summary.php?Customerlogin=$email");
+                    exit();
+                }  
             }else if ($role == "2"){
+                $_SESSION['login-type'] = 'employee';
                 header("Location: dashboard.php?Adminlogin=success");
-            }else {
-                header("Location: index.php?Error=$role");
+                exit();
+            }else if ($role == "1") {
+                $_SESSION['login-type'] = 'owner';
+                header("Location: dashboard.php?masterlogin=success");
+                exit();
+            }else{header("Location: index.php?login=userNotFound");
             }
-            exit();
         }
     }
     else

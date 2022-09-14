@@ -2,8 +2,7 @@
 <!-- written by Vina Touch-->
 
 <?php 
-    include 'backend-connection.php';
-
+    include_once 'php-scripts/backend-connection.php';
     class PersonDTO{
         private $username="";
         private $name ="";
@@ -73,13 +72,16 @@
             $auth = "no user found"; 
             for($i=0; $i< count($userID); $i++){        //loop through the result array
                 $userToString = implode(" ",$userID[$i]);       //convert array to string
-                $userPwd = $dbCon->get('password', ("user_name = '$userToString'"));        
-                if ($userToString == $id &&  implode('',$userPwd[0]) == $pwd){      //allow access only if the userID and the password match the ones in the database
+                $userPwd = $dbCon->get('password', ("user_name = '$userToString'"));     
+                $hashed_password= implode('',$userPwd[0]);  
+                if ($userToString == $id && ($pwd == $hashed_password ||password_verify($pwd, $hashed_password))){      //allow access only if the userID and the password match the ones in the database
                     $roleID = $dbCon->get('role_id', ("user_name = '$userToString'"));   //fetch the role assigned to the user
                     if (implode('',$roleID[0]) == "3"){     //convert an array of array into string
                         return $auth = "3";
-                    }else{
+                    }else if (implode('',$roleID[0]) == "2"){
                         return $auth = "2"; 
+                    }else{
+                        return $auth = "1";
                     }
                 }
             }

@@ -8,6 +8,15 @@ Contributor(s):
 	- Vina Touch @ 101928802@student.swin.edu.au
 	- Jake Hipworth @ 102090870@student.swin.edu.au (Navigation section and Styles)
 -->
+
+<?php 
+    if(!isset($_SESSION)){ 
+        session_start();     
+    }
+    if(!isset($_SESSION["login-type"]) || $_SESSION["login-type"] == "customer"){
+        header("location: index.php?Error403:AccessDenied");
+        exit;
+    }?>
 <!DOCTYPE html>
 <html>
     <link rel="stylesheet" href="style/Jake_style.css">
@@ -23,11 +32,14 @@ Contributor(s):
             <div class = "sideNavigation">
                 <a class="active" href= "Dashboard.php"> <img src= "img/icons/bulletin-board.png" alt="Dashboard Logo" /> Dashboard </a> <br>
                 <a href = "Customer.php"> <img src= "img/icons/account-group.png" alt="Customer Logo" />  Customer  </a> <br>
+                <?php if ($_SESSION["login-type"] == "owner"){
+                        echo "<a href='staff.php'> <img src='img/icons/staff.png' alt='Staff Logo' /> Staff </a> <br>";} ?>
                 <a href= "Inventory.php"> <img src= "img/icons/bicycle.png" alt="Inventory Logo" />  Inventory </a> <br>
                 <a href="Accessory.php"> <img src="img/icons/accessories.png" alt="Inventory Logo" /> Accessories </a> <br>
                 <a href= "bookings.php"> <img src= "img/icons/book-open-blank-variant.png" alt="Bookings Logo" /> Bookings </a> <br>
                 <a href= "Block_Out_Date.php"> <img src= "img/icons/calendar.png" alt="Block out date Logo" /> Block Out Dates </a> <br>
                 <a href= "Locations.php"> <img src= "img/icons/earth.png" alt="Locations Logo" /> Locations </a> <br>
+
             </div>
          </nav>
         <!-- Block of content in center -->

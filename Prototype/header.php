@@ -1,3 +1,16 @@
+<!-- The entire file is written by Vina Touch 101928802!-->
+<?php 
+    if(!isset($_SESSION)){ 
+        session_start();     
+    }
+    if(isset($_POST['logout'])==true){
+        $_SESSION = array();
+        session_destroy();
+        header("location: index.php");
+        exit;
+    }
+
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -26,8 +39,18 @@
                                     </ul>
                                 </li>
                                 <li><a href="contactus.php">Contact Us</a></li>
-                                <!-- <li id="login">Login</li> -->
-                                <li><?php include 'login.php'?></li>
+                                <?php 
+                                    if(!isset($_SESSION["login-type"]) || $_SESSION["login-type"] != "customer"){
+                                        echo include 'login.php';
+                                    }else{
+                                        echo "<li> <a href='booking-summary.php'>My Bookings</a></li>";
+                                        echo "<li>
+                                                <form action='header.php' method='post'>
+                                                    <input type='hidden' name='logout' value='logout'>
+                                                    <button type='submit'>Logout</button>
+                                                </form></li>";
+                                    }     
+                                ?>
                             </ul>
                         </nav>
                     </div>

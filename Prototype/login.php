@@ -1,6 +1,4 @@
 <?php
-    session_start();
-    $_SESSION['id'] = '123';
 ?>
 <!DOCTYPE html>
 <html>
@@ -27,11 +25,13 @@
 
                         if ($loginVar == "empty")
                         {
-                            echo '<p class="error">Em pty inputs</p>';
+                            echo '<p class="error">The inputs cannot be empty!</p>';
                         }
                         elseif ($loginVar == "email")
                         {
                             echo '<p class="error">Invalid email</p>';
+                        }elseif($loginVar =="userNotFound"){
+                            echo'<p class="error">The account does not exist!</p>';
                         }
                     }
                 ?>
@@ -71,6 +71,23 @@
             <div class="modal-content">
                 <span class="close-btn">&times;</span>
                 <p class="centre-text modal-content-header">CREATE AN ACCOUNT</p>
+                <?php
+                    if (isset($_GET["ca"]))
+                    {
+                        $ca = $_GET["ca"];
+
+                        if ($ca == "empty")
+                        {
+                            echo '<p class="error">The inputs cannot be empty!</p>';
+                        }
+                        elseif ($ca == "email")
+                        {
+                            echo '<p class="error">Invalid email</p>';
+                        }elseif($ca =="pwdsnomatch"){
+                            echo'<p class="error">The passwords don\'t match!</p>';
+                        }
+                    }
+                ?>
                 <form action="create-account-script.php" method="post">
                     <input
                         name="ca-first-name"
@@ -133,16 +150,15 @@
                         style="margin-bottom: 0px;"
                     />
                     <br>
-                    <label for="privacy-policy-checkbox" style="position: relative; left: 12%;">
+                    <!-- <label for="privacy-policy-checkbox" style="position: relative; left: 12%;">
                         <input name="ca-privacy-policy" type="checkbox"/> I agree to the <a href="https://www.blank.org">privacy policy</a>
-                    </label>
+                    </label> -->
                     <br>
                     <button type="submit" name="ca-submit" class="centre-element modal-btn login-btn" style="position: relative; transform: translate(-50%, 15px)">LOGIN</button>
                 </form>
             </div>
         </div>
         <script src="scripts/login-js.php"></script>
-        <scrip t>
             <?php
                 if (isset($_GET["login"]))
                 {
@@ -150,8 +166,8 @@
 
                     if ($loginVar != "success")
                     {
-                        echo 'var login_modal = document.getElementById("login-overlay");';
-                        echo 'login_modal.style.display = "block";';
+                        echo '<script> var login_modal = document.getElementById("login-overlay");
+                                login_modal.style.display = "block"; </script>';
                     }
                 }
                 elseif (isset($_GET["ca"]))
@@ -160,11 +176,10 @@
 
                     if ($caVar != "success")
                     {
-                        echo 'var create_account_modal = document.getElementById("create-account-overlay");';
-                        echo 'create_account_modal.style.display = "block";';
+                        echo '<script>var create_account_modal = document.getElementById("create-account-overlay"); 
+                        create_account_modal.style.display = "block";</script>';
                     }
                 }
             ?>
-        </script>
     </body>
 </html>

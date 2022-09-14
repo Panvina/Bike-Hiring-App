@@ -1,9 +1,9 @@
-<?php 
+<?php /* This file as a whole is written by Vina Touch 101928802 */
+    include_once 'person-dto.php';
+    include_once 'php-scripts/bookings-db.php';    //to retrieve a function
     class BookingDTO{
         private $username="";
         private $bookingid=array();
-        private $bikeid=array();
-        private $bikeName=array();
         private $accessory= array();
         private $startT = array();
         private $endT=array();
@@ -14,19 +14,16 @@
 
         function __construct($login){
             $this->username=$login;
+            if (str_contains($login, '@')){
+                $user= new PersonDTO($login);
+                $this->username= $user->getUsername();
+            }
         }
-
         function getUsername(){
             return $this->username;
         }
         function getBookingID(){
             return $this->bookingid;
-        }
-        function getBikeID(){
-            return $this->bikeID;
-        }
-        function getBikeName(){
-            return $this->bikename;
         }
         function getAccessory(){
             return $this->accessory;
@@ -50,6 +47,32 @@
             return $this->fee;
         }
 
+        function getBookingBikeID($booking_id){
+            $dbCon = new DBConnection('booking_bike_table');
+            $bike = $dbCon->get('bike_id',("booking_id = '$booking_id'"));
+            $bike = $bike[0]['bike_id'];
+            return $bike;
+        }
+
+        function getBikeName($bikeid){
+            $dbCon = new DBConnection('bike_inventory_table');
+            $name = $dbCon->get('name',("bike_id = '$bikeid'"));
+            $name = $name[0]['name'];
+            return $name;
+        }
+
+        function getBikeAccessory($bookingid){
+            $getID = new DBConnection('booking_accessory_table');
+            $getName = new DBConnection('accessory_inventory_table');
+            $accessoryID = $getID->get('accessory_id',("booking_id = '$bookingid'"));
+            $accessoryName = array();
+            foreach ($accessoryID as $row){
+                $row = implode("",$row);
+                $name = $getName->get('name',("accessory_id = '$row'"));
+                array_push($accessoryName, $name[0]['name']);
+            }
+            return $accessoryName;
+        }
         function getDetails($login=""){
             $login = $this->getUsername();
             $dbCon = new DBConnection('booking_table');
@@ -67,9 +90,6 @@
             $this->printDetails($detail);
         }
 
-        function cancelBooking($bookingID){
-
-        }
 
         function printDetails($array){
             
@@ -77,7 +97,11 @@
                 echo "<p>No current booking/s.</p>";
             }else{
                 for ($i =0; $i<count($array); $i++){  
-                    $bookingid =$this->bookingid[$i];
+                    $bookingid =$this->bookingid[$i];                   
+                    $bikeid = $this->getBookingBikeID($bookingid);
+                    $bikeName = $this->getBikeName($bikeid);
+                    $bikeAccessory = $this->getBikeAccessory($bookingid);
+                    $bikeAccessory = implode(", ",$bikeAccessory);
                     $startT= $this->startT[$i];
                     $endT=$this->endT[$i];
                     $dur=$this->duration[$i];
@@ -85,27 +109,29 @@
                     $doLoc=$this->dropOffLoc[$i];
                     $fee=$this->fee[$i];
                     echo "
-                    <h3>Booking ID: $bookingid</h3>
+                    <h3>Booking ID: $bookingid</h3> 
                     <div class='text'>
                         <div class='text-col'>
-                            <p><b>Bike ID:</b> sad</p>
-                            <p><b>Bike Name:</b> sad</p>
-                            <p><b>Bike Accessory:</b></p>
-                            <p>sad</p><br>
+                            <p><b>Bike ID:</b> $bikeid</p>
+                            <p><b>Bike Name:</b> $bikeName</p>
+                            <p><b>Bike Accessory:</b> $bikeAccessory</p><br>
                             <p><b>Start Date and Time:</b> $startT</p>
                             <p><b>End Date and time:</b> $endT</p>
                             <p><b>Duration:</b> $dur</p></div>
                         <div class='text-col'>
                             <p><b>Pick-up Location:</b> $puLoc</p>
                             <p><b>Drop-off Location:</b> $doLoc</p><br>
-                            <p><b>Booking Fee:</b> $fee</p></div>
+                            <p><b>Booking Fee:</b> $$fee</p></div>
                     </div>
-                    <p>------------</p>       
+                    <form method='post' action='booking-summary.php' class='confirm'>
+                        <input type='hidden' name='cancelBookingID' value='$bookingid'>
+                        <input type='submit' name='cancelBooking'
+                        class='button' value='Cancel this Booking' />
+                    </form>
+                    <hr>     
                  ";
                 }
             }
-           
         }
-
     }
 ?>
