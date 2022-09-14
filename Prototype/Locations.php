@@ -109,7 +109,7 @@ toggle between hiding and showing the dropdown content */
 				<th> Address </th>
 				<th> Drop-Off </th>
 				<th> Pick-Up </th>
-				<th> Query </th>
+				<th> Action </th>
 			</tr>
 			<?php
 			//this to select all items from the table before showing it
@@ -154,9 +154,9 @@ toggle between hiding and showing the dropdown content */
 						//This is showing each data from database on the website interface
 						echo "<form method='POST' action='UpdateLocations.php'>";
 						echo "<tr>";
-						echo "<td><input type='hidden' id='LID' name='LID' value='{$LID}'><input type='text' name='nameupdate' id ='nameupdate' value='{$name}' required><br/>";
+						echo "<td><input type='hidden' id='LID' name='LID' value='{$LID}'><input type='text' name='nameupdate' id ='nameupdate' value='{$name}'  style='width: 100%;' required><br/>";
 						echo "</td>";
-						echo "<td> <input type='text' name='fulladdress' id ='fulladdress' value='{$fulladdress}' required> </td>";
+						echo "<td> <input type='text' name='fulladdress' id ='fulladdress' value='{$fulladdress}' style='width: 100%;' required> </td>";
 						echo "<td> <input type='checkbox' class='CheckBox' id='dropOffBox' name='dropOffBox' $dropOffResult> </td>";
 						echo "<td> <input type='checkbox' class='CheckBox' id='pickUpBox' name='pickUpBox' $pickUpResult> </td>";
 						echo "<td>
@@ -196,16 +196,6 @@ toggle between hiding and showing the dropdown content */
 
 </style>
 
-<!--  <h2>Hoverable Dropdown</h2>
-  <p>Move the mouse over the button to open the dropdown menu.</p>
-
-  <div class="dropdown">
-    <button class="dropbtn">Dropdown</button>
-    <div class="dropdown-content">
-        <button type='submit' name='deleteLocation' id='deleteLocation' class='btn'>Delete</button><br/>
-        <button type='submit' name='updateLocation' id='updateLocation' class='btn'>Update</button>
-    </div>
-  </div>-->
 
 	</body>
 </html>
