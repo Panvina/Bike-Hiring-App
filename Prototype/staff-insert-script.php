@@ -29,7 +29,7 @@
         else 
         {
             //cleans the input and assigns the variable for inserting
-            $userName = test_input($_POST["userName"]);
+            $userName = "EM-" . test_input($_POST["userName"]);
 
         }
         //------------------------------------------------------
@@ -155,23 +155,36 @@
         //Double checks to ensure no field is empty
         if(!empty($userName) && !empty($name) && !empty($phoneNumber) && !empty($email) && !empty($streetAddress) && !empty($suburb) && !empty($postCode) && !empty($state))
         {
-            //defines the SQL query
-            $cols = "user_name, name, phone_number, email, street_address, suburb, post_code, state";
-            $data = "'$userName', '$name', '$phoneNumber', '$email', '$streetAddress', '$suburb', '$postCode', '$state'";
+            //defines the SQL query for the customer table
+            $staffCols = "user_name, name, phone_number, email, address, suburb, post_code, state";
+            $staffData = "'$userName', '$name', '$phoneNumber', '$email', '$streetAddress', '$suburb', '$postCode', '$state'";
+            $staffQuery = "INSERT INTO employee_table ($staffCols) VALUES ($staffData)";
 
-            //Inserts the data into the database and checks if it was successful
-            //If successful, redirects back to the customer page 
-            if ($conn->insert($cols , $data) == true)
-            {
-                header("Location: staff.php?insert=true");
-                exit();
-            }
-            //If unsuccessful, redirects back to the customer page with error
-            else
+            $accountCols = "user_name, role_id, password";
+            $accountPassword = randomPassword();
+            $accountData = "'$userName', 3, '$accountPassword'";
+            $accountQuery = "INSERT INTO accounts_table (user_name, role_id, password) VALUES ($accountData)";
+            
+            //creates a transaction to run multiple queries to insert data into the staff and account table. Then commits.
+            $conn->runQuery("START TRANSACTION;");
+        
+            if ($conn->runQuery($staffQuery) == false)
             {
                 header("Location: staff.php?insert=false");
                 exit();
             }
+            else if ($conn->runQuery($accountQuery) == false)
+            {
+                header("Location: staff.php?insert=false");
+                exit();
+            }
+            else
+            {
+                // commit changes to database
+                $conn->runQuery("COMMIT;");
+                header("Location: staff.php?insert=true");
+                exit();
+            }          
         }
     }
 ?>

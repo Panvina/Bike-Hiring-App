@@ -226,6 +226,8 @@ nav a {
 .Insertclose:focus,
 .updateFormClose:hover,
 .updateFormClose:focus,
+.UpdateButton:hover,
+.UpdateButton:focus,
 .deleteButton:hover,
 .deleteButton:focus,
 .closeDeleteForm:hover,
@@ -245,23 +247,22 @@ nav a {
   padding-top: 5%;
 }
 
-#UpdateButton{
-  background-color: darkcyan;
-  border: none;
-  color: white;
-  font-size: 20px;
-  border: solid white;
-  border-width: thin;
-  cursor: pointer;
-  left: -10%;
-}
-
-
 .UpdateButton, .deleteButton{
   background-color: darkcyan !important;
   border: none !important;
   color: white!important;
   font-size: 20px!important;
+  border: solid white!important;
+  border-width: thin!important;
+  cursor: pointer!important;
+  left: -2%!important;
+}
+
+.AccountUpdateButton{
+  background-color: darkcyan !important;
+  border: none !important;
+  color: white!important;
+  font-size: 21px!important;
   border: solid white!important;
   border-width: thin!important;
   cursor: pointer!important;

@@ -4,6 +4,7 @@
     session_start();
     //include database functions
     include_once("php-scripts/backend-connection.php");
+    include "php-scripts\customer-db.php";
     include_once "php-scripts/utils.php";
     //create the connection with the database
     $conn = new DBConnection("customer_table");
@@ -36,17 +37,35 @@
     //checks to see if the yes button in the delete form has been pressed
     if (isset($_POST["submitDeleteCustomer"]))
     {
-        //gets the primary key that was used in the row
+
+        //gets the primary key from the row selected
         $pk = $_POST["submitDeleteCustomer"];
-        //deletes the data from the table and checks to see if it was successful
-        if ($conn->delete("user_name", "'$pk'") == true)
-        {
-            header("Location: Customer.php?delete=true");
-        }
-        else
+        //creates the query to delete the same row in the account table
+        $accountQuery = "DELETE FROM accounts_table WHERE user_name = '$pk'";
+    
+        //starts the transaction for the query for database security
+        $conn->runQuery("START TRANSACTION;");
+
+        //deletes the customer from the customer table
+        if ($conn->delete("user_name", "'$pk'") == false)
         {
             header("Location: Customer.php?delete=false");
         }
+        //deletes the customer from the accounts table
+        else if ($conn->runQuery($accountQuery) == false)
+        {
+           header("Location: Customer.php?delete=false");
+            exit();
+        }
+        //goes back to the customer page with a error
+        else
+        {
+            // commit changes to database
+            $conn->runQuery("COMMIT;");
+            header("Location: Customer.php?delete=true");
+            exit();
+        }          
+
     }
 
     //If the no button was pressed, redirects back to the customer page

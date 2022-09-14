@@ -3,8 +3,8 @@
     //start the session with the database
     session_start();
     //include database functions
-    include_once("php-scripts/backend-connection.php");
-    include_once "php-scripts/utils.php";
+    include_once "php-scripts\utils.php";
+    include_once "php-scripts\bike-inventory-db.php";
     //create the connection with the database
     $conn = new DBConnection("employee_table");
 ?>
@@ -25,7 +25,8 @@
             <a href="Dashboard.php"> <img src="img/icons/bulletin-board.png" alt="Dashboard Logo" /> Dashboard </a> <br>
             <a href="Customer.php"> <img src="img/icons/account-group.png" alt="Customer Logo" /> Customer </a> <br>
             <a class="active" href="staff.php"> <img src="img/icons/staff.png" alt="Staff Logo" />
-            Staff </a> <br>    
+            Staff </a> <br>
+            <a href="accounts.php"> <img src="img/icons/account.png" alt="Account logo"/> Accounts </a> <br>     
             <a href="Inventory.php"> <img src="img/icons/bicycle.png" alt="Inventory Logo" /> Inventory </a> <br>
             <a href="Accessory.php"> <img src="img/icons/accessories.png" alt="Accessory Logo" /> Accessories </a> <br>
             <a href="BikeTypes.php"> <img src="img/icons/biketypes.png" alt="Bike Types Logo" /> Bike Types </a> <br>
@@ -53,7 +54,7 @@
                 <?php
                     //Fetch data done by Alex, altered by Jake for customer table
                     //establishes the collumns in the table to be used in the query
-                    $cols = "user_name, name, phone_number, email, street_address, suburb, post_code, state";
+                    $cols = "user_name, name, phone_number, email, address, suburb, post_code, state";
                     //get the data from the table
                     $rows = $conn->get($cols);
 

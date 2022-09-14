@@ -26,6 +26,7 @@
             <a class="active" href="Customer.php"> <img src="img/icons/account-group.png" alt="Customer Logo" />
                 Customer </a> <br>
             <a href="staff.php"> <img src="img/icons/staff.png" alt="Staff Logo" /> Staff </a> <br>    
+            <a href="accounts.php"> <img src="img/icons/account.png" alt="Account logo"/> Accounts </a> <br> 
             <a href="Inventory.php"> <img src="img/icons/bicycle.png" alt="Inventory Logo" /> Inventory </a> <br>
             <a href="Accessory.php"> <img src="img/icons/accessories.png" alt="Inventory Logo" /> Accessories </a> <br>
             <a href="BikeTypes.php"> <img src="img/icons/biketypes.png" alt="Bike Types Logo" /> Bike Types </a> <br>
@@ -44,7 +45,6 @@
         <h1> All Customers</h1>
 
         <!-- Add Customer pop up -->
-       
         <button id="CustomerPopUp" class="CustomerPopUp">+ New Customer</button>
 
         <!-- List of current customers -->
@@ -598,6 +598,10 @@ if (isset($_GET["insert"]))
     else if ($_GET["insert"] == "false")
     {
         echo "<p class = 'echo'>  Record was not created successfuly </p>";
+    }
+    else if ($_GET["insert"] == "duplicatePrimaryKey")
+    {
+        echo "<p class = 'echo'> Primary Key is already taken </p>";
     }
 }
 

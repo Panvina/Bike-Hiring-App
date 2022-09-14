@@ -14,7 +14,7 @@
     $pk = $_POST['UpdateButton'];
  
     //establish the columns of the database for querying
-    $cols = "user_name, name, phone_number, email, street_address, suburb, post_code, state";
+    $cols = "user_name, name, phone_number, email, address, suburb, post_code, state";
     //establish the where condition for the query
     $condition = "user_name='$pk'";
     //fetch the data and assign it to the array
@@ -29,7 +29,7 @@
         $_SESSION["name"] = $fetchData["name"];
         $_SESSION["phone_number"] = $fetchData["phone_number"];
         $_SESSION["email"] = $fetchData["email"];
-        $_SESSION["street_address"] = $fetchData["street_address"];
+        $_SESSION["street_address"] = $fetchData["address"];
         $_SESSION["suburb"] = $fetchData["suburb"];
         $_SESSION["post_code"] = $fetchData["post_code"];
         $_SESSION["state"] = $fetchData["state"];
@@ -189,10 +189,10 @@
             $state = test_input($_POST["state"]);
         }
 
-        //double checks to ensure all variables are not empty then parses the data to be updated. Returns back to the customer page based on the result
+        //double checks to ensure all variables are not empty then parses the data to be updated. Returns back to the staff page based on the result
         if(!empty($name) && !empty($phoneNumber) && !empty($email) && !empty($streetAddress) && !empty($suburb) && !empty($postCode) && !empty($state))
         {
-            if ($conn->update("user_name", "'$pk'", "name, phone_number, email, street_address, suburb, post_code, state",
+            if ($conn->update("user_name", "'$pk'", "name, phone_number, email, address, suburb, post_code, state",
             "$name, $phoneNumber, $email, $streetAddress, $suburb, $postCode, $state") == true)
             {
                 
