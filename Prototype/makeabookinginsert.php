@@ -40,7 +40,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 		//dislay results
 		echo "<p><strong>Bike:" . $bikeVariableArray . "</strong></p>";
 		echo "<p><strong>Quantity:" . $bikeQuantity . "</strong></p>";
-	}	
+	}
 	*/
 
 
@@ -67,7 +67,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 	foreach($accessoryVariableArray as $accessoryVariableArray){
 		//loop through submitted accessories and display
 		//echo "<p><strong>Accessory:" . $accessoryVariableArray . "</strong></p>";
-	}	
+	}
 
 
 	$ret = false;
@@ -169,6 +169,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 			}
 
 			// execute booking_bike_table query
+            echo "<br>$bookingBikeTableQuery<br>"; 
 			if ($conn->query($bookingBikeTableQuery) == TRUE)
 			{
 				$ret = TRUE;
@@ -209,7 +210,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 	<link rel="stylesheet" type="text/css" href="style/makeyourbooking.css">
 </head>
 <body>
-	<?php include 'header.php' ?>    
+	<?php include 'header.php' ?>
 	<div id = "main">
         <div class="banner">
             <div id="bannertext">
@@ -235,7 +236,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     </ul>
             </div>
         </div>
-        
+
         <div class="maincontainer">
         <div id="dualContainer">
             <div id="dualColumn1">
@@ -279,7 +280,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 					//dislay results
 					echo "<p><strong>Bike:" . $bikeVariableArray . "</strong></p>";
 					echo "<p><strong>Quantity:" . $bikeQuantity . "</strong></p>";
-				}	
+				}
 			    ?>
 			    <?php
 			    // Fetching all column data from the accessory type table
@@ -317,7 +318,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 
             </div>
             <div id="dualColumn2">
-		        
+
 		    </div>
 		</div>
 	</div>
@@ -330,7 +331,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
         });</script>
 	<?php include 'footer.php' ?>
 <script type="text/javascript">
-</script>	
+</script>
 
 
 
