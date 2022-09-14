@@ -1,6 +1,6 @@
 <?php
     session_start();
-    include 'php-scripts/backend-connection.php';
+    include 'backend-connection.php';
     include("inventory-util.php");
     $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 
@@ -17,32 +17,32 @@
         //Check if all the fields are empty
         if(empty($_POST["name"]) && empty($_POST["accessoryTypeId"])&& empty($_POST["price"]))
         {
-            header("Location: Accessory.php?insert=empty");
+            header("Location: ../Accessory.php?insert=empty");
         }
         //Check if the name field is empty
         else if(empty($_POST["name"]))
         {
-            header("Location: Accessory.php?insert=emptyName");
+            header("Location: ../Accessory.php?insert=emptyName");
         }
         //Check if the accessory type id is empty
         else if (empty($_POST["accessoryTypeId"]))
         {
-            header("Location: Accessory.php?insert=emptyType");
+            header("Location: ../Accessory.php?insert=emptyType");
         }
         //Check if the price field is empty
         else if (empty($_POST["price"]))
         {
-            header("Location: Accessory.php?insert=emptyPrice");
+            header("Location: ../Accessory.php?insert=emptyPrice");
         }
         //Check if the name field has only alphabets
         else if (!validName($_POST["name"])) 
         {
-           header("Location: Accessory.php?insert=invalidName");
+           header("Location: ../Accessory.php?insert=invalidName");
         }
         //Check if the price field has only integers and decimals
         else if (!validPrice($_POST["price"]))
         {
-            header("Location: Accessory.php?insert=invalidPrice");
+            header("Location: ../Accessory.php?insert=invalidPrice");
         }
         else 
         {
@@ -66,7 +66,7 @@
         $query = "INSERT INTO `accessory_inventory_table` ($cols) VALUES ($data)";
         $results = mysqli_query($conn,$query);
         
-        header("Location: Accessory.php?insert=true");
+        header("Location: ../Accessory.php?insert=true");
     
         mysqli_close($conn);
     }

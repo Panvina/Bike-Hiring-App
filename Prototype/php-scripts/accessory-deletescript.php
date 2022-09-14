@@ -1,7 +1,7 @@
 <?php
     session_start();
-    include_once("php-scripts/backend-connection.php");
-    include_once "php-scripts/utils.php";
+    include_once("backend-connection.php");
+    include_once "utils.php";
     $conn = new mysqli("localhost", "root", "", "bike_hiring_system") or die(mysqli_error($mysqli));
 
     if (isset($_POST['deleteItem']))
@@ -18,7 +18,7 @@
         $_SESSION["accessory_id"] = $fetchData["accessory_id"];
         $primaryKey = $_SESSION["accessory_id"];
 
-        header("Location: Accessory.php?delete=$primaryKey");
+        header("Location: ../Accessory.php?delete=$primaryKey");
         exit();
     }
 
@@ -28,12 +28,12 @@
         $primaryKey = $_POST["submitDeleteItem"];
         $query = "DELETE FROM accessory_inventory_table WHERE accessory_id=$primaryKey";
         $results = mysqli_query($conn, $query);
-        header("Location: Accessory.php?delete=true");
+        header("Location: ../Accessory.php?delete=true");
     }
 
     if (isset($_POST["cancelDeleteItem"]))
     {
-     header("Location: Accessory.php");
+     header("Location: ../Accessory.php");
      exit();
     }
 ?> 

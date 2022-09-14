@@ -1,7 +1,7 @@
 <?php
     /* Code completed by Aadesh Jagannathan - 102072344*/
     session_start();
-    include 'php-scripts/backend-connection.php';
+    include 'backend-connection.php';
     include("inventory-util.php");
     $conn = new mysqli("localhost", "root", "", "bike_hiring_system") or die(mysqli_error($mysqli));
 
@@ -14,22 +14,22 @@
         //Check if all fields are empty
         if(empty($_POST["name"]) && empty($_POST["description"]))
         {
-            header("Location: AccessoryTypes.php?insert=empty");
+            header("Location: ../AccessoryTypes.php?insert=empty");
         }
         //Check if only the name field is empty
         else if (empty($_POST["name"])) 
         {
-           header("Location: AccessoryTypes.php?insert=emptyName");
+           header("Location: ../AccessoryTypes.php?insert=emptyName");
         }
         //Check if only the description field is empty
         else if (empty($_POST["description"])) 
         {
-           header("Location: AccessoryTypes.php?insert=emptyDescription");
+           header("Location: ../AccessoryTypes.php?insert=emptyDescription");
         }
         //Check if the name field has only alphabets
         else if (!validName($_POST["name"])) 
         {
-            header("Location: AccessoryTypes.php?insert=invalidName");
+            header("Location: ../AccessoryTypes.php?insert=invalidName");
         } 
         else 
         {
@@ -52,12 +52,12 @@
         
         if($results = true)
         {
-            header("Location: AccessoryTypes.php?insert=true");
+            header("Location: ../AccessoryTypes.php?insert=true");
             exit();
         }
         else
         {
-            header("Location: AccessoryTypes.php?insert=false");
+            header("Location: ../AccessoryTypes.php?insert=false");
             exit();
         }
     

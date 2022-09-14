@@ -1,7 +1,7 @@
 <?php
     session_start();
-    include_once("php-scripts\backend-connection.php");
-    //include ("php-scripts/utils.php");
+    include_once("backend-connection.php");
+    //include ("utils.php");
     include("inventory-util.php");
     $conn = new mysqli("localhost", "root", "", "bike_hiring_system") or die(mysqli_error($mysqli));
     $ret = array();
@@ -30,15 +30,15 @@
         $price = $_SESSION['price_ph'];
         $safetyInspect = $_SESSION['safety_inspect'];
 
-        header("location:Accessory.php?update=notEmpty");
+        header("location:../Accessory.php?update=notEmpty");
         /* if (!checkEmptyVariables([$name, $accessoryTypeId, $price, $safetyInspect]))
         {
-            header("Location: Accessory.php?update=notEmpty");
+            header("Location: ../Accessory.php?update=notEmpty");
             exit();
         }
         else
         {
-            header("Location: Accessory.php?update=empty");
+            header("Location: ../Accessory.php?update=empty");
             exit();
         }  */
    }
@@ -55,32 +55,32 @@
         //Check if all the fields are empty
         if(empty($_POST["name"]) && empty($_POST["accessoryTypeId"])&& empty($_POST["price"]))
         {
-            header("Location: Accessory.php?update=empty");
+            header("Location: ../Accessory.php?update=empty");
         }
         //Check if the name field is empty
         else if(empty($_POST["name"]))
         {
-            header("Location: Accessory.php?update=emptyName");
+            header("Location: ../Accessory.php?update=emptyName");
         }
         //Check if the accessory type id is empty
         else if (empty($_POST["accessoryTypeId"]))
         {
-            header("Location: Accessory.php?update=emptyType");
+            header("Location: ../Accessory.php?update=emptyType");
         }
         //Check if the price field is empty
         else if (empty($_POST["price"]))
         {
-            header("Location: Accessory.php?update=emptyPrice");
+            header("Location: ../Accessory.php?update=emptyPrice");
         }
         //Check if the name field has only alphabets
         else if (!validName($_POST["name"])) 
         {
-           header("Location: Accessory.php?update=invalidName");
+           header("Location: ../Accessory.php?update=invalidName");
         }
         //Check if the price field has only integers and decimals
         else if (!validPrice($_POST["price"]))
         {
-            header("Location: Accessory.php?update=invalidPrice");
+            header("Location: ../Accessory.php?update=invalidPrice");
         }
         else 
         {
@@ -106,11 +106,11 @@
             //Check to see if query has been successful
             if($conn = true)
             {
-                header("location:Accessory.php?update=true");
+                header("location:../Accessory.php?update=true");
             }
             else
             {
-                header("location:Accessory.php?update=false");
+                header("location:../Accessory.php?update=false");
             }      
         }
     }
