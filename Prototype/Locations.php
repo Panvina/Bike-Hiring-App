@@ -154,9 +154,9 @@ toggle between hiding and showing the dropdown content */
 						//This is showing each data from database on the website interface
 						echo "<form method='POST' action='UpdateLocations.php'>";
 						echo "<tr>";
-						echo "<td><input type='hidden' id='LID' name='LID' value='{$LID}'><input type='text' name='nameupdate' id ='nameupdate' value='{$name}'  style='width: 100%;' required><br/>";
+						echo "<td><input type='hidden' id='LID' name='LID' value='{$LID}'><input type='text' name='nameupdate' id ='nameupdate' value='{$name}'  style='width: 100%; border: hidden;' required><br/>";
 						echo "</td>";
-						echo "<td> <input type='text' name='fulladdress' id ='fulladdress' value='{$fulladdress}' style='width: 100%;' required> </td>";
+						echo "<td> <input type='text' name='fulladdress' id ='fulladdress' value='{$fulladdress}' style='width: 100%; border: hidden;' required> </td>";
 						echo "<td> <input type='checkbox' class='CheckBox' id='dropOffBox' name='dropOffBox' $dropOffResult> </td>";
 						echo "<td> <input type='checkbox' class='CheckBox' id='pickUpBox' name='pickUpBox' $pickUpResult> </td>";
 						echo "<td>
