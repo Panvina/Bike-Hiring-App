@@ -15,40 +15,67 @@
 		}
 
 		/**
-		 *	INSERT method
-		 *	Parameters:
-		 *		- tablename : name of table (e.g. 'bike_types')
-		 *		- colnames : columns to fill from table (e.g. 'id, name, address')
-		 *		- data : conditional on which rows to retrieve (e.g. '"val1", "val2", "val3"')
-		 *
-		 *	Return:
-		 * 		- Return if insert was successful
-		 *
-		 *	To insert a new row, need to first create a booking_table row:
-		 *		Requirements:
-		 *		- CustomerID, Start Date, End Date, Start Time, End Time, Duration, Pick-up, Drop-off, and final price
-		 *			- Final Price =
+		 * Get all currently unavailable bikes from inventory
 		 */
-		public function insert($columns="bike_id, name, bike_type_id, helmet_id, price_ph, safety_inspect, description", $data)
+		public function getUnavailableBikes()
 		{
-			$ret = FALSE;
-
-			$data = explode(',', $data);
-			if (count($data) == count(explode(',', $columns)))
-			{
-				$query = "INSERT INTO $tablename ($columns) VALUES ($data)";
-				//echo $query;
-				if ($this->conn->query($query) == TRUE)
-				{
-					$ret = TRUE;
-				}
-			}
-			else
-			{
-				echo "Data value count is incorrect.";
-			}
+			$ret = $this->get("*", "safety_inspect=0");
 
 			return $ret;
+		}
+
+		/**
+		 * Get all currently available bikes from inventory
+		 */
+		public function getAvailableBikes()
+		{
+			$ret = $this->get("*", "safety_inspect=1");
+
+			return $ret;
+		}
+
+		/**
+		 * Get bike availability between start and end
+		 *
+		 *
+		 * All parameters are strings.
+		 * Dates are to be formatted as: YYYY-mm-dd
+		 */
+		public function getBikesAvailabilityAtDate($startDate, $startTime, $endDate, $endTime)
+		{
+			$bikeTable = $this->tablename;
+			$bookingTable = "booking_table";
+			$bookingBikeTable = "booking_bike_table";
+
+			// construct query. Join with booking table and booking_bike_table
+			$query =   "SELECT $bikeTable.bike_id
+						FROM $bikeTable
+							LEFT JOIN $bookingTable
+								ON $bikeTable.bike_id = $bookingTable.bike_id
+						WHERE ";
+
+			// // prospective booking within existing bookings
+			// // that is prospective booking start and end date within existing booking start and end dates
+			// $query .= "('$startDate' >= $bookingTable.start_date AND
+			// 			'$endDate' <= $bookingTable.endDate) AND ";
+			//
+			// // prospective booking starts before, but ends during existing booking
+			// $query .= "('$startDate' <= $bookingTable.start_date AND
+			// 			'$endDate' <= $bookingTable.endDate) AND ";
+			//
+			// // prospective booking starts after, but ends before existing booking
+			// $query .= "('$startDate' >= $bookingTable.start_date AND
+			// 			'$endDate' >= $bookingTable.endDate) AND ";
+
+			$query =   "SELECT $cols
+						FROM $bookingsTableName
+						    LEFT JOIN $custTableName
+						    	ON $bookingsTableName.user_name = $custTableName.user_name
+							LEFT JOIN $locationTableName lt1
+								ON $bookingsTableName.pick_up_location=lt1.location_id
+							LEFT JOIN $locationTableName lt2
+    							ON $bookingsTableName.drop_off_location=lt2.location_id
+						WHERE $bookingsTableName.booking_id = $bookingId";
 		}
 	}
 ?>

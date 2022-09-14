@@ -96,13 +96,13 @@ body{
 
 .Date{
   font-size: 20px;
-  
+
   padding-top: .1%;
   position: absolute;
 }
 
 .Content #rightArrow{
-  left: 212%;
+  left: 320%;
 }
 
 .Content #leftArrow{
@@ -122,12 +122,12 @@ body{
 
 .DashboardInformationContainer{
   display:inline-block;
-  width: 100%; 
+  width: 100%;
   height: auto;
   background-color: lightgray;
   display: table;
   border: solid white;
-  
+
 }
 
 .DashboardInformation{
@@ -137,7 +137,7 @@ body{
   display:table-cell;
   border: solid white;
   text-align: center;
-  
+
 }
 
 nav a {
@@ -198,7 +198,7 @@ nav a {
   text-align: center;
   margin-left: 15%;
  }
- 
+
 .modal-content button{
   display:inline-block;
   text-align: center;
@@ -236,12 +236,12 @@ nav a {
 }
 
 .echo{
-  color: red; 
+  color: red;
   font-size: 25px;
-  margin-left: 45%; 
-  position: absolute; 
-  z-index: 1; left: 0; 
-  top: 0; 
+  margin-left: 45%;
+  position: absolute;
+  z-index: 1; left: 0;
+  top: 0;
   padding-top: 5%;
 }
 
@@ -270,7 +270,7 @@ nav a {
 
 .error {
   color: red;
-  
+
 }
 
 /* Repurposed clemeants CSS to current style */

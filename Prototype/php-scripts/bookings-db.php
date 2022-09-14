@@ -22,11 +22,21 @@ Contributor(s): Dabin Lee @ icelasersparr@gmail.com
 		}
 
 		/**
+		 * Get column names for display purposes.
+		 */
+		public function getBookingDisplayColumns()
+		{
+			$cols = "Booking ID,Bike Name,Customer Name,Start Date,Start Time,End Date,End Time,Duration,Pick Up,Drop Off,Price($)";
+
+			return $cols;
+		}
+
+		/**
 		 *	Retrieve all rows from bookings table, with associated data.
 		 *	condition is simply appended to the end of the
 		 *
 		 */
-		public function getBookingRows($condition=null)
+		public function getBookingRows($condition=0)
 		{
 			$ret = array();
 
@@ -63,9 +73,11 @@ Contributor(s): Dabin Lee @ icelasersparr@gmail.com
 							LEFT JOIN $locationTableName lt2
     							ON $bookingsTableName.drop_off_location=lt2.location_id";
 
-			if ($condition != null) {
+			if ($condition) {
 				$query .= " WHERE $condition";
 			}
+
+			$query .= " ORDER BY $bookingsTableName.start_date, $bookingsTableName.start_time";
 
 			// perform query and verify successful
 			// echo "$query";
@@ -265,9 +277,12 @@ Contributor(s): Dabin Lee @ icelasersparr@gmail.com
 
 			// execute booking_accessory_table query
 			echo $bookingAccessoryTableQuery;
-			if ($this->conn->query($bookingAccessoryTableQuery) == TRUE)
+			if ($bookingAccessoryTableQuery != "")
 			{
-				$ret = TRUE;
+				if ($this->conn->query($bookingAccessoryTableQuery) == TRUE)
+				{
+					$ret = TRUE;
+				}
 			}
 
 			// commit changes to database

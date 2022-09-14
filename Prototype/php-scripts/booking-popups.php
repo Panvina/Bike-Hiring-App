@@ -16,6 +16,15 @@ Contributor(s): Dabin Lee @ icelasersparr@gmail.com
     $_SESSION['id'] = '123';
 
     /**
+     * Clears booking variables from the current session.
+     */
+    function clearSessionVariables()
+    {
+        unset($_SESSION["addBooking"]);
+        unset($_SESSION["changeBooking"]);
+    }
+
+    /**
      * Get booking duration (hours between 0900 to 1700)
      * NOTE: $startTime and $endTime must be properly constrained to between business hours
      * Inputs are direct from form POST outputs
@@ -170,23 +179,41 @@ Contributor(s): Dabin Lee @ icelasersparr@gmail.com
             "bookingDuration" => $bookingDuration
         );
 
-        // NOTE: DEBUGGING
-        // $keys = array_keys($_POST);
-        // for($i = 0; $i < count($keys); $i++)
-        // {
-        //     $key = $keys[$i];
-        //     echo "<br><br>";
-        //     echo "$key: $_POST[$key]";
-        // }
+        // validate not empty
+        $emptyInputError = emptyArr([$customer, $startDate, $startTime, $endDate, $endTime, $pickUpLocation, $dropOffLocation]);
+        // $emptyInputError = !(empty($customer) || empty($startDate) || empty($startTime) || empty($endDate) || empty($endTime) || empty($pickUpLocation) || empty($dropOffLocation));
+        echo "et: $endTime | $emptyInputError | $bookingDuration | ";
 
-        // ensure all variables have values
-        if (!emptyArr([$customer, $startDate, $startTime, $endDate, $endTime, $pickUpLocation, $dropOffLocation]))
+        // convert datetime strings to datetime objects
+        $dtStartDate = strtotime($startDate);
+        $dtStartTime = strtotime($startTime);
+        $dtEndDate = strtotime($endDate);
+        $dtEndTime = strtotime($endTime);
+
+        // check if error exists in date and time
+        $dateError = ($dtStartDate > $dtEndDate);   // check that start date is before or equal to end date
+        $timeError = ($dtStartDate == $dtEndDate) ? ($dtStartTime >= $dtEndTime) : false;    // check thgat start
+
+        if (!$emptyInputError && !$dateError && !$timeError)
         {
-            header("Location: ..\bookings.php?booking-mode=stage2");
+            header("Location: ..\bookings.php?booking-mode=add2-none");
         }
         else
         {
-            header("Location: ..\bookings.php?booking-mode=empty");
+            $error = "null";
+            if ($emptyInputError)
+            {
+                $error = "emptyError";
+            }
+            else if ($dateError)
+            {
+                $error = "dateError";
+            }
+            else if ($timeError)
+            {
+                $error = "timeError";
+            }
+            header("Location: ..\bookings.php?booking-mode=add1-$error");
         }
     }
     // Process submit button press for bikes and accessory selection form
@@ -200,8 +227,7 @@ Contributor(s): Dabin Lee @ icelasersparr@gmail.com
         // verify at least one bike
         if (empty($bikes))
         {
-            echo "empty";
-            header("Location: ..\bookings.php?booking-mode=stage2-invalid");
+            header("Location: ..\bookings.php?booking-mode=add2-bikeError");
         }
         else
         {
@@ -234,7 +260,9 @@ Contributor(s): Dabin Lee @ icelasersparr@gmail.com
             $conn = new BookingsDBConnection();
             $conn->addBooking($data, $bikes, $accessories);
 
-            header("Location: ..\bookings.php?booking-mode=success");
+            // clear booking variables and redirect
+            clearSessionVariables();
+            header("Location: ..\bookings.php?booking-mode=add2-success");
         }
     }
     // check for change booking button being clicked
@@ -264,49 +292,60 @@ Contributor(s): Dabin Lee @ icelasersparr@gmail.com
             "dropoffName" => $row["drop_off_location"]
         );
 
-        header("Location: ..\bookings.php?booking-mode=change");
+        header("Location: ..\bookings.php?booking-mode=change1-none");
     }
     else if ($changeBookingInfoSubmit)
     {
-        // Verify if changes to date/times have been made. TODO: May not need this with current workflow
-        $pickupLocation = explode(": ", $_POST["change-booking-pick-up-location"]);
-        $dropOffLocation = explode(": ", $_POST["change-booking-drop-off-location"]);
-
-        // get original variables and potentially changed variables
-        $preVariables = $_SESSION["changeBooking"];
-        $postVariables = array(
-            "startTime"  => $_POST["change-booking-start-time"],
-            "endTime"    => $_POST["change-booking-end-time"],
-            "startDate"  => $_POST["change-booking-start-date"],
-            "endDate"    => $_POST["change-booking-end-date"],
-            "pickupStr"  => $_POST["change-booking-pick-up-location"],
-            "dropoffStr" => $_POST["change-booking-drop-off-location"]
-        );
-        // $keys = array_keys($postVariables);
-
-        // $changed = false;
-        // for($i = 0; $i < count($keys); $i++)
-        // {
-        //     $key = $keys[$i];
-        //     $change |= ($preVariables[$key] != $postVariables[$key]);
-        // }
+        $startDate = $_POST["change-booking-start-date"];
+        $startTime = $_POST["change-booking-start-time"];
+        $endDate = $_POST["change-booking-end-date"];
+        $endTime = $_POST["change-booking-end-time"];
+        $pickupLocation = explode(": ", $_POST["change-booking-pick-up-location"])[0];
+        $dropOffLocation = explode(": ", $_POST["change-booking-drop-off-location"])[0];
 
         // save data into session for next form
-        $_SESSION["changeBooking"]["startDate"] = $_POST["change-booking-start-date"];
-        $_SESSION["changeBooking"]["startTime"] = $_POST["change-booking-start-time"];
-        $_SESSION["changeBooking"]["endDate"] = $_POST["change-booking-end-date"];
-        $_SESSION["changeBooking"]["endTime"] = $_POST["change-booking-end-time"];
-        $_SESSION["changeBooking"]["pickupId"] = explode(": ", $_POST["change-booking-pick-up-location"])[0];
-        $_SESSION["changeBooking"]["dropoffId"] = explode(": ", $_POST["change-booking-drop-off-location"])[0];
+        $_SESSION["changeBooking"]["startDate"] = $startDate;
+        $_SESSION["changeBooking"]["startTime"] = $startTime;
+        $_SESSION["changeBooking"]["endDate"] = $endDate;
+        $_SESSION["changeBooking"]["endTime"] = $endTime;
+        $_SESSION["changeBooking"]["pickupId"] = $pickupLocation;
+        $_SESSION["changeBooking"]["dropoffId"] = $dropOffLocation;
 
-        // TODO: May not need this
-        if ($changed)
+        // validate not empty
+        $emptyInputError = !emptyArr([$startDate, $startTime, $endDate, $endTime, $pickUpLocation, $dropOffLocation]);
+
+        // convert datetime strings to datetime objects
+        $dtStartDate = strtotime($startDate);
+        $dtStartTime = strtotime($startTime);
+        $dtEndDate = strtotime($endDate);
+        $dtEndTime = strtotime($endTime);
+
+        // check if error exists in date and time
+        $dateError = ($dtStartDate > $dtEndDate);   // check that start date is before or equal to end date
+        $timeError = ($dtStartDate == $dtEndDate) ? ($dtStartTime >= $dtEndTime) : false;    // check thgat start
+
+        if (!$emptyInputError && !$dateError && !$timeError)
         {
-            header("Location: ..\bookings.php?booking-mode=change-stage2");
+            // all fields are fine
+            header("Location: ..\bookings.php?booking-mode=change2-none");
         }
         else
         {
-            header("Location: ..\bookings.php?booking-mode=change-stage2");
+            // errors found. need to find which.
+            $error = "null";
+            if ($emptyInputError)
+            {
+                $error = "emptyError";
+            }
+            else if ($dateError)
+            {
+                $error = "dateError";
+            }
+            else if ($timeError)
+            {
+                $error = "timeError";
+            }
+            header("Location: ..\bookings.php?booking-mode=change1-$error");
         }
     }
     else if ($changeBookingBikesSubmit)
@@ -318,9 +357,7 @@ Contributor(s): Dabin Lee @ icelasersparr@gmail.com
         // verify at least one bike
         if (empty($bikes))
         {
-            echo "empty";
-            exit();
-            header("Location: ..\bookings.php?booking-mode=stage2-invalid");
+            header("Location: ..\bookings.php?booking-mode=change2-invalid");
         }
         else
         {
@@ -355,6 +392,9 @@ Contributor(s): Dabin Lee @ icelasersparr@gmail.com
             $conn = new BookingsDBConnection();
             $res = $conn->modifyBooking($bookingId, $bookingData, $bikes, $accessories);
 
+            // clear booking variables
+            clearSessionVariables();
+            // redirect back to main bookings page
             header("Location: ..\bookings.php");
         }
     }
