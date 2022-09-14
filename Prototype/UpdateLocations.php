@@ -9,6 +9,12 @@ Contributor:
 <!-- This page is completely done by Clement -->
 <?php
 include( "php-scripts/Reusable.php" );
+//this is to spit the address into seperate sections
+function commansplit($data)
+{
+	$pieces = explode(",",$data);
+	return $pieces;
+}
 
 //Retrieving data from the table from Locations.php
 $LID = $_POST[ "LID" ];
@@ -19,6 +25,12 @@ $pickupInput = $_POST[ "pickUpBox" ];
 $pickupValue = isItNull( $pickupInput );
 $name = $_POST["nameupdate"];
 $name = sanitise_input($name); 
+$completeaddress = $_POST["fulladdress"];
+$completeaddress = sanitise_input($completeaddress);
+$splitaddress = commansplit($completeaddress);
+$address = $splitaddress[0];
+$suburb = $splitaddress[1];
+$postcode = $splitaddress[2];
 
 //test which button press
 if ( isset( $_POST[ "deleteLocation" ] ) ) {
@@ -58,20 +70,22 @@ if ( !$conn ) { //if connection fails
       $db_msg .= "Deleting Data Failed";
     }
   }
+  //this query is to update the location data that the admin want to update
 
-  if ( isset( $_POST[ "updateLocation" ] ) ) //updating the checkboxes send
-  {
-    //this query is to update the location data that the admin want to update
-    // $query = "UPDATE `location_table` SET `drop_off_location` = '$dropoffValue', `pick_up_location` = '$pickupValue' WHERE `location_table`.`location_id` = $LID;";
-		// $query = "UPDATE `location_table` SET `name` = '$name', `address` = '213 Preston Street', `suburb` = 'Peston', `post_code` = '3123', `drop_off_location` = '$dropoffValue', `pick_up_location` = '$pickupValue' WHERE `location_table`.`location_id` = '$LID';";
-		$query = "UPDATE `location_table` SET `name` = '$name', `drop_off_location` = '$dropoffValue', `pick_up_location` = '$pickupValue' WHERE `location_table`.`location_id` = '$LID';";
-    $result = mysqli_query( $conn, $query );
-    if ( $result ) { //Data Updated Successfully
-      header( "location:Locations.php" ); //this is to redirect if success
-    } else { //Data Update Fail
-      $db_msg .= "Data has fail to update";
-    }
-  }
+  if(isset($_POST["updateLocation"]))//updating the checkboxes send
+	{
+		$query = "UPDATE `location_table` SET `name` = '$name', `address` = '$address', `suburb` = '$suburb', `post_code` = '$postcode', `drop_off_location` = '$dropoffValue', `pick_up_location` = '$pickupValue' WHERE `location_table`.`location_id` = '$LID';";
+		// $query = "UPDATE `location_table` SET `name` = '$name', `drop_off_location` = '$dropoffValue', `pick_up_location` = '$pickupValue' WHERE `location_table`.`location_id` = '$LID';";
+		$result = mysqli_query($conn,$query);
+		if($result)
+		{//Data Updated Successfully
+			header("location:Locations.php");//this is to redirect if success
+		}
+		else
+		{//Data Update Fail
+			$db_msg .="Data has fail to update";
+		}
+	}
 
   mysqli_close( $conn ); // Close the database connect
 }

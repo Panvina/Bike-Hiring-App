@@ -156,7 +156,7 @@ toggle between hiding and showing the dropdown content */
 						echo "<tr>";
 						echo "<td><input type='hidden' id='LID' name='LID' value='{$LID}'><input type='text' name='nameupdate' id ='nameupdate' value='{$name}' required><br/>";
 						echo "</td>";
-						echo "<td> {$fulladdress} </td>";
+						echo "<td> <input type='text' name='fulladdress' id ='fulladdress' value='{$fulladdress}' required> </td>";
 						echo "<td> <input type='checkbox' class='CheckBox' id='dropOffBox' name='dropOffBox' $dropOffResult> </td>";
 						echo "<td> <input type='checkbox' class='CheckBox' id='pickUpBox' name='pickUpBox' $pickUpResult> </td>";
 						echo "<td>
