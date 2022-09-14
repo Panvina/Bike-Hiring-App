@@ -17,6 +17,8 @@ $dropoffInput = $_POST[ "dropOffBox" ];
 $dropoffValue = isItNull( $dropoffInput );
 $pickupInput = $_POST[ "pickUpBox" ];
 $pickupValue = isItNull( $pickupInput );
+$name = $_POST["nameupdate"];
+$name = sanitise_input($name); 
 
 //test which button press
 if ( isset( $_POST[ "deleteLocation" ] ) ) {
@@ -60,7 +62,9 @@ if ( !$conn ) { //if connection fails
   if ( isset( $_POST[ "updateLocation" ] ) ) //updating the checkboxes send
   {
     //this query is to update the location data that the admin want to update
-    $query = "UPDATE `location_table` SET `drop_off_location` = '$dropoffValue', `pick_up_location` = '$pickupValue' WHERE `location_table`.`location_id` = $LID;";
+    // $query = "UPDATE `location_table` SET `drop_off_location` = '$dropoffValue', `pick_up_location` = '$pickupValue' WHERE `location_table`.`location_id` = $LID;";
+		// $query = "UPDATE `location_table` SET `name` = '$name', `address` = '213 Preston Street', `suburb` = 'Peston', `post_code` = '3123', `drop_off_location` = '$dropoffValue', `pick_up_location` = '$pickupValue' WHERE `location_table`.`location_id` = '$LID';";
+		$query = "UPDATE `location_table` SET `name` = '$name', `drop_off_location` = '$dropoffValue', `pick_up_location` = '$pickupValue' WHERE `location_table`.`location_id` = '$LID';";
     $result = mysqli_query( $conn, $query );
     if ( $result ) { //Data Updated Successfully
       header( "location:Locations.php" ); //this is to redirect if success
