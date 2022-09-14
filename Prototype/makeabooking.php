@@ -1,4 +1,17 @@
-﻿<!DOCTYPE html>
+﻿<?php
+session_start();
+
+date_default_timezone_set('Australia/Melbourne');
+
+include_once("php-scripts/backend-connection.php");
+
+//Linking utility functions associated with inventory
+include("php-scripts/utils.php");
+
+//Establishing database connection using mysqli()
+$conn = new mysqli("localhost", "root", "", "bike_hiring_system");
+?>
+<!DOCTYPE html>
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -8,8 +21,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <title>Make a Booking</title>
 </head>
-<style type="text/css">
-    
+<style type="text/css">    
 
 .mainheader {
     position: relative; 
@@ -164,7 +176,7 @@ ul {list-style-type: none;}
 
 </style>
 <body>
-    <?php include 'header.php'?>    
+    <?php include 'header.php' ?>    
     <div id = "main">
         <div class="banner">
             <div id="bannertext">
@@ -182,7 +194,7 @@ ul {list-style-type: none;}
                             <a href="javascript:window.location.href=window.location.href" class="BreadcrumbsURL BreadcrumbsURLactive">Mountain</a>
                         </li>
                         <li class="BreadcrumbsItem">
-                            <a href="javascript:window.location.href=window.location.href" class="BreadcrumbsURL BreadcrumbsURLactive">MERIDA Big Seven</a>
+                            <a href="javascript:window.location.href=window.location.href" class="BreadcrumbsURL BreadcrumbsURLactive">MERIDA Big 7</a>
                         </li>
                         <li class="BreadcrumbsItem">
                             <a href="javascript:window.location.href=window.location.href" class="BreadcrumbsURL BreadcrumbsURLactive">Book</a>
@@ -194,24 +206,27 @@ ul {list-style-type: none;}
         <div class="maincontainer">
         <div id="dualContainer">
             <div id="dualColumn1">
-                <h1><strong>MERIDA Big Seven</strong></h1>
+              <?php
+            $accessoryType = $conn->query("SELECT * FROM bike_type_table");
+            while ($row = $accessoryType->fetch_assoc()) {
+                $bikeName = $row["name"];
+                $bikeTypeId = $row["bike_type_id"];  
+            ?>
+            <h1><strong><?php echo $row["name"]; ?></strong></h1>
                 <img src="img/photos/4.jpg" style="width:50%;">
-                <p>Price Per: $$</p>
-                <p>Duration: MIN 2 Hrs<p>
-                <h1><strong>Details</strong></h1>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                <p style="padding-left: 25px;">- Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
-                <p style="padding-left: 25px;">- Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
-                <p style="padding-left: 25px;">- Duis aute irure dolor in reprehenderit in voluptate</p>
-                <p style="padding-left: 25px;">- Cillum dolore eu fugiat nulla pariatur</p>
+                <p><?php echo $row["description"]; ?></p>
+                <?php echo '<a style="font-size:24px;font-family: Comfortaa;color:black;" href="javascript: addBike(' . '\'' . $bikeName . '\'' . ', ' . '\'' . $bikeTypeId . '\'' .     ')">Add Bike</a>';?>
+            <?php
+            }
+            ?>
             </div>
             <div id="dualColumn2">
-                <p><strong>Select Date:</strong></p>
+                <p><strong>Select Date/s:</strong></p>
                 <div class="month">      
                   <ul>
                     <li class="prev">&#10094;</li>
                     <li class="next">&#10095;</li>
-                    <li style="font-size:14px">MAY<br>
+                    <li style="font-size:14px">June<br>
                       <span style="font-size:14px">2022</span>
                     </li>
                   </ul>
@@ -226,88 +241,126 @@ ul {list-style-type: none;}
                   <li>S</li>
                   <li>S</li>
                 </ul>
+                
                 <div id="dateContainer">
-                <ul class="days">  
-                  <a href="javascript:changeDate()"><li><span class="date active">1</span></li></a>
-                  <a href="javascript:changeDate()"><li><span class="date">2</span></li></a>
-                  <a href="javascript:changeDate()"><li><span class="date">3</span></li></a>
-                  <a href="javascript:changeDate()"><li><span class="date">4</span></li></a>
-                  <a href="javascript:changeDate()"><li><span class="date">5</span></li></a>
-                  <a href="javascript:changeDate()"><li><span class="date">6</span></li></a>
-                  <a href="javascript:changeDate()"><li><span class="date">7</span></li></a>
-                  <a href="javascript:changeDate()"><li><span class="date">8</span></li></a>
-                  <a href="javascript:changeDate()"><li><span class="date">9</span></li></a>
-                  <a href="javascript:changeDate()"><li><span class="date">10</span></li></a>
-                  <a href="javascript:changeDate()"><li><span class="date">11</span></li></a>
-                  <a href="javascript:changeDate()"><li><span class="date">12</span></li></a>
-                  <a href="javascript:changeDate()"><li><span class="date">13</span></li></a>
-                  <a href="javascript:changeDate()"><li><span class="date">14</span></li></a>
-                  <a href="javascript:changeDate()"><li><span class="date">15</span></li></a>
-                  <a href="javascript:changeDate()"><li><span class="date">16</span></li></a>
-                  <a href="javascript:changeDate()"><li><span class="date">17</span></li></a>
-                  <a href="javascript:changeDate()"><li><span class="date">18</span></li></a>
-                  <a href="javascript:changeDate()"><li><span class="date">19</span></li></a>
-                  <a href="javascript:changeDate()"><li><span class="date">20</span></li></a>
-                  <a href="javascript:changeDate()"><li><span class="date">21</span></li></a>
-                  <a href="javascript:changeDate()"><li><span class="date">22</span></li></a>
-                  <a href="javascript:changeDate()"><li><span class="date">23</span></li></a>
-                  <a href="javascript:changeDate()"><li><span class="date">24</span></li></a>
-                  <a href="javascript:changeDate()"><li><span class="date">25</span></li></a>
-                  <a href="javascript:changeDate()"><li><span class="date">26</span></li></a>
-                  <a href="javascript:changeDate()"><li><span class="date">27</span></li></a>
-                  <a href="javascript:changeDate()"><li><span class="date">28</span></li></a>
-                  <a href="javascript:changeDate()"><li><span class="date">29</span></li></a>
-                  <a href="javascript:changeDate()"><li><span class="date">30</span></li></a>
-                  <a href="javascript:changeDate()"><li><span class="date">31</span></li></a>
+                <ul class="days">
+
+                  <a class="datetest" style="display: none;" href=""><li><span class="date active">0</span></li></a>
+                  <?php 
+                  $blockOutDatesSQL = $conn->query("SELECT * FROM block_out_dates");
+                  while ($row = $blockOutDatesSQL->fetch_assoc()) {
+                      $date_value = $row["date_value"];
+                      $date_day = $row["date_day"];
+                      $date_blockout = $row["date_blockout"];
+                      if ($date_blockout == 0){
+                        echo '<a class="datetest" href="javascript:changeStartDate()"><li><span id="' . $date_value . '" class="date";">' . $date_day .'</span></li></a>';
+                      }else if ($date_blockout == 1){
+                        echo '<a style="pointer-events: none;" class="datetest" href="javascript:changeStartDate()"><li><span style="color:red;" id="' . $date_value . '" class="date";">' . $date_day .'</span></li></a>';
+                      }
+                      ?>
+                  <?php
+                    }
+                  ?>
+                  <br>
                 </ul>
+
                 </div>
+
                 <br>
-                <form action="insert.php" method="post"> 
-                  <input class="" type="text" id="bikeType" name="bikeType" value="MERIDA Big Seven" hidden>
-                  <input class="dateInput" type="text" id="dateValue" name="dateValue" value="1" hidden>
-                  <label for="timeValue">Time:</label>
-                  <select id="timeValue" name="timeValue">
+                <form action="makeabookinginsert.php" method="post">
+                  <label for="timeValue">Start Date:</label>
+                  <input class="startDateInput" type="text" id="startDateValue" name="startDateValue" value="" readonly>
+                  <br><br>
+                  <div style="display:none;" id="endDateContainer">
+                    <label for="timeValue">End Date:</label>
+                    <input class="endDateInput" type="text" id="endDateValue" name="endDateValue" value="" readonly>
+                    <br><br>
+                  </div>
+                  <label for="pickupTimeValue">Pickup Time:</label>
+                  <select id="pickupTimeValue" name="pickupTimeValue">
                     <option value="none"></option>
-                    <option value="9:00AM">9:00 AM</option>
-                    <option value="10:00AM">10:00 AM</option>
-                    <option value="11:00AM">11:00 AM</option>
-                    <option value="12:00PM">12:00 PM</option>
-                    <option value="1:00PM">1:00 PM</option>
-                    <option value="2:00PM">2:00 PM</option>
-                    <option value="3:00PM">3:00 PM</option>
-                    <option value="4:00PM">4:00 PM</option>
+                    <option value="9:00:00">9:00 AM</option>
+                    <option value="10:00:00">10:00 AM</option>
+                    <option value="11:00:00">11:00 AM</option>
+                    <option value="12:00:00">12:00 PM</option>
+                    <option value="13:00:00">1:00 PM</option>
+                    <option value="14:00:00">2:00 PM</option>
+                    <option value="15:00:00">3:00 PM</option>
+                    <option value="16:00:00">4:00 PM</option>
                   </select>
-                  <label for="durationValue">Duration:</label>
-                  <select id="durationValue" name="durationValue">
+                  <br><br>
+                  <label for="dropoffTimeValue">Dropoff Time:</label>
+                  <select id="dropoffTimeValue" name="dropoffTimeValue">
                     <option value="none"></option>
-                    <option value="2 Hours">2 Hours</option>
-                    <option value="3 Hours">3 Hours</option>
-                    <option value="4 Hours">4 Hours</option>
-                    <option value="5 Hours">5 Hours</option>
-                    <option value="6 Hours">6 Hours</option>
-                    <option value="7 Hours">7 Hours</option>
-                    <option value="Overnight">Overnight</option>
+                    <option value="9:00:00">9:00 AM</option>
+                    <option value="10:00:00">10:00 AM</option>
+                    <option value="11:00:00">11:00 AM</option>
+                    <option value="12:00:00">12:00 PM</option>
+                    <option value="13:00:00">1:00 PM</option>
+                    <option value="14:00:00">2:00 PM</option>
+                    <option value="15:00:00">3:00 PM</option>
+                    <option value="16:00:00">4:00 PM</option>
                   </select>
-                  <br>
-                  <br>
-                  <label for="locationValue">Pick-Up Location:</label>
-                  <select id="locationValue" name="locationValue">
+                  <br><br>
+                  <label for="pickupLocationValue">Pick-Up Location:</label>
+                  <select id="pickupLocationValue" name="pickupLocationValue">
                     <option value="none"></option>
-                    <option value="Inverloch Pier">Inverloch Pier</option>
-                    <option value="Inverloch Library">Inverloch Library</option>
+                  <?php
+                    $locationQuery = $conn->query("SELECT * FROM location_table WHERE pick_up_location=1");
+                    while ($row = $locationQuery->fetch_assoc()) {
+                        
+                        $locationName = $row["name"];
+                        $locationId = $row["location_id"];  
+                    ?>
+                    
+                    <?php echo '<option value="' . $locationId . '"> ' . $locationName . '</option>'?>
+                    <?php
+                    }
+                    ?>
                   </select>
-                  <br>
-                  <br>
-                  <label for="quantityValue">Quantity:</label>
-                  <select id="quantityValue" name="quantityValue">
+                  <br><br>
+                  <label for="dropoffLocationValue">Drop-Off Location:</label>
+                  <select id="dropoffLocationValue" name="dropoffLocationValue">
                     <option value="none"></option>
-                    <option value="1 Bike">1 Bike</option>
-                    <option value="2 Bikes">2 Bikes</option>
-                    <option value="3 Bikes">3 Bikes</option>
-                    <option value="4 Bikes">4 Bikes</option>
+                  <?php
+                    $locationQuery = $conn->query("SELECT * FROM location_table WHERE drop_off_location=1");
+                    while ($row = $locationQuery->fetch_assoc()) {
+                        $locationName = $row["name"];
+                        $locationId = $row["location_id"];  
+                    ?>
+                    
+                    <?php echo '<option value="' . $locationId . '">' . $locationName . '</option>'?>
+                    <?php
+                    }
+                    ?>
                   </select>
                   <br>
+                <p style="font-size: 24px;display: inline-block;">Add Accessory:</p>
+                <br>
+                <?php
+                $accessoryType = $conn->query("SELECT * FROM accessory_type_table");
+
+                while ($row = $accessoryType->fetch_assoc()) {
+                    $accessoryTypeId = $row["accessory_type_id"];
+                    $accessoryTypeName = $row["name"];
+                ?>
+                <?php echo '<a style="font-size:18px;font-family: Comfortaa;color:black;" href="javascript: addAccessory(' . '\'' . $accessoryTypeName . '\'' . ', ' . '\'' . $accessoryTypeId . '\'' .     ')">Add ' . $accessoryTypeName . '</a>';?>
+                <br>
+                <?php
+                }
+                ?>
+                    <p style="font-size: 24px;">Item List:</p>
+                    <div id="itemListContainer" style="display: inline-block;">
+                    
+                  </div>
                   <br>
+                  
+                  <label style="" id="" for="custId">Customer Info:</label>
+                  <input style="font-size: 14px;" class="" type="text" id="userName" name="userName" value="11" readonly> 
+                  <br><br>
+                  <label for="timeValue">Total Price:</label>
+                  <input style="font-size: 14px;" class="" type="text" id="totalPriceInput" name="totalPriceInput" value="0" readonly>
+                  <br><br>
                   <input type="checkbox" id="termsValue" name="termsValue" value="">
                   <label for="termsValue"> I have read and agreed to the <a href="">terms and conditions.</a></label>
                   <br>
@@ -319,11 +372,6 @@ ul {list-style-type: none;}
             </div>
         </div>
     </div>
-
-
-
-
-
         <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
         <script type = "text/javascript">
         $('.main-carousel').flickity({
@@ -332,25 +380,205 @@ ul {list-style-type: none;}
         freeScroll:true
         });</script>
     </div>
-    <?php include 'footer.php'?>
+    <?php include 'footer.php' ?>
+
+<script type="text/javascript">
+  
+
+</script>
+
+
+<script type="text/javascript">
+ function addBike(bikeName, bikeTypeId){
+  newTextInput = document.createElement("input");
+  bikeNameText = "bike";
+  newTextInput.name = bikeNameText.concat(bikeTypeId);
+  newTextInput.id = bikeNameText.concat(bikeTypeId);
+  newTextInput.type = "text";
+  newTextInput.value = bikeTypeId;
+  newTextInput.readOnly = true;
+  newTextInput.style.visibility = "hidden";
+  newBikeText = document.createElement("p");
+  newBikeText.innerHTML = bikeName;
+  document.getElementById("itemListContainer").appendChild(newTextInput);
+  document.getElementById("itemListContainer").appendChild(newBikeText);
+  newSelectText = document.createElement("p");
+  newSelectText.innerHTML =  bikeName + " Quantity:";
+  document.getElementById("itemListContainer").appendChild(newSelectText);
+  var newArray = ["1","2","3","4"];
+  var newSelectList = document.createElement("select");
+  newSelectText1 = "bike";
+  newSelectText2 = "quantity";
+  newSelectIDName1 = newSelectText1.concat(bikeTypeId);
+  newSelectIDName2 = newSelectIDName1.concat(newSelectText2);
+  newSelectList.id = newSelectIDName2;
+  newSelectList.name = newSelectIDName2;
+  for (var i = 0; i < newArray.length; i++) {
+      var option = document.createElement("option");
+      option.value = newArray[i];
+      option.text = newArray[i];
+      newSelectList.appendChild(option);
+  }
+  document.getElementById("itemListContainer").appendChild(newSelectList);
+
+ }
+
+
+
+ function addAccessory(accessoryName, accessoryTypeId){
+  newTextInput = document.createElement("input");
+  newAccessoryText = "accessory";
+  newTextInput.id = newAccessoryText.concat(accessoryTypeId);
+  newTextInput.name = newAccessoryText.concat(accessoryTypeId);
+  newTextInput.type = "text";
+  newTextInput.value = accessoryTypeId;
+  newTextInput.readOnly = true;
+  newTextInput.style.visibility = "hidden";
+  newAccessoryText = document.createElement("p");  
+  newAccessoryText.innerHTML = accessoryName;
+  document.getElementById("itemListContainer").appendChild(newTextInput);
+  document.getElementById("itemListContainer").appendChild(newAccessoryText);
+  /*
+  newSelectText = document.createElement("p");
+  newSelectText.innerHTML =  accessoryName + " Quantity:";
+  document.getElementById("itemListContainer").appendChild(newSelectText);
+  var newArray = ["1","2","3","4"];
+  var newSelectList = document.createElement("select");
+  newSelectText1 = "bike";
+  newSelectText2 = "quantity";
+  newSelectIDName1 = newSelectText1.concat(bikeTypeId);
+  newSelectIDName2 = newSelectIDName1.concat(newSelectText2);
+  newSelectList.id = newSelectIDName2;
+  newSelectList.name = newSelectIDName2;
+  for (var i = 0; i < newArray.length; i++) {
+      var option = document.createElement("option");
+      option.value = newArray[i];
+      option.text = newArray[i];
+      newSelectList.appendChild(option);
+  }
+    document.getElementById("itemListContainer").appendChild(newSelectList);
+    */
+
+ }
+
+</script>
+
+
+
 <script type="text/javascript">
 // Run function on load 
-document.onload = changeDate();
-function changeDate(){
-// Set variables
+document.onload = initaliseCalendar();
+
+function setEnd(){
+      $(".datetest[href]").attr("href", "javascript:changeEndDate()");
+      document.getElementsByClassName("active")[0].style.backgroundColor = "green";
+      document.getElementsByClassName("active")[0].style.color = "white";
+      document.getElementsByClassName("active")[0].parentNode.parentNode.href = "javascript:resetDates()";
+}
+
+function setStart(){
+      $(".datetest[href]").attr("href", "javascript:changeStartDate()");
+      //document.getElementsByClassName("active")[0].style.backgroundColor = "red";
+      //document.getElementsByClassName("active")[0].style.color = "white";
+}
+
+function finaliseCalendar(){
+      $(".datetest[href]").attr("href", "javascript:resetDates()");
+      document.getElementsByClassName("active")[0].style.backgroundColor = "red";
+      document.getElementsByClassName("active")[0].style.color = "white";
+
+
+}
+
+
+function resetDates(){
+      var dateContainer = document.getElementById("dateContainer");
+      var allDates = dateContainer.getElementsByClassName("date");
+      // Loop through the buttons and add the active class to the clicked date
+      for (var i = 0; i < allDates.length; i++) {
+        allDates[i].style.backgroundColor = "";
+        allDates[i].style.color = "";
+      }
+      document.getElementById("endDateContainer").style.display = "none";
+      document.getElementById("endDateValue").value = document.getElementById("startDateValue").value;
+      document.getElementById("startDateValue").value = "";
+      document.getElementById("endDateValue").value = "";
+      setStart();
+      changeStartDate();
+      setEnd();
+ 
+
+
+}
+
+
+function initaliseCalendar(){
+  // Set variables
 var dateContainer = document.getElementById("dateContainer");
-var dates = dateContainer.getElementsByClassName("date");
+var allDates = dateContainer.getElementsByClassName("date");
 // Loop through the buttons and add the active class to the clicked date
-for (var i = 0; i < dates.length; i++) {
-  dates[i].addEventListener("click", function() {
-    var currentDate = document.getElementsByClassName("active");
-    currentDate[0].className = currentDate[0].className.replace(" active", "");
+for (var i = 0; i < allDates.length; i++) {
+  allDates[i].addEventListener("click", function() {
+    var currentDates = document.getElementsByClassName("active");
+    currentDates[0].className = currentDates[0].className.replace(" active", "");
     this.className += " active";
     // Set form value for date to clicked date
-    document.getElementById("dateValue").value = document.getElementsByClassName("active")[0].innerHTML;
   });
+  document.getElementById("startDateValue").value = document.getElementsByClassName("active")[0].id;
+  document.getElementById("endDateValue").value = document.getElementsByClassName("active")[0].id;
 }
 }
+
+
+function changeStartDate(){
+// Set variables
+var dateContainer = document.getElementById("dateContainer");
+var allDates = dateContainer.getElementsByClassName("date");
+// Loop through the buttons and add the active class to the clicked date
+for (var i = 0; i < allDates.length; i++) {
+  allDates[i].addEventListener("click", function() {
+    var currentDates = document.getElementsByClassName("active");
+    currentDates[0].className = currentDates[0].className.replace(" active", "");
+    this.className += " active";
+    // Set form value for date to clicked date
+  });
+  document.getElementById("startDateValue").value = document.getElementsByClassName("active")[0].id;
+  document.getElementById("endDateValue").value = document.getElementsByClassName("active")[0].id;
+}
+  setEnd();
+}
+
+function changeEndDate(){
+// Set variables
+var dateContainer = document.getElementById("dateContainer");
+var allDates = dateContainer.getElementsByClassName("date");
+// Loop through the buttons and add the active class to the clicked date
+for (var i = 0; i < allDates.length; i++) {
+  allDates[i].addEventListener("click", function() {
+    var currentDates = document.getElementsByClassName("active");
+    currentDates[0].className = currentDates[0].className.replace(" active", "");
+    this.className += " active";
+    // Set form value for date to clicked date
+  });
+  document.getElementById("endDateContainer").style.display = "block";
+  document.getElementById("endDateValue").value = document.getElementsByClassName("active")[0].id;
+}
+setDuration();
+finaliseCalendar();
+}
+
+
+function setDuration(){
+  var start = document.getElementById("startDateValue").value;
+  var end = document.getElementById("startDateValue").value;
+  if (start === end){
+    $('#durationValue').val('Overnight');
+  }
+}
+
+
+
+
 </script>    
 </body>
 </html>

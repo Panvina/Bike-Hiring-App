@@ -17,7 +17,7 @@
                         <nav class="mainNav">
                             <ul id="menu">
                                 <li><a href="index.php">Home</a></li>
-                                <li><a href="">Hire</a></li>
+                                <li><a href="makeabooking.php">Hire</a></li>
                                 <li><a href="about.php">About Inverloch</a></li>
                                 <li><a href="explore.php">About Cycling</a>
                                     <ul id="subNav">

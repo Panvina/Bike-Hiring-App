@@ -1,12 +1,3 @@
-<!--
-Project Name: Inverloch Bike Hire
-Project Description: A website for hiring bikes. Front-end accompanied
-	   by an admin dashboard.
-File Description: Show both the functions and locations information
-Contributor(s):
-	- Clement Cheung @ 103076376@student.swin.edu.au
-	- Jake Hipworth @ 102090870@student.swin.edu.au (Navigation section and Styles)
--->
 <!DOCTYPE html>
 <html>
 	<head>
@@ -16,7 +7,7 @@ Contributor(s):
 		<script src="scripts/FormOpenOrClose.js"></script>
 		<script>
 				/* When the user clicks on the button, 
-toggle between hiding and showing the dropdown content - By Clement */
+toggle between hiding and showing the dropdown content */
 			function myFunction() {
 				document.getElementById("myDropdown").classList.toggle("show");
 			}
@@ -25,8 +16,6 @@ toggle between hiding and showing the dropdown content - By Clement */
 		<link rel="stylesheet" href="style/LocationPop.css">
 		<link rel="stylesheet" href="style/dropdownboxcss.css">
 		<?php
-		// Setting up Database and connecting to reusable file where there are functions which can be reused
-		// Section coded by Clement
 		include("php-scripts/Reusable.php");
 		
 		//setting up and connecting to DB
@@ -46,20 +35,22 @@ toggle between hiding and showing the dropdown content - By Clement */
 	</head>
 	<body>
 		<nav>
-			<!--Navigation area Done by Jake-->
+			<!--Navigation area-->
 			<div class = "sideNavigation">
 				<a href = "Dashboard.php"> <img src= "img/icons/bulletin-board.png" alt="Dashboard Logo" /> Dashboard </a> <br>
 				<a href = "Customer.php"> <img src= "img/icons/account-group.png" alt="Customer Logo" />  Customer  </a> <br>
 				<a href= "Inventory.php"> <img src= "img/icons/bicycle.png" alt="Inventory Logo" />  Inventory </a> <br>
 				<a href="Accessory.php"> <img src="img/icons/accessories.png" alt="Inventory Logo" /> Accessories </a> <br>
+				<a href="BikeTypes.php"> <img src="img/icons/biketypes.png" alt="Bike Types Logo" /> Bike Types </a> <br>
+				<a href="AccessoryTypes.php"> <img src="img/icons/accessorytypes.png" alt="Bike Types Logo" /> Accessory Types </a> <br>
 				<a href= "Bookings.php"> <img src= "img/icons/book-open-blank-variant.png" alt="Bookings Logo" /> Bookings </a> <br>
 				<a href= "Block_Out_Date.php"> <img src= "img/icons/calendar.png" alt="Block out date Logo" /> Block Out Dates </a> <br>
 				<a class="active" href= "Locations.php"> <img src= "img/icons/earth.png" alt="Locations Logo" /> Locations </a> <br>
+				<a href= "editpages.php"> <img src= "img/icons/bulletin-board.png" alt="Edit Pages Logo" /> Edit </a> <br>
 			</div>
 		</nav>
 		
-		<!-- This section is done by Clement and it is for Adding Locations and have it pop up when clicking a button.  -->
-		<div class="Content"> 
+		<div class="Content">
 			<h1> Pick-Up & Drop-Off Locations </h1>
 			
 			<!-- Trigger/Open The PopUp -->
@@ -97,7 +88,6 @@ toggle between hiding and showing the dropdown content - By Clement */
 					</form>
 			</div>
 		</div>
-		<!-- This section is done by Clement it is to show the locations form the database along with two buttons for Updating and Deleting  -->
 		<table class="TableContent">
 			<tr>
 				<th> Name </th>
@@ -187,6 +177,20 @@ toggle between hiding and showing the dropdown content - By Clement */
 			?>
 		</table>
 		</div>
+	<style>
+
+</style>
+
+<!--  <h2>Hoverable Dropdown</h2>
+  <p>Move the mouse over the button to open the dropdown menu.</p>
+
+  <div class="dropdown">
+    <button class="dropbtn">Dropdown</button>
+    <div class="dropdown-content">
+        <button type='submit' name='deleteLocation' id='deleteLocation' class='btn'>Delete</button><br/>
+        <button type='submit' name='updateLocation' id='updateLocation' class='btn'>Update</button>
+    </div>
+  </div>-->
 
 	</body>
 </html>
