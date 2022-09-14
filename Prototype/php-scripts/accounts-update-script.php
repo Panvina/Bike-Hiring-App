@@ -3,8 +3,8 @@
     //start the session with the database
     session_start();
     //include database functions
-    include_once "php-scripts\bike-inventory-db.php";
-    include_once "php-scripts\utils.php";
+    include_once "bike-inventory-db.php";
+    include_once "utils.php";
     //create the connection with the database
     $conn = new DBConnection("accounts_table");
 
@@ -35,19 +35,19 @@
         //checks to see if any of the variables is empty then redirects back based on the result
         if (!checkEmptyVariables([$roleID, $password]))
         {
-            header("Location: accounts.php?update=notEmpty");
+            header("Location: ../accounts.php?update=notEmpty");
             exit();
         }
         else
         {
-            header("Location: accounts.php?update=empty");
+            header("Location: ../accounts.php?update=empty");
             exit();
         }
 
         // //checks to see if the username is valid and matches the pattern
         // if (!validUserName($password) )
         // {
-        //     header("Location: accounts.php?update=passwordValidErr");
+        //     header("Location: ../accounts.php?update=passwordValidErr");
         //     exit();
         // }  
         // else 
@@ -68,13 +68,13 @@
 
         if (empty($password)) 
         {
-            header("Location: accounts.php?update=passwordEmptyErr");
+            header("Location: ../accounts.php?update=passwordEmptyErr");
             exit();
         }
         //checks to see if the username is valid and matches the pattern
         else if (!validUserName($password)) 
         {
-            header("Location: accounts.php?update=passwordValidErr");
+            header("Location: ../accounts.php?update=passwordValidErr");
             exit();
         }  
         else 
@@ -89,12 +89,12 @@
         {
             if ($conn->update("user_name", "'$pk'", "role_id, password","$roleID, $hashedAccountPassword") == true)
             {
-                header("Location: accounts.php?update=true");
+                header("Location: ../accounts.php?update=true");
                 exit();
             }
             else
             {
-                header("Location: accounts.php?update=false");
+                header("Location: ../accounts.php?update=false");
                 exit();
             }
         }   

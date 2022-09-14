@@ -104,9 +104,9 @@
                         <div class='dropdown'>
                             <button class='dropbtn' disabled>...</button>
                             <div class='dropdown-content'>
-                                <form action='accounts-update-script.php' method='POST' event.preventDefault() > <button type='submit' id= '$primaryKey' class='AccountUpdateButton' name='UpdateButton' 
+                                <form action='php-scripts\accounts-update-script.php' method='POST' event.preventDefault() > <button type='submit' id= '$primaryKey' class='AccountUpdateButton' name='UpdateButton' 
                                 value='$primaryKey'> Update Account </button> </form>
-                                <form action='account-delete-script.php' method='POST' event.preventDefault()> <button type='submit' name='deleteButton' id='$primaryKey' class='deleteButton' 
+                                <form action='php-scripts\account-delete-script.php' method='POST' event.preventDefault()> <button type='submit' name='deleteButton' id='$primaryKey' class='deleteButton' 
                                 value = '$primaryKey'>Delete Customer</button> </form>
                             </div>
                         </div>
@@ -138,7 +138,7 @@
         <div class="modal-content" >
         
             <span class="updateFormClose">&times;</span>
-            <form action="accounts-update-script.php" method="POST" event.preventDefault()>
+            <form action="php-scripts\accounts-update-script.php" method="POST" event.preventDefault()>
 
                 <h1> Update a customer </h1>
                 <div>
@@ -212,7 +212,7 @@
             <?php
                 $pk = $_SESSION["user_name"];
                 echo "<h1 style='left: 20%; position: relative;'> $pk </h1>";
-                echo "<form action='account-delete-script.php' method='POST' event.preventDefault()>
+                echo "<form action='php-scripts\account-delete-script.php' method='POST' event.preventDefault()>
                       <button style='width: 40%; left: -10%; position: relative;' type='submit' id='$pk' value ='$pk' name='submitDeleteAccount'>Yes</button>
                       <button style='width: 40%; left: -10%; position: relative; background-color: red;' type='submit' name='CancelDeleteAccount'>No</button> </form>";
             ?>  

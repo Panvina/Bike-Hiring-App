@@ -3,8 +3,8 @@
     //start the session with the database
     session_start();
     //include database functions
-    include_once("php-scripts/backend-connection.php");
-    include_once "php-scripts/utils.php";
+    include_once("backend-connection.php");
+    include_once "utils.php";
     //create the connection with the database
     $conn = new DBConnection("accounts_table");
 
@@ -29,7 +29,7 @@
         //create variable for the session variable due to string errors when querying
         $pk = $_SESSION["user_name"];
         //redirects back to the form to double check user wants to delete data
-        header("Location: accounts.php?delete=$pk");
+        header("Location: ../accounts.php?delete=$pk");
         exit();
     }
 
@@ -54,7 +54,7 @@
         {
             if ($conn->runQuery($customerQuery) == false)
             {
-                header("Location: accounts.php?delete=false");
+                header("Location: ../accounts.php?delete=false");
                 exit();
             }
         }
@@ -63,32 +63,32 @@
         {
             if ($conn->runQuery($employeeQuery) == false)
             {
-                header("Location: accounts.php?delete=false");
+                header("Location: ../accounts.php?delete=false");
                 exit();
             }
         }
 
         if ($conn->runQuery($accountQuery) == false)
         {
-            header("Location: accounts.php?delete=false");
+            header("Location: ../accounts.php?delete=false");
             exit();
         }
         
         // commit changes to database
         $conn->runQuery("COMMIT;");
-        header("Location: accounts.php?delete=true");
+        header("Location: ../accounts.php?delete=true");
         exit();
     
-        //header("Location: accounts.php?delete=true");
+        //header("Location: ../accounts.php?delete=true");
         // //deletes the employee from the employee table
         // if ($conn->delete("user_name", "'$pk'") == false)
         // {
-        //     header("Location: staff.php?delete=false");
+        //     header("Location: ../staff.php?delete=false");
         // }
         // //deletes the employee from the accounts table
         // else if ($conn->runQuery($accountQuery) == false)
         // {
-        //    header("Location: staff.php?delete=false");
+        //    header("Location: ../staff.php?delete=false");
         //     exit();
         // }
         // //goes back to the employee page with a error
@@ -96,7 +96,7 @@
         // {
         //     // commit changes to database
         //     $conn->runQuery("COMMIT;");
-        //     header("Location: staff.php?delete=true");
+        //     header("Location: ../staff.php?delete=true");
         //     exit();
         // }          
     }
@@ -104,7 +104,7 @@
     //If the no button was pressed, redirects back to the account page
     if (isset($_POST["CancelDeleteAccount"]))
     {
-        header("Location: accounts.php?");
+        header("Location: ../accounts.php?");
         exit();
     }
 ?> 
