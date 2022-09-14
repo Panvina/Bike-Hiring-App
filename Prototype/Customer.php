@@ -5,7 +5,7 @@
     if(!isset($_SESSION["login-type"]) || $_SESSION["login-type"] == "customer"){
         header("location: index.php?Error403:AccessDenied");
         exit;
-    }?>
+    }
     //include database functions
     include_once("php-scripts/backend-connection.php");
     include_once "php-scripts/utils.php";
