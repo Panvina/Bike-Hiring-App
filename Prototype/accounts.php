@@ -106,8 +106,8 @@
                             <div class='dropdown-content'>
                                 <form action='php-scripts\accounts-update-script.php' method='POST' event.preventDefault() > <button type='submit' id= '$primaryKey' class='AccountUpdateButton' name='UpdateButton' 
                                 value='$primaryKey'> Update Account </button> </form>
-                                <form action='php-scripts\account-delete-script.php' method='POST' event.preventDefault()> <button type='submit' name='deleteButton' id='$primaryKey' class='deleteButton' 
-                                value = '$primaryKey'>Delete Customer</button> </form>
+                                <form action='php-scripts\account-delete-script.php' method='POST' event.preventDefault()> <button type='submit' name='deleteButton' id='$primaryKey' class='AccountDeleteButton' 
+                                value = '$primaryKey'>Delete Account</button> </form>
                             </div>
                         </div>
                         </td>";

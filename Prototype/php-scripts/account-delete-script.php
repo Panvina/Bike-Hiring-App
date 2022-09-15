@@ -68,6 +68,15 @@
             }
         }
 
+        if ($typeOfUser != "EM" && $typeOfUser != "CU")
+        {
+            if ($conn->runQuery($customerQuery) == false)
+            {
+                header("Location: ../accounts.php?delete=false");
+                exit();
+            }
+        }
+
         if ($conn->runQuery($accountQuery) == false)
         {
             header("Location: ../accounts.php?delete=false");

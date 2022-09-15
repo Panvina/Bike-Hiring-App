@@ -182,7 +182,8 @@
 
             $accountCols = "user_name, role_id, password";
             $accountPassword = randomPassword();
-            $hashedAccountPassword = sha1($accountPassword);
+            //$hashedAccountPassword = sha1($accountPassword);
+            $hashedAccountPassword = password_hash($accountPassword, PASSWORD_DEFAULT);
             $accountData = "'$userName', 3, '$hashedAccountPassword'";
             $accountQuery = "INSERT INTO accounts_table (user_name, role_id, password) VALUES ($accountData)";
             

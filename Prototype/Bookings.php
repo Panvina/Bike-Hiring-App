@@ -417,20 +417,9 @@
          <div class="Content">
             <h1> All Bookings </h1>
 
-            <!-- Search bar with icons -->
-            <img src="img/icons/account-search.png" alt="Customer Search Logo"/>
-            <input type="text"  placeholder="Search">
-
             <div>
                 <!-- Add Booking pop up -->
                 <button type="button" id="add-booking-btn">+ Add Booking</button>
-
-                <!-- <form action="php-scripts\booking-popups.php" method="POST">
-                    <button type="submit" name="change-booking-btn" value="change,27">Modify Booking</button>
-                </form>
-                <form action="php-scripts\booking-popups.php" method="POST">
-                    <button type="submit" name="delete-booking-btn" value="delete,27">Delete Booking</button>
-                </form> -->
             </div>
 
             <!-- List of available bookings -->

@@ -269,6 +269,17 @@ nav a {
   left: -2%!important;
 }
 
+.AccountDeleteButton{
+  background-color: darkcyan !important;
+  border: none !important;
+  color: white!important;
+  font-size: 22px!important;
+  border: solid white!important;
+  border-width: thin!important;
+  cursor: pointer!important;
+  left: -2%!important;
+}
+
 .error {
   color: red;
 

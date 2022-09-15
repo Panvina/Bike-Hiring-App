@@ -162,7 +162,7 @@
 
             $accountCols = "user_name, role_id, password";
             $accountPassword = randomPassword();
-            $accountData = "'$userName', 3, '$accountPassword'";
+            $accountData = "'$userName', 2, '$accountPassword'";
             $accountQuery = "INSERT INTO accounts_table (user_name, role_id, password) VALUES ($accountData)";
             
             //creates a transaction to run multiple queries to insert data into the staff and account table. Then commits.
