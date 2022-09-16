@@ -20,7 +20,7 @@
     if(!isset($_SESSION["login-type"]) || $_SESSION["login-type"] == "customer"){
         header("location: index.php?Error403:AccessDenied");
         exit;
-    }?>
+    }
     $_SESSION['id'] = '123';
 
     $bookingMode = "none";
