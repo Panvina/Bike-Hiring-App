@@ -48,12 +48,12 @@
                 <?php
                     //Fetch data done by Alex, altered by Jake for customer table
                     //establishes the collumns in the table to be used in the query
-                    $cols = "user_name, role_id, password";
+                    $cols = "user_name, role_id";
                     //get the data from the table
                     $rows = $conn->get($cols);
 
                     //establish the headings that will be used to display the data in the table
-                    $tableHeadings = "User Name, Role, Password";
+                    $tableHeadings = "User Name, Role";
 
                     //data validation to remove ',' for querying and displaying data in the table
                     $cols = explode(',', $cols);
