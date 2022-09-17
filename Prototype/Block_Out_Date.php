@@ -1,14 +1,11 @@
 <?php
-if(!isset($_SESSION)){ 
-        session_start();     
-    }
-    if(!isset($_SESSION["login-type"]) || $_SESSION["login-type"] == "customer"){
-        header("location: index.php?Error403:AccessDenied");
-        exit;
-    }
+
 date_default_timezone_set('Australia/Melbourne');
 
 include_once("php-scripts/backend-connection.php");
+
+//enabling the user privilege of certain tabs. Added by Vina Touch 101928802
+include_once "user-privilege.php";
 
 //Linking utility functions associated with inventory
 include("php-scripts/utils.php");
@@ -23,7 +20,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
     <head>
          <!-- Header -->
         <title> Block Out Dates </title>
-        <h1 class="header"> <img src="img/photos/Inverloch_Logo3.png" alt="Inverloch Logo" id="Logo"/> Block Out Dates </h1>
+        <h1 class="header"> <a href="index.php"><img src="img/photos/Inverloch_Logo3.png" alt="Inverloch Logo" id="Logo" /></a> Block Out Dates </h1>
 
 
     </head>
@@ -130,9 +127,8 @@ ul {list-style-type: none;}
             <div class = "sideNavigation">
                 <a href= "Dashboard.php"> <img src= "img/icons/bulletin-board.png" alt="Dashboard Logo" /> Dashboard </a> <br>
                 <a href = "Customer.php"> <img src= "img/icons/account-group.png" alt="Customer Logo" />  Customer  </a> <br>
-                <?php if ($_SESSION["login-type"] == "owner"){
-                        echo "<a href='staff.php'> <img src='img/icons/staff.png' alt='Staff Logo' /> Staff </a> <br>";} ?>
-                <a href="accounts.php"> <img src="img/icons/account.png" alt="Account logo"/> Accounts </a> <br>
+                <?php setOwnerDashboardPrivilege(); ?>
+            <!--<a href="accounts.php"> <img src="img/icons/account.png" alt="Account logo"/> Accounts </a> <br>-->
                 <a href= "Inventory.php"> <img src= "img/icons/bicycle.png" alt="Inventory Logo" />  Inventory </a> <br>
                 <a href="Accessory.php"> <img src="img/icons/accessories.png" alt="Inventory Logo" /> Accessories </a> <br>
                 <a href="BikeTypes.php"> <img src="img/icons/biketypes.png" alt="Bike Types Logo" /> Bike Types </a> <br>
@@ -141,6 +137,7 @@ ul {list-style-type: none;}
                 <a class="active" href= "Block_Out_Date.php"> <img src= "img/icons/calendar.png" alt="Block out date Logo" /> Block Out Dates </a> <br>
                 <a href= "Locations.php"> <img src= "img/icons/earth.png" alt="Locations Logo" /> Locations </a> <br>
                 <a href= "editpages.php"> <img src= "img/icons/bulletin-board.png" alt="Edit Pages Logo" /> Edit </a> <br>
+                <?php setLogoutButton()?>
             </div>
          </nav>
          <div class="Content">
