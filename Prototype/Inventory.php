@@ -13,7 +13,7 @@ if(!isset($_SESSION["login-type"]) || $_SESSION["login-type"] == "customer"){
 date_default_timezone_set('Australia/Melbourne');
 
 //Linking utility functions associated with inventory
-include("inventory-util.php");
+include("php-scripts/inventory-util.php");
 
 //Establishing database connection using mysqli()
 $conn = new mysqli("localhost", "root", "", "bike_hiring_system");

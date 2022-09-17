@@ -2,7 +2,7 @@
     session_start();
     include_once("php-scripts/backend-connection.php");
     //include_once "php-scripts/utils.php";
-    include("inventory-util.php");
+    include("php-scripts/inventory-util.php");
     //$conn = new DBConnection("bike_inventory_table");
     $conn = new mysqli("localhost", "root", "", "bike_hiring_system") or die(mysqli_error($mysqli));
     $ret = array();
