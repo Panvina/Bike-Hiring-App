@@ -158,6 +158,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                         ?>
                     </td>
                 </tr>
+                
             <?php
             }
             ?>
@@ -332,8 +333,8 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                 </div>
 
                 <div>
-                    <h2>Description</h2>
-                    <textarea placeholder="Description about the bike..." name="description"></textarea>
+                    <h2>Description</h2><br>
+                    <textarea  style='width: 220px; height: 50px' placeholder="Description about the bike..." name="description"></textarea>
                 </div>
                 <span class="error"> 
                         <?php 
@@ -368,6 +369,12 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                                                     ?>>
         <!-- Content within popup -->
         <div class="modal-content">
+            <?php 
+            $tempBikeTypeId = $_SESSION['bike_type_id'];
+            /*Retreiving bike type data to display in the form*/
+            $tempBikeType = $conn->query("SELECT * FROM bike_type_table WHERE bike_type_id = $tempBikeTypeId" );
+            if ($tempBikeTypeOption = mysqli_fetch_array($tempBikeType))
+            ?>
             <span class="updateFormClose">&times;</span>
             <form action="inventory-updatescript.php" method="post" event.preventDefault()>
                 <div>
@@ -413,13 +420,18 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     <!-- Bike type options displayed as a dropdown by fetching from bike type table in db-->
                     <h2>BikeTypeID</h2>
                     <select placeholder="Bike's Type..." name="bikeTypeId" type="submit" value="<?php echo $_SESSION['bike_type_id'] ?>">
-                        <option selected=selected><?php echo $_SESSION['bike_type_id'] ?></option>
+                        <!-- <option style = 'background-color:#8DEF6E' selected=selected><//?php echo $_SESSION['bike_type_id'];
+                        echo "-";
+                        echo $tempBikeTypeOption['name'];?></option> -->
                         <?php
                         foreach ($bikeTypeOption as $option) {
+                        $selected = $_SESSION['bike_type_id']===$option['bike_type_id'] ? 'selected' : '';
                         ?>
-                            <option><?php echo $option['bike_type_id'];
+                            <option <?php echo $selected ?>><?php 
+                                    echo $option['bike_type_id'];
                                     echo "-";
-                                    echo  $option['name']; ?> </option>
+                                    echo  $option['name'];                              
+                                     ?> </option>
                         <?php
                         }
                         ?>
@@ -442,11 +454,11 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     <!-- Helmet options displayed as a dropdown by fetching from accessory type table in db-->
                     <h2>HelmetID</h2>
                     <select placeholder="Helmet's ID..." name="helmetId" type="submit" value="<?php echo $_SESSION['helmet_id'] ?>">
-                        <option selected=selected><?php echo $_SESSION['helmet_id'] ?></option>
                         <?php
                         foreach ($bikeAccessoryOption as $option) {
+                        $selected = $_SESSION['helmet_id']===$option['accessory_id'] ? 'selected' : '';
                         ?>
-                            <option><?php echo $option['accessory_type_id'];
+                            <option <?php echo $selected ?>><?php echo $option['accessory_id'];
                                     echo "-";
                                     echo  $option['name']; ?> </option>
                         <?php
@@ -508,8 +520,8 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                 </div>            
 
                 <div>
-                    <h2>Description</h2>
-                    <textarea iplaceholder="Description about the bike..." name="description"><?php echo $_SESSION['description'] ?></textarea>
+                    <h2>Description</h2><br>
+                    <textarea style='width: 220px; height: 50px' iplaceholder="Description about the bike..." name="description"><?php echo $_SESSION['description'] ?></textarea>
                 <span class="error"> 
                         <?php 
                             if (isset($_GET["update"]))
@@ -547,10 +559,12 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
             <h1 style="left: -8%; position: relative;"> Do you wish to delete the item? </h1>
             <form action="inventory-deletescript.php" method="post" event.preventDefault()>
                 <div>
-                    <h2>BikeID</h2>
+                    <div style="text-align: center; background-color: none;">
+                    <h2>Bike ID :</h2>
                     <?php
                     $primaryKey = $_SESSION["bike_id"];
-                    echo "<h1 style='left: 25%; position: relative;'> $primaryKey </h1>";
+                    echo "<h1 style='left:-10%; position: relative;'> $primaryKey </h1>";?></div><br>
+                    <?php
                     echo "<form action='inventory-deletescript.php' method='POST' event.preventDefault()>
                       <button style='width: 40%; left: -10%; position: relative;' type='submit' id='$primaryKey' value ='$primaryKey' name='submitDeleteItem'>Yes</button>
                       <button style='width: 40%; left: -10%; position: relative; background-color: red;' type='submit' name='cancelDeleteItem'>No</button> </form>";
