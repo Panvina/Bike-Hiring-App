@@ -17,10 +17,14 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 <head>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="./style/style.css">
-    <title>Home</title>
+    <title>Edit Home</title>
 </head>
 <style type="text/css">
-    
+
+body{
+    margin: 0;
+}
+
     span{
     padding-right: 10px;
     line-height: 1.9;
@@ -36,12 +40,17 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
   position: fixed;
   bottom: 0;
   width: 100%;
+  padding-top: 25px;
+    padding-bottom: 25px;
+
 }
 
 /* Style the navbar */
 #topnavbar {
-  overflow: hidden;
   background-color: red;
+  margin: 0, padding:0;
+  position: fixed;
+  width: 100%;
 }
 
 /* Navbar links */
@@ -54,30 +63,16 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
   text-decoration: none;
 }
 
-/* Page content */
-.content {
-  padding: 16px;
-}
-
-/* The sticky class is added to the navbar with JS when it reaches its scroll position */
-.sticky {
-  position: fixed;
-  top: 0;
-  width: 100%;
-}
-
-/* Add some top padding to the page content to prevent sudden quick movement (as the navigation bar gets a new position at the top of the page (position:fixed and top:0) */
-.sticky + .content {
-  padding-top: 60px;
-}
-
 
 </style>
 <body>
     <div id="topnavbar">
-        <center><p style="color:white;font-size: 24px;">EDIT MODE</p></center>
-        <a href="editpages.php" style="font-size: 32px;padding: 10px;">Go Back To Dashboard</a>
+        <a href="editpages.php" style="color:black;font-size: 20px;padding: 10px;float:left;position: fixed;margin-top: 5px;">&larr; Back To Dashboard</a>
+        <center>
+            <h2>Editing Home Page</h2>
+        </center>
     </div>
+    <br><br><br>
     <div id = "main">
         <div class="Homebanner">
             <div id="homebannertext">
@@ -103,10 +98,10 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     while ($row = $locationQuery->fetch_assoc()) {
                         $edit_name = $row["edit_name"];
                         $edit_content = $row["edit_content"];
-                        echo '<div style="outline:none;" class="HomeDesc"><span id="text_span" style="outline:none;" contenteditable="true">' . $edit_content . '</span></div>';
+                        echo '<div style="outline:none;border:5px dashed red;" class="HomeDesc"><span id="text_span" style="outline:none;" contenteditable="true">' . $edit_content . '</span></div>';
                     }
                     ?>
-                <button style="margin-left:25px;" onclick="updateForm()">Update</button>
+                <button style="" onclick="updateForm()">Update</button>
 
                 <!--<div class='HomeDesc'><p>Explore the area and Rail Trails in comfort and style on an electric bike. We also have a range of standard bikes to suit your needs with a range of accessories available. We are a local family owned and operated business and pride ourselves on providing you with a unique experience while you enjoy what Inverloch and the sounding region has to offer. Whether your family have been holidaying here for years, you’re are having a weekend away or just simply visiting for the day we have an experience to suit everyone’s tastes and abilities.</p></div>-->
             </div>
@@ -130,21 +125,21 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
             </div>
         </div>
     </div>
+    <br><br><br><br>
+
     <div class="bottomnavbar">
         <form action="editindexinsert.php" method="post">
-            <div id="contentEditFormDiv">
-            </div>
             <?php
                 $locationQuery = $conn->query("SELECT * FROM content_editing_table WHERE edit_name = 'home_about_us_text'");
                     while ($row = $locationQuery->fetch_assoc()) {
                         $edit_name = $row["edit_name"];
                         $edit_content = $row["edit_content"];
-                        echo '<input id="edit_content_text" type="text" name="edit_content_text" value="' . $edit_content . '">';
+                        echo '<input style="display:none" id="edit_content_text" type="text" name="edit_content_text" value="' . $edit_content . '">';
+                        echo '<textarea id="edit_content_text2" style="resize:none;width:87%;" rows="5" readonly>' . $edit_content. '</textarea>';
                     }
                     ?>
-            <input type="submit" value="Save Changes">
+            <input style="float: right;font-size: 32px;height: 75px;" type="submit" value="Save Changes">
         </form>
-        <br><br>
     </div>
     <script type="text/javascript">
 
@@ -152,6 +147,8 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 function updateForm(){
     var currentText =  document.getElementById("text_span").innerHTML;
     document.getElementById("edit_content_text").value = currentText;
+    document.getElementById("edit_content_text2").value = currentText;
+
     //var currentImage =  document.getElementById("home_image_id").src;
     //document.getElementById("edit_content_image").value = currentImage;
 }
@@ -182,26 +179,5 @@ window.onload = function() {
 
 
 </script>   
-<script type="text/javascript">
-    
-// When the user scrolls the page, execute myFunction
-window.onscroll = function() {myFunction()};
-
-// Get the navbar
-var navbar = document.getElementById("topnavbar");
-
-// Get the offset position of the navbar
-var sticky = navbar.offsetTop;
-
-// Add the sticky class to the navbar when you reach its scroll position. Remove "sticky" when you leave the scroll position
-function myFunction() {
-  if (window.pageYOffset >= sticky) {
-    navbar.classList.add("sticky")
-  } else {
-    navbar.classList.remove("sticky");
-  }
-}
-
-</script>
 </body>
 </html>

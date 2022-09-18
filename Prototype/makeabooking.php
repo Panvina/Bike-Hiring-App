@@ -1,7 +1,9 @@
 ﻿<?php
-session_start();
+if (!isset($_SESSION)){
+        session_start();
+}
 
-date_default_timezone_set('Australia/Melbourne');
+$_SESSION['id'] = '123';
 
 include_once("php-scripts/backend-connection.php");
 
@@ -190,35 +192,78 @@ ul {list-style-type: none;}
                         <li class="BreadcrumbsItem">
                             <a href="javascript:window.location.href=window.location.href" class="BreadcrumbsURL BreadcrumbsURLactive">Hire</a>
                         </li>
-                        <li class="BreadcrumbsItem">
-                            <a href="javascript:window.location.href=window.location.href" class="BreadcrumbsURL BreadcrumbsURLactive">Mountain</a>
-                        </li>
-                        <li class="BreadcrumbsItem">
-                            <a href="javascript:window.location.href=window.location.href" class="BreadcrumbsURL BreadcrumbsURLactive">MERIDA Big 7</a>
-                        </li>
-                        <li class="BreadcrumbsItem">
-                            <a href="javascript:window.location.href=window.location.href" class="BreadcrumbsURL BreadcrumbsURLactive">Book</a>
-                        </li>
                     </ul>
             </div>
         </div>
         
         <div class="maincontainer">
         <div id="dualContainer">
-            <div id="dualColumn1">
+            <div style="" id="dualColumn1">
               <?php
-            $accessoryType = $conn->query("SELECT * FROM bike_type_table");
-            while ($row = $accessoryType->fetch_assoc()) {
+            $bikeType = $conn->query("SELECT * FROM bike_type_table");
+            while ($row = $bikeType->fetch_assoc()) {
                 $bikeName = $row["name"];
                 $bikeTypeId = $row["bike_type_id"];  
+                $bikeDescription = $row["description"];
             ?>
-            <h1><strong><?php echo $row["name"]; ?></strong></h1>
-                <img src="img/photos/4.jpg" style="width:50%;">
-                <p><?php echo $row["description"]; ?></p>
-                <?php echo '<a style="font-size:24px;font-family: Comfortaa;color:black;" href="javascript: addBike(' . '\'' . $bikeName . '\'' . ', ' . '\'' . $bikeTypeId . '\'' .     ')">Add Bike</a>';?>
+            <h1><strong><?php echo $bikeName; ?></strong></h1>
+                <?php
+                  $imgArray = array("1", "2", "4", "6", "7");
+                  $img_rand_keys = array_rand($imgArray, 2);
+
+                 ?>
+                <?php echo '<img src="img/photos/'; echo $imgArray[$img_rand_keys[0]]; echo'.jpg" style="width:50%;">'; ?>
+                <?php echo '<p style="font-size:24px;">Description: ' . $bikeDescription . '</p>'; ?>
+                <?php 
+
+                  
+
+                  $bikeInventoryAvailable = $conn->query("SELECT bike_type_id, bike_id FROM bike_inventory_table where bike_type_id = $bikeTypeId");
+                  $bikeInventoryNum = mysqli_num_rows($bikeInventoryAvailable);
+                  if ($bikeInventoryNum > 0){
+                    while ($row = $bikeInventoryAvailable->fetch_assoc()) {
+                    $bikeInventoryBikeBikeId = $row["bike_id"];
+                    $bookingBikeTableAvailability = $conn->query("SELECT * FROM booking_bike_table");
+                      while ($row = $bookingBikeTableAvailability->fetch_assoc()) {
+                        $bookingBikeTableBikeId = $row["bike_id"];
+                        if ($bookingBikeTableBikeId == $bikeInventoryBikeBikeId){
+                          $bikeInventoryNum = $bikeInventoryNum - 1;
+                        }
+                      }
+                    }
+                    echo '<p style="font-size:24px;">Available Bikes: ' . $bikeInventoryNum . '</p>';
+                    if ($bikeInventoryNum > 0){
+                    echo '<div id="addBikeContainer'. $bikeTypeId .'">';
+                    echo '<a style="font-size:24px;font-family: Comfortaa;color:black;font-weight:bold;" href="javascript: addBike(' . '\'' . $bikeName . '\'' . ', ' . '\'' . $bikeTypeId . '\'' .     ')">Add Bike</a>';
+                    echo '</div>';
+                    }else{
+                    echo '<p style="font-size:24px;">Bike Unavailable</p>';
+                    }
+
+                  /*
+                  $bikeAvailable = $conn->query("SELECT bike_type_id FROM bike_inventory_table where bike_type_id = $bikeTypeId");
+                  $bike_available_check = mysqli_num_rows($bikeAvailable);
+                  echo '<p style="font-size:24px;">Available Bikes: ' . $bike_available_check . '</p>';
+                  if ($bike_available_check > 0){
+                  echo '<div id="addBikeContainer'. $bikeTypeId .'">';
+                  echo '<a style="font-size:24px;font-family: Comfortaa;color:black;font-weight:bold;" href="javascript: addBike(' . '\'' . $bikeName . '\'' . ', ' . '\'' . $bikeTypeId . '\'' .     ')">Add Bike</a>';
+                  echo '</div>';
+                  */
+
+
+                  }else {
+                    echo '<p style="font-size:24px;">Available Bikes: 0</p>';
+                    echo '<p style="font-size:24px;">Bike Unavailable</p>';
+                  }
+                ?>
             <?php
             }
             ?>
+            <br>
+            <br>
+            <br>
+            <br>
+
             </div>
             <div id="dualColumn2">
                 <p><strong>Select Date/s:</strong></p>
@@ -263,11 +308,9 @@ ul {list-style-type: none;}
                   ?>
                   <br>
                 </ul>
-
                 </div>
-
                 <br>
-                <form action="makeabookinginsert.php" method="post">
+                <form action="makeabookingconfirm.php" method="post">
                   <label for="timeValue">Start Date:</label>
                   <input class="startDateInput" type="text" id="startDateValue" name="startDateValue" value="" readonly>
                   <br><br>
@@ -336,7 +379,6 @@ ul {list-style-type: none;}
                   </select>
                   <br>
                 <p style="font-size: 24px;display: inline-block;">Add Accessory:</p>
-                <br>
                 <?php
                 $accessoryType = $conn->query("SELECT * FROM accessory_type_table");
 
@@ -344,27 +386,37 @@ ul {list-style-type: none;}
                     $accessoryTypeId = $row["accessory_type_id"];
                     $accessoryTypeName = $row["name"];
                 ?>
-                <?php echo '<a style="font-size:18px;font-family: Comfortaa;color:black;" href="javascript: addAccessory(' . '\'' . $accessoryTypeName . '\'' . ', ' . '\'' . $accessoryTypeId . '\'' .     ')">Add ' . $accessoryTypeName . '</a>';?>
                 <br>
+                <?php 
+                  echo '<div id="addAccessoryContainer'. $accessoryTypeId .'">';
+                  echo '<a style="font-size:18px;font-family: Comfortaa;color:black;" href="javascript: addAccessory(' . '\'' . $accessoryTypeName . '\'' . ', ' . '\'' . $accessoryTypeId . '\'' .     ')">Add ' . $accessoryTypeName . '</a>';
+                  echo '</div>';
+                ?>
                 <?php
                 }
                 ?>
                     <p style="font-size: 24px;">Item List:</p>
-                    <div id="itemListContainer" style="display: inline-block;">
-                    
-                  </div>
-                  <br>
-                  
-                  <label style="" id="" for="custId">Customer Info:</label>
-                  <input style="font-size: 14px;" class="" type="text" id="userName" name="userName" value="11" readonly> 
-                  <br><br>
-                  <label for="timeValue">Total Price:</label>
-                  <input style="font-size: 14px;" class="" type="text" id="totalPriceInput" name="totalPriceInput" value="0" readonly>
-                  <br><br>
-                  <input type="checkbox" id="termsValue" name="termsValue" value="">
+                    <div id="itemListContainer" style="">
+                      <p style="font-size: 18px;">Bikes:</p>
+                      <div id="bikeListContainer" style="font-weight: bold;font-style: italic;">
+                      
+                      </div>
+                      <p style="font-size: 18px;">Accessories:</p>
+                      <div id="accessoryListContainer" style="font-weight: bold;font-style: italic;">
+                      
+                      </div>
+                    </div>                  
+                  <!--<label style="" id="" for="custId">Customer Info:</label>
+                  <input style="font-size: 14px;" class="" type="text" id="userName" name="userName" value="11" readonly> -->
+                  <a style="font-size: 18px;color:black;" href="javascript:clearItems()"><p>Clear Items</p></a>
+                  <!--<label for="timeValue">Total Price:</label>
+                  <input style="font-size: 14px;" class="" type="text" id="totalPriceInput" name="totalPriceInput" value="0" readonly>-->
+                  <input required type="checkbox" id="termsValue" name="termsValue" value="">
                   <label for="termsValue"> I have read and agreed to the <a href="">terms and conditions.</a></label>
                   <br>
                   <br>
+                  <!--<a href="javascript:calculateDuration()">Calculate Duration Test</a>
+                  <a href="javascript:calculatePrice()">Calculate Price</a>-->
                   <center><input type="submit" value="BOOK NOW" style="background-color:black;color:white;padding: 10px;text-align: center;font-size:24px;width: 100%;"></center>
                 </form>
 
@@ -383,26 +435,105 @@ ul {list-style-type: none;}
     <?php include 'footer.php' ?>
 
 <script type="text/javascript">
-  
+  function clearItems(){
+    var bikeListContainer = document.getElementById("bikeListContainer");
+    var accessoryListContainer = document.getElementById("accessoryListContainer");
+    bikeListContainer.innerHTML = '';
+    accessoryListContainer.innerHTML = '';
+  }
+
+</script>
+
+
+<script type="text/javascript">
+
+function calculateDuration(){
+  var pickUpTimeVar = document.getElementById("pickupTimeValue");
+  var pickUpTimeText = pickUpTimeVar.options[pickUpTimeVar.selectedIndex].text;
+  var pickUpTimeValue;
+  if (pickUpTimeText == "9:00 AM"){
+    pickUpTimeValue = 1;
+  }else if (pickUpTimeText == "10:00 AM"){
+    pickUpTimeValue = 2;
+  }else if (pickUpTimeText == "11:00 AM"){
+    pickUpTimeValue = 3;
+  }else if (pickUpTimeText == "12:00 PM"){
+    pickUpTimeValue = 4;
+  }else if (pickUpTimeText == "1:00 PM"){
+    pickUpTimeValue = 5;
+  }else if (pickUpTimeText == "2:00 PM"){
+    pickUpTimeValue = 6;
+  }else if (pickUpTimeText == "3:00 PM"){
+    pickUpTimeValue = 7;
+  }else if (pickUpTimeText == "4:00 PM"){
+    pickUpTimeValue = 8;
+  }
+  var dropOffTimeVar = document.getElementById("dropoffTimeValue");
+  var dropOffTimeText = dropOffTimeVar.options[dropOffTimeVar.selectedIndex].text;
+  var dropOffTimeValue;
+  if (dropOffTimeText == "9:00 AM"){
+    dropOffTimeValue = 1;
+  }else if (dropOffTimeText == "10:00 AM"){
+    dropOffTimeValue = 2;
+  }else if (dropOffTimeText == "11:00 AM"){
+    dropOffTimeValue = 3;
+  }else if (dropOffTimeText == "12:00 PM"){
+    dropOffTimeValue = 4;
+  }else if (dropOffTimeText == "1:00 PM"){
+    dropOffTimeValue = 5;
+  }else if (dropOffTimeText == "2:00 PM"){
+    dropOffTimeValue = 6;
+  }else if (dropOffTimeText == "3:00 PM"){
+    dropOffTimeValue = 7;
+  }else if (dropOffTimeText == "4:00 PM"){
+    dropOffTimeValue = 8;
+  }
+  var durationValueTimes = dropOffTimeValue - pickUpTimeValue;
+  var startDateValue = document.getElementById("startDateValue").value;
+  var endDateValue = document.getElementById("endDateValue").value;
+  startDateValueDays = startDateValue.slice(-2);
+  endDateValueDays = endDateValue.slice(-2);
+  startDateValueDays = parseInt(startDateValueDays);
+  endDateValueDays = parseInt(endDateValueDays);
+  var durationValueDates = endDateValueDays - startDateValueDays;
+  var durationDatesTotalValueHours = durationValueDates * 24;
+  var totalDuration = durationDatesTotalValueHours + durationValueTimes;
+  alert(totalDuration);
+}  
 
 </script>
 
 
 <script type="text/javascript">
  function addBike(bikeName, bikeTypeId){
-  newTextInput = document.createElement("input");
-  bikeNameText = "bike";
+  var bikeListContainer = document.getElementById("bikeListContainer");
+  var testText = "bike"
+  var testNum = testText.concat(bikeTypeId);
+  var hasChild = bikeListContainer.querySelector("p#" + CSS.escape(testNum) + "") != null;
+  if (hasChild == 1){
+  }else{
+  var newTextInput = document.createElement("input");
+  var bikeNameText = "bike";
   newTextInput.name = bikeNameText.concat(bikeTypeId);
   newTextInput.id = bikeNameText.concat(bikeTypeId);
   newTextInput.type = "text";
   newTextInput.value = bikeTypeId;
   newTextInput.readOnly = true;
-  newTextInput.style.visibility = "hidden";
-  newBikeText = document.createElement("p");
+  newTextInput.style.display = "none";
+  var newBikeText = document.createElement("p");
   newBikeText.innerHTML = bikeName;
-  document.getElementById("itemListContainer").appendChild(newTextInput);
-  document.getElementById("itemListContainer").appendChild(newBikeText);
-  newSelectText = document.createElement("p");
+  var newBikeTextText = "bike"
+  newBikeText.id = newBikeTextText.concat(bikeTypeId);
+  bikeListContainer.appendChild(newTextInput);
+  bikeListContainer.appendChild(newBikeText);
+  }
+  
+    /*
+  addBikeContainerText = 'addBikeContainer';
+  addBikeContainerValue = addBikeContainerText.concat(bikeTypeId);
+  document.getElementById(addBikeContainerValue).style.display = "none";
+  */
+  /*newSelectText = document.createElement("p");
   newSelectText.innerHTML =  bikeName + " Quantity:";
   document.getElementById("itemListContainer").appendChild(newSelectText);
   var newArray = ["1","2","3","4"];
@@ -420,24 +551,41 @@ ul {list-style-type: none;}
       newSelectList.appendChild(option);
   }
   document.getElementById("itemListContainer").appendChild(newSelectList);
-
+*/
  }
 
 
 
  function addAccessory(accessoryName, accessoryTypeId){
-  newTextInput = document.createElement("input");
-  newAccessoryText = "accessory";
+  var accessoryListContainer = document.getElementById("accessoryListContainer");
+  var testText = "accessory"
+  var testNum = testText.concat(accessoryTypeId);
+  var hasChild = accessoryListContainer.querySelector("p#" + CSS.escape(testNum) + "") != null;
+  if (hasChild == 1){
+  }else{
+  var newTextInput = document.createElement("input");
+  var newAccessoryText = "accessory";
   newTextInput.id = newAccessoryText.concat(accessoryTypeId);
   newTextInput.name = newAccessoryText.concat(accessoryTypeId);
   newTextInput.type = "text";
   newTextInput.value = accessoryTypeId;
   newTextInput.readOnly = true;
-  newTextInput.style.visibility = "hidden";
-  newAccessoryText = document.createElement("p");  
+  newTextInput.style.display = "none";
+  var newAccessoryText = document.createElement("p");  
   newAccessoryText.innerHTML = accessoryName;
-  document.getElementById("itemListContainer").appendChild(newTextInput);
-  document.getElementById("itemListContainer").appendChild(newAccessoryText);
+  var newAccessoryTextText = "accessory"
+  newAccessoryText.id = newAccessoryTextText.concat(accessoryTypeId);
+  document.getElementById("accessoryListContainer").appendChild(newTextInput);
+  document.getElementById("accessoryListContainer").appendChild(newAccessoryText);
+  }
+
+
+  
+  /*
+  addAccessoryContainerText = 'addAccessoryContainer';
+  addAccessoryContainerValue = addAccessoryContainerText.concat(accessoryTypeId);
+  document.getElementById(addAccessoryContainerValue).style.display = "none";
+  */
   /*
   newSelectText = document.createElement("p");
   newSelectText.innerHTML =  accessoryName + " Quantity:";
@@ -506,9 +654,6 @@ function resetDates(){
       setStart();
       changeStartDate();
       setEnd();
- 
-
-
 }
 
 

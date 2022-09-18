@@ -127,7 +127,7 @@ ul {list-style-type: none;}
             <div class = "sideNavigation">
                 <a href= "Dashboard.php"> <img src= "img/icons/bulletin-board.png" alt="Dashboard Logo" /> Dashboard </a> <br>
                 <a href = "Customer.php"> <img src= "img/icons/account-group.png" alt="Customer Logo" />  Customer  </a> <br>
-                <?php setOwnerDashboardPrivilege(); ?>
+                <?php  setOwnerDashboardPrivilege(); ?>
             <!--<a href="accounts.php"> <img src="img/icons/account.png" alt="Account logo"/> Accounts </a> <br>-->
                 <a href= "Inventory.php"> <img src= "img/icons/bicycle.png" alt="Inventory Logo" />  Inventory </a> <br>
                 <a href="Accessory.php"> <img src="img/icons/accessories.png" alt="Inventory Logo" /> Accessories </a> <br>
@@ -137,23 +137,21 @@ ul {list-style-type: none;}
                 <a class="active" href= "Block_Out_Date.php"> <img src= "img/icons/calendar.png" alt="Block out date Logo" /> Block Out Dates </a> <br>
                 <a href= "Locations.php"> <img src= "img/icons/earth.png" alt="Locations Logo" /> Locations </a> <br>
                 <a href= "editpages.php"> <img src= "img/icons/bulletin-board.png" alt="Edit Pages Logo" /> Edit </a> <br>
-                <?php setLogoutButton()?>
+                <?php  setLogoutButton()?>
             </div>
          </nav>
          <div class="Content">
-            <h1> Block Out Dates </h1>
-            <p><strong>Select Date/s:</strong></p>
                 <div class="month">      
                   <ul>
                     <li class="prev">&#10094;</li>
                     <li class="next">&#10095;</li>
-                    <li style="font-size:14px">JUNE<br>
+                    <li style="font-size:14px">June<br>
                       <span style="font-size:14px">2022</span>
                     </li>
                   </ul>
                 </div>
 
-                <ul class="weekdays">
+                <ul class="weekdays" style="font-size:24px;">
                   <li>M</li>
                   <li>T</li>
                   <li>W</li>
@@ -162,48 +160,77 @@ ul {list-style-type: none;}
                   <li>S</li>
                   <li>S</li>
                 </ul>
+                
                 <div id="dateContainer">
                 <ul class="days">
-                    
-                  
-        <?php 
-            $blockOutDatesSQL = $conn->query("SELECT * FROM block_out_dates");
-            while ($row = $blockOutDatesSQL->fetch_assoc()) {
-                $date_id = $row["date_id"];
-                $date_value = $row["date_value"];
-                $date_day = $row["date_day"];
-                $date_month = $row["date_month"];
-                $date_year = $row["date_year"];
-                $date_blockout = $row["date_blockout"];  
-                $date_reason = $row["date_reason"];  
 
-            ?>
-            <?php echo '<a class="datetest" href="javascript: manageDate(' . '\'' . $date_id . '\'' . ', ' . '\'' . $date_blockout . '\'' .     ')"><li><span id="' . $date_value . '" class ="date">' . $date_day . '</a>';?>
-            <?php
-            }
-            ?>
-            <br>
+                  <a class="datetest" style="display: none;" href=""><li><span class="date active">0</span></li></a>
+                  <?php 
+                  $blockOutDatesSQL = $conn->query("SELECT * FROM block_out_dates");
+                  while ($row = $blockOutDatesSQL->fetch_assoc()) {
+                      $date_value = $row["date_value"];
+                      $date_day = $row["date_day"];
+                      $date_blockout = $row["date_blockout"];
+                      $date_id = $row["date_id"];
+                      $date_month = $row["date_month"];
+                      $date_year = $row["date_year"];
+                      $date_reason = $row["date_reason"];
+                      if ($date_blockout == 0){
+                       // echo '<a class="datetest" href="javascript:changeStartDate()"><li><span id="' . $date_value . '" class="date";">' . $date_day .'</span></li></a>';
+                        echo '<a style="text-decoration:none;font-size:24px;" class="datetest" href="javascript: manageDate(' . '\'' . $date_id . '\'' . ', ' . '\'' . $date_blockout . '\'' .     ')"><li><span style="color:black;" id="' . $date_value . '" class ="date">' . $date_day . '</a>';
+
+                      }else if ($date_blockout == 1){
+                        //echo '<a style="pointer-events: none;" class="datetest" href="javascript:changeStartDate()"><li><span style="color:red;" id="' . $date_value . '" class="date";">' . $date_day .'</span></li></a>';
+                        echo '<a style="text-decoration:none;font-size:24px;" class="datetest" href="javascript: manageDate(' . '\'' . $date_id . '\'' . ', ' . '\'' . $date_blockout . '\'' .     ')"><li><span style="color:red;" id="' . $date_value . '" class ="date">' . $date_day . '</a>';
+                      }
+                      ?>
+                  <?php
+                    }
+                  ?>
+                  <br>
                 </ul>
+
                 </div>
-                <br>
-                <br>
         <form id="blockOutDateAddForm" style="display: none;" action="block_out_date_add.php" method="post">
         <div id="blockOutDateAddContainer">
         </div>
-        <input style="display:none;" id="blockDateSubmit" type="submit" value="Block Date">
+        <input style="display:none;font-size: 24px;" id="blockDateSubmit" type="submit" value="Block Date">
         </form>
 
         <form id="blockOutDateRemoveForm" style="display: none;" action="block_out_date_remove.php" method="post">
         <div id="blockOutDateRemoveContainer">
         </div>
-        <input style="display:none;" id="unblockDateSubmit" type="submit" value="Unblock Date">
+        <input style="display:none;font-size: 24px;" id="unblockDateSubmit" type="submit" value="Unblock Date">
         </form>
+        <p style="font-size:24px;font-weight: bold;">Current Blockout Dates:</p>
+        <?php 
+          $blockOutDatesSQL = $conn->query("SELECT * FROM block_out_dates WHERE date_blockout = 1");
+          while ($row = $blockOutDatesSQL->fetch_assoc()) {
+              $date_value = $row["date_value"];
+              $date_day = $row["date_day"];
+              $date_blockout = $row["date_blockout"];
+              $date_id = $row["date_id"];
+              $date_month = $row["date_month"];
+              $date_year = $row["date_year"];
+              $date_reason = $row["date_reason"];
+              echo '<tr> 
+                  <td><strong style="font-size:24px;">'.$date_value.'</strong></td> 
+              </tr><br>';
+            }
+          ?>
+
 
 
 
         </div>
 
 <script type="text/javascript">
+
+/*https://www.codegrepper.com/code-examples/javascript/javascript+add+character+to+string+at+position*/
+  function addStr(str, index, stringToAdd){
+    return str.substring(0, index) + stringToAdd + str.substring(index, str.length);
+  }
+
 
   function clearSelect(){
     var deleteAddContainer = document.getElementById("blockOutDateAddContainer");
@@ -218,11 +245,18 @@ function manageDate(dateid, blockedout){
     document.getElementById("blockDateSubmit").style.display = "block";
     document.getElementById("unblockDateSubmit").style.display = "none";
     document.getElementById("blockOutDateAddForm").style.display = "block";
-    blockoutDateInput = document.createElement("input");
+    var blockoutDateInput = document.createElement("input");
     blockoutDateInput.id = dateid;
     blockoutDateInput.name = "blockOutDate";
     blockoutDateInput.value = dateid;
+    blockoutDateInput.style.display = "none";
     document.getElementById("blockOutDateAddContainer").appendChild(blockoutDateInput);
+    blockoutDateText = document.createElement("h1");
+    var blockoutDateTextStringToEdit = dateid;
+    var blockoutDateTextFinish = addStr(blockoutDateTextStringToEdit, 4, "/");
+    blockoutDateTextFinish = addStr(blockoutDateTextFinish, 7, "/");
+    blockoutDateText.innerHTML = blockoutDateTextFinish;
+    document.getElementById("blockOutDateAddContainer").appendChild(blockoutDateText);
     } else if (blockedout == 1){
     document.getElementById("blockDateSubmit").style.display = "none";
     document.getElementById("unblockDateSubmit").style.display = "block";
@@ -231,7 +265,14 @@ function manageDate(dateid, blockedout){
     blockoutDateInput.id = dateid;
     blockoutDateInput.name = "blockOutDate";
     blockoutDateInput.value = dateid;
+    blockoutDateInput.style.display = "none";
     document.getElementById("blockOutDateRemoveContainer").appendChild(blockoutDateInput);
+    blockoutDateText = document.createElement("h1");
+    var blockoutDateTextStringToEdit = dateid;
+    var blockoutDateTextFinish = addStr(blockoutDateTextStringToEdit, 4, "/");
+    blockoutDateTextFinish = addStr(blockoutDateTextFinish, 7, "/");
+    blockoutDateText.innerHTML = blockoutDateTextFinish;
+    document.getElementById("blockOutDateRemoveContainer").appendChild(blockoutDateText);
     }
 }
 

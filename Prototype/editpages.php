@@ -20,7 +20,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
     <link rel="stylesheet" href="style/Jake_style.css">
     <head>
          <!-- Header -->
-        <title> Block Out Dates </title>
+        <title>Edit Pages </title>
         <h1 class="header"> <a href="index.php"><img src="img/photos/Inverloch_Logo3.png" alt="Inverloch Logo" id="Logo" /></a> Edit Pages </h1>
 
 
@@ -52,7 +52,13 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
             </div>
          </nav>
          <div class="Content">
-            <a style="font-size: 32px;" href="editIndex.php">Edit Home Page</a>
+            <ul>
+                <li style="font-size: 32px;"><a href="editIndex.php">Home</a></li>
+                <li style="font-size: 32px;">Hire</li>
+                <li style="font-size: 32px;">About Inverloch</li>
+                <li style="font-size: 32px;">About Cycling</li>
+                <li style="font-size: 32px;">Contact Us</li>
+            </ul>   
         
 
 
