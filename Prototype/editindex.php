@@ -36,12 +36,10 @@ body{
 
 .bottomnavbar {
   overflow: hidden;
-  background-color: lightgrey;
+  background-color: red;
   position: fixed;
   bottom: 0;
   width: 100%;
-  padding-top: 25px;
-    padding-bottom: 25px;
 
 }
 
@@ -101,7 +99,7 @@ body{
                         echo '<div style="outline:none;border:5px dashed red;" class="HomeDesc"><span id="text_span" style="outline:none;" contenteditable="true">' . $edit_content . '</span></div>';
                     }
                     ?>
-                <button style="" onclick="updateForm()">Update</button>
+                <button style="font-size: 32px;" onclick="updateForm()">Update Change</button>
 
                 <!--<div class='HomeDesc'><p>Explore the area and Rail Trails in comfort and style on an electric bike. We also have a range of standard bikes to suit your needs with a range of accessories available. We are a local family owned and operated business and pride ourselves on providing you with a unique experience while you enjoy what Inverloch and the sounding region has to offer. Whether your family have been holidaying here for years, you’re are having a weekend away or just simply visiting for the day we have an experience to suit everyone’s tastes and abilities.</p></div>-->
             </div>
@@ -135,10 +133,11 @@ body{
                         $edit_name = $row["edit_name"];
                         $edit_content = $row["edit_content"];
                         echo '<input style="display:none" id="edit_content_text" type="text" name="edit_content_text" value="' . $edit_content . '">';
-                        echo '<textarea id="edit_content_text2" style="resize:none;width:87%;" rows="5" readonly>' . $edit_content. '</textarea>';
+                        //echo '<textarea id="edit_content_text2" style="resize:none;width:87%;" rows="5" readonly>' . $edit_content. '</textarea>';
                     }
                     ?>
-            <input style="float: right;font-size: 32px;height: 75px;" type="submit" value="Save Changes">
+            <input style="float: right;font-size: 32px;height: 75px;" type="submit" value="Save Change">
+            <p style="float: right; font-size: 24px;padding-right: 10px;">(Make sure to select <strong>Update Change</strong> before selecting <strong>Save Change</strong>)</p>
         </form>
     </div>
     <script type="text/javascript">
