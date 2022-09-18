@@ -183,8 +183,8 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     </span>
                 </div>
                 <div>
-                    <h2>Description</h2>
-                    <textarea placeholder="Description about the type of accessory..." name="description"></textarea>
+                    <h2>Description</h2><br>
+                    <textarea style='width: 220px; height: 50px' placeholder="Description about the type of accessory..." name="description"></textarea>
                     <span class="error"> 
                         <?php 
                             if (isset($_GET["insert"]))
@@ -259,8 +259,8 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     </span>
                 </div>
                 <div>
-                    <h2>Description</h2>
-                    <textarea placeholder="Description about the accessory type..." name="description"><?php echo $_SESSION['description'] ?></textarea>
+                    <h2>Description</h2><br>
+                    <textarea style='width: 220px; height: 50px' placeholder="Description about the accessory type..." name="description"><?php echo $_SESSION['description'] ?></textarea>
                     <span class="error"> 
                         <?php 
                             if (isset($_GET["update"]))
@@ -298,10 +298,12 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
             <h1 style="left: -8%; position: relative;"> Do you wish to delete the accessory type? </h1>
             <form action="php-scripts/accessorytype-modifyscript.php" method="post" event.preventDefault()>
                 <div>
-                    <h2>Accessory Type ID</h2>
+                    <div style="text-align: center; background-color: none;">
+                    <h2>Accessory Type ID:</h2>
                     <?php
                     $primaryKey = $_SESSION["accessory_type_id"];
-                    echo "<h1 style='left: 25%; position: relative;'> $primaryKey </h1>";
+                    echo "<h1 style='left:-10%; position: relative;'> $primaryKey </h1>";?></div><br>
+                    <?php
                     echo "<form action='php-scripts/accessorytype-modifyscript.php' method='POST' event.preventDefault()>
                       <button style='width: 40%; left: -10%; position: relative;' type='submit' id='$primaryKey' value ='$primaryKey' name='submitDeleteItem'>Yes</button>
                       <button style='width: 40%; left: -10%; position: relative; background-color: red;' type='submit' name='cancelDeleteItem'>No</button> </form>";
