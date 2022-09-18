@@ -8,6 +8,7 @@ include_once("php-scripts/backend-connection.php");
 include("php-scripts/utils.php");
 //Establishing database connection using mysqli()
 $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
+
 ?>
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
@@ -475,7 +476,7 @@ ul {list-style-type: none;}
                   <br>
                   <!--<a href="javascript:calculateDuration()">Calculate Duration Test</a>
                   <a href="javascript:calculatePrice()">Calculate Price</a>-->
-                  <center><input type="submit" value="BOOK NOW" style="background-color:black;color:white;padding: 10px;text-align: center;font-size:24px;width: 100%;"></center>
+                  <center><input id="bookNowButton" type="submit" value="BOOK NOW" style="background-color:black;color:white;padding: 10px;text-align: center;font-size:24px;width: 100%;display:none"></center>
                 </form>
 
 
@@ -927,3 +928,10 @@ window.onclick = function(event) {
 
 </body>
 </html>
+<?php
+if (isset($_SESSION['login-email'])) {
+	echo '<script type="text/javascript">' . 
+      'document.getElementById("bookNowButton").style.display = "block";' .
+      '</script>';
+    }
+ ?>
