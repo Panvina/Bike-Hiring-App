@@ -133,13 +133,6 @@ Contributor(s):
             <!--This calendar section is done by Clement where it is showing the current bookings as an event scheduler and it is hard code since it is to demonstrate the potential type of thing-->
             <!-- Current bookings section -->
             <h1 style="line-height: 50px;"><strong> Current Bookings: </strong></h1>
-			<div class="keyContainer"><div class="keys">Key:</div>
-				<div class="event stage-booked length-1 key">Booked</div>
-				<div class="event stage-confirm length-1 key">Confirm</div>
-				<div class="event stage-checkedOut length-1 key">Checkout</div>
-				<div class="event stage-provisional length-1 key">Provisional</div>
-
-			</div>
 			<div class="background">
     			<pre>
     			<!--keeping the schedule inside it-->
@@ -265,7 +258,6 @@ Contributor(s):
                             echo "<div class='event stage-bookings start-$startTimeNoColon end-$endTimeNoColon length-1'>$custName<br/>$startTime-<br/>$endTime</div>";
                         }
                     ?>
-    				
     			</div>
             </pre>
 		</div>

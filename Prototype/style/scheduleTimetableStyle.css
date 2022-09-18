@@ -17,14 +17,13 @@ pre {
 /*This is to put a background of the calendar bookings*/
 .background
 {
-	background-color: #d3d3d3;
-	height: 80%;
-  border-radius: 5rem;
 	margin-bottom: 2rem;
 }
 /*This is to keep it in the container and have a proper setup of where data can be put in*/
 .scheduleContainer {
   display: grid;
+  border-radius: 2.5rem;
+	background-color: #d3d3d3;
   grid-gap: 0.2rem;
   /*	This is to change the collumns and its size of the table*/
   grid-template-columns: repeat(auto-fit, 1fr);
@@ -284,35 +283,4 @@ padding-right: 0.5rem;
 .event.stage-provisional {
   background-color: black;
   color: white;
-}
-
-/*This is to show the key index of the current status of the booking*/
-.keyContainer {
-  display: grid;
-  grid-gap: 0.2rem;
-  border-radius: 2rem;
-  /*This is to make sure the 5 collumns of the grid is distriuted properly*/
-  grid-template-columns: 5% 24% 24% 24% 24%;
-  /*This is to make sure that it fits on one row*/
-  grid-template-rows: repeat(1, 1fr);
-
-/*This is to make sure the key index is clean*/
-	padding: 0rem 2rem 0rem 0.5rem;
-  margin-bottom: 0rem;
-  grid-template-areas:
-    "keys stage"
-}
-
-/*This is keep the title of key index title as readale*/
-.keys
-{
-  font-size: 1.5rem;
-  font-weight: bold;
-  justify-content: flex-end;
-}
-
-/*This is to give it some spacing between it and the calendar data*/
-.event.key
-{
-	margin-bottom: 0.25rem;
 }
