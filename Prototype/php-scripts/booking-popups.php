@@ -357,7 +357,7 @@ Contributor(s): Dabin Lee @ icelasersparr@gmail.com
         // verify at least one bike
         if (empty($bikes))
         {
-            header("Location: ..\bookings.php?booking-mode=change2-invalid");
+            header("Location: ..\bookings.php?booking-mode=change2-bikeError");
         }
         else
         {

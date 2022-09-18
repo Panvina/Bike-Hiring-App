@@ -62,7 +62,6 @@
                 <!-- booking form -->
                 <form action="php-scripts\booking-popups.php" method="POST">
                     <!-- Select customer -->
-                    <br>
                     <label>Customer:</label><br>
                     <select name="add-booking-customer" id="add-booking-customer"><br><br>
                         <?php
@@ -167,7 +166,31 @@
                                 arrayToComboBoxOptions($dropoffLocations, "location_id", $selectedId);
                             }
                         ?>
-                    </select><br><br>
+                    </select><br>
+                    <p class="modal-error-message">
+                        <?php
+                            if ($errorCode != "none")
+                            {
+                                $errorString = "";
+                                switch($errorCode)
+                                {
+                                    case "emptyError":
+                                        $errorString = "Please ensure that all fields are filled.";
+                                        break;
+                                    case "dateError":
+                                        $errorString = "Please ensure starting date is before or equal to end date";
+                                        break;
+                                    case "timeError":
+                                        $errorString = "Please ensure the starting time is before the ending time";
+                                        break;
+                                    default:
+                                        break;
+                                }
+
+                                echo "$errorString";
+                            }
+                        ?>
+                    </p>
                     <button type="submit" name="add-booking-main-submit"> Select Bikes </button>
                 </form>
             </div>
@@ -226,7 +249,15 @@
                                 arrayToComboBoxOptions($accessories, "accessory_id");
                             }
                         ?>
-                    </select><br><br>
+                    </select><br>
+                    <p class="modal-error-message">
+                        <?php
+                            if ($errorCode != "none")
+                            {
+                                echo "Please ensure that at least one bike has been selected.";
+                            }
+                        ?>
+                    </p>
                     <button type="submit" name="add-booking-bike-accessory-submit"> Add Booking </button>
                 </form>
             </div>
@@ -250,7 +281,7 @@
                     echo "style='display: none';";
                 }
             ?>
-            >
+        >
             <div class="modal-content">
                 <span class="close-btn">&times;</span>
                 <h2> Modify Booking - Booking Details </h2>
@@ -279,7 +310,6 @@
                 <!-- booking form -->
                 <form action="php-scripts\booking-popups.php" method="POST">
                     <!-- Display customer (non-modifiable) -->
-                    <br>
                     <label>Customer:</label><br>
                     <select name="add-booking-customer" id="add-booking-customer" disabled>
                         <?php
@@ -331,7 +361,31 @@
                                 arrayToComboBoxOptions($pickupLocations, "location_id", $dropoffId);
                             }
                         ?>
-                    </select><br><br>
+                    </select><br>
+                    <p class="modal-error-message">
+                        <?php
+                            if ($errorCode != "none")
+                            {
+                                $errorString = "";
+                                switch($errorCode)
+                                {
+                                    case "emptyError":
+                                        $errorString = "Please ensure that all fields are filled.";
+                                        break;
+                                    case "dateError":
+                                        $errorString = "Please ensure starting date is before or equal to end date";
+                                        break;
+                                    case "timeError":
+                                        $errorString = "Please ensure the starting time is before the ending time";
+                                        break;
+                                    default:
+                                        break;
+                                }
+
+                                echo "$errorString";
+                            }
+                        ?>
+                    </p>
                     <button type="submit" name="change-booking-main-submit"> Select Bikes </button>
                 </form>
             </div>
@@ -390,7 +444,15 @@
                                 arrayToComboBoxOptions($accessories, "accessory_id");
                             }
                         ?>
-                    </select><br><br>
+                    </select><br>
+                    <p class="modal-error-message">
+                        <?php
+                            if ($errorCode != "none")
+                            {
+                                echo "Please ensure that at least one bike has been selected.";
+                            }
+                        ?>
+                    </p>
                     <button type="submit" name="change-booking-bike-accessory-submit"> Submit Changes </button>
                 </form>
             </div>
@@ -416,11 +478,8 @@
          <!-- Block of content in center -->
          <div class="Content">
             <h1> All Bookings </h1>
-
-            <div>
-                <!-- Add Booking pop up -->
-                <button type="button" id="add-booking-btn">+ Add Booking</button>
-            </div>
+            <!-- Add Booking pop up -->
+            <button type="button" id="add-booking-btn">+ Add Booking</button>
 
             <!-- List of available bookings -->
             <table class="TableContent">
@@ -494,10 +553,10 @@
                                     <button class='dropbtn' disabled>...</button>
                                     <div class='dropdown-content'>
                                         <form action='php-scripts/booking-popups.php' method='POST'>
-                                            <button type='submit' name='change-booking-btn' value='change,$bookingId' class='dropdown-element'> Update </button>
+                                            <button type='submit' name='change-booking-btn' value='change,$bookingId' class='dropdown-element'> Update Booking </button>
                                         </form>
                                         <form action='php-scripts/booking-popups.php' method='POST'>
-                                            <button type='submit' name='delete-booking-btn' value='delete,$bookingId' class='dropdown-element'> Delete </button>
+                                            <button type='submit' name='delete-booking-btn' value='delete,$bookingId' class='dropdown-element'> Delete Booking </button>
                                         </form>
                                     </div>
                                 </div>
