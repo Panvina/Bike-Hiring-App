@@ -1,5 +1,7 @@
 <?php
-session_start();
+	if (!isset($_SESSION)){ 
+		session_start();     
+	}
 date_default_timezone_set('Australia/Melbourne');
 include_once("php-scripts/backend-connection.php");
 //Linking utility functions associated with inventory
@@ -58,7 +60,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 		     ?>
 <?php
 		//get form data
-			$userName =  'test2';
+			$userName =   $_SESSION["login-email"];
 			$startDateValue = $_REQUEST['startDateValue'];
 			$endDateValue = $_REQUEST['endDateValue'];
 			$startTimeValue =  $_REQUEST['pickupTimeValue'];
