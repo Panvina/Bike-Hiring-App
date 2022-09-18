@@ -262,7 +262,7 @@ Contributor(s):
 
                             $startTimeNoColon = str_replace(":", "", $startTime);
                             $endTimeNoColon = str_replace(":", "", $endTime);
-                            echo "<div class='event stage-provisional start-$startTimeNoColon end-$endTimeNoColon length-1'>$custName<br/>$startTime-<br/>$endTime</div>";
+                            echo "<div class='event stage-bookings start-$startTimeNoColon end-$endTimeNoColon length-1'>$custName<br/>$startTime-<br/>$endTime</div>";
                         }
                     ?>
     				

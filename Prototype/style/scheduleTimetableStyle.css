@@ -263,7 +263,12 @@ padding-right: 0.5rem;
   grid-column-end: span 1;
 }
 
-/*This is to set the color to each items and each color represent different statuses of the booking*/
+/*This is to set the color of each booking to one set of color*/
+.event.stage-bookings {
+  background-color: #00b7b1;
+  color: white;
+}
+/*This is to set the color to each bookings and each color represent different statuses of the booking*/
 .event.stage-booked {
   background-color: forestgreen;
   color: white;
