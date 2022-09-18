@@ -57,7 +57,7 @@
                         type="password"
                         placeholder="PASSWORD"
                     />
-                    <p style="margin-top: 0px; transform: translate(0, -15px);" class="centre-text"><a href="https://blank.org" class="no-text-decoration">Forgot Password</a></p>
+                    <!--<p style="margin-top: 0px; transform: translate(0, -15px);" class="centre-text"><a href="https://blank.org" class="no-text-decoration">Forgot Password</a></p>-->
                     <button type="submit" name="login-submit" class="centre-element modal-btn login-btn">LOGIN</button>
                 </form>
                 <p class="decorated-lines no-vertical-margins" style="transform: translate(0, -10px);">OR</p>
