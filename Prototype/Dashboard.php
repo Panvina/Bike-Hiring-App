@@ -7,7 +7,8 @@ Contributor(s):
 	- Clement Cheung @ 103076376@student.swin.edu.au
 	- Vina Touch @ 101928802@student.swin.edu.au
 	- Jake Hipworth @ 102090870@student.swin.edu.au (Navigation section and Styles)
-	- Dabin Lee @ icelasersparr@gmail.com
+	- Dabin Lee @ icelasersparr@gmail.com.
+    - Aadesh Jagannathan @102072344@student.swin.edu.au (Urgent replacements)
 -->
 <?php
     include_once "php-scripts/backend-connection.php";
@@ -15,7 +16,8 @@ Contributor(s):
     include_once "php-scripts/dashboard-script.php";
     include_once "php-scripts/bookings-db.php";
     include_once "php-scripts/bike-inventory-db.php";
-    
+    include_once "php-scripts/damaged-item-db.php";
+
     //enabling the user privilege of certain tabs. Added by Vina Touch 101928802
     include_once "user-privilege.php";
 
@@ -101,10 +103,25 @@ Contributor(s):
 
                 <!-- Urgent section -->
                 <div class="DashboardInformation">
-                    <h2>URGENT</h2>
-                    <h3>Needing Replacement:
+                    <h2>Urgent Replacements</h2>
+                    <h3>Bikes: 
+                    <?php
+                            // print number of available accessories
+                            $conn = new DamagedItemsDBConnection();
+                            $res = $conn->getDamagedBikes();
 
-                    </h3>
+                            echo count($res);
+                        ?>
+                    <h3>
+                    <h3>Accessories: 
+                    <?php
+                            // print number of damaged accessories
+                            $conn = new DamagedItemsDBConnection();
+                            $res = $conn->getDamagedAccessories();
+
+                            echo count($res);
+                        ?>    
+                    <h3>
                 </div>
                 <!-- Inventory Summary section -->
                 <div class="DashboardInformation">

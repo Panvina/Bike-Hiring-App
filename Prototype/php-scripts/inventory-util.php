@@ -27,6 +27,9 @@ function bike_availability_check($id)
     //Print broken status if item is broken after booking
     if (isset($row['bike_id'])) 
     {
+        // set item safety status to not inspected
+        $query = ("UPDATE bike_inventory_table SET `safety_inspect`='$safetyStatus' WHERE bike_id= $id");
+        $results = mysqli_query($conn,$query);
         return "Broken";
     }
     //Print available status if item is not present in the bookings table
@@ -34,7 +37,7 @@ function bike_availability_check($id)
         return "Available";
     } else {
         //Retrieving the bike's allocated booking id from the booking table
-        $query = "SELECT booking_id FROM booking_bike_table WHERE bike_id= $id";
+        $query = "SELECT booking_id FROM booking_bike_table WHERE bike_id= $id ORDER By booking_bike_id DESC";
         $result = mysqli_query($conn, $query);
         $row = mysqli_fetch_assoc($result);
         if (isset($row['booking_id'])) {
@@ -48,10 +51,16 @@ function bike_availability_check($id)
         }
         //Checking if the end date of the booking is before today
         elseif (strtotime(date("Y-m-d")) > strtotime($bookingDT["end_date"])) {
-            return "Available";
-        } else {
+            return "Available";} 
+        else {
             //Checking if the end time of booking has passed
-            if ((time() > strtotime($bookingDT["expected_end_time"])) && strtotime(date("Y-m-d")) > strtotime($bookingDT["end_date"])) {
+            if(strtotime($bookingDT["end_date"]) > strtotime(date("Y-m-d")))
+            {
+                $query = ("UPDATE bike_inventory_table SET `safety_inspect`='$safetyStatus' WHERE bike_id= $id");
+                $results = mysqli_query($conn,$query);
+                return "Not Available";
+            }
+            else if ((time() > strtotime($bookingDT["expected_end_time"]))) {
                 $var = time();
                 return "Available";
             } else {
@@ -82,6 +91,9 @@ function accessory_availability_check($id)
     //Print broken status if item is broken after booking
     if (isset($row['accessory_id'])) 
     {
+        // set item safety status to not inspected
+        $query = ("UPDATE accessory_inventory_table SET `safety_inspect`='$safetyStatus' WHERE accessory_id= $id");
+        $results = mysqli_query($conn,$query);
         return "Broken";
     }
     //Print available status if item is not present in the bookings table
@@ -92,7 +104,7 @@ function accessory_availability_check($id)
     else 
     {
         //Retrieving the bike's allocated booking id from the booking table
-        $query = "SELECT booking_id FROM booking_accessory_table WHERE accessory_id= $id";
+        $query = "SELECT booking_id FROM booking_accessory_table WHERE accessory_id= $id ORDER By booking_accessory_id DESC";
         $result = mysqli_query($conn, $query);
         $row = mysqli_fetch_assoc($result);
         if (isset($row['booking_id'])) {
@@ -105,11 +117,19 @@ function accessory_availability_check($id)
             return "Available";
         }
         //Checking if the end date of the booking is before today
-        elseif (strtotime(date("Y-m-d")) > strtotime($bookingDT["end_date"])) {
+        else if (strtotime(date("Y-m-d")) > strtotime($bookingDT["end_date"])) {
             return "Available";
         } else {
             //Checking if the end time of booking has passed
-            if ((time() > strtotime($bookingDT["expected_end_time"])) && strtotime(date("Y-m-d")) > strtotime($bookingDT["end_date"])) {
+            if(strtotime($bookingDT["end_date"]) > strtotime(date("Y-m-d")))
+            {
+                //updates safety status if the bike is in a booking
+                $query = ("UPDATE accessory_inventory_table SET `safety_inspect`='$safetyStatus' WHERE accessory_id= $id");
+                $results = mysqli_query($conn,$query);
+                return "Not Available";
+            }
+            //Checking if the end time of booking has passed
+            else if ((time() > strtotime($bookingDT["expected_end_time"]))) {
                 $var = time();
                 return "Available";
             } else {
@@ -129,13 +149,13 @@ function availabilityStatusColour($bookingStatus)
     if ($bookingStatus == "Available") {
         return "#8DEF6E";
     }
-    // Red colour if not available
+    // Orange colour if not available
     else if ($bookingStatus == "Not Available") {
-        return "#EF6E6E";
-    }
-    //Orange colour in other cases
-    else {
         return "#EFAC6E";
+    }
+    //Red colour in other cases
+    else {
+        return "#EF6E6E";
     }
 }
 
@@ -146,13 +166,13 @@ function safetyStatusColour($bookingStatus)
     if ($bookingStatus == "Checked") {
         return "#8DEF6E";
     }
-    //Red colour if not checked
+    //Orange colour if not checked
     else if ($bookingStatus == "Not checked") {
-        return "#EF6E6E";
-    }
-    //Orange colour in other cases
-    else {
         return "#EFAC6E";
+    }
+    //Red colour in other cases
+    else {
+        return "#EF6E6E";
     }
 }
 
