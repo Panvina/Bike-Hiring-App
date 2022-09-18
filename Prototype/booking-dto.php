@@ -47,6 +47,22 @@
             return $this->fee;
         }
 
+        function getPickUpLocNameAddress($pickupID){
+            $dbCon = new DBConnection('location_table');
+            $pickupLoc = $dbCon->get('name, address, suburb, post_code',("location_id = '$pickupID'"));
+            $pickupLoc = $pickupLoc[0]['name'] . ", " . $pickupLoc[0]['address'] . " " . $pickupLoc[0]['suburb'] . " " . $pickupLoc[0]['post_code'];
+
+            return $pickupLoc;
+        }
+
+        function getDropOffLocNameAddress($dropOffID){
+            $dbCon = new DBConnection('location_table');
+            $dropOffLoc = $dbCon->get('name, address, suburb, post_code',("location_id = '$dropOffID'"));
+            $dropOffLoc =  $dropOffLoc[0]['name'] . ", " . $dropOffLoc[0]['address'] . " " . $dropOffLoc[0]['suburb'] . " " . $dropOffLoc[0]['post_code'];
+
+            return $dropOffLoc;
+        }
+
         function getBookingBikeID($booking_id){
             $dbCon = new DBConnection('booking_bike_table');
             $bike = $dbCon->get('bike_id',("booking_id = '$booking_id'"));
@@ -105,9 +121,10 @@
                     $startT= $this->startT[$i];
                     $endT=$this->endT[$i];
                     $dur=$this->duration[$i];
-                    $puLoc=$this->pickupLoc[$i];
-                    $doLoc=$this->dropOffLoc[$i];
+                    $puLoc=$this->getPickUpLocNameAddress($this->pickupLoc[$i]);
+                    $doLoc=$this->getDropOffLocNameAddress($this->dropOffLoc[$i]);
                     $fee=$this->fee[$i];
+
                     echo "
                     <h3>Booking ID: $bookingid</h3> 
                     <div class='text'>

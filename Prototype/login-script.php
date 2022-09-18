@@ -26,7 +26,7 @@
             $newUser = new PersonDTO($email);
             $role = $newUser->authenticateUser($pwd);  
             $newUser->getDetails();
-            $license = $newUser->getLicense();  
+            $license = $newUser->getLicence();  
             if($role == "3"){
                 $_SESSION['login-type'] = 'customer';
                 if ($license == "null"){

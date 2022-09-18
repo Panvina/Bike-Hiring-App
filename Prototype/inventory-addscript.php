@@ -1,7 +1,7 @@
 <?php
     session_start();
     include 'php-scripts/backend-connection.php';
-    include("inventory-util.php");
+    include("php-scripts/inventory-util.php");
     $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 
     $bikeId = $_POST["bikeId"];

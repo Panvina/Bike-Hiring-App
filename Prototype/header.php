@@ -3,13 +3,6 @@
     if(!isset($_SESSION)){ 
         session_start();     
     }
-    if(isset($_POST['logout'])==true){
-        $_SESSION = array();
-        session_destroy();
-        header("location: index.php");
-        exit;
-    }
-
 ?>
 <!DOCTYPE html>
 <html>
@@ -40,12 +33,14 @@
                                 </li>
                                 <li><a href="contactus.php">Contact Us</a></li>
                                 <?php 
-                                    if(!isset($_SESSION["login-type"]) || $_SESSION["login-type"] != "customer"){
-                                        echo include 'login.php';
+                                    if(!isset($_SESSION["login-type"])){
+                                        include 'login.php';
+                                    }else if($_SESSION["login-type"] != "customer"){
+                                        echo "<li><a href='dashboard.php'><button type='text'>Dashboard</button></a></li>";
                                     }else{
                                         echo "<li> <a href='booking-summary.php'>My Bookings</a></li>";
                                         echo "<li>
-                                                <form action='header.php' method='post'>
+                                                <form action='user-privilege.php' method='post'>
                                                     <input type='hidden' name='logout' value='logout'>
                                                     <button type='submit'>Logout</button>
                                                 </form></li>";

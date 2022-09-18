@@ -3,13 +3,16 @@
 
 <?php 
     include_once 'php-scripts/backend-connection.php';
+    include_once 'php-scripts/utils.php';
     class PersonDTO{
         private $username="";
         private $name ="";
         private $phoneN="";
         private $email="";
         private $address="";
-        private $license="";
+        private $suburb="";
+        private $postcode="";
+        private $licence="";
         private $state="";
         private $role="";
 
@@ -37,11 +40,17 @@
         function getAddress(){
             return $this->address;
         }
-        function getLicense(){
-            return $this->license;
+        function getLicence(){
+            return $this->licence;
         }
         function getState(){
             return $this->state;
+        }
+        function getSuburb(){
+            return $this->suburb;
+        }
+        function getPostCode(){
+            return $this->postcode;
         }
         function getRole(){
             return $this->role;
@@ -60,10 +69,49 @@
             $this->name = $oneDiArray['name'];
             $this->phoneN= $oneDiArray['phone_number'];
             $this->email = $oneDiArray['email'];
-            $this->address= $oneDiArray['street_address'] ." ". $oneDiArray ['suburb'] ." ". $oneDiArray ['post_code'] ." ". $oneDiArray ['state'];
-            $this->license = $oneDiArray['licence_number'];
+            $this->address= $oneDiArray['street_address'];
+            $this->licence = $oneDiArray['licence_number'];
+            $this->suburb = $oneDiArray ['suburb'];
+            $this->postcode=$oneDiArray ['post_code'];
+            $this->state=$oneDiArray ['state'];
         }
 
+        function updateDetails($login="", $formName, $formNumber, $formStreet, $formSuburb, $formPcode, $formState, $formEmail ){
+            $login = $this->getUsername();
+            $dbCon = new DBConnection('customer_table');
+            $msg="";
+                if (!validName($formName) || empty($formName)){
+                    $msg = $msg . "<p class='error'>Name is invalid.</p>";
+                }
+                if (!validMobileNumber($formNumber) || empty($formNumber)){
+                    $msg = $msg . "<p class='error'>The phone number is invalid.</p>";
+                }
+                if (!validAddress($formStreet) || empty($formStreet)){
+                    $msg = $msg . "<p class='error'>The street address is invalid.</p>";
+                }
+                if (!validName($formSuburb) || empty($formSuburb)){
+                    $msg = $msg . "<p class='error'>The suburb is invalid.</p>";
+                }
+                if (!validPostCode($formPcode)|| empty ($formPcode)){
+                    $msg = $msg . "<p class='error'>The post code is invalid.</p>";
+                }
+                if (!validState($formState) || empty($formState)){
+                    $msg = $msg . "<p class='error'>The state is invalid.</p>";
+                }
+                if (!validEmail( $formEmail)||empty ($formEmail)){
+                    $msg =$msg . "<p class='error'>The email address is invalid. </p>";
+                }
+                if (empty($msg)){
+                    $user = $this->getUsername();
+                    $conn = new DBConnection("customer_table");
+                    if ($conn->update("user_name", "'$user'", "name, phone_number, email, street_address, suburb, post_code, state",
+                    "$formName, $formNumber, $formEmail, $formStreet, $formSuburb, $formPcode, $formState") == true)
+                    {
+                        $msg = "true";
+                    }
+                }
+            return $msg;
+        }
         //authenticate the user when they log in through the popup on the website. 
         function authenticateUser($pwd){
             $id = $this->getUsername();

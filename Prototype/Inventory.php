@@ -5,15 +5,15 @@
 
 // Enabling session
 session_start();
-if(!isset($_SESSION["login-type"]) || $_SESSION["login-type"] == "customer"){
-    header("location: index.php?Error403:AccessDenied");
-    exit;
-}
+
 // Setting the timezone to local timezone to compare booking availabilities
 date_default_timezone_set('Australia/Melbourne');
 
 //Linking utility functions associated with inventory
-include("inventory-util.php");
+include("php-scripts/inventory-util.php");
+
+//enabling the user privilege of certain tabs. Added by Vina Touch 101928802
+include_once "user-privilege.php";
 
 //Establishing database connection using mysqli()
 $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
@@ -27,7 +27,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 <head>
     <!-- header -->
     <title> Inventory </title>
-    <h1 class="header"> <img src="img/photos/Inverloch_Logo3.png" alt="Inverloch Logo" id="Logo" /> Inventory </h1>
+    <h1 class="header"> <a href="index.php"><img src="img/photos/Inverloch_Logo3.png" alt="Inverloch Logo" id="Logo" /></a> Inventory </h1>
 </head>
 
 <body>
@@ -65,9 +65,8 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
         <div class="sideNavigation">
             <a href= "Dashboard.php"> <img src= "img/icons/bulletin-board.png" alt="Dashboard Logo" /> Dashboard </a> <br>
             <a href = "Customer.php"> <img src= "img/icons/account-group.png" alt="Customer Logo" />  Customer  </a> <br>
-            <?php if ($_SESSION["login-type"] == "owner"){
-                    echo "<a href='staff.php'> <img src='img/icons/staff.png' alt='Staff Logo' /> Staff </a> <br>";} ?>
-            <a href="accounts.php"> <img src="img/icons/account.png" alt="Account logo"/> Accounts </a> <br>
+            <?php setOwnerDashboardPrivilege(); ?>
+            <!--<a href="accounts.php"> <img src="img/icons/account.png" alt="Account logo"/> Accounts </a> <br>-->
             <a class="active" href= "Inventory.php"> <img src= "img/icons/bicycle.png" alt="Inventory Logo" />  Inventory </a> <br>
             <a href="Accessory.php"> <img src="img/icons/accessories.png" alt="Inventory Logo" /> Accessories </a> <br>
             <a href="BikeTypes.php"> <img src="img/icons/biketypes.png" alt="Bike Types Logo" /> Bike Types </a> <br>
@@ -76,6 +75,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
             <a href= "Block_Out_Date.php"> <img src= "img/icons/calendar.png" alt="Block out date Logo" /> Block Out Dates </a> <br>
             <a href= "Locations.php"> <img src= "img/icons/earth.png" alt="Locations Logo" /> Locations </a> <br>
             <a href= "editpages.php"> <img src= "img/icons/bulletin-board.png" alt="Edit Pages Logo" /> Edit </a> <br>
+            <?php setLogoutButton()?>
         </div>
     </nav>
 
@@ -158,6 +158,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                         ?>
                     </td>
                 </tr>
+                
             <?php
             }
             ?>
@@ -332,8 +333,8 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                 </div>
 
                 <div>
-                    <h2>Description</h2>
-                    <textarea placeholder="Description about the bike..." name="description"></textarea>
+                    <h2>Description</h2><br>
+                    <textarea  style='width: 220px; height: 50px' placeholder="Description about the bike..." name="description"></textarea>
                 </div>
                 <span class="error"> 
                         <?php 
@@ -368,6 +369,12 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                                                     ?>>
         <!-- Content within popup -->
         <div class="modal-content">
+            <?php 
+            $tempBikeTypeId = $_SESSION['bike_type_id'];
+            /*Retreiving bike type data to display in the form*/
+            $tempBikeType = $conn->query("SELECT * FROM bike_type_table WHERE bike_type_id = $tempBikeTypeId" );
+            if ($tempBikeTypeOption = mysqli_fetch_array($tempBikeType))
+            ?>
             <span class="updateFormClose">&times;</span>
             <form action="inventory-updatescript.php" method="post" event.preventDefault()>
                 <div>
@@ -413,13 +420,18 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     <!-- Bike type options displayed as a dropdown by fetching from bike type table in db-->
                     <h2>BikeTypeID</h2>
                     <select placeholder="Bike's Type..." name="bikeTypeId" type="submit" value="<?php echo $_SESSION['bike_type_id'] ?>">
-                        <option selected=selected><?php echo $_SESSION['bike_type_id'] ?></option>
+                        <!-- <option style = 'background-color:#8DEF6E' selected=selected><//?php echo $_SESSION['bike_type_id'];
+                        echo "-";
+                        echo $tempBikeTypeOption['name'];?></option> -->
                         <?php
                         foreach ($bikeTypeOption as $option) {
+                        $selected = $_SESSION['bike_type_id']===$option['bike_type_id'] ? 'selected' : '';
                         ?>
-                            <option><?php echo $option['bike_type_id'];
+                            <option <?php echo $selected ?>><?php 
+                                    echo $option['bike_type_id'];
                                     echo "-";
-                                    echo  $option['name']; ?> </option>
+                                    echo  $option['name'];                              
+                                     ?> </option>
                         <?php
                         }
                         ?>
@@ -442,11 +454,11 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     <!-- Helmet options displayed as a dropdown by fetching from accessory type table in db-->
                     <h2>HelmetID</h2>
                     <select placeholder="Helmet's ID..." name="helmetId" type="submit" value="<?php echo $_SESSION['helmet_id'] ?>">
-                        <option selected=selected><?php echo $_SESSION['helmet_id'] ?></option>
                         <?php
                         foreach ($bikeAccessoryOption as $option) {
+                        $selected = $_SESSION['helmet_id']===$option['accessory_id'] ? 'selected' : '';
                         ?>
-                            <option><?php echo $option['accessory_type_id'];
+                            <option <?php echo $selected ?>><?php echo $option['accessory_id'];
                                     echo "-";
                                     echo  $option['name']; ?> </option>
                         <?php
@@ -508,8 +520,8 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                 </div>            
 
                 <div>
-                    <h2>Description</h2>
-                    <textarea iplaceholder="Description about the bike..." name="description"><?php echo $_SESSION['description'] ?></textarea>
+                    <h2>Description</h2><br>
+                    <textarea style='width: 220px; height: 50px' iplaceholder="Description about the bike..." name="description"><?php echo $_SESSION['description'] ?></textarea>
                 <span class="error"> 
                         <?php 
                             if (isset($_GET["update"]))
@@ -547,10 +559,12 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
             <h1 style="left: -8%; position: relative;"> Do you wish to delete the item? </h1>
             <form action="inventory-deletescript.php" method="post" event.preventDefault()>
                 <div>
-                    <h2>BikeID</h2>
+                    <div style="text-align: center; background-color: none;">
+                    <h2>Bike ID :</h2>
                     <?php
                     $primaryKey = $_SESSION["bike_id"];
-                    echo "<h1 style='left: 25%; position: relative;'> $primaryKey </h1>";
+                    echo "<h1 style='left:-10%; position: relative;'> $primaryKey </h1>";?></div><br>
+                    <?php
                     echo "<form action='inventory-deletescript.php' method='POST' event.preventDefault()>
                       <button style='width: 40%; left: -10%; position: relative;' type='submit' id='$primaryKey' value ='$primaryKey' name='submitDeleteItem'>Yes</button>
                       <button style='width: 40%; left: -10%; position: relative; background-color: red;' type='submit' name='cancelDeleteItem'>No</button> </form>";
