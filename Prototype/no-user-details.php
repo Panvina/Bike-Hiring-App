@@ -12,8 +12,8 @@
     include_once "php-scripts/backend-connection.php" ;
     include_once 'php-scripts/utils.php';
     $error = "none";
-    if(isset($_POST['number']) || isset($_POST['number']) || isset($_POST['street_address']) || isset($_POST['suburb']) || isset($_POST['post_code']) 
-|| isset($_POST['state']) || isset($_POST['licence_number'])){
+    if(isset($_POST['number']) || isset($_POST['street_address']) || isset($_POST['suburb']) || isset($_POST['post_code']) 
+    || isset($_POST['state']) || isset($_POST['licence_number'])){
         $error = "";
         $number = $_POST['number'];
         $street = $_POST['street_address'];
@@ -22,22 +22,22 @@
         $state = $_POST['state'];
         $licence = $_POST['licence_number'];
         if (!validMobileNumber($number) || empty($_POST['number'])){
-            $error = $error . "The phone number is invalid.<br>";
+            $error = $error . "<p class='error'>The phone number is invalid.</p>";
         }
-        if (empty($_POST['street_address'])){
-            $error = $error . "The street address is invalid.<br>";
+        if (!validAddress($street) || empty($_POST['street_address'])){
+            $error = $error . "<p class='error'>The street address is invalid.</p>";
         }
         if (!validName($suburb) || empty($_POST['suburb'])){
-            $error = $error . "The suburb is invalid.<br>";
+            $error = $error . "<p class='error'>The suburb is invalid.</p>";
         }
         if (!validPostCode($pcode)|| empty ($_POST['post_code'])){
-            $error = $error . "The post code is invalid.<br>";
+            $error = $error . "<p class='error'>The post code is invalid.</p>";
         }
         if (!validState($state) || empty($_POST['state'])){
-            $error = $error . "The state is invalid.<br>";
+            $error = $error . "<p class='error'>The state is invalid.</p>";
         }
         if (!validLicenceNumber( $licence)||empty ($_POST['licence_number'])){
-            $error = $error . "The licence number is invalid.<br>";
+            $error = $error . "<p class='error'>The licence number is invalid.</p>";
         }
         if (empty($error) || isset($_GET['cusID'])){
             $cusID = $_SESSION['cusID'];
@@ -79,14 +79,13 @@
             <input type="text" name ="street_address"/><br><br>
             <label for="suburb">Suburb: </label>
             <input type="text" name ="suburb"/><br><br>
-            <label for="post_code">Post_Code:</label>
+            <label for="post_code">Post Code:</label>
             <input type="text" name ="post_code"/><br><br>        
             <label for="state">State: </label>
             <input type="text" name ="state"/><br><br>
             <label for="licence_number">Licence Number: </label>
             <input type="text" name ="licence_number"/><br><br>
-            <input type="reset" value="Reset" id="reset"/>
-            <input type="submit" value="Post""/>
+            <input type="submit" value="Post"/>
         </form>
         <footer><?php include 'footer.php'?></footer>
     </body>

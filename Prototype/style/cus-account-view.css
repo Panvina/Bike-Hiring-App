@@ -1,9 +1,21 @@
 /*Styling the customer account page*/
+.addressBox{
+  width: 20%;
+  margin-top: 5px;
+}
+input[type="text"]{
+  font-size: 14px;
+}
+
+input::placeholder {
+  font-size: 10px;
+}
 #greet-heading{
     padding-top: 20px;
     margin-left: 5em;
     padding-left: 2.5em;
 }
+
 .section {
     display: flex;
   }
@@ -38,5 +50,6 @@
 
 .text-col{
   flex: 50%;
-    float: left;
+  float: left;
+  margin-left: 50px;
 }
