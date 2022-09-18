@@ -57,7 +57,7 @@
                         type="password"
                         placeholder="PASSWORD"
                     />
-                    <p style="margin-top: 0px; transform: translate(0, -15px);" class="centre-text"><a href="https://blank.org" class="no-text-decoration">Forgot Password</a></p>
+                    <!--<p style="margin-top: 0px; transform: translate(0, -15px);" class="centre-text"><a href="https://blank.org" class="no-text-decoration">Forgot Password</a></p>-->
                     <button type="submit" name="login-submit" class="centre-element modal-btn login-btn">LOGIN</button>
                 </form>
                 <p class="decorated-lines no-vertical-margins" style="transform: translate(0, -10px);">OR</p>
@@ -154,7 +154,7 @@
                         <input name="ca-privacy-policy" type="checkbox"/> I agree to the <a href="https://www.blank.org">privacy policy</a>
                     </label> -->
                     <br>
-                    <button type="submit" name="ca-submit" class="centre-element modal-btn login-btn" style="position: relative; transform: translate(-50%, 15px)">LOGIN</button>
+                    <button type="submit" name="ca-submit" class="centre-element modal-btn login-btn" style="position: relative; transform: translate(-50%, 15px)">Create</button>
                 </form>
             </div>
         </div>

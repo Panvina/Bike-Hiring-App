@@ -6,8 +6,7 @@
         header("location: index.php?Error403:AccessDenied");
         exit;
     }
-?>
-<?php 
+
     include_once 'person-dto.php';
     include_once "php-scripts/backend-connection.php" ;
     include_once 'php-scripts/utils.php';
@@ -45,9 +44,8 @@
             $cusID = $user->getUsername();
             $conn = new DBConnection("customer_table");
             if ($conn->update("user_name", "'$cusID'", "phone_number, street_address, suburb, post_code, licence_number, state",
-            "$number,  $street, $suburb, $pcode, $licence, $state") == true)
-            {
-                $_SESSION["user-details"] == "yes";
+            "$number,  $street, $suburb, $pcode, $licence, $state") == true){
+                $_SESSION["user-details"] = "yes";
                 header("Location: booking-summary.php?update=success");
                 exit();
             }
@@ -85,7 +83,7 @@
             <input type="text" name ="state"/><br><br>
             <label for="licence_number">Licence Number: </label>
             <input type="text" name ="licence_number"/><br><br>
-            <input type="submit" value="Post"/>
+            <input type="submit" value="Submit"/>
         </form>
         <footer><?php include 'footer.php'?></footer>
     </body>
