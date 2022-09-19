@@ -97,40 +97,41 @@
                         ?>
                     ><br><br>
                     <label>Start Time</label><br>
-                    <input name="add-booking-start-time" id="add-booking-start-time" type="time" min="09:00" max="17:00"
-                        <?php
-                            if (isset($_SESSION["addBooking"]))
-                            {
-                                // get selected start date
-                                $bookingStartTimeValue = $_SESSION["addBooking"]["startTime"];
-                                echo "value='$bookingStartTimeValue'";
-                            }
-                        ?>
-                    ><br><br>
+                    <select name="add-booking-start-time" id="add-booking-start-time">
+                    <?php
+                        $selectTime = -1;
+                        if (isset($_SESSION["addBooking"]))
+                        {
+                            // get selected start date
+                            $selectTime = $_SESSION["addBooking"]["startTime"];
+                        }
+                        printTimeComboBoxOptions($selectTime);
+                    ?>
+                    </select><br><br>
                     <!-- Select end of booking -->
                     <label>End Date</label><br>
-                        <input name="add-booking-end-date" id="add-booking-end-date" type="date"
-                        <?php
-                            if (isset($_SESSION["addBooking"]))
-                            {
-                                // get selected start date
-                                $bookingEndDateValue = $_SESSION["addBooking"]["endDate"];
-                                echo "value='$bookingEndDateValue'";
-                            }
-                        ?>
+                    <input name="add-booking-end-date" id="add-booking-end-date" type="date"
+                    <?php
+                        if (isset($_SESSION["addBooking"]))
+                        {
+                            // get selected start date
+                            $bookingEndDateValue = $_SESSION["addBooking"]["endDate"];
+                            echo "value='$bookingEndDateValue'";
+                        }
+                    ?>
                     ><br><br>
                     <label>End Time</label><br>
-                    <input name="add-booking-end-time" id="add-booking-end-time" type="time" min="09:00" max="17:00"
-                        <?php
-                            if (isset($_SESSION["addBooking"]))
-                            {
-                                // get selected start date
-                                $bookingEndTimeValue = $_SESSION["addBooking"]["endTime"];
-                                echo "value='$bookingEndTimeValue'";
-                            }
-                        ?>
-                    ><br><br>
-
+                    <select name="add-booking-end-time" id="add-booking-end-time">
+                    <?php
+                        $selectTime = -1;
+                        if (isset($_SESSION["addBooking"]))
+                        {
+                            // get selected start date
+                            $selectTime = $_SESSION["addBooking"]["endTime"];
+                        }
+                        printTimeComboBoxOptions($selectTime);
+                    ?>
+                    </select><br><br>
                     <!-- Select pickup and dropoff locations -->
                     <label>Pick-Up Location</label><br>
                     <select name="add-booking-pick-up-location" id="add-booking-pick-up-location"><br><br>
@@ -330,13 +331,20 @@
                     <label>Start Date</label><br>
                     <input name="change-booking-start-date" id="change-booking-start-date" type="date" value=<?php echo "$startDate"; ?>><br><br>
                     <label>Start Time</label><br>
-                    <input name="change-booking-start-time" id="change-booking-start-time" type="time" min="09:00" max="17:00" value=<?php echo "$startTime"; ?>><br><br>
-
+                    <select name="change-booking-start-time" id="change-booking-start-time">
+                    <?php
+                        printTimeComboBoxOptions($startTime);
+                    ?>
+                    </select><br><br>
                     <!-- Select end of booking -->
                     <label>End Date</label><br>
                     <input name="change-booking-end-date" id="change-booking-end-date" type="date" value=<?php echo "$endDate"; ?>><br><br>
                     <label>End Time</label><br>
-                    <input name="change-booking-end-time" id="change-booking-end-time" type="time" min="09:00" max="17:00" value=<?php echo "$endTime"; ?>><br><br>
+                    <select name="change-booking-end-time" id="change-booking-end-time"<
+                    <?php
+                        printTimeComboBoxOptions($endTime);
+                    ?>
+                    </select><br><br>
 
                     <!-- Select pickup and dropoff locations -->
                     <label>Pick-Up Location</label><br>

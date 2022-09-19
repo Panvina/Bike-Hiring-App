@@ -9,6 +9,28 @@ Contributor(s):
 -->
 
 <?php
+	function printTimeComboBoxOptions($selectedTime=-1, $startHour=9, $endHour=17)
+	{
+		if ($selectedTime != -1)
+		{
+			$selectedTime = strtotime($selectedTime);
+		}
+		for($i = $startHour; $i <= $endHour; $i++)
+		{
+			$value = "$i:00";
+			$valTime = strtotime($value);
+
+			if ($selectedTime == $valTime)
+			{
+				echo "<option value='$value' selected='selected'>$value</option>";
+			}
+			else
+			{
+				echo "<option value='$value'>$value</option>";
+			}
+		}
+	}
+
 	/**
 	 * Convert a PHP array to HTML select box options (combo boxes)
 	 * - arr : PHP array
@@ -111,7 +133,7 @@ Contributor(s):
 		//1. Only contains alphanumeric characters excluding underscore and dots
 		//2. A underscore and dot cannot be used at the start, end or used together
 		//3. The underscore and dots cannot be used multple times
-		//4. Number of characters must be between 8 and 20 characters 
+		//4. Number of characters must be between 8 and 20 characters
 	function validUserName($userName)
 	{
 		//return preg_match("/[a-z0-9_\-A-Z]{3,16}/",$userName);
