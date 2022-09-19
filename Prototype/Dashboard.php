@@ -63,7 +63,7 @@ Contributor(s):
          </nav>
         <!-- Block of content in center -->
         <div class="Content">
-            <div style="display: inline-block;">
+            <div style="display: inline-block; ">
                 <label class="Date" for="dDate">
                     <?php
                         $date = $_GET["date"];
@@ -145,7 +145,7 @@ Contributor(s):
 
             <!--This calendar section is done by Clement where it is showing the current bookings as an event scheduler and it is hard code since it is to demonstrate the potential type of thing-->
             <!-- Current bookings section -->
-            <h1 style="line-height: 50px;"><strong> Current Bookings: </strong></h1>
+            <h1 style="line-height: 0px; margin-bottom: 0px; margin-top: 2em; "><strong> Current Bookings: </strong></h1>
 			<div class="background">
     			<pre>
     			<!--keeping the schedule inside it-->
