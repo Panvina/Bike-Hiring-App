@@ -152,7 +152,18 @@
                 <div>
                     <!-- User name input validation, checks based on error and displays accurate error message -->
                     <h2> User Name: </h2>
-                    <input type="text" name="userName">
+                    <!-- Recieves the current value of field that was used instead of wiping it clear -->
+                    <?php
+                        if (isset($_SESSION["customerInsertUserName"]))
+                        {
+                            $userName = $_SESSION["customerInsertUserName"];
+                            echo "<input type='text' name='userName' value='$userName'>";    
+                        }
+                        else
+                        {
+                            echo '<input type="text" name="userName">';    
+                        }
+                    ?>
                     <span class="error"> 
                         <?php 
                             if (isset($_GET["insert"]))
@@ -175,7 +186,18 @@
                 <div>
                     <!-- Name input validation, checks based on error and displays accurate error message -->
                     <h2> Name: </h2>
-                    <input type="text" name="name">
+                     <!-- Recieves the current value of field that was used instead of wiping it clear -->
+                    <?php
+                        if (isset($_SESSION["customerInsertName"]))
+                        {
+                            $name = $_SESSION["customerInsertName"];
+                            echo "<input type='text' name='name' value='$name'>";    
+                        }
+                        else
+                        {
+                            echo '<input type="text" name="name">';    
+                        }
+                    ?>
                     <span class="error"> 
                         <?php 
                             if (isset($_GET["insert"]))
@@ -196,7 +218,18 @@
                 <div>
                     <!-- Phone Number input validation, checks based on error and displays accurate error message -->
                     <h2> Phone Number: </h2>
-                    <input type="text" name="phoneNumber">
+                    <!-- Recieves the current value of field that was used instead of wiping it clear -->
+                    <?php
+                        if (isset($_SESSION["customerInsertPhoneNumber"]))
+                        {
+                            $phoneNumber = $_SESSION["customerInsertPhoneNumber"];
+                            echo "<input type='text' name='phoneNumber' value='$phoneNumber'>";    
+                        }
+                        else
+                        {
+                            echo '<input type="text" name="phoneNumber">';    
+                        }
+                    ?>
                     <span class="error"> 
                         <?php 
                             if (isset($_GET["insert"]))
@@ -217,7 +250,18 @@
                 <div>
                     <!-- Email input validation, checks based on error and displays accurate error message -->
                     <h2> Email: </h2>
-                    <input type="text" name="email">
+                    <!-- Recieves the current value of field that was used instead of wiping it clear -->
+                    <?php
+                        if (isset($_SESSION["customerInsertEmail"]))
+                        {
+                            $email = $_SESSION["customerInsertEmail"];
+                            echo "<input type='text' name='email' value='$email'>";    
+                        }
+                        else
+                        {
+                            echo '<input type="text" name="email">';    
+                        }
+                    ?>
                     <span class="error"> 
                         <?php 
                             if (isset($_GET["insert"]))
@@ -238,7 +282,18 @@
                 <div>
                     <!-- Street Address input validation, checks based on error and displays accurate error message -->
                     <h2> Street Address </h2>
-                    <input type="text" name="streetAddress">
+                    <!-- Recieves the current value of field that was used instead of wiping it clear -->
+                    <?php
+                        if (isset($_SESSION["customerInsertStreetAddress"]))
+                        {
+                            $streetAddress = $_SESSION["customerInsertStreetAddress"];
+                            echo "<input type='text' name='streetAddress' value='$streetAddress'>";    
+                        }
+                        else
+                        {
+                            echo '<input type="text" name="streetAddress">';    
+                        }
+                    ?>
                     <span class="error"> 
                         <?php 
                             if (isset($_GET["insert"]))
@@ -259,7 +314,18 @@
                 <div>
                     <!-- Suburb input validation, checks based on error and displays accurate error message -->
                     <h2> Suburb </h2>
-                    <input type="text" name="suburb">
+                    <!-- Recieves the current value of field that was used instead of wiping it clear -->
+                    <?php
+                        if (isset($_SESSION["customerInsertSuburb"]))
+                        {
+                            $suburb = $_SESSION["customerInsertSuburb"];
+                            echo "<input type='text' name='suburb' value='$suburb'>";    
+                        }
+                        else
+                        {
+                            echo '<input type="text" name="suburb">';    
+                        }
+                    ?>
                     <span class="error"> 
                         <?php 
                             if (isset($_GET["insert"]))
@@ -280,7 +346,18 @@
                 <div>
                     <!-- Post Code input validation, checks based on error and displays accurate error message -->
                     <h2> Post Code </h2>
-                    <input type="text" name="postCode">
+                    <!-- Recieves the current value of field that was used instead of wiping it clear -->
+                    <?php
+                        if (isset($_SESSION["customerInsertPostCode"]))
+                        {
+                            $postCode = $_SESSION["customerInsertPostCode"];
+                            echo "<input type='text' name='postCode' value='$postCode'>";    
+                        }
+                        else
+                        {
+                            echo '<input type="text" name="postCode">';    
+                        }
+                    ?>
                     <span class="error"> 
                         <?php 
                             if (isset($_GET["insert"]))
@@ -301,7 +378,18 @@
                 <div>
                     <!-- Licence number input validation, checks based on error and displays accurate error message -->
                     <h2> Licence Number </h2>
-                    <input type="text" name="licenceNumber">
+                    <!-- Recieves the current value of field that was used instead of wiping it clear -->
+                    <?php
+                        if (isset($_SESSION["customerInsertLicenceNumber"]))
+                        {
+                            $licenceNumber = $_SESSION["customerInsertLicenceNumber"];
+                            echo "<input type='text' name='licenceNumber' value='$licenceNumber'>";    
+                        }
+                        else
+                        {
+                            echo '<input type="text" name="licenceNumber">';    
+                        }
+                    ?>
                     <span class="error"> 
                         <?php 
                             if (isset($_GET["insert"]))
@@ -322,7 +410,18 @@
                 <div>
                     <!-- State input validation, checks based on error and displays accurate error message -->
                     <h2> State </h2>
-                    <input type="text" name="state">
+                    <!-- Recieves the current value of field that was used instead of wiping it clear -->
+                    <?php
+                        if (isset($_SESSION["customerInsertState"]))
+                        {
+                            $state = $_SESSION["customerInsertState"];
+                            echo "<input type='text' name='state' value='$state'>";    
+                        }
+                        else
+                        {
+                            echo '<input type="text" name="state">';    
+                        }
+                    ?>
                     <span class="error"> 
                         <?php 
                             if (isset($_GET["insert"]))

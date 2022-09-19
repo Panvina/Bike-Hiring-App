@@ -3,8 +3,8 @@
     //start the session with the database
     session_start();
     //include database functions
-    include_once("php-scripts/backend-connection.php");
-    include_once "php-scripts/utils.php";
+    include_once("backend-connection.php");
+    include_once "utils.php";
     //create the connection with the database
     $conn = new DBConnection("employee_table");
 
@@ -46,12 +46,12 @@
         //checks to see if any of the variables is empty then redirects back based on the result
         if (!checkEmptyVariables([$name, $phoneNumber, $email, $streetAddress, $suburb , $postCode, $state]))
         {
-            header("Location: staff.php?update=notEmpty");
+            header("Location: ../staff.php?update=notEmpty");
             exit();
         }
         else
         {
-            header("Location: staff.php?update=empty");
+            header("Location: ../staff.php?update=empty");
             exit();
         }
    }
@@ -74,12 +74,12 @@
         //checks to see if input is empty
         if (empty($_POST["name"])) 
         {
-           header("Location: staff.php?update=nameEmptyErr");
+           header("Location: ../staff.php?update=nameEmptyErr");
         }
         //checks to see if the name is valid and matches the pattern
         else if (!validName($_POST["name"])) 
         {
-            header("Location: staff.php?update=nameValidErr");
+            header("Location: ../staff.php?update=nameValidErr");
         } 
         else 
         {
@@ -91,12 +91,12 @@
         //checks to see if input is empty
         if (empty($_POST["phoneNumber"]))
         {
-            header("Location: staff.php?update=phoneNumberEmptyErr");
+            header("Location: ../staff.php?update=phoneNumberEmptyErr");
         } 
         //checks to see if the mobile number is valid and matches the pattern
         else if (!validMobileNumber($_POST["phoneNumber"])) 
         {
-            header("Location: staff.php?update=phoneValidErr");
+            header("Location: ../staff.php?update=phoneValidErr");
         } 
         else 
         {
@@ -107,12 +107,12 @@
         //Email input validation
         //checks to see if input is empty
         if (empty($_POST["email"])) {
-            header("Location: staff.php?update=emailEmptyErr");
+            header("Location: ../staff.php?update=emailEmptyErr");
         }
         //checks to see if the email is valid and matches the pattern
         else if (!validEmail($_POST["email"])) 
         {
-            header("Location: staff.php?update=emailValidErr");
+            header("Location: ../staff.php?update=emailValidErr");
         }
         else 
         {
@@ -124,13 +124,13 @@
         //checks to see if input is empty
         if (empty($_POST["streetAddress"])) 
         {
-            header("Location: staff.php?update=streetAddressEmptyErr");
+            header("Location: ../staff.php?update=streetAddressEmptyErr");
         }
         //checks to see if the address is valid and matches the pattern
         else if (!validAddress($_POST["streetAddress"])) 
         {
             //cleans the input and assigns the variable for inserting
-            header("Location: staff.php?update=streetAddressValidErr");
+            header("Location: ../staff.php?update=streetAddressValidErr");
         } 
         else 
         {
@@ -142,12 +142,12 @@
         //checks to see if input is empty
         if (empty($_POST["suburb"])) 
         {
-            header("Location: staff.php?update=suburbEmptyErr");
+            header("Location: ../staff.php?update=suburbEmptyErr");
         }
         //checks to see if the suburb is valid and matches the pattern
         else if (!validName($_POST["suburb"])) 
         {
-            header("Location: staff.php?update=suburbValidErr");
+            header("Location: ../staff.php?update=suburbValidErr");
         } 
         else 
         {
@@ -159,12 +159,12 @@
         //checks to see if input is empty
         if (empty($_POST["postCode"])) 
         {
-            header("Location: staff.php?update=postCodeEmptyErr");
+            header("Location: ../staff.php?update=postCodeEmptyErr");
         }
         //checks to see if the postcode is valid and matches the pattern
         else if (!validPostCode($_POST["postCode"])) 
         {
-            header("Location: staff.php?update=postCodeValidErr");
+            header("Location: ../staff.php?update=postCodeValidErr");
         }  
         else 
         {
@@ -176,12 +176,12 @@
         //checks to see if input is empty
         if (empty($_POST["state"])) 
         {
-            header("Location: staff.php?update=stateEmptyErr");
+            header("Location: ../staff.php?update=stateEmptyErr");
         } 
         //checks to see if the state is valid and matches the pattern
         else if (!validState($_POST["state"])) 
         {
-            header("Location: staff.php?update=stateValidErr");
+            header("Location: ../staff.php?update=stateValidErr");
         }  
         else 
         {
@@ -195,13 +195,12 @@
             if ($conn->update("user_name", "'$pk'", "name, phone_number, email, address, suburb, post_code, state",
             "$name, $phoneNumber, $email, $streetAddress, $suburb, $postCode, $state") == true)
             {
-                
-                header("Location: staff.php?update=true");
+                header("Location: ../staff.php?update=true");
                 exit();
             }
             else
             {
-                header("Location: staff.php?update=false");
+                header("Location: ../staff.php?update=false");
                 exit();
             }
         }   

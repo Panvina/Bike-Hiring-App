@@ -120,9 +120,9 @@
                         <div class='dropdown'>
                             <button class='dropbtn' disabled>...</button>
                             <div class='dropdown-content'>
-                                <form action='staff-update-script.php' method='POST' event.preventDefault() > <button type='submit' id= '$primaryKey' class='UpdateButton' name='UpdateButton' 
+                                <form action='php-scripts/staff-update-script.php' method='POST' event.preventDefault() > <button type='submit' id= '$primaryKey' class='UpdateButton' name='UpdateButton' 
                                 value='$primaryKey'> Update Customer </button> </form>
-                                <form action='staff-delete-script.php' method='POST' event.preventDefault()> <button type='submit' name='deleteButton' id='$primaryKey' class='deleteButton' 
+                                <form action='php-scripts/staff-delete-script.php' method='POST' event.preventDefault()> <button type='submit' name='deleteButton' id='$primaryKey' class='deleteButton' 
                                 value = '$primaryKey'>Delete Customer</button> </form>
                             </div>
                         </div>
@@ -153,12 +153,22 @@
         <!-- Creates the content within the pop up -->
         <div class="modal-content">
             <span class="Insertclose">&times;</span>
-            <form action="staff-insert-script.php" method="POST" event.preventDefault()>
+            <form action="php-scripts/staff-insert-script.php" method="POST" event.preventDefault()>
                 <h1> Create a staff member </h1>
                 <div>
                     <!-- User name input validation, checks based on error and displays accurate error message -->
                     <h2> User Name: </h2>
-                    <input type="text" name="userName">
+                    <?php
+                        if (isset($_SESSION["staffInsertUserName"]))
+                        {
+                            $userName = $_SESSION["staffInsertUserName"];
+                            echo "<input type='text' name='userName' value='$userName'>";    
+                        }
+                        else
+                        {
+                            echo '<input type="text" name="userName">';    
+                        }
+                    ?>
                     <span class="error"> 
                         <?php 
                             if (isset($_GET["insert"]))
@@ -181,7 +191,17 @@
                 <div>
                     <!-- Name input validation, checks based on error and displays accurate error message -->
                     <h2> Name: </h2>
-                    <input type="text" name="name">
+                    <?php
+                        if (isset($_SESSION["staffInsertName"]))
+                        {
+                            $name = $_SESSION["staffInsertName"];
+                            echo "<input type='text' name='name' value='$name'>";    
+                        }
+                        else
+                        {
+                            echo '<input type="text" name="name">';    
+                        }
+                    ?>
                     <span class="error"> 
                         <?php 
                             if (isset($_GET["insert"]))
@@ -202,7 +222,17 @@
                 <div>
                     <!-- Phone Number input validation, checks based on error and displays accurate error message -->
                     <h2> Phone Number: </h2>
-                    <input type="text" name="phoneNumber">
+                    <?php
+                        if (isset($_SESSION["staffInsertPhoneNumber"]))
+                        {
+                            $phoneNumber = $_SESSION["staffInsertPhoneNumber"];
+                            echo "<input type='text' name='phoneNumber' value='$phoneNumber'>";    
+                        }
+                        else
+                        {
+                            echo '<input type="text" name="phoneNumber">';    
+                        }
+                    ?>
                     <span class="error"> 
                         <?php 
                             if (isset($_GET["insert"]))
@@ -223,7 +253,17 @@
                 <div>
                     <!-- Email input validation, checks based on error and displays accurate error message -->
                     <h2> Email: </h2>
-                    <input type="text" name="email">
+                    <?php
+                        if (isset($_SESSION["staffInsertEmail"]))
+                        {
+                            $email = $_SESSION["staffInsertEmail"];
+                            echo "<input type='text' name='email' value='$email'>";    
+                        }
+                        else
+                        {
+                            echo '<input type="text" name="email">';    
+                        }
+                    ?>
                     <span class="error"> 
                         <?php 
                             if (isset($_GET["insert"]))
@@ -244,7 +284,17 @@
                 <div>
                     <!-- Street Address input validation, checks based on error and displays accurate error message -->
                     <h2> Street Address </h2>
-                    <input type="text" name="streetAddress">
+                    <?php
+                        if (isset($_SESSION["staffInsertStreetAddress"]))
+                        {
+                            $streetAddress = $_SESSION["staffInsertStreetAddress"];
+                            echo "<input type='text' name='streetAddress' value='$streetAddress'>";    
+                        }
+                        else
+                        {
+                            echo '<input type="text" name="streetAddress">';    
+                        }
+                    ?>
                     <span class="error"> 
                         <?php 
                             if (isset($_GET["insert"]))
@@ -265,7 +315,17 @@
                 <div>
                     <!-- Suburb input validation, checks based on error and displays accurate error message -->
                     <h2> Suburb </h2>
-                    <input type="text" name="suburb">
+                    <?php
+                        if (isset($_SESSION["staffInsertSuburb"]))
+                        {
+                            $suburb = $_SESSION["staffInsertSuburb"];
+                            echo "<input type='text' name='suburb' value='$suburb'>";    
+                        }
+                        else
+                        {
+                            echo '<input type="text" name="suburb">';    
+                        }
+                    ?>
                     <span class="error"> 
                         <?php 
                             if (isset($_GET["insert"]))
@@ -286,7 +346,17 @@
                 <div>
                     <!-- Post Code input validation, checks based on error and displays accurate error message -->
                     <h2> Post Code </h2>
-                    <input type="text" name="postCode">
+                    <?php
+                        if (isset($_SESSION["staffInsertPostCode"]))
+                        {
+                            $postCode = $_SESSION["staffInsertPostCode"];
+                            echo "<input type='text' name='postCode' value='$postCode'>";    
+                        }
+                        else
+                        {
+                            echo '<input type="text" name="postCode">';    
+                        }
+                    ?>
                     <span class="error"> 
                         <?php 
                             if (isset($_GET["insert"]))
@@ -307,7 +377,17 @@
                 <div>
                     <!-- State input validation, checks based on error and displays accurate error message -->
                     <h2> State </h2>
-                    <input type="text" name="state">
+                    <?php
+                        if (isset($_SESSION["staffInsertState"]))
+                        {
+                            $state = $_SESSION["staffInsertState"];
+                            echo "<input type='text' name='state' value='$state'>";    
+                        }
+                        else
+                        {
+                            echo '<input type="text" name="state">';    
+                        }
+                    ?>
                     <span class="error"> 
                         <?php 
                             if (isset($_GET["insert"]))
@@ -353,7 +433,7 @@
         <div class="modal-content" >
         
             <span class="updateFormClose">&times;</span>
-            <form action="staff-update-script.php" method="POST" event.preventDefault()>
+            <form action="php-scripts/staff-update-script.php" method="POST" event.preventDefault()>
 
                 <h1> Update a customer </h1>
                 <div>
@@ -539,7 +619,7 @@
             <?php
                 $pk = $_SESSION["user_name"];
                 echo "<h1 style='left: 25%; position: relative;'> $pk </h1>";
-                echo "<form action='staff-delete-script.php' method='POST' event.preventDefault()>
+                echo "<form action='php-scripts/staff-delete-script.php' method='POST' event.preventDefault()>
                       <button style='width: 40%; left: -10%; position: relative;' type='submit' id='$pk' value ='$pk' name='submitDeleteStaff'>Yes</button>
                       <button style='width: 40%; left: -10%; position: relative; background-color: red;' type='submit' name='CancelDeleteStaff'>No</button> </form>";
             ?>  

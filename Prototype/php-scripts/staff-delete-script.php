@@ -3,8 +3,8 @@
     //start the session with the database
     session_start();
     //include database functions
-    include_once("php-scripts/backend-connection.php");
-    include_once "php-scripts/utils.php";
+    include_once("backend-connection.php");
+    include_once "utils.php";
     //create the connection with the database
     $conn = new DBConnection("employee_table");
 
@@ -29,7 +29,7 @@
         //create variable for the session variable due to string errors when querying
         $pk = $_SESSION["user_name"];
         //redirects back to the form to double check user wants to delete data
-        header("Location: staff.php?delete=$pk");
+        header("Location: ../staff.php?delete=$pk");
         exit();
     }
 
@@ -47,12 +47,12 @@
         //deletes the staff from the employee table
         if ($conn->delete("user_name", "'$pk'") == false)
         {
-            header("Location: staff.php?delete=false");
+            header("Location: ../staff.php?delete=false");
         }
         //deletes the staff from the accounts table
         else if ($conn->runQuery($accountQuery) == false)
         {
-           header("Location: staff.php?delete=false");
+           header("Location: ../staff.php?delete=false");
             exit();
         }
         //goes back to the staff page with a error
@@ -60,7 +60,7 @@
         {
             // commit changes to database
             $conn->runQuery("COMMIT;");
-            header("Location: staff.php?delete=true");
+            header("Location: ../staff.php?delete=true");
             exit();
         }          
     }

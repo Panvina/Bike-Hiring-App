@@ -12,7 +12,17 @@
     //define the err variables
     $userNameErr = $nameErr = $phoneNumberErr = $emailErr = $streetAddressErr = $suburbErr = $postCodeErr = $licenceNumberErr = $stateErr = "";
     $_SESSION["userNameErr"] = "";
-    //$customerPrefix = "CU"; 
+    
+    //creates session variables to be used to populate the form once an error has occured
+    $_SESSION["customerInsertUserName"] = $_POST["userName"];
+    $_SESSION["customerInsertName"] = $_POST["name"];
+    $_SESSION["customerInsertPhoneNumber"] = $_POST["phoneNumber"];
+    $_SESSION["customerInsertEmail"] = $_POST["email"];
+    $_SESSION["customerInsertStreetAddress"] = $_POST["streetAddress"];
+    $_SESSION["customerInsertSuburb"] = $_POST["suburb"];
+    $_SESSION["customerInsertPostCode"] = $_POST["postCode"];
+    $_SESSION["customerInsertLicenceNumber"] = $_POST["licenceNumber"];
+    $_SESSION["customerInsertState"] = $_POST["state"];
 
     //checks to see form has opened
     if (isset($_POST['SubmitCustomer']))
@@ -205,6 +215,17 @@
             }
             else
             {
+                //unsets all session variables
+                unset($_SESSION["customerInsertUserName"]);
+                unset($_SESSION["customerInsertName"]);
+                unset($_SESSION["customerInsertPhoneNumber"]);
+                unset($_SESSION["customerInsertEmail"]);
+                unset($_SESSION["customerInsertStreetAddress"]);
+                unset($_SESSION["customerInsertSuburb"]);
+                unset( $_SESSION["customerInsertPostCode"]);
+                unset($_SESSION["customerInsertLicenceNumber"]);
+                unset($_SESSION["customerInsertState"]);
+
                 // commit changes to database
                 $conn->runQuery("COMMIT;");
                 header("Location: ../Customer.php?insert=true");
