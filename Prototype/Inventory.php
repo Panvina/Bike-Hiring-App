@@ -335,7 +335,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                 <div>
                     <h2>Description</h2><br>
                     <textarea  style='width: 220px; height: 50px' placeholder="Description about the bike..." name="description"></textarea>
-                </div>
+                </div><br>
                 <span class="error"> 
                         <?php 
                             if (isset($_GET["insert"]))
@@ -369,12 +369,6 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                                                     ?>>
         <!-- Content within popup -->
         <div class="modal-content">
-            <?php 
-            $tempBikeTypeId = $_SESSION['bike_type_id'];
-            /*Retreiving bike type data to display in the form*/
-            $tempBikeType = $conn->query("SELECT * FROM bike_type_table WHERE bike_type_id = $tempBikeTypeId" );
-            if ($tempBikeTypeOption = mysqli_fetch_array($tempBikeType))
-            ?>
             <span class="updateFormClose">&times;</span>
             <form action="inventory-updatescript.php" method="post" event.preventDefault()>
                 <div>
@@ -534,7 +528,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                             }
                         ?>
                 </span>
-                </div>
+                </div><br>
 
                 <div>
                     <button type="submit" name="submitUpdateItem">Update Item</button>

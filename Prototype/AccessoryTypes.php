@@ -79,7 +79,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
         <h1> All Items </h1>
 
         <!-- Add Item pop up -->
-        <button type="button" id="AddItem">+ Add Accessory</button>
+        <button type="button" id="AddItem">+ Add Accessory Type</button>
 
         <!-- List of available bookings -->
         <table class="TableContent">
@@ -197,10 +197,10 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                             }
                         ?>
                     </span>
-                </div>
+                </div><br>
             
             <div>
-                    <button type="submit" name="AddItem">Add Accessory</button>
+                    <button type="submit" name="AddItem">Add Accessory Type</button>
             </div>
             </form> 
         </div>
@@ -273,7 +273,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                             }
                         ?>
                     </span>
-                </div>
+                </div><br>
 
                 <div>
                     <button type="submit" name="submitUpdateItem">Update Accessory</button>

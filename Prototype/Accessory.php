@@ -283,7 +283,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 
                 <div>
                     <h2>Safety Status</h2>
-                    <label class="switch"  style='left: 10px; bottom:5px;' >
+                    <label class="switch"  style='left: 10px; bottom:14px;' >
                     <input type="hidden" name="safetyInspect" value="0">
                     <input type="checkbox" name="safetyInspect" value="1">
                     <span class="slider round"></span>
@@ -406,7 +406,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     </select> -->
         
                     <h2>Safety Status</h2>
-                    <label class="switch"  style='left: 10px; bottom:5px;' >
+                    <label class="switch"  style='left: 10px; bottom: 14px;' >
                     <input type="hidden" name="safetyInspect" value="0">
                     <input type="checkbox" name="safetyInspect" value="1" <?php echo ($_SESSION['safety_inspect']==1 ? 'checked' : '');?>>
                     <span class="slider round"></span>
