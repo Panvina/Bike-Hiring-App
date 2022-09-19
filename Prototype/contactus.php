@@ -36,7 +36,7 @@ Contributor:
     <div class ="NavContainer">
       <ul class="Breadcrumbs">
         <li class="BreadcrumbsItem"><a href="Index.php" class="BreadcrumbsURL">Home</a></li>
-        <li class="BreadcrumbsItem"><a href="javascript:window.location.href=window.location.href" class="BreadcrumbsURL BreadcrumbsURLactive">CONTACT US</a></li>
+        <li class="BreadcrumbsItem"><a href="javascript:window.location.href=window.location.href" class="BreadcrumbsURL BreadcrumbsURLactive">Contact Us</a></li>
       </ul>
     </div>
   </div>
@@ -110,7 +110,7 @@ Contributor:
       <div id="mainfaq">
         <button type="button" class="collapsible">Do I need a license to ride on an eBike?</button>
         <div class="content">
-          <p>For most electric bikes, you do not need a licence of anykind to use.</p>
+          <p class="content-size">For most electric bikes, you do not need a licence of anykind to use.</p>
         </div>
         <button type="button" class="collapsible">I've never ridden an eBike is it difficult?</button>
         <div class="content">
