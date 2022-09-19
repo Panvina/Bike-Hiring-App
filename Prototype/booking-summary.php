@@ -103,17 +103,17 @@
             <h2>Your Booking Details:</h2>
             <?php
             if (empty($msg)){
-                echo "<h3>To protect your private information, please contact us to update your licence number.</h3>";
+                echo "<h3>To protect your private information, please contact us to update your driver's licence number.</h3>";
             }else{
                 echo "$msg";
             }
             if (!isset($_POST['updateButton'])){
                 echo "<div class='text' id=toUserDetails''>
                         <div class='text-col2'><h4>Name:</h4><p>$name</p><br>
-                        <h4>Address:</h4>
+                        <h4>Residential Address:</h4>
                         <p>$wholeAddress</p></div>
                         <div class='text-col'><h4>Phone Number:</h4>
-                        <p>$pnum</p><br>
+                        <p>0$pnum</p><br>
                         <h4>Email:</h4>
                         <p>$email</p></div>
                     </div><br>";
@@ -126,7 +126,7 @@
                         
                         <div class='text-col2'><h4>Name:</h4>
                             <input type='text' name='name' value='$name'/>
-                            <h4>Address:</h4>
+                            <h4>Residential Address:</h4>
                             <input type='text' name ='street_address' placeholder='street' value='$address'/><br>
                             <input class='addressBox' type='text' name ='suburb' placeholder='suburb' value='$suburb'/>
                             <input class='addressBox' type='text' name ='post_code' placeholder='post code' value='$pcode'/>      
