@@ -186,6 +186,7 @@ nav a {
   border: 1px solid #888;
   width: 20%; /* Could be more or less, depending on screen size */
   background-color: #eaf7f6;
+  /*overflow-x: auto;*/
 }
 
 .modal-content h2, input[type=text]{

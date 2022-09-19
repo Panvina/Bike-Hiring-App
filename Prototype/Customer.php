@@ -673,10 +673,10 @@
             <!-- creates the yes and no button and parses the primary key back to be deleted  -->
             <?php
                 $pk = $_SESSION["user_name"];
-                echo "<h1 style='left: 20%; position: relative;'> $pk </h1>";
+                echo "<h1 style='float: center; display: block; text-align: center;  padding-left: 5%; padding-right: 20%; position: relative; word-wrap: break-word;'> $pk </h1>";
                 echo "<form action='php-scripts/customer-delete-script.php' method='POST' event.preventDefault()>
-                      <button style='width: 40%; left: -10%; position: relative;' type='submit' id='$pk' value ='$pk' name='submitDeleteCustomer'>Yes</button>
-                      <button style='width: 40%; left: -10%; position: relative; background-color: red;' type='submit' name='CancelDeleteCustomer'>No</button> </form>";
+                      <button style='width: 40%; left: -10%; float: center; display: block; text-align: center;  position: relative;' type='submit' id='$pk' value ='$pk' name='submitDeleteCustomer'>Yes</button>
+                      <button style='width: 40%; left: -10%;  float: center; display: block; text-align: center; position: relative; background-color: red;' type='submit' name='CancelDeleteCustomer'>No</button> </form>";
             ?>  
         </div>
     </div>

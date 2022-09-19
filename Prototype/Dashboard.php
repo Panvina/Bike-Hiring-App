@@ -78,11 +78,7 @@ Contributor(s):
                 <br>
              </div>
             <br>
-            <!-- Section headings -->
-            <h1 class="Headings"> Booking Summary </h1>
-            <h1 class="Headings"> Urgent </h1>
-            <h1 class="Headings"> Inventory Summary </h1>
-
+            <br>
             <div class="DashboardInformationContainer">
                 <!-- Booking summary section -->
                 <div class="DashboardInformation">
