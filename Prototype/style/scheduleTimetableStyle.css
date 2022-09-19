@@ -12,7 +12,7 @@ This page is completely done by Clement */
 pre {
   max-width: 100%;
   overflow:scroll;
-
+  font-family:'Times New Roman', Times, serif;
 }
 /*This is to put a background of the calendar bookings*/
 .background
@@ -22,7 +22,7 @@ pre {
 /*This is to keep it in the container and have a proper setup of where data can be put in*/
 .scheduleContainer {
   display: grid;
-  border-radius: 2.5rem;
+  /* border-radius: 2.5rem; */
 	background-color: #d3d3d3;
   grid-gap: 0.2rem;
   /*	This is to change the collumns and its size of the table*/
@@ -140,7 +140,7 @@ padding-right: 0.5rem;
   flex-direction: row;
   padding: 0.5rem 0.5rem;
   background-color: forestgreen;
-  border-radius: 0.5em;
+  /* border-radius: 0.5em; */
   border: 0.2em solid #000000;
   font-size: 1rem;
   line-height: 1.25;
@@ -265,12 +265,12 @@ padding-right: 0.5rem;
 /*This is to set the color of each booking to one set of color*/
 .event.stage-bookings {
   background-color: #00b7b1;
-  color: white;
+  color: black;
 }
 /*This is to set the color to each bookings and each color represent different statuses of the booking*/
 .event.stage-booked {
   background-color: forestgreen;
-  color: white;
+  color: black;
 }
 .event.stage-confirm {
   background-color: darkblue;

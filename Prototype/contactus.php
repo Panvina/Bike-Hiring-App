@@ -31,7 +31,7 @@ Contributor:
   <!-- The banner is created by aadesh and implemented the BreadCrumbs program in -->
   <div class="banner">
     <div id="bannertext">
-      <h1>CONTACT US</h1>
+      <h1>Contact Us</h1>
     </div>
     <div class ="NavContainer">
       <ul class="Breadcrumbs">
@@ -52,7 +52,7 @@ Contributor:
     <div id="contactbox">
       <div class="Contactbox" id="Conactbox1">
         <div id="contactInfo" class="textcentral">
-          <h2>CONTACT INFORMATION</h2>
+          <h2>Contact Information</h2>
           <p>We are a 'Click &amp; Collect' Service. Book a location and pick-up time online and your bike/s will be waiting for you.</p>
           <table width="100%" border="0">
             <tbody>
