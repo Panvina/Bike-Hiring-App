@@ -5,12 +5,12 @@
     //include database functions
     include_once "php-scripts\bike-inventory-db.php";
     include_once "php-scripts\utils.php";
-    
+
     //enabling the user privilege of certain tabs. Added by Vina Touch 101928802
     include_once "user-privilege.php";
     if($_SESSION["login-type"] == "employee"){
         header("location: dashboard.php?Error403:AccessDenied");
-        exit;}    
+        exit;}
     //create the connection with the database
     $conn = new DBConnection("accounts_table");
 ?>
@@ -43,9 +43,33 @@
             <?php setLogoutButton();?>
         </div>
     </nav>
-    
+
     <!-- Block of content in center -->
     <div class="Content">
+        <h1> Roles </h1>
+            <table class="TableContent">
+                <tr>
+                    <th> Role </th>
+                    <th> Description </th>
+                </tr>
+                <!-- Print roles (Dabin) -->
+                <?php
+                    // Get roles
+                    $tmpCon = new DBConnection("authorisation_table");
+                    $rows = $tmpCon->get("*");
+                    for($i = 0; $i < count($rows); $i++)
+                    {
+                        $row = $rows[$i];
+
+                        $roleId = $row["role_id"];
+                        $desc = $row["description"];
+                        echo "<tr>";
+                        echo "<td>$roleId</td>";
+                        echo "<td>$desc</td>";
+                        echo "</tr>";
+                    }
+                ?>
+            </table>
         <h1> All Accounts</h1>
 
         <!-- List of current customers -->
@@ -72,9 +96,9 @@
                         echo "<th> $col </th>";
                     }
                     echo "<th> Edit </th>"
-                ?> 
+                ?>
             </tr>
-            <?php       
+            <?php
                 if ($rows == null)
                 {
                     $rows = array();
@@ -89,7 +113,7 @@
                 $keys = array_keys($rows[0]);
 
                 $primaryColumn = "user_name";
-        
+
                 for($x = 0; $x < count($rows); $x++)
                 {
                     echo "<tr>";
@@ -108,19 +132,19 @@
                     $_SESSION["primaryKey"] = $primaryKey;
                     //Creates the dropdown box with the buttons used for updating and deleting
                     //Clemeant created the drop down box. Jake repurposed it and changed the style and functionality to suit current methods
-                    echo 
-                        "<td>  
+                    echo
+                        "<td>
                         <div class='dropdown'>
                             <button class='dropbtn' disabled>...</button>
                             <div class='dropdown-content'>
-                                <form action='php-scripts\accounts-update-script.php' method='POST' event.preventDefault() > <button type='submit' id= '$primaryKey' class='AccountUpdateButton' name='UpdateButton' 
+                                <form action='php-scripts\accounts-update-script.php' method='POST' event.preventDefault() > <button type='submit' id= '$primaryKey' class='AccountUpdateButton' name='UpdateButton'
                                 value='$primaryKey'> Update Account </button> </form>
-                                <form action='php-scripts\account-delete-script.php' method='POST' event.preventDefault()> <button type='submit' name='deleteButton' id='$primaryKey' class='AccountDeleteButton' 
+                                <form action='php-scripts\account-delete-script.php' method='POST' event.preventDefault()> <button type='submit' name='deleteButton' id='$primaryKey' class='AccountDeleteButton'
                                 value = '$primaryKey'>Delete Account</button> </form>
                             </div>
                         </div>
                         </td>";
-                    
+
                     echo "</tr>";
                 }
             ?>
@@ -145,7 +169,7 @@
 
         <!-- Creates the content within the pop up -->
         <div class="modal-content" >
-        
+
             <span class="updateFormClose">&times;</span>
             <form action="php-scripts\accounts-update-script.php" method="POST" event.preventDefault()>
 
@@ -159,19 +183,19 @@
                     <!-- Name input validation, checks based on error and displays accurate error message -->
                     <h2> roleID: </h2>
                     <input type="text" name="role_id" readonly value = "<?php echo $_SESSION['role_id'];?>">
-                    <span class="error"> 
-                        <?php 
-                         
+                    <span class="error">
+                        <?php
+
                         ?>
                     </span>
                 </div>
-                
+
                 <div>
                     <!-- Name input validation, checks based on error and displays accurate error message -->
                     <h2> Password: </h2>
                     <input type="password" name="password" value = "">
-                    <span class="error"> 
-                        <?php 
+                    <span class="error">
+                        <?php
                             if (isset($_GET["update"]))
                             {
                                 $password = $_GET["update"];
@@ -189,7 +213,7 @@
                         ?>
                     </span>
                 </div>
-                 
+
                 </br>
                     <button type="submit" name="submitUpdateCustomer">Submit</button>
                 </div>
@@ -197,8 +221,8 @@
         </div>
     </div>
 
-    <!-- Create the initial window for the pop up -->                        
-    <div id="DeleteCustomerModal" class="modal" 
+    <!-- Create the initial window for the pop up -->
+    <div id="DeleteCustomerModal" class="modal"
         <?php
             //Used to redirect back to the form once the first button has been pressed
             if(isset($_GET["delete"]))
@@ -224,7 +248,7 @@
                 echo "<form action='php-scripts\account-delete-script.php' method='POST' event.preventDefault()>
                       <button style='width: 40%; left: -10%; position: relative;' type='submit' id='$pk' value ='$pk' name='submitDeleteAccount'>Yes</button>
                       <button style='width: 40%; left: -10%; position: relative; background-color: red;' type='submit' name='CancelDeleteAccount'>No</button> </form>";
-            ?>  
+            ?>
         </div>
     </div>
 
