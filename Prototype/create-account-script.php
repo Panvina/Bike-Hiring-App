@@ -49,6 +49,7 @@
                 $cus_conn = new DBConnection("customer_table");
                 $acc_conn = new DBConnection("accounts_table");
                 $empty="null";
+                $email = strtolower($email);
                 $full_name= $first_name . " " .$last_name;
                 $cols = "user_name, name, phone_number, email, street_address, suburb, post_code, licence_number, state";
                 $customer_data = "'$email','$full_name', '$empty', '$email', '$empty', '$empty', '$empty', '$empty', '$empty'";

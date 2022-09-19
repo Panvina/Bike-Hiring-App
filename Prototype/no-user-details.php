@@ -6,8 +6,7 @@
         header("location: index.php?Error403:AccessDenied");
         exit;
     }
-?>
-<?php 
+
     include_once 'person-dto.php';
     include_once "php-scripts/backend-connection.php" ;
     include_once 'php-scripts/utils.php';
@@ -22,22 +21,22 @@
         $state = $_POST['state'];
         $licence = $_POST['licence_number'];
         if (!validMobileNumber($number) || empty($_POST['number'])){
-            $error = $error . "<p class='error'>The phone number is invalid.</p>";
+            $error = $error . "The phone number is invalid.<br>";
         }
         if (!validAddress($street) || empty($_POST['street_address'])){
-            $error = $error . "<p class='error'>The street address is invalid.</p>";
+            $error = $error . "The street address is invalid.<br>";
         }
         if (!validName($suburb) || empty($_POST['suburb'])){
-            $error = $error . "<p class='error'>The suburb is invalid.</p>";
+            $error = $error . "The suburb is invalid.<br>";
         }
         if (!validPostCode($pcode)|| empty ($_POST['post_code'])){
-            $error = $error . "<p class='error'>The post code is invalid.</p>";
+            $error = $error . "The post code is invalid.<br>";
         }
         if (!validState($state) || empty($_POST['state'])){
-            $error = $error . "<p class='error'>The state is invalid.</p>";
+            $error = $error . "The state is invalid.<br>";
         }
         if (!validLicenceNumber( $licence)||empty ($_POST['licence_number'])){
-            $error = $error . "<p class='error'>The licence number is invalid.</p>";
+            $error = $error . "The licence number is invalid.<br>";
         }
         if (empty($error) || isset($_GET['cusID'])){
             $cusID = $_SESSION['cusID'];
@@ -45,9 +44,8 @@
             $cusID = $user->getUsername();
             $conn = new DBConnection("customer_table");
             if ($conn->update("user_name", "'$cusID'", "phone_number, street_address, suburb, post_code, licence_number, state",
-            "$number,  $street, $suburb, $pcode, $licence, $state") == true)
-            {
-                $_SESSION["user-details"] == "yes";
+            "$number,  $street, $suburb, $pcode, $licence, $state") == true){
+                $_SESSION["user-details"] = "yes";
                 header("Location: booking-summary.php?update=success");
                 exit();
             }
@@ -55,7 +53,10 @@
     }
 ?>
 <html>
-    <head></head>
+    <head>
+        <link rel="stylesheet" href="style/cus-account-view.css" type="text/css"/>
+        <link rel="stylesheet" href="style/style.css" type="text/css"/>
+    </head>
     <body>
         <header><?php include 'header.php'?></header>
         <div id = "main">
@@ -65,14 +66,14 @@
             </div>
         </div>
     </div>
-        <?php 
+        <div class="form-div"><?php 
             if ($error == "none"){
-                echo "<h3>Before you proceed, we require more of your details. These will be used for your future bookings.</h3>";
+                echo "<h3 class='no-details-form'>Before you proceed, we require more of your details. These will be used for your future bookings.</h3>";
             }else{
-                echo "<p style='color:red;font-size: 12px;'>$error</p>";
+                echo "<p class='no-details-form' style='color:red;font-size: 12px;'>$error</p>";
             }
         ?> 
-        <form action = "no-user-details.php" method = "POST" >
+        <form class="no-details-form" action = "no-user-details.php" method = "POST" >
             <label for="phone_number">Phone Number: </label> 
             <input type="text" name="number"/><br><br>
             <label for="street_address">Street Address: </label>
@@ -85,8 +86,8 @@
             <input type="text" name ="state"/><br><br>
             <label for="licence_number">Licence Number: </label>
             <input type="text" name ="licence_number"/><br><br>
-            <input type="submit" value="Post"/>
-        </form>
+            <input id="sub-button" type="submit" value="Submit"/>
+        </form></div>
         <footer><?php include 'footer.php'?></footer>
     </body>
 </html>

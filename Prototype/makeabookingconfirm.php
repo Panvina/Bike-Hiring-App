@@ -1,5 +1,7 @@
 <?php
-session_start();
+	if (!isset($_SESSION)){ 
+		session_start();     
+	}
 date_default_timezone_set('Australia/Melbourne');
 include_once("php-scripts/backend-connection.php");
 //Linking utility functions associated with inventory
@@ -7,9 +9,7 @@ include("php-scripts/utils.php");
 	//Establishing database connection using mysqli()
 $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 ?>
-
 <?php
-
 		    function calculateDuration($startDateValue, $endDateValue, $startTimeValue, $endTimeValue){
 				$pickUpTimeValue = 0;
 			  if ($startTimeValue == "9:00:00"){
@@ -58,12 +58,9 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 			  return $totalDuration;
 			}
 		     ?>
-
-
-
 <?php
 		//get form data
-			$userName =  'test2';
+			$userName =   $_SESSION["login-email"];
 			$startDateValue = $_REQUEST['startDateValue'];
 			$endDateValue = $_REQUEST['endDateValue'];
 			$startTimeValue =  $_REQUEST['pickupTimeValue'];
@@ -285,11 +282,13 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 				echo "<p style='font-size: 24px;'><strong>Bikes Ordered: </strong></p>";
 				foreach($bikeVariableArray as $bikeVariableArray){
 					$bikeNameId = str_replace('bike', '', $bikeVariableArray);
+					$quantityGet = $bikeVariableArray . "quantity";
+					$bikeQuantityDisplay =  $_REQUEST[$quantityGet];
 					$bikeNameQuery = $conn->query("SELECT name FROM bike_type_table where bike_type_id = $bikeNameId");
 					while ($row = $bikeNameQuery->fetch_assoc()) {
 			    	$bikeName = $row["name"];
 			    	}
-			    	echo "<p style='font-size: 24px;'><em>" . $bikeName . "</em></p>";
+			    	echo "<p style='font-size: 24px;'><em>" . $bikeName . " x" . $bikeQuantityDisplay . "</em></p>";
 				}
 			    // Fetching all column data from the accessory type table
 			    $accessoryType = $conn->query("SELECT * FROM accessory_type_table");
@@ -352,20 +351,36 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 
 
 				  foreach($bikeVariableArray2 as $bikeVariableArray2){
-					$bikeVariableID = str_replace('bike', '', $bikeVariableArray2);
-				  	$sqlGetBikes = "SELECT bike_id FROM bike_inventory_table WHERE bike_type_id = $bikeVariableID";
+				  	$bikeVariableID = str_replace('bike', '', $bikeVariableArray2);
+				  	$quantityGet = $bikeVariableArray2 . "quantity";
+					$bikeQuantity =  $_REQUEST[$quantityGet];
+					$sqlGetBikes = "SELECT DISTINCT bike_id FROM bike_inventory_table WHERE bike_type_id = $bikeVariableID LIMIT $bikeQuantity";
 					$result = $conn->query($sqlGetBikes);
 				  	if ($result->num_rows > 0) {
 						while ($row = $result->fetch_assoc()) {
 							$bikeInventoryId = $row["bike_id"];
+							$sqlBookingBike = "INSERT INTO booking_bike_table (booking_id, bike_id)
+							VALUES ('$last_id', '$bikeInventoryId')";
+							if ($conn->query($sqlBookingBike) === TRUE){
+							//	echo "New bike booking created successfully";
+							}else{
+								echo "Error: " . $sqlBookingBike . "<br>" . $conn->error;
+							}
+
+							//$bikeVariableID = str_replace('bike', '', $bikeVariableArray2);
+							/*
+						  	$sqlGetBikes = "SELECT bike_id FROM bike_inventory_table WHERE bike_type_id = $bikeVariableID";
+							$result = $conn->query($sqlGetBikes);
+						  	if ($result->num_rows > 0) {
+								while ($row = $result->fetch_assoc()) {
+									$bikeInventoryId = $row["bike_id"];
+								}
+							}
+						  	*/
+
+
+
 						}
-					}
-				  	$sqlBookingBike = "INSERT INTO booking_bike_table (booking_id, bike_id)
-					VALUES ('$last_id', '$bikeInventoryId')";
-					if ($conn->query($sqlBookingBike) === TRUE){
-					//	echo "New bike booking created successfully";
-					}else{
-						echo "Error: " . $sqlBookingBike . "<br>" . $conn->error;
 					}
 				  }
 

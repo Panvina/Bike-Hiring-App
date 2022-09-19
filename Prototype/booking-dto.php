@@ -66,15 +66,22 @@
         function getBookingBikeID($booking_id){
             $dbCon = new DBConnection('booking_bike_table');
             $bike = $dbCon->get('bike_id',("booking_id = '$booking_id'"));
-            $bike = $bike[0]['bike_id'];
-            return $bike;
+            $bikeList = array();
+            foreach ($bike as $row){
+                $row = implode("",$row);
+                array_push($bikeList, $row);
+            }
+            return $bikeList;
         }
 
         function getBikeName($bikeid){
             $dbCon = new DBConnection('bike_inventory_table');
-            $name = $dbCon->get('name',("bike_id = '$bikeid'"));
-            $name = $name[0]['name'];
-            return $name;
+            $bikeName = array();
+            foreach ($bikeid as $row){
+                $name = $dbCon->get('name',("bike_id = '$row'"));
+                array_push($bikeName, $name[0]['name']);
+            }
+            return $bikeName;
         }
 
         function getBikeAccessory($bookingid){
@@ -116,6 +123,8 @@
                     $bookingid =$this->bookingid[$i];                   
                     $bikeid = $this->getBookingBikeID($bookingid);
                     $bikeName = $this->getBikeName($bikeid);
+                    $bikeid = implode(", ",$bikeid);
+                    $bikeName = implode(", ",$bikeName);
                     $bikeAccessory = $this->getBikeAccessory($bookingid);
                     $bikeAccessory = implode(", ",$bikeAccessory);
                     $startT= $this->startT[$i];

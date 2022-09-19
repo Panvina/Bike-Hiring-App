@@ -1,4 +1,4 @@
-/*Styling the customer account page*/
+/*Styling the no-details-account page*/
 .addressBox{
   width: 20%;
   margin-top: 5px;
@@ -10,6 +10,43 @@ input[type="text"]{
 input::placeholder {
   font-size: 10px;
 }
+
+form.no-details-form{
+    margin-right: 5em;
+}
+.form-div{
+  margin-top: 30px;
+  margin-bottom: 50px;
+  width: 50%;
+  text-align: center;
+  margin-left: 30em;
+}
+
+.no-details-form label, .no-details-form
+input {
+  display: inline-block;
+}
+
+.no-details-form label{
+      width: 20%;
+      text-align: right;
+}
+
+#sub-button{
+  margin-left: 4em;
+  background-color: #172026;
+  color: #fff;
+  font-size: 20px;
+  padding: 5px 10px 5px 10px;
+  border: none;
+}
+
+#sub-button:hover{
+  background-color: #00b7b1;
+}
+
+/********************************************/
+/*Styling the customer booking summary page*/
 #greet-heading{
     padding-top: 20px;
     margin-left: 5em;
