@@ -31,9 +31,9 @@ $err_msg = "";
 $nameInput = sanitise_input( $nameInput );
 if ( $nameInput == "" ) {
   $err_msg .= "<p>Please enter info.</p>";
-} else if ( !preg_match( "/^[a-zA-Z ]{2,25}$/", $nameInput ) ) {
-  $err_msg .= "<p>Name of location can only contain max 25 alpha characters.</p>";
-}
+} 
+//else if ( !preg_match( "/^[a-zA-Z ]{2,25}$/", $nameInput ) ) {
+//  $err_msg .= "<p>Name of location can only contain max 25 alpha characters.</p>";}
 
 //postcodes validation
 $postcodeInput = sanitise_input( $postcodeInput );
