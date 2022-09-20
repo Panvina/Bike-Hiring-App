@@ -161,6 +161,7 @@ Contributor(s):
             $numRows = count($rows);
 
             $customerNames = array();
+            $tmpCustNames = array();
             $times = array();
             // print bookings
             $custCount = 0;
@@ -173,10 +174,11 @@ Contributor(s):
                 $endTime = $row["expected_end_time"];
 
                 $custName = $row['name'];
-                if (!in_array($custName, $customerNames))
+                if (!in_array($custName, $tmpCustNames))
                 {
                     $custCount++;
                     array_push($customerNames, "$custCount,$custName");
+                    array_push($tmpCustNames, "$custName");
                 }
 
                 $startHour = substr($startTime, 0, 2);
@@ -189,7 +191,8 @@ Contributor(s):
                     "startHour" => $startHour,
                     "startMin" => $startMinutes,
                     "endHour" => $endHour,
-                    "endMin" => $endMinutes
+                    "endMin" => $endMinutes,
+                    "custId" => $custCount
                 ));
             }
 
@@ -245,16 +248,17 @@ Contributor(s):
             $month = substr("$today", 5, 2);
             $day = substr("$today", 8, 2);
 
-            if ($numCustomers > 0)
+            $numBookings = count($times);
+            if ($numBookings > 0)
             {
-                for($i = 0; $i < $numCustomers; $i++)
+                for($i = 0; $i < $numBookings; $i++)
                 {
-                    $custId = explode(',', $customerNames[$i])[0];
                     $time = $times[$i];
                     $startHour = $time["startHour"];
                     $startMin = $time["startMin"];
                     $endHour = $time["endHour"];
                     $endMin = $time["endMin"];
+                    $custId = $time["custId"];
 
                     echo "timetable.addEvent('$startHour:$startMin-$endHour:$endMin', '$custId', new Date($year, $month, $day, $startHour, $startMin), new Date($year, $month, $day, $endHour, $endMin));";
                 }
