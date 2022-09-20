@@ -164,8 +164,8 @@ toggle between hiding and showing the dropdown content */
 						<div class='dropdown'>
 							<button class='dropbtn' disabled>...</button>
 							<div class='dropdown-content'>
-								<button type='submit' name='deleteLocation' id='deleteLocation' class='btn'>Delete</button><br/>
-								<button type='submit' name='updateLocation' id='updateLocation' class='btn'>Update</button>
+								<button type='submit' name='updateLocation' id='updateLocation' class='btn'>Update</button><br/>
+								<button type='submit' name='deleteLocation' id='deleteLocation' class='btn'>Delete</button>
 							</div>
 						</div>
 						

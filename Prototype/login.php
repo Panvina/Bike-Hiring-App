@@ -31,7 +31,7 @@
                         {
                             echo '<p class="error">Invalid email</p>';
                         }elseif($loginVar =="userNotFound"){
-                            echo'<p class="error">The account does not exist!</p>';
+                            echo'<p class="error">Your username or password is incorrect!</p>';
                         }
                     }
                 ?>
@@ -85,6 +85,8 @@
                             echo '<p class="error">Invalid email</p>';
                         }elseif($ca =="pwdsnomatch"){
                             echo'<p class="error">The passwords don\'t match!</p>';
+                        }elseif($ca == "existinguser"){
+                            echo'<p class="error">The account already exists!</p>';
                         }
                     }
                 ?>

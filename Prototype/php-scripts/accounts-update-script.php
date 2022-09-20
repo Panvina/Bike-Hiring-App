@@ -23,7 +23,7 @@
     
     //checks to see if the first button is pressed
     if (isset($_POST['UpdateButton']))
-  {
+    {
         //assigns session variables to the fetched array to be used to transfer data between forms
         $_SESSION["user_name"] = $fetchData["user_name"];
         $_SESSION["role_id"] = $fetchData["role_id"];
@@ -43,20 +43,7 @@
             header("Location: ../accounts.php?update=empty");
             exit();
         }
-
-        // //checks to see if the username is valid and matches the pattern
-        // if (!validUserName($password) )
-        // {
-        //     header("Location: ../accounts.php?update=passwordValidErr");
-        //     exit();
-        // }  
-        // else 
-        // {
-        //     //cleans the input and assigns the variable for inserting
-        //     $password =  test_input($password);
-
-        // }
-   }
+    }
    
    //checks to see if the submit button in the update form has been pressed
    if (isset($_POST["submitUpdateCustomer"]))
@@ -82,6 +69,17 @@
            //cleans the input and assigns the variable for inserting. Then hashes the password for security purposes
            $password = test_input($password);
            $hashedAccountPassword = sha1($password);
+        }
+
+        if(empty($roleID))
+        {
+            header("Location: ../accounts.php?update=roleIDEmptyErr");
+            exit();
+        }
+        else if ($roleID != 1 && $roleID != 2 && $roleID != 3)
+        {
+            header("Location: ../accounts.php?update=roleIDValidErr");
+            exit();
         }
        
         //double checks to ensure all variables are not empty then parses the data to be updated. Returns back to the account page based on the result

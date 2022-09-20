@@ -1,6 +1,7 @@
 <?php
     require "php-scripts/utils.php";
     include_once 'php-scripts/backend-connection.php';
+    include_once 'person-dto.php';
 
     session_start();
     $_SESSION['id'] = '123';
@@ -47,9 +48,11 @@
              /* Inserting data into the customer table and the accounts table
                 Vina Touch */
                 $cus_conn = new DBConnection("customer_table");
-                $acc_conn = new DBConnection("accounts_table");
+                $acc_conn = new DBConnection("accounts_table");       
                 $empty="null";
                 $email = strtolower($email);
+                $searchExistingUser = new PersonDTO($email);
+                $searchExistingUser->getDetails();
                 $full_name= $first_name . " " .$last_name;
                 $cols = "user_name, name, phone_number, email, street_address, suburb, post_code, licence_number, state";
                 $customer_data = "'$email','$full_name', '$empty', '$email', '$empty', '$empty', '$empty', '$empty', '$empty'";
@@ -57,11 +60,17 @@
                 $hashed_pwd = password_hash($pwd, PASSWORD_DEFAULT);
                 $acc_cols= "user_name, role_id, password";
                 $account_data= "'$email', 3, '$hashed_pwd'";
-                $cus_conn->insert($cols ,  $customer_data);
-                $acc_conn->insert($acc_cols, $account_data);
-                $_SESSION["user-details"] = "no";
-                header("Location: index.php?login=success");
-                exit();
+                if ($searchExistingUser->getUsername() == null){
+                    $cus_conn->insert($cols ,  $customer_data);
+                    $acc_conn->insert($acc_cols, $account_data);
+                    $_SESSION["user-details"] = "no";
+                    header("Location: index.php?login=success");
+                    exit();
+                }else{
+                    header("Location: index.php?ca=existinguser");
+                    exit();
+                }
+                
         }
     }
     else

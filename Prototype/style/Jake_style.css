@@ -39,7 +39,7 @@ body{
 }
 
 #Logo{
-  height: 180px;
+  height: 135px;
   float: left;
   position: absolute;
   top: 0px;
@@ -187,6 +187,7 @@ nav a {
   border: 1px solid #888;
   width: 20%; /* Could be more or less, depending on screen size */
   background-color: #eaf7f6;
+  /*overflow-x: auto;*/
 }
 
 .modal-content h2, input[type=text]{
@@ -250,8 +251,9 @@ nav a {
 
 .UpdateButton, .deleteButton{
   background-color: darkcyan !important;
-  border: none !important;
   color: white!important;
+  width: 90%;
+  height: 50px;
   font-size: 20px!important;
   border: solid white!important;
   border-width: thin!important;
@@ -259,26 +261,12 @@ nav a {
   left: -2%!important;
 }
 
-.AccountUpdateButton{
-  background-color: darkcyan !important;
-  border: none !important;
-  color: white!important;
-  font-size: 21px!important;
-  border: solid white!important;
-  border-width: thin!important;
-  cursor: pointer!important;
-  left: -2%!important;
-}
-
-.AccountDeleteButton{
-  background-color: darkcyan !important;
-  border: none !important;
-  color: white!important;
-  font-size: 22px!important;
-  border: solid white!important;
-  border-width: thin!important;
-  cursor: pointer!important;
-  left: -2%!important;
+#formButton{
+  float: center;
+  width: 30%;
+  display: inline;
+  position: relative;
+  right: 4%;
 }
 
 .error {

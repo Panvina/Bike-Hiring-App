@@ -42,12 +42,13 @@
         
         <h1 id="AboutH1"> MORE FROM OUR AREA!</h1>
         <div class ="main-carousel" id = "carousel">
+            <div class="cell"><img src = "img/photos/1.jpg"></div>
+            <div class="cell"><img src = "img/photos/2.jpg"></div>
             <div class="cell"><img src = "img/photos/3.jpg"></div>
-            <div class="cell"><img src = "img/photos/3.jpg"></div>
-            <div class="cell"><img src = "img/photos/3.jpg"></div>
-            <div class="cell"><img src = "img/photos/3.jpg"></div>
-            <div class="cell"><img src = "img/photos/3.jpg"></div>
-            <div class="cell"><img src = "img/photos/3.jpg"></div>
+            <div class="cell"><img src = "img/photos/4.jpg"></div>
+            <div class="cell"><img src = "img/photos/5.jpg"></div>
+            <div class="cell"><img src = "img/photos/6.jpg"></div>
+            <div class="cell"><img src = "img/photos/7.jpg"></div>
         </div>
         <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
         <script type = "text/javascript">
@@ -57,6 +58,8 @@
         freeScroll:true
         });</script>
     </div>
+    <br>
+    <br>
     <?php include 'footer.php'?>
 </body>
 </html>

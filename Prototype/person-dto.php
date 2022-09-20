@@ -18,6 +18,7 @@
 
         //if the login is an email, calls authByEmail function.
         function __construct($login){
+            $login = strtolower($login);
             if (str_contains($login, '@')){
                 $this->authByEmail($login);
             }else{
@@ -120,6 +121,7 @@
             $auth = "no user found"; 
             for($i=0; $i< count($userID); $i++){        //loop through the result array
                 $userToString = implode(" ",$userID[$i]);       //convert array to string
+                $userToString = strtolower($userToString);
                 $userPwd = $dbCon->get('password', ("user_name = '$userToString'"));     
                 $hashed_password= implode('',$userPwd[0]);  
                 if ($userToString == $id && ($pwd == $hashed_password ||password_verify($pwd, $hashed_password))){      //allow access only if the userID and the password match the ones in the database

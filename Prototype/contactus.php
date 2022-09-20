@@ -31,12 +31,12 @@ Contributor:
   <!-- The banner is created by aadesh and implemented the BreadCrumbs program in -->
   <div class="banner">
     <div id="bannertext">
-      <h1>CONTACT US</h1>
+      <h1>Contact Us</h1>
     </div>
     <div class ="NavContainer">
       <ul class="Breadcrumbs">
         <li class="BreadcrumbsItem"><a href="Index.php" class="BreadcrumbsURL">Home</a></li>
-        <li class="BreadcrumbsItem"><a href="javascript:window.location.href=window.location.href" class="BreadcrumbsURL BreadcrumbsURLactive">CONTACT US</a></li>
+        <li class="BreadcrumbsItem"><a href="javascript:window.location.href=window.location.href" class="BreadcrumbsURL BreadcrumbsURLactive">Contact Us</a></li>
       </ul>
     </div>
   </div>
@@ -52,7 +52,7 @@ Contributor:
     <div id="contactbox">
       <div class="Contactbox" id="Conactbox1">
         <div id="contactInfo" class="textcentral">
-          <h2>CONTACT INFORMATION</h2>
+          <h2>Contact Information</h2>
           <p>We are a 'Click &amp; Collect' Service. Book a location and pick-up time online and your bike/s will be waiting for you.</p>
           <table width="100%" border="0">
             <tbody>
@@ -110,7 +110,7 @@ Contributor:
       <div id="mainfaq">
         <button type="button" class="collapsible">Do I need a license to ride on an eBike?</button>
         <div class="content">
-          <p>For most electric bikes, you do not need a licence of anykind to use.</p>
+          <p class="content-size">For most electric bikes, you do not need a licence of anykind to use.</p>
         </div>
         <button type="button" class="collapsible">I've never ridden an eBike is it difficult?</button>
         <div class="content">
