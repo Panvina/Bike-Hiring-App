@@ -1,6 +1,6 @@
-.add-booking-btn
+#add-booking-btn
 {
-	left: 90%;
+
 }
 
 .modal-error-message
@@ -26,6 +26,7 @@ form
     border-width: thin!important;
     cursor: pointer!important;
     left: -2%!important;
+	width: 100%;
 }
 
 .dropdown-content {
