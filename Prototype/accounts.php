@@ -182,10 +182,21 @@
                 <div>
                     <!-- Name input validation, checks based on error and displays accurate error message -->
                     <h2> roleID: </h2>
-                    <input type="text" name="role_id" readonly value = "<?php echo $_SESSION['role_id'];?>">
+                    <input type="text" name="role_id" value = "<?php echo $_SESSION['role_id'];?>">
                     <span class="error">
                         <?php
-
+                            if (isset($_GET["update"]))
+                            {
+                                $roleID = $_GET["update"];
+                                if ($roleID == "roleIDValidErr")
+                                {
+                                    echo '<p class = "error">* RoleID Can only either be 1 (owner), 2 (employee) or 3 (customer) </br> </p>';
+                                }
+                                else if ($roleID == "roleIDEmptyErr")
+                                {
+                                    echo '<p class = "error">* RoleID must not be empty</p>';
+                                }
+                            }
                         ?>
                     </span>
                 </div>
@@ -193,7 +204,7 @@
                 <div>
                     <!-- Name input validation, checks based on error and displays accurate error message -->
                     <h2> Password: </h2>
-                    <input type="password" name="password" value = "">
+                    <input type="password" name="password" value = "<?php echo $_SESSION['password'];?>">
                     <span class="error">
                         <?php
                             if (isset($_GET["update"]))
