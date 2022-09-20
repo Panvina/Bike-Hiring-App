@@ -137,10 +137,10 @@
                         <div class='dropdown'>
                             <button class='dropbtn' disabled>...</button>
                             <div class='dropdown-content'>
-                                <form action='php-scripts\accounts-update-script.php' method='POST' event.preventDefault() > <button type='submit' id= '$primaryKey' class='AccountUpdateButton' name='UpdateButton'
-                                value='$primaryKey'> Update Account </button> </form>
-                                <form action='php-scripts\account-delete-script.php' method='POST' event.preventDefault()> <button type='submit' name='deleteButton' id='$primaryKey' class='AccountDeleteButton'
-                                value = '$primaryKey'>Delete Account</button> </form>
+                                <form action='php-scripts\accounts-update-script.php' method='POST' event.preventDefault() > <button type='submit' id= '$primaryKey' class='UpdateButton' name='UpdateButton'
+                                value='$primaryKey'> Update </button> </form>
+                                <form action='php-scripts\account-delete-script.php' method='POST' event.preventDefault()> <button type='submit' name='deleteButton' id='$primaryKey' class='deleteButton'
+                                value = '$primaryKey'>Delete </button> </form>
                             </div>
                         </div>
                         </td>";
@@ -215,7 +215,7 @@
                 </div>
 
                 </br>
-                    <button type="submit" name="submitUpdateCustomer">Submit</button>
+                    <button id="formButton" type="submit" name="submitUpdateCustomer">Update</button>
                 </div>
             </form>
         </div>
@@ -244,7 +244,7 @@
             <!-- creates the yes and no button and parses the primary key back to be deleted  -->
             <?php
                 $pk = $_SESSION["user_name"];
-                echo "<h1 style='left: 20%; position: relative;'> $pk </h1>";
+                echo "<h1 style='float: center; display: block; text-align: center;  padding-left: 5%; padding-right: 20%; position: relative; word-wrap: break-word;'> $pk </h1>";
                 echo "<form action='php-scripts\account-delete-script.php' method='POST' event.preventDefault()>
                       <button style='width: 40%; left: -10%; position: relative;' type='submit' id='$pk' value ='$pk' name='submitDeleteAccount'>Yes</button>
                       <button style='width: 40%; left: -10%; position: relative; background-color: red;' type='submit' name='CancelDeleteAccount'>No</button> </form>";

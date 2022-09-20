@@ -115,9 +115,9 @@
                             <button class='dropbtn' disabled>...</button>
                             <div class='dropdown-content'>
                                 <form action='php-scripts/customer-update-script.php' method='POST' event.preventDefault() > <button type='submit' id= '$primaryKey' class='UpdateButton' name='UpdateButton' 
-                                value='$primaryKey'> Update Customer </button> </form>
+                                value='$primaryKey'> Update</button> </form>
                                 <form action='php-scripts/customer-delete-script.php' method='POST' event.preventDefault()> <button type='submit' name='deleteButton' id='$primaryKey' class='deleteButton' 
-                                value = '$primaryKey'>Delete Customer</button> </form>
+                                value = '$primaryKey'>Delete</button> </form>
                             </div>
                         </div>
                         </td>";
@@ -441,7 +441,7 @@
                 </div>
                 </br>
                 <div>
-                    <button type="submit" name="SubmitCustomer">Submit</button>
+                    <button id="formButton" type="submit" name="SubmitCustomer">Add</button>
                 </div>
             </form>
         </div>
@@ -644,7 +644,7 @@
                     </span>
                 </div>
                 </br>
-                    <button type="submit" name="submitUpdateCustomer">Submit</button>
+                    <button id="formButton" type="submit" name="submitUpdateCustomer">Update</button>
                 </div>
             </form>
         </div>
