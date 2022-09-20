@@ -55,6 +55,7 @@ body{
   height: 1300px auto;
   float: left;
   display: inline-block;
+  padding-bottom: 30px;
 }
 
 .Content input[type=text] {
