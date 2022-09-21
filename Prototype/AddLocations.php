@@ -78,7 +78,10 @@ if ( !$conn ) {
 		 `drop_off_location` tinyint(1) NOT NULL DEFAULT 0,
 		 `pick_up_location` tinyint(1) NOT NULL DEFAULT 0
 		 )";
-
+	
+	$addressInput= mysqli_real_escape_string($conn, $addressInput);
+$nameInput = mysqli_real_escape_string($conn, $nameInput);
+	
   $result = mysqli_query( $conn, $query );
   if ( $result ) { //create table successful
     $query = "INSERT INTO `location_table` (`name`, `address`, `suburb`, `post_code`, `drop_off_location`, `pick_up_location`) VALUES ( '$nameInput', '$addressInput', '$suburbInput', '$postcodeInput', '$dropoffValue', '$pickupValue'); ";
