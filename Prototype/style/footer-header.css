@@ -1,7 +1,6 @@
 /*Styling the header and the footer of the pages*/
-
-footer{
-    background: #eaf7f6;
+html, body{
+    overflow-x: hidden;
 }
 
 /* Divides div into 2 columns for header content*/
@@ -119,25 +118,49 @@ nav.mainNav{
     color: white;
     border-width: 0px;
 }
-@media screen and (max-width: 320px) {
-    .column,.column1{
-      width: 100%;
-    }
-  }
 
 /*Footer Styling*/
-
-/* Divides div into 3 columns for footer content */
-.column1{
-    float: left;
-    width: 33%;
-}
-
 /* Change the alignment of footer mid text. */
-#footer-text{
+#footer-content{
     text-align: center;
+    position: absolute;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    background-color: #eaf7f6;
+    width: 100%;
+
 }
 
+#footer-content span{
+    display: block;
+    margin-top: -5px;
+}
+
+.footer-logo{
+    display: block;
+    margin: auto;
+    text-align: center;
+    margin-bottom: -20px;
+}
 nav.footerNav li{
     list-style-type: none;
 }
+
+/*Responsiveness*/
+@media (max-width: 2240px){
+    nav.mainNav li{
+        padding:5px;
+        font-size:19x;
+    }
+    
+    #menu{
+        margin-left: -20px;
+    }
+}  
+
+@media (max-width: 1200px){
+    nav.mainNav li{
+        padding:7px;
+        font-size:16px;
+    }
+}  

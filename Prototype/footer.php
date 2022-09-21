@@ -6,28 +6,11 @@
         <link rel="stylesheet" href="style/foote-header.css" type="text/css"/>
     </head>
     <body>
-        <footer id="f">
-            <div class="row">
-                <div class="column1">
-                    <div id="panel1">
-                        <h3>Quicklinks</h3>
-                        <nav class="footerNav">
-                            <ul>
-                                <li><a href="">Hire</a></li>
-                                <li><a href="contactus.php">Contact Us<a></li>
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
-                <div class="column1">
-                    <div id="footer-text">
-                        <p>P: 0123 456 789</p> 
-                        <p>E: inverlochbikes@gmail.com</p>
-                        <p>Address: 23 A'Beckett St Inverloch</p>
-                    </div>
-                </div>
-                <div class="column1">
-                    <img class="logo" src="img/photos/logo-no-text.png" alt="business logo - a bike wheel is covered with waves" width="150" height="150"></div>
+        <footer id="f"> 
+            <div id="footer-content"><img class="footer-logo" src="img/photos/logo-no-text.png" alt="business logo - a bike wheel is covered with waves" width="65" height="65">
+                <span>P: 0123 456 789</span><br> 
+                <span>E: inverlochbikes@gmail.com</span><br>
+                <span>Address: 23 A'Beckett St Inverloch</span>
             </div>
         </footer>
     </body>
