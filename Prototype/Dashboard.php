@@ -34,8 +34,8 @@ Contributor(s):
 
 <!--DOCTYPE html -->
 <html>
-    <link rel="stylesheet" href="style/Jake_style.css">
-    <link rel="stylesheet" href="style/scheduleTimetableStyle.css">
+    <link rel="stylesheet" href="style/dashboard-style.css">
+    <link rel="stylesheet" href="style/main-dashboard-style.css">
     <link rel="stylesheet" href="style/timetablejs.css">
     <head>
         <!-- header -->
@@ -43,112 +43,108 @@ Contributor(s):
         <h1 class="header"> <a href="index.php"><img src="img/photos/Inverloch_Logo3.png" alt="Inverloch Logo" id="Logo" /></a> Admin Dashboard </h1>
     </head>
     <body>
-        <!-- Side navigation -->
-        <nav>
-            <div class = "sideNavigation">
-                <a class="active" href= "Dashboard.php"> <img src= "img/icons/bulletin-board.png" alt="Dashboard Logo" /> Dashboard </a> <br>
-                <a href = "Customer.php"> <img src= "img/icons/account-group.png" alt="Customer Logo" />  Customer  </a> <br>
-                <!-- <a href='staff.php'> <img src='img/icons/staff.png' alt='Staff Logo' /> Staff </a> <br>
-                <a href="accounts.php"> <img src="img/icons/account.png" alt="Account logo"/> Accounts </a> <br> -->
-                <?php setOwnerDashboardPrivilege(); ?>
-                <a href= "Inventory.php"> <img src= "img/icons/bicycle.png" alt="Inventory Logo" />  Inventory </a> <br>
-                <a href="Accessory.php"> <img src="img/icons/accessories.png" alt="Inventory Logo" /> Accessories </a> <br>
-                <a href="BikeTypes.php"> <img src="img/icons/biketypes.png" alt="Bike Types Logo" /> Bike Types </a> <br>
-                <a href="AccessoryTypes.php"> <img src="img/icons/accessorytypes.png" alt="Bike Types Logo" /> Accessory Types </a> <br>
-                <a href= "bookings.php"> <img src= "img/icons/book-open-blank-variant.png" alt="Bookings Logo" /> Bookings </a> <br>
-                <a href= "Block_Out_Date.php"> <img src= "img/icons/calendar.png" alt="Block out date Logo" /> Block Out Dates </a> <br>
-                <a href= "Locations.php"> <img src= "img/icons/earth.png" alt="Locations Logo" /> Locations </a> <br>
-                <a href= "editpages.php"> <img src= "img/icons/bulletin-board.png" alt="Edit Pages Logo" /> Edit </a> <br>
-               <?php setLogoutButton(); ?>
-            </div>
-         </nav>
-        <!-- Block of content in center -->
-        <div class="Content">
-            <div style="display: inline-block; ">
-                <label class="Date" for="dDate">
-                    <?php
-                        $date = $_GET["date"];
-                        $dateStr = getFormattedDate($date);
+        <div class="grid-container">
+        	<div class="menu">
+        		<a href= "Dashboard.php"> <img src= "img/icons/bulletin-board.png" alt="Dashboard Logo" /> Dashboard </a> <br>
+        		<a href = "Customer.php"> <img src= "img/icons/account-group.png" alt="Customer Logo" />  Customer  </a> <br>
+        		<?php setOwnerDashboardPrivilege(); ?>
+        		<a href= "Inventory.php"> <img src= "img/icons/bicycle.png" alt="Inventory Logo" />  Inventory </a> <br>
+        		<a href="Accessory.php"> <img src="img/icons/accessories.png" alt="Inventory Logo" /> Accessories </a> <br>
+        		<a href="BikeTypes.php"> <img src="img/icons/biketypes.png" alt="Bike Types Logo" /> Bike Types </a> <br>
+        		<a href="AccessoryTypes.php"> <img src="img/icons/accessorytypes.png" alt="Bike Types Logo" /> Accessory Types </a> <br>
+        		<a class="active" href= "bookings.php"> <img src= "img/icons/book-open-blank-variant.png" alt="Bookings Logo" /> Bookings </a> <br>
+        		<a href= "Block_Out_Date.php"> <img src= "img/icons/calendar.png" alt="Block out date Logo" /> Block Out Dates </a> <br>
+        		<a href= "Locations.php"> <img src= "img/icons/earth.png" alt="Locations Logo" /> Locations </a> <br>
+        		<a href= "editpages.php"> <img src= "img/icons/bulletin-board.png" alt="Edit Pages Logo" /> Edit </a> <br>
+        		<?php setLogoutButton()?>
+        	</div>
+        	<div class="main">
+                <div class="date-grid">
+                    <img class="arrows" id="leftArrow" onclick="decrementDate()" src="img/icons/arrow-left-bold.png"/>
+                    <label class="date_string" for="dDate">
+                        <?php
+                            $date = $_GET["date"];
+                            $dateStr = getFormattedDate($date);
 
-                        echo "$dateStr";
-                    ?>
-                </label>
-                <img id="rightArrow" onclick="incrementDate()" src="img/icons/arrow-right-bold.png"/>
-                <!-- <img id="calendar" src="img/icons/calendar-blank.png"/> -->
-                <img id="leftArrow" onclick="decrementDate()" src="img/icons/arrow-left-bold.png"/>
+                            echo "$dateStr";
+                        ?>
+                    </label>
+                    <img class="arrows" id="rightArrow" onclick="incrementDate()" src="img/icons/arrow-right-bold.png"/>
+
+                    <br>
+                 </div>
                 <br>
-             </div>
-            <br>
-            <br>
-            <div class="DashboardInformationContainer">
-                <!-- Booking summary section -->
-                <div class="DashboardInformation">
-                    <h2> Booking Summary </h2>
-                    <h3> Total Bookings:
+                <br>
+                <div class="DashboardInformationContainer">
+                    <!-- Booking summary section -->
+                    <div class="DashboardInformation">
+                        <h2> Booking Summary </h2>
+                        <h3> Total Bookings:
+                            <?php
+                                // get total bookings for the day
+                                $ymdDate = DateTime::createFromFormat("d-m-Y", $date);
+                                $strDate = $ymdDate->format("Y-m-d");
+                                $conn = new BookingsDBConnection();
+                                $res = $conn->get("booking_id", "start_date='$strDate'");
+
+                                echo count($res);
+                            ?>
+                        </h3>
+                        <h3> Total Cancellations: 0</h3>
+                    </div>
+
+                    <!-- Urgent section -->
+                    <div class="DashboardInformation">
+                        <h2>Urgent Replacements</h2>
+                        <h3>Bikes:
                         <?php
-                            // get total bookings for the day
-                            $ymdDate = DateTime::createFromFormat("d-m-Y", $date);
-                            $strDate = $ymdDate->format("Y-m-d");
-                            $conn = new BookingsDBConnection();
-                            $res = $conn->get("booking_id", "start_date='$strDate'");
+                                // print number of available accessories
+                                $conn = new DamagedItemsDBConnection();
+                                $res = $conn->getDamagedBikes();
 
-                            echo count($res);
-                        ?>
-                    </h3>
-                    <h3> Total Cancellations: 0</h3>
-                </div>
-
-                <!-- Urgent section -->
-                <div class="DashboardInformation">
-                    <h2>Urgent Replacements</h2>
-                    <h3>Bikes:
-                    <?php
-                            // print number of available accessories
-                            $conn = new DamagedItemsDBConnection();
-                            $res = $conn->getDamagedBikes();
-
-                            echo count($res);
-                        ?>
-                    <h3>
-                    <h3>Accessories:
-                    <?php
-                            // print number of damaged accessories
-                            $conn = new DamagedItemsDBConnection();
-                            $res = $conn->getDamagedAccessories();
-
-                            echo count($res);
-                        ?>
-                    <h3>
-                </div>
-                <!-- Inventory Summary section -->
-                <div class="DashboardInformation">
-                    <h2>Inventory Summary</h2>
-                    <h3>Available Bikes:
+                                echo count($res);
+                            ?>
+                        <h3>
+                        <h3>Accessories:
                         <?php
-                            // print number of available bikes
-                            $conn = new BikeInventoryDBConnection();
-                            $res = $conn->getAvailableBikes();
+                                // print number of damaged accessories
+                                $conn = new DamagedItemsDBConnection();
+                                $res = $conn->getDamagedAccessories();
 
-                            echo count($res);
-                        ?>
-                    </h3>
-                    <h3>Pending Inspections:
-                        <?php
-                            // print number of unavailable bikes
-                            $res = $conn->getUnavailableBikes();
+                                echo count($res);
+                            ?>
+                        <h3>
+                    </div>
+                    <!-- Inventory Summary section -->
+                    <div class="DashboardInformation">
+                        <h2>Inventory Summary</h2>
+                        <h3>Available Bikes:
+                            <?php
+                                // print number of available bikes
+                                $conn = new BikeInventoryDBConnection();
+                                $res = $conn->getAvailableBikes();
 
-                            echo count($res);
-                        ?>
-                    </h3>
+                                echo count($res);
+                            ?>
+                        </h3>
+                        <h3>Pending Inspections:
+                            <?php
+                                // print number of unavailable bikes
+                                $res = $conn->getUnavailableBikes();
+
+                                echo count($res);
+                            ?>
+                        </h3>
+                    </div>
                 </div>
-            </div>
-            <br>
+                <br>
 
-            <!--This calendar section is done by Clement where it is showing the current bookings as an event scheduler and it is hard code since it is to demonstrate the potential type of thing-->
-            <!-- Current bookings section -->
-            <h1 style="line-height: 0px; margin-bottom: 1.5%; margin-top: 2em; "><strong> Current Bookings: </strong></h1>
-			<div class="timetable"></div>
-		</div>
+                <!--This calendar section is done by Clement where it is showing the current bookings as an event scheduler and it is hard code since it is to demonstrate the potential type of thing-->
+                <!-- Current bookings section -->
+                <h1 style="line-height: 0px; margin-bottom: 1.5%; margin-top: 2em; "><strong> Current Bookings: </strong></h1>
+    			<div class="timetable"></div>
+        	</div>
+        </div>
 
         <?php
             $conn = new BookingsDBConnection();

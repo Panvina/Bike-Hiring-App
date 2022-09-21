@@ -10,8 +10,7 @@ var deleteBtn = document.getElementsByClassName("deleteButton");
 
 // Get the <span> element that closes the modal
 var staffInsertSpan = document.getElementsByClassName("Insertclose")[0];
-var updateSpan = document.getElementsByClassName("updateFormClose")[0];
-var deleteSpan = document.getElementsByClassName("closeDeleteForm")[0];
+var closeModalSpans = document.getElementsByClassName("close-btn");
 var noDeleteButton = document.getElementById("CancelDeleteCustomer");
 
 // When the user clicks on the button, open the modal
@@ -40,18 +39,17 @@ staffInsertSpan.onclick = function() {
   $_SESSION["ret"] = null;
 }
 
-updateSpan.onclick = function() {
-  updateModal.style.display = "none";
-  window.location.replace("staff.php");
-  $_SESSION["ret"] = null;
-}
 
-deleteSpan.onclick = function() {
-  deleteModal.style.display = "none";
-  window.location.replace("staff.php");
-  $_SESSION["ret"] = null;
+for (let i = 0; i < closeModalSpans.length; i++)
+{
+    closeModalSpans[i].onclick = function()
+    {
+        deleteModal.style.display = "none";
+        updateModal.style.display = "none";
+        window.location.replace("staff.php");
+        $_SESSION["ret"] = null;
+    }
 }
-
 
 
 // When the user clicks anywhere outside of the modal, close it
@@ -73,3 +71,21 @@ window.onclick = function(event) {
     window.location.replace("staff.php");
   }
 }
+
+alignAddBtn();
+function alignAddBtn()
+{
+    var headerWidth = document.getElementById('content-header').getBoundingClientRect().width;
+
+    var addBtn = document.getElementById('staffInsertPopUp');
+    var addBtnInfo = addBtn.getBoundingClientRect();
+    var btnWidth = addBtnInfo.width;
+
+    var tableWidth = document.getElementById('data-table').getBoundingClientRect().width;
+
+    var width = (tableWidth - headerWidth - btnWidth - 3) +  "px";
+
+    addBtn.style.left = width;
+}
+
+window.addEventListener('resize', alignAddBtn);

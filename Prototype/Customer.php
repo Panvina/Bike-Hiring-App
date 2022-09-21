@@ -5,17 +5,17 @@
     //include database functions
     include_once("php-scripts/backend-connection.php");
     include_once "php-scripts/utils.php";
-    
+
     //enabling the user privilege of certain tabs. Added by Vina Touch 101928802
     include_once "user-privilege.php";
-    
+
     //create the connection with the database
     $conn = new DBConnection("customer_table");
 ?>
 <!DOCTYPE html>
 <html>
-<link rel="stylesheet" href="style/Jake_style.css">
-
+<link rel="stylesheet" href="style/dashboard-style.css">
+<link rel="stylesheet" href="style/popup.css">
 <head>
     <!-- Header -->
     <title> Customers </title>
@@ -23,13 +23,11 @@
 </head>
 
 <body>
-    <!-- Side navigation -->
-    <nav>
-        <div class="sideNavigation">
+    <div class="grid-container">
+        <div class="menu">
             <a href= "Dashboard.php"> <img src= "img/icons/bulletin-board.png" alt="Dashboard Logo" /> Dashboard </a> <br>
             <a class="active" href = "Customer.php"> <img src= "img/icons/account-group.png" alt="Customer Logo" />  Customer  </a> <br>
             <?php setOwnerDashboardPrivilege(); ?>
-            <!--<a href="accounts.php"> <img src="img/icons/account.png" alt="Account logo"/> Accounts </a> <br>-->
             <a href= "Inventory.php"> <img src= "img/icons/bicycle.png" alt="Inventory Logo" />  Inventory </a> <br>
             <a href="Accessory.php"> <img src="img/icons/accessories.png" alt="Inventory Logo" /> Accessories </a> <br>
             <a href="BikeTypes.php"> <img src="img/icons/biketypes.png" alt="Bike Types Logo" /> Bike Types </a> <br>
@@ -40,96 +38,93 @@
             <a href= "editpages.php"> <img src= "img/icons/bulletin-board.png" alt="Edit Pages Logo" /> Edit </a> <br>
             <?php setLogoutButton()?>
         </div>
-    </nav>
+        <div class="main">
+            <h1 id="content-header"> All Customers</h1>
 
-    <!-- Block of content in center -->
-    <div class="Content">
-        <h1> All Customers</h1>
+            <!-- Add Customer pop up -->
+            <button id="CustomerPopUp" class="CustomerPopUp">+ New Customer</button>
 
-        <!-- Add Customer pop up -->
-        <button id="CustomerPopUp" class="CustomerPopUp">+ New Customer</button>
+            <!-- List of current customers -->
+            <table class="TableContent" id="data-table">
+                <tr>
+                    <?php
+                        //Fetch data done by Alex, altered by Jake for customer table
+                        //establishes the collumns in the table to be used in the query
+                        $cols = "user_name, name, phone_number, email, street_address, suburb, post_code, licence_number, state";
+                        //get the data from the table
+                        $rows = $conn->get($cols);
 
-        <!-- List of current customers -->
-        <table class="TableContent">
-            <tr>
-                <?php
-                    //Fetch data done by Alex, altered by Jake for customer table
-                    //establishes the collumns in the table to be used in the query
-                    $cols = "user_name, name, phone_number, email, street_address, suburb, post_code, licence_number, state";
-                    //get the data from the table
-                    $rows = $conn->get($cols);
+                        //establish the headings that will be used to display the data in the table
+                        $tableHeadings = "User Name, Name, Phone Number, Email, Street Address, Suburb, Post Code, Licence Number, State";
 
-                    //establish the headings that will be used to display the data in the table
-                    $tableHeadings = "User Name, Name, Phone Number, Email, Street Address, Suburb, Post Code, Licence Number, State";
+                        //data validation to remove ',' for querying and displaying data in the table
+                        $cols = explode(',', $cols);
+                        $tableHeadings = explode(',', $tableHeadings);
 
-                    //data validation to remove ',' for querying and displaying data in the table
-                    $cols = explode(',', $cols);
-                    $tableHeadings = explode(',', $tableHeadings);
-
-                    $count = count($cols);
-                    for($x = 0; $x < $count; $x++)
-                    {
-                        $col = trim($tableHeadings[$x]);
-                        echo "<th> $col </th>";
-                    }
-                    echo "<th> Edit </th>"
-                ?> 
-            </tr>
-            <?php       
-                if ($rows == null)
-                {
-                    $rows = array();
-                    $tmp = array();
-                    for($x = 0; $x < count($cols); $x++)
-                    {
-                        array_push($tmp, "null");
-                    }
-                    array_push($rows, $tmp);
-                }
-
-                $keys = array_keys($rows[0]);
-
-                $primaryColumn = "user_name";
-        
-                for($x = 0; $x < count($rows); $x++)
-                {
-                    echo "<tr>";
-                    for($y = 0; $y < count($keys); $y++)
-                    {
-                        $row = $rows[$x];
-                        $key = $keys[$y];
-                        $data = $row[$key];
-                        echo "<td> $data </td>";
-
-                        if($key == $primaryColumn)
+                        $count = count($cols);
+                        for($x = 0; $x < $count; $x++)
                         {
-                            $primaryKey = $data;
+                            $col = trim($tableHeadings[$x]);
+                            echo "<th> $col </th>";
                         }
+                        echo "<th> Edit </th>"
+                    ?>
+                </tr>
+                <?php
+                    if ($rows == null)
+                    {
+                        $rows = array();
+                        $tmp = array();
+                        for($x = 0; $x < count($cols); $x++)
+                        {
+                            array_push($tmp, "null");
+                        }
+                        array_push($rows, $tmp);
                     }
-                    $_SESSION["primaryKey"] = $primaryKey;
-                    //Creates the dropdown box with the buttons used for updating and deleting
-                    //Clemeant created the drop down box. Jake repurposed it and changed the style and functionality to suit current methods
-                    echo 
-                        "<td>  
-                        <div class='dropdown'>
-                            <button class='dropbtn' disabled>...</button>
-                            <div class='dropdown-content'>
-                                <form action='php-scripts/customer-update-script.php' method='POST' event.preventDefault() > <button type='submit' id= '$primaryKey' class='UpdateButton' name='UpdateButton' 
-                                value='$primaryKey'> Update</button> </form>
-                                <form action='php-scripts/customer-delete-script.php' method='POST' event.preventDefault()> <button type='submit' name='deleteButton' id='$primaryKey' class='deleteButton' 
-                                value = '$primaryKey'>Delete</button> </form>
-                            </div>
-                        </div>
-                        </td>";
-                    
-                    echo "</tr>";
-                }
-            ?>
-        </table>
-    </div>
 
+                    $keys = array_keys($rows[0]);
+
+                    $primaryColumn = "user_name";
+
+                    for($x = 0; $x < count($rows); $x++)
+                    {
+                        echo "<tr>";
+                        for($y = 0; $y < count($keys); $y++)
+                        {
+                            $row = $rows[$x];
+                            $key = $keys[$y];
+                            $data = $row[$key];
+                            echo "<td> $data </td>";
+
+                            if($key == $primaryColumn)
+                            {
+                                $primaryKey = $data;
+                            }
+                        }
+                        $_SESSION["primaryKey"] = $primaryKey;
+                        //Creates the dropdown box with the buttons used for updating and deleting
+                        //Clemeant created the drop down box. Jake repurposed it and changed the style and functionality to suit current methods
+                        echo
+                            "<td class='editcolumn'>
+                                <div class='dropdown'>
+                                    <button class='dropbtn' disabled>...</button>
+                                    <div class='dropdown-content'>
+                                        <form action='php-scripts/customer-update-script.php' method='POST' event.preventDefault() > <button type='submit' id= '$primaryKey' class='dropdown-element' name='UpdateButton'
+                                        value='$primaryKey'> Update</button> </form>
+                                        <form action='php-scripts/customer-delete-script.php' method='POST' event.preventDefault()> <button type='submit' name='deleteButton' id='$primaryKey' class='dropdown-element'
+                                        value = '$primaryKey'>Delete</button> </form>
+                                    </div>
+                                </div>
+                            </td>";
+
+                        echo "</tr>";
+                    }
+                ?>
+            </table>
+        </div>
+    </div>
     <!-- Create the initial window for the pop up -->
-    <div id="CustomerModal" class="modal"<?php
+    <div id="CustomerModal" class="modal-overlay"<?php
             //checks to see if there was any errors and if there was, it will continue to display the modal
             if(isset($_GET["insert"]))
             {
@@ -146,26 +141,26 @@
 
         <!-- Creates the content within the pop up -->
         <div class="modal-content">
-            <span class="Insertclose">&times;</span>
+            <span class="close-btn">&times;</span>
             <form action="php-scripts/customer-script.php" method="POST" event.preventDefault()>
-                <h1> Create a customer </h1>
+                <h2> Create a customer </h2>
                 <div>
                     <!-- User name input validation, checks based on error and displays accurate error message -->
-                    <h2> User Name: </h2>
+                    <label> User Name: </label>
                     <!-- Recieves the current value of field that was used instead of wiping it clear -->
                     <?php
                         if (isset($_SESSION["customerInsertUserName"]))
                         {
                             $userName = $_SESSION["customerInsertUserName"];
-                            echo "<input type='text' name='userName' value='$userName'>";    
+                            echo "<input type='text' name='userName' value='$userName'>";
                         }
                         else
                         {
-                            echo '<input type="text" name="userName">';    
+                            echo '<input type="text" name="userName">';
                         }
                     ?>
-                    <span class="error"> 
-                        <?php 
+                    <span class="error">
+                        <?php
                             if (isset($_GET["insert"]))
                             {
                                 $userName = $_GET["insert"];
@@ -185,21 +180,21 @@
                 </div>
                 <div>
                     <!-- Name input validation, checks based on error and displays accurate error message -->
-                    <h2> Name: </h2>
+                    <label> Name: </label>
                      <!-- Recieves the current value of field that was used instead of wiping it clear -->
                     <?php
                         if (isset($_SESSION["customerInsertName"]))
                         {
                             $name = $_SESSION["customerInsertName"];
-                            echo "<input type='text' name='name' value='$name'>";    
+                            echo "<input type='text' name='name' value='$name'>";
                         }
                         else
                         {
-                            echo '<input type="text" name="name">';    
+                            echo '<input type="text" name="name">';
                         }
                     ?>
-                    <span class="error"> 
-                        <?php 
+                    <span class="error">
+                        <?php
                             if (isset($_GET["insert"]))
                             {
                                 $name = $_GET["insert"];
@@ -217,21 +212,21 @@
                 </div>
                 <div>
                     <!-- Phone Number input validation, checks based on error and displays accurate error message -->
-                    <h2> Phone Number: </h2>
+                    <label> Phone Number: </label>
                     <!-- Recieves the current value of field that was used instead of wiping it clear -->
                     <?php
                         if (isset($_SESSION["customerInsertPhoneNumber"]))
                         {
                             $phoneNumber = $_SESSION["customerInsertPhoneNumber"];
-                            echo "<input type='text' name='phoneNumber' value='$phoneNumber'>";    
+                            echo "<input type='text' name='phoneNumber' value='$phoneNumber'>";
                         }
                         else
                         {
-                            echo '<input type="text" name="phoneNumber">';    
+                            echo '<input type="text" name="phoneNumber">';
                         }
                     ?>
-                    <span class="error"> 
-                        <?php 
+                    <span class="error">
+                        <?php
                             if (isset($_GET["insert"]))
                             {
                                 $phoneNumber = $_GET["insert"];
@@ -249,21 +244,21 @@
                 </div>
                 <div>
                     <!-- Email input validation, checks based on error and displays accurate error message -->
-                    <h2> Email: </h2>
+                    <label> Email: </label>
                     <!-- Recieves the current value of field that was used instead of wiping it clear -->
                     <?php
                         if (isset($_SESSION["customerInsertEmail"]))
                         {
                             $email = $_SESSION["customerInsertEmail"];
-                            echo "<input type='text' name='email' value='$email'>";    
+                            echo "<input type='text' name='email' value='$email'>";
                         }
                         else
                         {
-                            echo '<input type="text" name="email">';    
+                            echo '<input type="text" name="email">';
                         }
                     ?>
-                    <span class="error"> 
-                        <?php 
+                    <span class="error">
+                        <?php
                             if (isset($_GET["insert"]))
                             {
                                 $email = $_GET["insert"];
@@ -281,21 +276,21 @@
                 </div>
                 <div>
                     <!-- Street Address input validation, checks based on error and displays accurate error message -->
-                    <h2> Street Address </h2>
+                    <label> Street Address </label>
                     <!-- Recieves the current value of field that was used instead of wiping it clear -->
                     <?php
                         if (isset($_SESSION["customerInsertStreetAddress"]))
                         {
                             $streetAddress = $_SESSION["customerInsertStreetAddress"];
-                            echo "<input type='text' name='streetAddress' value='$streetAddress'>";    
+                            echo "<input type='text' name='streetAddress' value='$streetAddress'>";
                         }
                         else
                         {
-                            echo '<input type="text" name="streetAddress">';    
+                            echo '<input type="text" name="streetAddress">';
                         }
                     ?>
-                    <span class="error"> 
-                        <?php 
+                    <span class="error">
+                        <?php
                             if (isset($_GET["insert"]))
                             {
                                 $streetAddress = $_GET["insert"];
@@ -313,21 +308,21 @@
                 </div>
                 <div>
                     <!-- Suburb input validation, checks based on error and displays accurate error message -->
-                    <h2> Suburb </h2>
+                    <label> Suburb </label>
                     <!-- Recieves the current value of field that was used instead of wiping it clear -->
                     <?php
                         if (isset($_SESSION["customerInsertSuburb"]))
                         {
                             $suburb = $_SESSION["customerInsertSuburb"];
-                            echo "<input type='text' name='suburb' value='$suburb'>";    
+                            echo "<input type='text' name='suburb' value='$suburb'>";
                         }
                         else
                         {
-                            echo '<input type="text" name="suburb">';    
+                            echo '<input type="text" name="suburb">';
                         }
                     ?>
-                    <span class="error"> 
-                        <?php 
+                    <span class="error">
+                        <?php
                             if (isset($_GET["insert"]))
                             {
                                 $suburb = $_GET["insert"];
@@ -345,21 +340,21 @@
                 </div>
                 <div>
                     <!-- Post Code input validation, checks based on error and displays accurate error message -->
-                    <h2> Post Code </h2>
+                    <label> Post Code </label>
                     <!-- Recieves the current value of field that was used instead of wiping it clear -->
                     <?php
                         if (isset($_SESSION["customerInsertPostCode"]))
                         {
                             $postCode = $_SESSION["customerInsertPostCode"];
-                            echo "<input type='text' name='postCode' value='$postCode'>";    
+                            echo "<input type='text' name='postCode' value='$postCode'>";
                         }
                         else
                         {
-                            echo '<input type="text" name="postCode">';    
+                            echo '<input type="text" name="postCode">';
                         }
                     ?>
-                    <span class="error"> 
-                        <?php 
+                    <span class="error">
+                        <?php
                             if (isset($_GET["insert"]))
                             {
                                 $postCode = $_GET["insert"];
@@ -377,21 +372,21 @@
                 </div>
                 <div>
                     <!-- Licence number input validation, checks based on error and displays accurate error message -->
-                    <h2> Licence Number </h2>
+                    <label> Licence Number </label>
                     <!-- Recieves the current value of field that was used instead of wiping it clear -->
                     <?php
                         if (isset($_SESSION["customerInsertLicenceNumber"]))
                         {
                             $licenceNumber = $_SESSION["customerInsertLicenceNumber"];
-                            echo "<input type='text' name='licenceNumber' value='$licenceNumber'>";    
+                            echo "<input type='text' name='licenceNumber' value='$licenceNumber'>";
                         }
                         else
                         {
-                            echo '<input type="text" name="licenceNumber">';    
+                            echo '<input type="text" name="licenceNumber">';
                         }
                     ?>
-                    <span class="error"> 
-                        <?php 
+                    <span class="error">
+                        <?php
                             if (isset($_GET["insert"]))
                             {
                                 $licenceNumber = $_GET["insert"];
@@ -409,21 +404,21 @@
                 </div>
                 <div>
                     <!-- State input validation, checks based on error and displays accurate error message -->
-                    <h2> State </h2>
+                    <label> State </label>
                     <!-- Recieves the current value of field that was used instead of wiping it clear -->
                     <?php
                         if (isset($_SESSION["customerInsertState"]))
                         {
                             $state = $_SESSION["customerInsertState"];
-                            echo "<input type='text' name='state' value='$state'>";    
+                            echo "<input type='text' name='state' value='$state'>";
                         }
                         else
                         {
-                            echo '<input type="text" name="state">';    
+                            echo '<input type="text" name="state">';
                         }
                     ?>
-                    <span class="error"> 
-                        <?php 
+                    <span class="error">
+                        <?php
                             if (isset($_GET["insert"]))
                             {
                                 $state = $_GET["insert"];
@@ -448,7 +443,7 @@
     </div>
 
      <!-- Create the initial window for the pop up -->
-    <div id="UpdateCustomerModal" class="modal" <?php
+    <div id="UpdateCustomerModal" class="modal-overlay" <?php
             //checks to see if there was any errors and if there was, it will continue to display the modal
             if(isset($_GET["update"]))
             {
@@ -465,22 +460,22 @@
 
         <!-- Creates the content within the pop up -->
         <div class="modal-content" >
-        
-            <span class="updateFormClose">&times;</span>
+
+            <span class="close-btn">&times;</span>
             <form action="php-scripts/customer-update-script.php" method="POST" event.preventDefault()>
 
-                <h1> Update a customer </h1>
+                <h2> Update a customer </h2>
                 <div>
                     <!-- //Made User name not editable to ensure database intergrity  -->
-                    <h2> User Name: </h2>
+                    <label> User Name: </label>
                     <input type="text" name="userName" readonly value = "<?php echo $_SESSION['user_name'];?>">
                 </div>
                 <div>
                     <!-- Name input validation, checks based on error and displays accurate error message -->
-                    <h2> Name: </h2>
+                    <label> Name: </label>
                     <input type="text" name="name" value = "<?php echo $_SESSION['name'];?>">
-                    <span class="error"> 
-                        <?php 
+                    <span class="error">
+                        <?php
                             if (isset($_GET["update"]))
                             {
                                 $name = $_GET["update"];
@@ -498,10 +493,10 @@
                 </div>
                 <div>
                     <!-- Phone number validation, checks based on error and displays accurate error message -->
-                    <h2> Phone Number: </h2>
+                    <label> Phone Number: </label>
                     <input type="text" name="phoneNumber" value = "<?php echo $_SESSION['phone_number'];?>">
-                    <span class="error"> 
-                        <?php 
+                    <span class="error">
+                        <?php
                             if (isset($_GET["update"]))
                             {
                                 $phoneNumber = $_GET["update"];
@@ -519,10 +514,10 @@
                 </div>
                 <div>
                     <!-- Email input validation, checks based on error and displays accurate error message -->
-                    <h2> Email: </h2>
+                    <label> Email: </label>
                     <input type="text" name="email" value = "<?php echo $_SESSION['email'];?>">
-                    <span class="error"> 
-                        <?php 
+                    <span class="error">
+                        <?php
                             if (isset($_GET["update"]))
                             {
                                 $email = $_GET["update"];
@@ -540,10 +535,10 @@
                 </div>
                 <div>
                     <!-- Street address input validation, checks based on error and displays accurate error message -->
-                    <h2> Street Address </h2>
+                    <label> Street Address </label>
                     <input type="text" name="streetAddress" value = "<?php echo $_SESSION['street_address'];?>">
-                    <span class="error"> 
-                        <?php 
+                    <span class="error">
+                        <?php
                             if (isset($_GET["update"]))
                             {
                                 $streetAddress = $_GET["update"];
@@ -561,10 +556,10 @@
                 </div>
                 <div>
                     <!-- Suburb input validation, checks based on error and displays accurate error message -->
-                    <h2> Suburb </h2>
+                    <label> Suburb </label>
                     <input type="text" name="suburb" value = "<?php echo $_SESSION['suburb'];?>">
-                    <span class="error"> 
-                        <?php 
+                    <span class="error">
+                        <?php
                             if (isset($_GET["update"]))
                             {
                                 $suburb = $_GET["update"];
@@ -582,10 +577,10 @@
                 </div>
                 <div>
                     <!-- Post code input validation, checks based on error and displays accurate error message -->
-                    <h2> Post Code </h2>
+                    <label> Post Code </label>
                     <input type="text" name="postCode" value = "<?php echo $_SESSION['post_code'];?>">
-                    <span class="error"> 
-                        <?php 
+                    <span class="error">
+                        <?php
                             if (isset($_GET["update"]))
                             {
                                 $postCode = $_GET["update"];
@@ -603,10 +598,10 @@
                 </div>
                 <div>
                     <!-- Licence Number input validation, checks based on error and displays accurate error message -->
-                    <h2> Licence Number </h2>
+                    <label> Licence Number </label>
                     <input type="text" name="licenceNumber" value = "<?php echo $_SESSION['licence_number'];?>">
-                    <span class="error"> 
-                        <?php 
+                    <span class="error">
+                        <?php
                             if (isset($_GET["update"]))
                             {
                                 $licenceNumber = $_GET["update"];
@@ -624,10 +619,10 @@
                 </div>
                 <div>
                     <!-- State input validation, checks based on error and displays accurate error message -->
-                    <h2> State </h2>
+                    <label> State </label>
                     <input type="text" name="state" value = "<?php echo $_SESSION['state'];?>">
-                    <span class="error"> 
-                        <?php 
+                    <span class="error">
+                        <?php
                             if (isset($_GET["update"]))
                             {
                                 $state = $_GET["update"];
@@ -650,8 +645,8 @@
         </div>
     </div>
 
-    <!-- Create the initial window for the pop up -->                        
-    <div id="DeleteCustomerModal" class="modal" 
+    <!-- Create the initial window for the pop up -->
+    <div id="DeleteCustomerModal" class="modal-overlay"
         <?php
             //Used to redirect back to the form once the first button has been pressed
             if(isset($_GET["delete"]))
@@ -668,16 +663,16 @@
         ?>>
         <!-- Creates the content within the pop up -->
         <div class="modal-content" >
-            <span class="closeDeleteForm">&times;</span>
-            <h1 style="left: -8%; position: relative;"> Do you wish to delete the following customer? </h1>
+            <span class="close-btn">&times;</span>
+            <h2 style="left: -8%; position: relative;"> Do you wish to delete the following customer? </h2>
             <!-- creates the yes and no button and parses the primary key back to be deleted  -->
             <?php
                 $pk = $_SESSION["user_name"];
-                echo "<h1 style='float: center; display: block; text-align: center;  padding-left: 5%; padding-right: 20%; position: relative; word-wrap: break-word;'> $pk </h1>";
+                echo "<h2 style='float: center; display: block; text-align: center;  padding-left: 5%; padding-right: 20%; position: relative; word-wrap: break-word;'> $pk </h2>";
                 echo "<form action='php-scripts/customer-delete-script.php' method='POST' event.preventDefault()>
                       <button style='width: 40%; left: -10%; float: center; display: block; text-align: center;  position: relative;' type='submit' id='$pk' value ='$pk' name='submitDeleteCustomer'>Yes</button>
                       <button style='width: 40%; left: -10%;  float: center; display: block; text-align: center; position: relative; background-color: red;' type='submit' name='CancelDeleteCustomer'>No</button> </form>";
-            ?>  
+            ?>
         </div>
     </div>
 

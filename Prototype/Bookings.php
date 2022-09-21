@@ -27,7 +27,6 @@
 ?>
 
 <html>
-    <link rel="stylesheet" href="style/Jake_style.css">
     <link rel="stylesheet" href="style/dashboard-style.css">
     <link rel="stylesheet" href="style/popup.css">
     <head>
@@ -568,7 +567,7 @@
                                 echo "<td> $data </td>";
                             }
                             echo "
-                                <td>
+                                <td class='editcolumn'>
                                     <div class='dropdown'>
                                         <button class='dropbtn' disabled>...</button>
                                         <div class='dropdown-content'>

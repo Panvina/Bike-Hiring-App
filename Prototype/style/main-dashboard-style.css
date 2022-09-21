@@ -1,0 +1,49 @@
+.date_string
+{
+    width: 8vw;
+    text-align: center;
+}
+
+.date-grid
+{
+    padding-top: 10px;
+    display: flex;
+}
+
+.DashboardInformationContainer{
+  display:inline-block;
+  width: 100%;
+  height: auto;
+  background-color: lightgray;
+  display: table;
+  border: solid white;
+}
+
+.DashboardInformation{
+  width: auto;
+  height: auto;
+  background-color: lightgray;
+  display:table-cell;
+  border: solid white;
+  text-align: center;
+
+}
+/*
+.Date{
+  font-size: 20px;
+
+  padding-top: .1%;
+  position: absolute;
+}
+
+.Content #rightArrow{
+  left: 320%;
+}
+
+.Content #leftArrow{
+  left: -75%;
+}
+
+.Content #calendar{
+  left: -70%;
+} */

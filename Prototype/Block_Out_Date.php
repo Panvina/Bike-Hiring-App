@@ -16,7 +16,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 
 <!DOCTYPE html>
 <html>
-    <link rel="stylesheet" href="style/Jake_style.css">
+    <link rel="stylesheet" href="style/dashboard-style.css">
     <link rel="stylesheet" href="style/blockoutdates.css">
     <head>
          <!-- Header -->
@@ -27,26 +27,23 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
     </head>
 
     <body>
-        <!-- Side navigation -->
-        <nav>
-            <div class = "sideNavigation">
-                <a href= "Dashboard.php"> <img src= "img/icons/bulletin-board.png" alt="Dashboard Logo" /> Dashboard </a> <br>
-                <a href = "Customer.php"> <img src= "img/icons/account-group.png" alt="Customer Logo" />  Customer  </a> <br>
-                <?php setOwnerDashboardPrivilege(); ?>
-            <!--<a href="accounts.php"> <img src="img/icons/account.png" alt="Account logo"/> Accounts </a> <br>-->
-                <a href= "Inventory.php"> <img src= "img/icons/bicycle.png" alt="Inventory Logo" />  Inventory </a> <br>
-                <a href="Accessory.php"> <img src="img/icons/accessories.png" alt="Inventory Logo" /> Accessories </a> <br>
-                <a href="BikeTypes.php"> <img src="img/icons/biketypes.png" alt="Bike Types Logo" /> Bike Types </a> <br>
-                <a href="AccessoryTypes.php"> <img src="img/icons/accessorytypes.png" alt="Bike Types Logo" /> Accessory Types </a> <br>
-                <a href= "bookings.php"> <img src= "img/icons/book-open-blank-variant.png" alt="Bookings Logo" /> Bookings </a> <br>
-                <a class="active" href= "Block_Out_Date.php"> <img src= "img/icons/calendar.png" alt="Block out date Logo" /> Block Out Dates </a> <br>
-                <a href= "Locations.php"> <img src= "img/icons/earth.png" alt="Locations Logo" /> Locations </a> <br>
-                <a href= "editpages.php"> <img src= "img/icons/bulletin-board.png" alt="Edit Pages Logo" /> Edit </a> <br>
-                <?php  setLogoutButton()?>
-            </div>
-         </nav>
-         <div class="Content">
-                <div class="month">      
+        <div class="grid-container">
+        	<div class="menu">
+        		<a href= "Dashboard.php"> <img src= "img/icons/bulletin-board.png" alt="Dashboard Logo" /> Dashboard </a> <br>
+        		<a href = "Customer.php"> <img src= "img/icons/account-group.png" alt="Customer Logo" />  Customer  </a> <br>
+        		<?php setOwnerDashboardPrivilege(); ?>
+        		<a href= "Inventory.php"> <img src= "img/icons/bicycle.png" alt="Inventory Logo" />  Inventory </a> <br>
+        		<a href="Accessory.php"> <img src="img/icons/accessories.png" alt="Inventory Logo" /> Accessories </a> <br>
+        		<a href="BikeTypes.php"> <img src="img/icons/biketypes.png" alt="Bike Types Logo" /> Bike Types </a> <br>
+        		<a href="AccessoryTypes.php"> <img src="img/icons/accessorytypes.png" alt="Bike Types Logo" /> Accessory Types </a> <br>
+        		<a href= "bookings.php"> <img src= "img/icons/book-open-blank-variant.png" alt="Bookings Logo" /> Bookings </a> <br>
+        		<a class="active" href= "Block_Out_Date.php"> <img src= "img/icons/calendar.png" alt="Block out date Logo" /> Block Out Dates </a> <br>
+        		<a href= "Locations.php"> <img src= "img/icons/earth.png" alt="Locations Logo" /> Locations </a> <br>
+        		<a href= "editpages.php"> <img src= "img/icons/bulletin-board.png" alt="Edit Pages Logo" /> Edit </a> <br>
+        		<?php setLogoutButton()?>
+        	</div>
+        	<div class="main">
+                <div class="month">
                   <ul>
                     <li class="prev">&#10094;</li>
                     <li class="next">&#10095;</li>
@@ -65,12 +62,12 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                   <li>S</li>
                   <li>S</li>
                 </ul>
-                
+
                 <div id="dateContainer">
                 <ul class="days">
 
                   <a class="datetest" style="display: none;" href=""><li><span class="date active">0</span></li></a>
-                  <?php 
+                  <?php
                   $blockOutDatesSQL = $conn->query("SELECT * FROM block_out_dates");
                   while ($row = $blockOutDatesSQL->fetch_assoc()) {
                       $date_value = $row["date_value"];
@@ -108,7 +105,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
         <input style="display:none;font-size: 24px;" id="unblockDateSubmit" type="submit" value="Unblock Date">
         </form>
         <p style="font-size:24px;font-weight: bold;">Current Blockout Dates:</p>
-        <?php 
+        <?php
           $blockOutDatesSQL = $conn->query("SELECT * FROM block_out_dates WHERE date_blockout = 1");
           while ($row = $blockOutDatesSQL->fetch_assoc()) {
               $date_value = $row["date_value"];
@@ -118,15 +115,12 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
               $date_month = $row["date_month"];
               $date_year = $row["date_year"];
               $date_reason = $row["date_reason"];
-              echo '<tr> 
-                  <td><strong style="font-size:24px;">'.$date_value.'</strong></td> 
+              echo '<tr>
+                  <td><strong style="font-size:24px;">'.$date_value.'</strong></td>
               </tr><br>';
             }
           ?>
-
-
-
-
+        	</div>
         </div>
 
 <script type="text/javascript">
@@ -143,7 +137,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
     deleteAddContainer.innerHTML = '';
     deleteRemoveContainer.innerHTML = '';
   }
-    
+
 function manageDate(dateid, blockedout){
     clearSelect();
     if (blockedout == 0){

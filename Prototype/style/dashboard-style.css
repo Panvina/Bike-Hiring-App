@@ -1,8 +1,13 @@
+/*                                                                                     */
+/* Jake's original styling modified by Dabin for a more responsive UI with grid layout */
+/*                                                                                     */
+/* Set background colour to a nice green */
 body
 {
     background-color: #eaf7f6;
 }
 
+/* Header text formatting */
 .header
 {
     font-size: 40px;
@@ -11,20 +16,45 @@ body
     line-height: 3;
 }
 
+/* header logo sizing */
+#Logo{
+    height: 135px;
+    float: left;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+/* Use two columns in grid layout */
+.grid-container {
+    display: grid;
+    grid-template-columns: max(200px, 17vw) auto;   /* Make 200px minimum width for side menu */
+    gap: 1px;
+    /* text-align: center; */
+    padding-top: 0px;
+    padding-right: 40px;
+}
+
+.grid-container > div {
+    padding-top: 0px;
+}
+
+/* Main content grid layout formatting */
 .main
 {
-    grid-area: main;
     background-color: white;
     padding: 0 4vw 4vw 4vw;
     font-size: calc(12px + 0.3vw);
 }
 
+/* Menu content grid layout formatting */
 .menu
 {
-    grid-area: menu;
+    font-size: 0px;
     min-width: 200px;
 }
 
+/* Styling for side menu text */
 .menu a
 {
     text-decoration: none;
@@ -32,6 +62,26 @@ body
     font-size: calc(20px + 0.9vw);
 }
 
+.menu a:hover
+{
+    background-color: white;
+    color: #00b7b1;
+    display: block;
+}
+
+.menu a.active {
+    background-color: white;
+    color: #00b7b1;
+    display: block;
+}
+
+br
+{
+    margin: 0px;
+    padding: 0px;
+}
+
+/* styling for main menu content buttons */
 .main button
 {
     display: inline-block;
@@ -53,29 +103,6 @@ body
     margin-bottom: 0px;
 }
 
-.grid-container {
-    display: grid;
-    grid-template-areas:
-        'menu main main main main main main main'
-        'menu main main main main main main main';
-    gap: 5px;
-    /* text-align: center; */
-    padding-top: 0px;
-    padding-right: 40px;
-}
-
-.grid-container > div {
-    padding-top: 0px;
-}
-
-#Logo{
-    height: 135px;
-    float: left;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-}
-
 .TableContent{
   border-collapse: collapse;
   width: 100%;
@@ -87,15 +114,25 @@ body
   padding: 8px;
 }
 
+.editcolumn
+{
+    width: 30px;
+}
 
-/* Remove nasty margins around forms ~ Dabin */
+table
+{
+    font-size: calc(12px + 0.3vw);
+}
+
 form
 {
 	margin:0px;
 	padding:0px;
 }
 
-/* Clement's dropdown styling used. */
+/*                                                      */
+/* Clement's styling for dropdown update/delete options */
+/*                                                      */
 .dropdown-element
 {
 	background-color: darkcyan !important;
@@ -113,7 +150,7 @@ form
   display: none;
   position: absolute;
   background-color: #f1f1f1;
-  min-width: 160px;
+  min-width: 80px;
   min-height: 60px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
@@ -144,4 +181,21 @@ form
 .dropdown button
 {
     left: 0px;
+}
+
+.dropdown
+{
+    position: relative;
+    display: inline-block;
+}
+
+.dropbtn {
+    background-color: darkcyan !important;
+    border: none !important;
+    color: white!important;
+    font-size: 20px!important;
+    border: solid white!important;
+    border-width: thin!important;
+    cursor: pointer!important;
+    left: 3%!important;
 }

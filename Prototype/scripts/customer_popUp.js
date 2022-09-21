@@ -8,10 +8,8 @@ var btn = document.getElementById("CustomerPopUp");
 var updateBtn = document.getElementsByClassName("UpdateCustomer");
 var deleteBtn = document.getElementsByClassName("deleteCustomer");
 
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("Insertclose")[0];
-var updateSpan = document.getElementsByClassName("updateFormClose")[0];
-var deleteSpan = document.getElementsByClassName("closeDeleteForm")[0];
+// Get the close-btn <span> elements that closes the modal
+var close_btns = document.getElementsByClassName("close-btn");
 var noDeleteButton = document.getElementById("CancelDeleteCustomer");
 
 // When the user clicks on the button, open the modal
@@ -33,26 +31,18 @@ for (var i = 0; i < deleteBtn.length; i++)
   }
 }
 
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-  customerInsertModal.style.display = "none";
-  window.location.replace("Customer.php");
-  $_SESSION["ret"] = null;
+// When the user clicks on a close button (x), close the modal
+for (let i = 0; i < close_btns.length; i++)
+{
+	close_btns[i].onclick = function()
+	{
+        customerInsertModal.style.display = "none";
+        updateModal.style.display = "none";
+        deleteModal.style.display = "none";
+        window.location.replace("Customer.php");
+        $_SESSION["ret"] = null;
+	}
 }
-
-updateSpan.onclick = function() {
-  updateModal.style.display = "none";
-  window.location.replace("Customer.php");
-  $_SESSION["ret"] = null;
-}
-
-deleteSpan.onclick = function() {
-  deleteModal.style.display = "none";
-  window.location.replace("Customer.php");
-  $_SESSION["ret"] = null;
-}
-
-
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
@@ -73,3 +63,21 @@ window.onclick = function(event) {
     window.location.replace("Customer.php");
   }
 }
+
+alignAddBtn();
+function alignAddBtn()
+{
+    var headerWidth = document.getElementById('content-header').getBoundingClientRect().width;
+
+    var addBtn = document.getElementById('CustomerPopUp');
+    var addBtnInfo = addBtn.getBoundingClientRect();
+    var btnWidth = addBtnInfo.width;
+
+    var tableWidth = document.getElementById('data-table').getBoundingClientRect().width;
+
+    var width = (tableWidth - headerWidth - btnWidth - 3) +  "px";
+
+    addBtn.style.left = width;
+}
+
+window.addEventListener('resize', alignAddBtn);
