@@ -151,6 +151,7 @@ Contributor(s): Dabin Lee @ icelasersparr@gmail.com
 
     // Delete booking button
     $deleteBookingSubmit = isset($_POST["delete-booking-btn"]);
+    $deleteBookingConfirm = isset($_POST["delete-booking-confirm-btn"]);
 
     // Verify button for add booking is pressed
     if ($addBookingInfoSubmit)
@@ -403,6 +404,12 @@ Contributor(s): Dabin Lee @ icelasersparr@gmail.com
         // get booking id to delete
         $buttonName = $_POST["delete-booking-btn"];
         $bookingId = explode(",", $buttonName)[1];
+        $_SESSION["deleteBooking"]["bookingId"] = $bookingId;
+        header("Location: ..\bookings.php?booking-mode=delete-none");
+    }
+    else if ($deleteBookingConfirm)
+    {
+        $bookingId = $_SESSION["deleteBooking"]["bookingId"];
 
         // Delete booking
         $conn = new BookingsDBConnection();

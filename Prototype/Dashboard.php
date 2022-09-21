@@ -36,6 +36,7 @@ Contributor(s):
 <html>
     <link rel="stylesheet" href="style/Jake_style.css">
     <link rel="stylesheet" href="style/scheduleTimetableStyle.css">
+    <link rel="stylesheet" href="style/timetablejs.css">
     <head>
         <!-- header -->
         <title> Admin dashboard </title>
@@ -100,7 +101,7 @@ Contributor(s):
                 <!-- Urgent section -->
                 <div class="DashboardInformation">
                     <h2>Urgent Replacements</h2>
-                    <h3>Bikes: 
+                    <h3>Bikes:
                     <?php
                             // print number of available accessories
                             $conn = new DamagedItemsDBConnection();
@@ -109,14 +110,14 @@ Contributor(s):
                             echo count($res);
                         ?>
                     <h3>
-                    <h3>Accessories: 
+                    <h3>Accessories:
                     <?php
                             // print number of damaged accessories
                             $conn = new DamagedItemsDBConnection();
                             $res = $conn->getDamagedAccessories();
 
                             echo count($res);
-                        ?>    
+                        ?>
                     <h3>
                 </div>
                 <!-- Inventory Summary section -->
@@ -145,138 +146,132 @@ Contributor(s):
 
             <!--This calendar section is done by Clement where it is showing the current bookings as an event scheduler and it is hard code since it is to demonstrate the potential type of thing-->
             <!-- Current bookings section -->
-            <h1 style="line-height: 0px; margin-bottom: 0px; margin-top: 2em; "><strong> Current Bookings: </strong></h1>
-			<div class="background">
-    			<pre>
-    			<!--keeping the schedule inside it-->
-    			<div class="scheduleContainer">
-    				<!-- TIMES -->
-    				<div class="time start-900">9:00</div>
-    				<div class="time start-930">9:30</div>
-    				<div class="time start-1000">10:00</div>
-    				<div class="time start-1030">10:30</div>
-    				<div class="time start-1100">11:00</div>
-    				<div class="time start-1130">11:30</div>
-    				<div class="time start-1200">12:00</div>
-    				<div class="time start-1230">12:30</div>
-    				<div class="time start-1300">13:00</div>
-    				<div class="time start-1330">13:30</div>
-    				<div class="time start-1400">14:00</div>
-    				<div class="time start-1430">14:30</div>
-    				<div class="time start-1500">15:00</div>
-    				<div class="time start-1530">15:30</div>
-    				<div class="time start-1600">16:00</div>
-    				<div class="time start-1630">16:30</div>
-    				<div class="time start-1700">17:00</div>
-
-    				<!-- EVENTS -->
-    				<!--This is to sort in order of time start so the it can be shown cleanly-->
-
-
-    				<!--Given the scenario where there is a lot of booking on this day-->
-                    <?php
-                        function intTimeToStringTime($hours, $minutes)
-                        {
-                            $leadingZeroHour = "";
-                            // if ($hours < 10)
-                            // {
-                            //     $leadingZeroHour = "0";
-                            // }
-
-                            $leadingZeroMinute = "";
-                            if ($minutes < 10)
-                            {
-                                $leadingZeroMinute = "0";
-                            }
-
-                            $hours = "$leadingZeroHour$hours";
-                            $minutes = "$leadingZeroMinute$minutes";
-
-                            $ret = "$hours:$minutes";
-                            return $ret;
-                        }
-
-                        function constraintToThirty($time)
-                        {
-                            $hours = (int)(substr($time, 0, 2));
-                            $minutes = (int)(substr($time, 3, 2));
-
-                            if ($minutes < 15)
-                            {
-                                // round XX:14 or less down to XX:00
-                                $minutes = 0;
-                            }
-                            else if ($minutes >= 15 && $minutes < 45)
-                            {
-                                // round (XX:15 - XX:44) to XX:30
-                                $minutes = 30;
-                            }
-                            else
-                            {
-                                // round XX:45 or above to XX+1:00
-                                $hours++;
-                                $minutes = 0;
-                            }
-
-                            $ret = intTimeToStringTime($hours, $minutes);
-
-                            return $ret;
-                        }
-
-                        $conn = new BookingsDBConnection();
-
-                        // create new DB connection and fetch rows for a given date
-                        $ymdDate = DateTime::createFromFormat("d-m-Y", $date);
-                        $strDate = $ymdDate->format("Y-m-d");
-                        $rows = $conn->getBookingRows("start_date='$strDate'");
-
-                        $numRows = count($rows);
-                        // print bookings
-                        for($i = 0; $i < $numRows; $i++)
-                        {
-                            echo "";
-                            // get current row
-                            $row = $rows[$i];
-
-                            $startTime = constraintToThirty($row["start_time"]);
-                            $endTime = constraintToThirty($row["expected_end_time"]);
-                            $startDate = $row["start_date"];
-                            $endDate = $row["end_date"];
-
-                            if ($startDate != $endDate)
-                            {
-                                $endTime = "17:00";
-                            }
-                            else if ($startTime == $endTime)
-                            {
-                                $endTimeHour = (int)substr($endTime, 0, 2);
-                                $endTimeMinute = (int)substr($endTime, 3, 2);
-
-                                if ($endTimeMinute == 0)
-                                {
-                                    $endTimeMinute = 30;
-                                }
-                                else
-                                {
-                                    $endTimeMinute = 0;
-                                    $endTimeHour++;
-                                }
-
-                                $endTime = intTimeToStringTime($endTimeHour, $endTimeMinute);
-                            }
-                            $custName = $row['name'];
-
-                            $startTimeNoColon = str_replace(":", "", $startTime);
-                            $endTimeNoColon = str_replace(":", "", $endTime);
-                            echo "<div class='event stage-bookings start-$startTimeNoColon end-$endTimeNoColon length-1'>$custName<br/>$startTime-<br/>$endTime</div>";
-                        }
-                    ?>
-    			</div>
-            </pre>
+            <h1 style="line-height: 0px; margin-bottom: 1.5%; margin-top: 2em; "><strong> Current Bookings: </strong></h1>
+			<div class="timetable"></div>
 		</div>
 
+        <?php
+            $conn = new BookingsDBConnection();
+
+            // create new DB connection and fetch rows for a given date
+            $ymdDate = DateTime::createFromFormat("d-m-Y", $date);
+            $strDate = $ymdDate->format("Y-m-d");
+            $rows = $conn->getBookingRows("start_date='$strDate'");
+
+            $numRows = count($rows);
+
+            $customerNames = array();
+            $tmpCustNames = array();
+            $times = array();
+            // print bookings
+            $custCount = 0;
+            for($i = 0; $i < $numRows; $i++)
+            {
+                // get current row
+                $row = $rows[$i];
+
+                $startTime = $row["start_time"];
+                $endTime = $row["expected_end_time"];
+
+                $custName = $row['name'];
+                if (!in_array($custName, $tmpCustNames))
+                {
+                    $custCount++;
+                    array_push($customerNames, "$custCount,$custName");
+                    array_push($tmpCustNames, "$custName");
+                }
+
+                $startHour = substr($startTime, 0, 2);
+                $startMinutes = substr($startTime, 3, 2);
+
+                $endHour = substr($endTime, 0, 2);
+                $endMinutes = substr($endTime, 3, 2);
+
+                array_push($times, array(
+                    "startHour" => $startHour,
+                    "startMin" => $startMinutes,
+                    "endHour" => $endHour,
+                    "endMin" => $endMinutes,
+                    "custId" => $custCount
+                ));
+            }
+
+            // print_r($customerNames);
+        ?>
     </body>
+    <script src="scripts/timetable.js"></script>
+
     <script>
+        var timetable = new Timetable();
+
+        timetable.setScope(8, 18);
+
+        timetable.addLocations([
+            <?php
+                // print customer names
+                $numCustomers = count($customerNames);
+                if ($numCustomers > 0)
+                {
+                    for($i = 0; $i < $numCustomers; $i++)
+                    {
+                        $cust = explode(',', $customerNames[$i]);
+                        $id = $cust[0];
+                        $name = $cust[1];
+                        echo "{'id' : '$id', 'name' : '$name'}";
+                        if ($i != $numCustomers - 1)
+                        {
+                            echo ", ";
+                        }
+                    }
+                }
+                else
+                {
+                    echo "{'id' : '1', 'name' : 'null'}";
+                }
+            ?>
+        ]);
+
+        // Date format = YYYY, MM, DD, HH, MM
+        // timetable.addEvent('Sightseeing', 'Rotterdam', new Date(2015,7,17,9,00), new Date(2015,7,17,11,30));
+        // timetable.addEvent('Zumba', 'Madrid', new Date(2015,7,17,12), new Date(2015,7,17,13));
+        // timetable.addEvent('Zumbu', 'Madrid', new Date(2015,7,17,13,30), new Date(2015,7,17,15));
+        // timetable.addEvent('Lasergaming', 'London', new Date(2015,7,17,17,45), new Date(2015,7,17,19,30));
+        // timetable.addEvent('All-you-can-eat grill', 'New York', new Date(2015,7,17,21), new Date(2015,7,18,1,30));
+        // timetable.addEvent('Hackathon', 'Tokyo', new Date(2015,7,17,11,30), new Date(2015,7,17,20));
+        // timetable.addEvent('Tokyo Hackathon Livestream', 'Los Angeles', new Date(2015,7,17,12,30), new Date(2015,7,17,16,15));
+        // timetable.addEvent('Lunch', 'Jakarta', new Date(2015,7,17,9,30), new Date(2015,7,17,11,45));
+        // timetable.addEvent('Cocktails', 'Rotterdam', new Date(2015,7,18,00,00), new Date(2015,7,18,02,00));
+
+        <?php
+            $today = date("Y/m/d");
+            $year = substr("$today", 0, 4);
+            $month = substr("$today", 5, 2);
+            $day = substr("$today", 8, 2);
+
+            $numBookings = count($times);
+            if ($numBookings > 0)
+            {
+                for($i = 0; $i < $numBookings; $i++)
+                {
+                    $time = $times[$i];
+                    $startHour = $time["startHour"];
+                    $startMin = $time["startMin"];
+                    $endHour = $time["endHour"];
+                    $endMin = $time["endMin"];
+                    $custId = $time["custId"];
+
+                    echo "timetable.addEvent('$startHour:$startMin-$endHour:$endMin', '$custId', new Date($year, $month, $day, $startHour, $startMin), new Date($year, $month, $day, $endHour, $endMin));";
+                }
+            }
+            else
+            {
+                echo "timetable.addEvent('No Bookings Founds', '1', new Date($year, $month, $day, 9), new Date($year, $month, $day, 17));";
+            }
+        ?>
+
+        var renderer = new Timetable.Renderer(timetable);
+        renderer.draw('.timetable');
+
         function decrementDate()
         {
             // alert("Test");
@@ -296,5 +291,13 @@ Contributor(s):
             ?>
             window.location.replace("dashboard.php?date=<?php echo $nextDay ?>");
         }
+    </script>
+    <script>
+      (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+      function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+      e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+      e.src='//www.google-analytics.com/analytics.js';
+      r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+      ga('create','UA-37417680-5');ga('send','pageview');
     </script>
 </html>

@@ -62,9 +62,9 @@
                 <span class="close-btn">&times;</span>
                 <h2> Add Booking - Booking Details </h2>
                 <!-- booking form -->
-                <form action="php-scripts\booking-popups.php" method="POST">
+                <form class="modal-form" action="php-scripts\booking-popups.php" method="POST">
                     <!-- Select customer -->
-                    <label>Customer:</label><br>
+                    <label>Customer</label><br>
                     <select name="add-booking-customer" id="add-booking-customer"><br><br>
                         <?php
                             // Populate customer combo box with all customers
@@ -194,7 +194,7 @@
                             }
                         ?>
                     </p>
-                    <button type="submit" name="add-booking-main-submit"> Select Bikes </button>
+                    <button type="submit" name="add-booking-main-submit" style=""> Next </button>
                 </form>
             </div>
         </div>
@@ -217,12 +217,12 @@
                 <span class="close-btn">&times;</span>
                 <h2> Add Booking - Bikes and Accessories </h2>
                 <!-- Form for submitting selections to PHP -->
-                <form action="php-scripts\booking-popups.php" method="POST">
+                <form class="modal-form" action="php-scripts\booking-popups.php" method="POST">
                     <!-- Bike list -->
                     <p>To select multiple values for either bikes or accessories, hold CTRL while clicking.</p>
                     <label>Bikes</label><br>
                     <!-- Get bikes as array (for PHP) -->
-                    <select name="add-booking-bike[]" id="add-booking-bike" multiple><br><br>
+                    <select name="add-booking-bike[]" id="add-booking-bike" multiple size="10"><br><br>
                         <?php
                             // Get DB connection object
                             $conn = new BikeInventoryDBConnection();
@@ -239,7 +239,7 @@
                     <!-- Accessory list -->
                     <label>Accessories</label><br>
                     <!-- Get accessories as array (for PHP) -->
-                    <select name="add-booking-accessory[]" id="add-booking-accessory" multiple><br><br>
+                    <select name="add-booking-accessory[]" id="add-booking-accessory" multiple size="10" size="10"><br><br>
                         <?php
                             // Get DB connection object
                             $conn = new AccessoryInventoryDBConnection();
@@ -311,9 +311,9 @@
                 ?>
 
                 <!-- booking form -->
-                <form action="php-scripts\booking-popups.php" method="POST">
+                <form class="modal-form" action="php-scripts\booking-popups.php" method="POST">
                     <!-- Display customer (non-modifiable) -->
-                    <label>Customer:</label><br>
+                    <label>Customer</label><br>
                     <select name="add-booking-customer" id="add-booking-customer" disabled>
                         <?php
                             // Populate customer combo box with all customers
@@ -396,7 +396,7 @@
                             }
                         ?>
                     </p>
-                    <button type="submit" name="change-booking-main-submit"> Select Bikes </button>
+                    <button type="submit" name="change-booking-main-submit"> Next </button>
                 </form>
             </div>
         </div>
@@ -419,12 +419,12 @@
                 <span class="close-btn">&times;</span>
                 <h2 >Modify Booking - Bikes and Accessories </h2>
                 <!-- Form for submitting selections to PHP -->
-                <form action="php-scripts\booking-popups.php" method="POST">
+                <form class="modal-form" action="php-scripts\booking-popups.php" method="POST">
                     <!-- Bike list -->
                     <p>To select multiple values for either bikes or accessories, hold CTRL while clicking.</p>
                     <label>Bikes</label><br>
                     <!-- Get bikes as array (for PHP) -->
-                    <select name="change-booking-bike[]" id="change-booking-bike" multiple><br><br>
+                    <select name="change-booking-bike[]" id="change-booking-bike" multiple size="10"><br><br>
                         <?php
                             // Get DB connection object
                             $conn = new BikeInventoryDBConnection();
@@ -441,7 +441,7 @@
                     <!-- Accessory list -->
                     <label>Accessories</label><br>
                     <!-- Get accessories as array (for PHP) -->
-                    <select name="change-booking-accessory[]" id="change-booking-accessory" multiple><br><br>
+                    <select name="change-booking-accessory[]" id="change-booking-accessory" multiple size="10"><br><br>
                         <?php
                             // Get DB connection object
                             $conn = new AccessoryInventoryDBConnection();
@@ -463,7 +463,30 @@
                             }
                         ?>
                     </p>
-                    <button type="submit" name="change-booking-bike-accessory-submit"> Submit Changes </button>
+                    <button type="submit" name="change-booking-bike-accessory-submit"> Update Booking </button>
+                </form>
+            </div>
+        </div>
+        <!-- Form for adding bikes and accessories to bookings -->
+        <div id="delete-booking-bikes-modal" class="modal-overlay"
+        <?php
+            if ($bookingMode == "delete")
+            {
+                echo "style='display: block';";
+            }
+            else
+            {
+                echo "style='display: none';";
+            }
+        ?>
+        >
+            <!-- Modal content for bikes and accessories -->
+            <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <h2 >Booking Delete Confirmation </h2>
+                <p> Delete Booking No.<?php $id = $_SESSION["deleteBooking"]["bookingId"]; echo "$id"; ?>? </p>
+                <form class="modal-form" action='php-scripts/booking-popups.php' method='POST'>
+                    <button type='submit' name='delete-booking-confirm-btn'> Confirm Delete </button>
                 </form>
             </div>
         </div>
@@ -487,12 +510,12 @@
          </nav>
          <!-- Block of content in center -->
          <div class="Content">
-            <h1> All Bookings </h1>
+            <h1 id="content-header"> All Bookings </h1>
             <!-- Add Booking pop up -->
             <button type="button" id="add-booking-btn">+ Add Booking</button>
 
             <!-- List of available bookings -->
-            <table class="TableContent">
+            <table id="data-table" class="TableContent">
                 <tr>
                     <!-- Populate table header -->
                     <?php
@@ -562,11 +585,11 @@
                                 <div class='dropdown'>
                                     <button class='dropbtn' disabled>...</button>
                                     <div class='dropdown-content'>
-                                        <form action='php-scripts/booking-popups.php' method='POST'>
-                                            <button type='submit' name='change-booking-btn' value='change,$bookingId' class='dropdown-element'> Update Booking </button>
+                                        <form class='modal-form' action='php-scripts/booking-popups.php' method='POST'>
+                                            <button type='submit' name='change-booking-btn' value='change,$bookingId' class='dropdown-element'> Update </button>
                                         </form>
-                                        <form action='php-scripts/booking-popups.php' method='POST'>
-                                            <button type='submit' name='delete-booking-btn' value='delete,$bookingId' class='dropdown-element'> Delete Booking </button>
+                                        <form class='modal-form' action='php-scripts/booking-popups.php' method='POST'>
+                                            <button type='submit' name='delete-booking-btn' value='delete,$bookingId' class='dropdown-element'> Delete </button>
                                         </form>
                                     </div>
                                 </div>
@@ -577,6 +600,7 @@
                 ?>
             </table>
         </div>
-        <script src="scripts/bookings.js"></script>
+        <script src="scripts/bookings.js">
+        </script>
     </body>
 </html>

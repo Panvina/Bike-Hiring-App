@@ -29,9 +29,12 @@ $completeaddress = $_POST["fulladdress"];
 $completeaddress = sanitise_input($completeaddress);
 $splitaddress = commansplit($completeaddress);
 $address = $splitaddress[0];
+$address = sanitise_input($address);
 $suburb = $splitaddress[1];
+$suburb = sanitise_input($suburb);
 $postcode = $splitaddress[2];
-
+$postcode = sanitise_input($postcode);
+echo $postcode;
 //test which button press
 if ( isset( $_POST[ "deleteLocation" ] ) ) {
   echo "<h2>True Delete</h2>";
