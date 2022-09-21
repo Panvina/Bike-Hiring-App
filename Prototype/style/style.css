@@ -107,7 +107,7 @@ font-size: 25px;
 
 .HomeMainCont{
     /* background-color: blue; */
-    height: 320px;
+    height: 360px;
     display: grid;
     grid-template-columns:50% 50%;
     width: 95%;
@@ -147,7 +147,7 @@ font-size: 25px;
 
 .AboutMainCont{
     /* background-color: blue; */
-    height: 370px;
+    height: 460px;
     display: grid;
     grid-template-columns:50% 50%;
     width: 95%;
@@ -161,7 +161,7 @@ font-size: 25px;
 }
 .AboutTxt{
     background-color: #eaf7f6;
-    height: 370px;
+    height: 460px;
     overflow:auto;
 }
 
