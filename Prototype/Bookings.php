@@ -1,13 +1,3 @@
-
- <!--
- Project Name: Inverloch Bike Hire
- Project Description: A website for hiring bikes. Front-end accompanied
-		by an admin dashboard.
- File Description: HTML description for bookings page in administrator dashboard.
- Contributor(s): Dabin Lee @ icelasersparr@gmail.com (PHP), Jake Hipworth (HTML)
--->
-
-
 <?php
     include_once "php-scripts\bookings-db.php";
     include_once "php-scripts\customer-db.php";
@@ -36,8 +26,9 @@
     }
 ?>
 
+<html>
     <link rel="stylesheet" href="style/Jake_style.css">
-    <link rel="stylesheet" href="style/bookings_page.css">
+    <link rel="stylesheet" href="style/dashboard-style.css">
     <link rel="stylesheet" href="style/popup.css">
     <head>
         <!-- Header -->
@@ -490,13 +481,11 @@
                 </form>
             </div>
         </div>
-        <!-- Side navigation -->
-        <nav>
-            <div class = "sideNavigation">
+        <div class="grid-container">
+            <div class="menu">
                 <a href= "Dashboard.php"> <img src= "img/icons/bulletin-board.png" alt="Dashboard Logo" /> Dashboard </a> <br>
                 <a href = "Customer.php"> <img src= "img/icons/account-group.png" alt="Customer Logo" />  Customer  </a> <br>
                 <?php setOwnerDashboardPrivilege(); ?>
-            <!--<a href="accounts.php"> <img src="img/icons/account.png" alt="Account logo"/> Accounts </a> <br>-->
                 <a href= "Inventory.php"> <img src= "img/icons/bicycle.png" alt="Inventory Logo" />  Inventory </a> <br>
                 <a href="Accessory.php"> <img src="img/icons/accessories.png" alt="Inventory Logo" /> Accessories </a> <br>
                 <a href="BikeTypes.php"> <img src="img/icons/biketypes.png" alt="Bike Types Logo" /> Bike Types </a> <br>
@@ -507,100 +496,100 @@
                 <a href= "editpages.php"> <img src= "img/icons/bulletin-board.png" alt="Edit Pages Logo" /> Edit </a> <br>
                 <?php setLogoutButton()?>
             </div>
-         </nav>
-         <!-- Block of content in center -->
-         <div class="Content">
-            <h1 id="content-header"> All Bookings </h1>
-            <!-- Add Booking pop up -->
-            <button type="button" id="add-booking-btn">+ Add Booking</button>
+            <div class="main">
+                <h1 id="content-header"> All Bookings </h1>
+                <!-- Add Booking pop up -->
+                <button type="button" id="add-booking-btn">+ Add Booking</button>
 
-            <!-- List of available bookings -->
-            <table id="data-table" class="TableContent">
-                <tr>
-                    <!-- Populate table header -->
-                    <?php
-                        // Declare columns and create array
-                        $conn = new BookingsDBConnection();
-                        $cols = $conn->getBookingDisplayColumns();
-                        $cols = explode(',', $cols);
+                <!-- List of available bookings -->
+                <table id="data-table" class="TableContent">
+                    <tr>
+                        <!-- Populate table header -->
+                        <?php
+                            // Declare columns and create array
+                            $conn = new BookingsDBConnection();
+                            $cols = $conn->getBookingDisplayColumns();
+                            $cols = explode(',', $cols);
 
-                        // Get number of columns
-                        $count = count($cols);
+                            // Get number of columns
+                            $count = count($cols);
 
-                        // print_r($cols);
-                        // echo "<br>";
+                            // print_r($cols);
+                            // echo "<br>";
 
-                        // Print data as a HTML table header
-                        for($x = 0; $x < $count; $x++)
-                        {
-                            $col = trim($cols[$x]);
-                            echo "<th> $col </th>";
-                        }
-                        echo "<th> Edit </th>";
-                    ?>
-                </tr>
-
-                <!-- Populate table data rows -->
-                <?php
-                    // create new DB connection and fetch rows
-                    $rows = $conn->getBookingRows();
-
-                    // if no rows are returned, create a null row as a placeholder
-                    if ($rows == null)
-                    {
-                        $rows = array();
-                        $tmp = array();
-                        for($x = 0; $x < count($cols); $x++)
-                        {
-                            array_push($tmp, "null");
-                        }
-                        array_push($rows, $tmp);
-                    }
-
-                    // get keys for each row
-                    // at least one row exists due to if-statement above
-                    $keys = array_keys($rows[0]);
-                    for($x = 0; $x < count($rows); $x++)
-                    {
-                        // create data row
-                        echo "<tr>";
-                        $bookingId = 0;
-                        for($y = 0; $y < count($keys); $y++)
-                        {
-                            // get row and key
-                            $row = $rows[$x];
-                            $key = $keys[$y];
-
-                            // retrieve data from above row for given key
-                            $data = $row[$key];
-
-                            if ($key == "booking_id")
+                            // Print data as a HTML table header
+                            for($x = 0; $x < $count; $x++)
                             {
-                                $bookingId = $data;
+                                $col = trim($cols[$x]);
+                                echo "<th> $col </th>";
                             }
-                            echo "<td> $data </td>";
+                            echo "<th> Edit </th>";
+                        ?>
+                    </tr>
+
+                    <!-- Populate table data rows -->
+                    <?php
+                        // create new DB connection and fetch rows
+                        $rows = $conn->getBookingRows();
+
+                        // if no rows are returned, create a null row as a placeholder
+                        if ($rows == null)
+                        {
+                            $rows = array();
+                            $tmp = array();
+                            for($x = 0; $x < count($cols); $x++)
+                            {
+                                array_push($tmp, "null");
+                            }
+                            array_push($rows, $tmp);
                         }
-                        echo "
-                            <td>
-                                <div class='dropdown'>
-                                    <button class='dropbtn' disabled>...</button>
-                                    <div class='dropdown-content'>
-                                        <form class='modal-form' action='php-scripts/booking-popups.php' method='POST'>
-                                            <button type='submit' name='change-booking-btn' value='change,$bookingId' class='dropdown-element'> Update </button>
-                                        </form>
-                                        <form class='modal-form' action='php-scripts/booking-popups.php' method='POST'>
-                                            <button type='submit' name='delete-booking-btn' value='delete,$bookingId' class='dropdown-element'> Delete </button>
-                                        </form>
+
+                        // get keys for each row
+                        // at least one row exists due to if-statement above
+                        $keys = array_keys($rows[0]);
+                        for($x = 0; $x < count($rows); $x++)
+                        {
+                            // create data row
+                            echo "<tr>";
+                            $bookingId = 0;
+                            for($y = 0; $y < count($keys); $y++)
+                            {
+                                // get row and key
+                                $row = $rows[$x];
+                                $key = $keys[$y];
+
+                                // retrieve data from above row for given key
+                                $data = $row[$key];
+
+                                if ($key == "booking_id")
+                                {
+                                    $bookingId = $data;
+                                }
+                                echo "<td> $data </td>";
+                            }
+                            echo "
+                                <td>
+                                    <div class='dropdown'>
+                                        <button class='dropbtn' disabled>...</button>
+                                        <div class='dropdown-content'>
+                                            <form class='modal-form' action='php-scripts/booking-popups.php' method='POST'>
+                                                <button type='submit' name='change-booking-btn' value='change,$bookingId' class='dropdown-element'> Update </button>
+                                            </form>
+                                            <form class='modal-form' action='php-scripts/booking-popups.php' method='POST'>
+                                                <button type='submit' name='delete-booking-btn' value='delete,$bookingId' class='dropdown-element'> Delete </button>
+                                            </form>
+                                        </div>
                                     </div>
-                                </div>
-                            </td>
-                        ";
-                        echo "</tr>";
-                    }
-                ?>
-            </table>
+                                </td>
+                            ";
+                            echo "</tr>";
+                        }
+                    ?>
+                </table>
+            </div>
         </div>
         <script src="scripts/bookings.js">
         </script>
+
     </body>
 </html>
