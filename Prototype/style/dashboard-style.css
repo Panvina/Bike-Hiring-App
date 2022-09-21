@@ -1,0 +1,148 @@
+body
+{
+    background-color: #eaf7f6;
+}
+
+.header
+{
+    font-size: 40px;
+    text-align: center;
+    height: 100px;
+    line-height: 3;
+}
+
+.main
+{
+    grid-area: main;
+    background-color: white;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+}
+
+.menu
+{
+    grid-area: menu;
+    min-width: 200px;
+}
+
+.menu a
+{
+    text-decoration: none;
+    color: black;
+    font-size: calc(20px + 0.7vw);
+}
+
+.main button
+{
+    display: inline-block;
+    margin-top: 2%;
+    left: 67%;
+    position: relative;
+    background-color: darkcyan;
+    border: none;
+    color: white;
+    font-size: 25px;
+    border: solid white;
+    border-width: thin;
+    cursor: pointer;
+}
+
+.main h1
+{
+    display: inline-block;
+    margin-bottom: 0px;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-areas:
+        'menu main main main main main main main'
+        'menu main main main main main main main';
+    gap: 5px;
+    /* text-align: center; */
+    padding-top: 0px;
+    padding-right: 40px;
+}
+
+.grid-container > div {
+    padding-top: 0px;
+}
+
+#Logo{
+    height: 135px;
+    float: left;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+.TableContent{
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.TableContent th, td{
+  text-align: center;
+  border: 2px solid black;
+  padding: 8px;
+}
+
+
+/* Remove nasty margins around forms ~ Dabin */
+form
+{
+	margin:0px;
+	padding:0px;
+}
+
+/* Clement's dropdown styling used. */
+.dropdown-element
+{
+	background-color: darkcyan !important;
+    border: none !important;
+    color: white!important;
+    font-size: 20px!important;
+    border: solid white!important;
+    border-width: thin!important;
+    cursor: pointer!important;
+    left: -2%!important;
+	width: 100%;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  min-height: 60px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover
+{
+	background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content
+{
+	display: block;
+}
+
+.dropdown:hover .dropbtn
+{
+	background-color: #3e8e41;
+}
+
+.dropdown button
+{
+    left: 0px;
+}
