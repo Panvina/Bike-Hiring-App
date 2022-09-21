@@ -22,8 +22,8 @@
                 <div class="column1">
                     <div id="footer-text">
                         <p>P: 0123 456 789</p> 
-                        <p>E: info@domainnam.com.au</p>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+                        <p>E: inverlochbikes@gmail.com</p>
+                        <p>Address: 23 A'Beckett St Inverloch</p>
                     </div>
                 </div>
                 <div class="column1">

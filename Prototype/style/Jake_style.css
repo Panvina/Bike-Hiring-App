@@ -189,10 +189,17 @@ nav a {
   /*overflow-x: auto;*/
 }
 
-.modal-content h2, input[type=text]{
+.modal-content h2{
  display:inline-block;
  text-align: center;
 }
+
+.modal-content input[type=text]{
+  display:inline-block;
+  text-align: center;
+  height: 2.5%;
+  padding-top: 2%;
+ }
 
 .modal-content h1{
   display:inline-block;

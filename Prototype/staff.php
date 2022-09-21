@@ -66,7 +66,7 @@
                     $rows = $conn->get($cols);
 
                     //establish the headings that will be used to display the data in the table
-                    $tableHeadings = "User Name, Name, Phone Number, Email, Street Address, Suburb, Post Code, State";
+                    $tableHeadings = "User Name, Name, Phone Number, Email, Residential Address, Suburb, Post Code, State";
 
                     //data validation to remove ',' for querying and displaying data in the table
                     $cols = explode(',', $cols);
@@ -283,16 +283,16 @@
                 </div>
                 <div>
                     <!-- Street Address input validation, checks based on error and displays accurate error message -->
-                    <h2> Street Address </h2>
+                    <h2> Residential Address: </h2>
                     <?php
                         if (isset($_SESSION["staffInsertStreetAddress"]))
                         {
                             $streetAddress = $_SESSION["staffInsertStreetAddress"];
-                            echo "<input type='text' name='streetAddress' value='$streetAddress'>";    
+                            echo "<input style='width: 43%;' type='text' name='streetAddress' value='$streetAddress'>";    
                         }
                         else
                         {
-                            echo '<input type="text" name="streetAddress">';    
+                            echo '<input style="width: 43%;" type="text" name="streetAddress">';    
                         }
                     ?>
                     <span class="error"> 
@@ -314,7 +314,7 @@
                 </div>
                 <div>
                     <!-- Suburb input validation, checks based on error and displays accurate error message -->
-                    <h2> Suburb </h2>
+                    <h2> Suburb: </h2>
                     <?php
                         if (isset($_SESSION["staffInsertSuburb"]))
                         {
@@ -345,7 +345,7 @@
                 </div>
                 <div>
                     <!-- Post Code input validation, checks based on error and displays accurate error message -->
-                    <h2> Post Code </h2>
+                    <h2> Post Code: </h2>
                     <?php
                         if (isset($_SESSION["staffInsertPostCode"]))
                         {
@@ -376,7 +376,7 @@
                 </div>
                 <div>
                     <!-- State input validation, checks based on error and displays accurate error message -->
-                    <h2> State </h2>
+                    <h2> State: </h2>
                     <?php
                         if (isset($_SESSION["staffInsertState"]))
                         {
@@ -506,8 +506,8 @@
                 </div>
                 <div>
                     <!-- Street address input validation, checks based on error and displays accurate error message -->
-                    <h2> Street Address </h2>
-                    <input type="text" name="streetAddress" value = "<?php echo $_SESSION['street_address'];?>">
+                    <h2> Residential Address: </h2>
+                    <input style="width: 43%;" type="text" name="streetAddress" value = "<?php echo $_SESSION['street_address'];?>">
                     <span class="error"> 
                         <?php 
                             if (isset($_GET["update"]))
@@ -527,7 +527,7 @@
                 </div>
                 <div>
                     <!-- Suburb input validation, checks based on error and displays accurate error message -->
-                    <h2> Suburb </h2>
+                    <h2> Suburb: </h2>
                     <input type="text" name="suburb" value = "<?php echo $_SESSION['suburb'];?>">
                     <span class="error"> 
                         <?php 
@@ -548,7 +548,7 @@
                 </div>
                 <div>
                     <!-- Post code input validation, checks based on error and displays accurate error message -->
-                    <h2> Post Code </h2>
+                    <h2> Post Code: </h2>
                     <input type="text" name="postCode" value = "<?php echo $_SESSION['post_code'];?>">
                     <span class="error"> 
                         <?php 
@@ -569,7 +569,7 @@
                 </div>
                 <div>
                     <!-- State input validation, checks based on error and displays accurate error message -->
-                    <h2> State </h2>
+                    <h2> State: </h2>
                     <input type="text" name="state" value = "<?php echo $_SESSION['state'];?>">
                     <span class="error"> 
                         <?php 
