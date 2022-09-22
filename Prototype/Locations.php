@@ -19,7 +19,8 @@ session_start();
 		<h1 class="header"> <a href="index.php"><img src="img/photos/Inverloch_Logo3.png" alt="Inverloch Logo" id="Logo" /></a> Locations </h1>
 		<script src="scripts/FormOpenOrClose.js"></script>
 		<link rel="stylesheet" href="style/Jake_Location_style.css">
-		<link rel="stylesheet" href="style/LocationPop.css">
+		<!-- <link rel="stylesheet" href="style/LocationPop.css"> -->
+		<link rel="stylesheet" href="style/popup.css">
 		<link rel="stylesheet" href="style/dashboard-style.css">
 		<?php
 		include("php-scripts/Reusable.php");
@@ -39,22 +40,19 @@ session_start();
 		
 	</head>
 	<body>
-	<div class="grid-container">
-        	<div class="menu">
-        		<?php printMenu("locations"); ?>
-        	</div>
-		
-		<!--Body of the entire content-->
-		<div class="Content">
+		<div class="grid-container">
+			<div class="menu">
+				<?php printMenu("location"); ?>
+			</div>
+	<div class="main">
+		<!-- Trigger/Open The add locations PopUp -->
+		<form method='POST' action='AddLocations.php' event.preventDefault()>
+			<h1> Pick-Up and Drop-Off Locations </h1>
+		<button id='LID' class='addLocationModal' name='addLocationModal' type='submit' value='LID' style="float: right; left:0%; ">+ Add Location</button>
+	</form>
 			
-			<!-- Trigger/Open The add locations PopUp -->
-			<form method='POST' action='AddLocations.php' event.preventDefault()>
-				<h1> Pick-Up & Drop-Off Locations </h1>
-				<button id='LID' style='float: right;'  class='addLocationModal' name='addLocationModal' type='submit' value='LID'>+ Add Location</button>
-			</form>
-			
-			<!--This handles the confirmation of Update, Add or Delete and Database issues -->
-			<div style="color: red;">
+		<!--This handles the confirmation of Update, Add or Delete and Database issues -->
+		<div style="color: red;">
 				<?php
                 //Idea from Jake and Aadesh
                 //this is basically if there is any issues with the database while in middle of the form
@@ -86,12 +84,13 @@ session_start();
 					}
 				}
 				?>
-			</div>
-			
-			
-			<!--This section is to display the data from the database here-->
-			<table class="TableContent">
-				<tr>
+		</div>
+
+
+		<!-- List of locations -->
+		<table class="TableContent" id="data-table">
+			<!-- Put your table here -->
+			<tr>
 					<th> Name </th>
 					<th> Address </th>
 					<th> Drop-Off </th>
@@ -169,12 +168,13 @@ session_start();
 					echo"</tr>";
 				}
 				?>
-			</table>
-			
-        	</div>
-			
-			<!-- The Add Locations PopUp (with content) -->
-			<div id="addModal" class="modal"
+		</table>
+	</div>
+
+	<!-- All modal popups should go here -->
+
+	<!-- Add Locations modal popup -->
+	<div id="addModal" class="modal"
 				 <?php
 				 //checks to see if there was any errors and if there was, it will continue to display the modal
 				 if(isset($_GET["add"]))
@@ -191,13 +191,13 @@ session_start();
 				 ?>>
 				
 				<!-- PopUp content for adding location-->
-				<div class="modal-content">
+				<div class="modal-content" style="margin: 5% auto;text-align: inherit;width: 17%;">
 					<!--<span class="addclose" href="locations.php">&times;</span>-->
 					<a href="locations.php" style="text-decoration: none;text-decoration-color:beige;">&times;</a>
-					<form action="AddLocations.php" class="form-container" method="post">
-						<p>
+					
 						<h1 style="margin-left: 8%">Add Location</h1>
-						</p>
+
+						<form action="AddLocations.php" class="form-container" method="post">
 					<?php
 					$addname="";
 					$addaddress="";
@@ -243,11 +243,11 @@ session_start();
 					<label for="pickUpInput"><b>Pick Up:</b></label>
 					<input type='checkbox' class='CheckBox' name="pickUpInput" id="pickUpInput"/>
 					<br/>
-					<button type="submit" name="submitLocation" id="submitLocation" class="btn, inputlocation" style='margin-left: 12%;'>Add Location</button>
+					<button type="submit" name="submitLocation" id="submitLocation" class="btn, inputlocation" style='margin-left: 12%;margin-top: 5%;'>Add Location</button>
 					</form>
 			</div>
 		</div>
-		
+
 		<!-- The PopUp for update locations-->
 		<div id='updateModal' class='modal' <?php
 						//checks to see if there was any errors and if there was, it will continue to display the modal
@@ -265,7 +265,7 @@ session_start();
 			 ?>>
 			
 			<!-- Update PopUp content -->
-			<div class='modal-content' style="width: 14em;">
+			<div class='modal-content' style="margin: 5% auto;text-align: inherit;">
 				<!--<span class='updateclose'>&times;</span>-->
 				<a href="locations.php" class='updateclose' style="text-decoration: none;text-decoration-color:beige;">&times;</a>
 				<p>
@@ -288,7 +288,6 @@ session_start();
 					$updatename = sanitise_input($updatename);
 					$updateaddress = $record['address'];
 					$updateaddress = sanitise_input($updateaddress);
-					$updateaddress = str_replace("'", "`",$updateaddress);
 					$updatesuburb = $record['suburb'];
 					$updatesuburb = sanitise_input($updatesuburb);
 					$updatepostcode = $record['post_code'];
@@ -309,7 +308,7 @@ session_start();
 						}
 					}
 					//This is showing each data from database on the website interface
-					echo"<form method='POST' action='UpdateLocations.php'>";
+					echo"<form method='POST' action='UpdateLocations.php' style='text-align: center;'>";
 					echo"<input type='hidden' id='LID' name='LID' value='$LID'>";
 					
 					echo"<label for='nameupdate'><b>Name:</b></label>
@@ -364,11 +363,11 @@ session_start();
 		
 		<!--This section is to have a form to Delete the location data-->
 		<!-- PopUp Delete confirm content -->
-		<div class='modal-content'>
+		<div class='modal-content' style="margin: 5% auto;text-align: inherit;">
 			<!--<span class='deleteclose'>&times;</span>-->
 			<a href="locations.php" style="text-decoration: none;text-decoration-color:beige;">&times;</a>
 			<p>
-			<h1 style="margin-left: 15%;">Delete Location</h1>
+			<h1>Delete Location</h1>
 			</p>
 		<form method='POST' action='UpdateLocations.php' event.preventDefault()>
 			<?php
@@ -390,11 +389,10 @@ session_start();
 		</form>
 	</div>
 	</div>
-
 </div>
 
-
 <?php
-mysqli_close ($conn);?>
+mysqli_close ($conn);
+?>
 	</body>
 </html>

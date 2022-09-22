@@ -217,7 +217,7 @@ nav a {
 /* Modal Content/Box */
 .modal-content {
   margin: 5% auto; /* 15% from the top and centered */
-  margin-left: 45%;
+  /* margin-left: 45%; */
   padding: 20px;
   border: 1px solid #888;
   width: 20%; /* Could be more or less, depending on screen size */
@@ -230,9 +230,7 @@ nav a {
 }
 
 .modal-content h1{
-  display:inline-block;
   text-align: center;
-/*  margin-left: 15%;*/
  }
 
 .modal-content button{
