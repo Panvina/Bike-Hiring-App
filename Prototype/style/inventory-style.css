@@ -1,0 +1,47 @@
+/*
+Project Name: Inverloch Bike Hire
+File Description: Stylesheet specific to inventory pages including inventory, accessory, accessory type & bike types.
+Created by: Aadesh Jagannathan @102072344@student.swin.edu.au
+*/
+
+/* Styling for the header content in all inventory pages*/
+#content-header{
+   width: 100%;
+   height: 60px;
+   display: grid;
+   grid-template-columns: 2;
+   grid-template-columns:50% 50%;
+}
+
+#header-button{
+    padding-top: 12; 
+        /*margin-right: 90; */
+}
+
+/*Styling for the dropdown in add and update modals*/
+.modal-content select{
+    height:2.5%;
+    font-size: 14px;
+    width:40%;
+    text-align: center;
+}
+
+.modal-content input{
+    margin-top: 10px;
+}
+
+/*Styling for the input text boxes in add and update modals*/
+.modal-content input[type=text]{
+    padding-bottom: 10px;
+    font-size: 14px;
+}
+
+/*Styling for the text areas in add and update modals*/
+.modal-content textarea{
+    font-size: 14.5px;
+}
+
+#modal-description-cont{
+    justify-content: center;
+}
+
