@@ -7,7 +7,8 @@ Contributor(s):
 	- Clement Cheung @ 103076376@student.swin.edu.au
 	- Jake Hipworth @ 102090870@student.swin.edu.au (Navigation section and Styles)
 -->
-<?php
+<?php 
+session_start();
     // dashboard side menu import (Dabin)
     include_once("php-scripts/dashboard-menu.php");
 ?>
@@ -16,13 +17,12 @@ Contributor(s):
 	<head>
 		<title> Locations </title>
 		<h1 class="header"> <a href="index.php"><img src="img/photos/Inverloch_Logo3.png" alt="Inverloch Logo" id="Logo" /></a> Locations </h1>
-        <link rel="stylesheet" href="style/dashboard-style.css">
-        <link rel="stylesheet" href="style/popup.css">
+		<script src="scripts/FormOpenOrClose.js"></script>
+		<link rel="stylesheet" href="style/Jake_Location_style.css">
 		<link rel="stylesheet" href="style/LocationPop.css">
 		<?php
 		include("php-scripts/Reusable.php");
-
-		//setting up and connecting to DB
+		//This is a setup to the database
 		$host = "localhost";
 		$user = "root";
 		$pwd = "";
@@ -31,151 +31,381 @@ Contributor(s):
 			("$host",
 			 "$user",
 			 "$pwd",
-			 "$sql_db")
+			 "$sql_db") 
 			or die
 			('Failed to connect to server');
 		?>
-
+		
 	</head>
 	<body>
-        <div class="grid-container">
-        	<div class="menu">
-        		<?php printMenu("location"); ?>
-        	</div>
-        	<div class="main">
-                <h1> Pick-Up & Drop-Off Locations </h1>
-
-    			<!-- Trigger/Open The PopUp -->
-    			<button id="myBtn" style="left: 0%"  class="open-button" type="button">+ Add Location</button>
-                <table class="TableContent" id="data-table">
-        			<tr>
-        				<th> Name </th>
-        				<th> Address </th>
-        				<th> Drop-Off </th>
-        				<th> Pick-Up </th>
-        				<th> Edit </th>
-        			</tr>
-        			<?php
-        			//this to select all items from the table before showing it
-        			$query = "SELECT * FROM `location_table`";
-        			$result = mysqli_query($conn,$query);
-        			if(!$result)
-        			{//showing if query has failed
-        				echo "<tr>";
-        				echo "<td>Query</td>";
-        				echo "<td> Has Failed you </td>";
-        				echo "<td> <input type='checkbox' class='CheckBox'> </td>";
-        				echo "<td> <input type='checkbox' class='CheckBox'> </td>";
-        				echo "<td> - - - </td>";
-        				echo"</tr>";
-        			}
-        			else
-        			{//query success
-        				$record = mysqli_fetch_array($result);
-        				if($record)
-        				{
-        					while ($record)//this is basically retrieveing data and then showing it on screen
-        					{
-        						//grabbing and putting all the data into variables or putting them together
-        						$fulladdress = "";
-        						$LID = $record['location_id'];
-        						$name = $record['name'];
-        						$name = sanitise_input($name);
-        						$address = $record['address'];
-        						$address = sanitise_input($address);
-        						$suburb = $record['suburb'];
-        						$suburb = sanitise_input($suburb);
-        						$postcode = $record['post_code'];
-        						$postcode = sanitise_input($postcode);
-        						$dropOff = $record['drop_off_location'];
-        						$pickUp = $record['pick_up_location'];
-        						$fulladdress = "$address,  $suburb, $postcode, Vic, Australia";
-
-        						//checking the values from database and turning it into checked so it can be shown on the interface
-        						$pickUpResult= checkValue($pickUp);
-        						$dropOffResult= checkValue($dropOff);
-
-        						//This is showing each data from database on the website interface
-        						echo "<form method='POST' action='UpdateLocations.php'>";
-        						echo "<tr>";
-        						echo "<td><input type='hidden' id='LID' name='LID' value='{$LID}'><input type='text' name='nameupdate' id ='nameupdate' value='{$name}'  style='width: 100%; border: hidden;' required><br/>";
-        						echo "</td>";
-        						echo "<td> <input type='text' name='fulladdress' id ='fulladdress' value='{$fulladdress}' style='width: 100%; border: hidden;' required> </td>";
-        						echo "<td> <input type='checkbox' class='CheckBox' id='dropOffBox' name='dropOffBox' $dropOffResult> </td>";
-        						echo "<td> <input type='checkbox' class='CheckBox' id='pickUpBox' name='pickUpBox' $pickUpResult> </td>";
-        						echo "<td class='editcolumn'>
-        						<div class='dropdown'>
-        							<button class='dropbtn' disabled>...</button>
-        							<div class='dropdown-content'>
-        								<button type='submit' name='updateLocation' id='updateLocation' class='dropdown-element'>Update</button><br/>
-        								<button type='submit' name='deleteLocation' id='deleteLocation' class='dropdown-element'>Delete</button>
-        							</div>
-        						</div>
-
-        						</td>";
-
-
-        						echo"</tr>";
-        						echo "</form>";
-
-        						$record = mysqli_fetch_assoc($result);//this is to move onto the next data
-        					}
-        				}
-        				else
-        				{//showing if there is no data
-        					echo "<tr>";
-        					echo "<td>Data</td>";
-        					echo "<td> Does not Exist </td>";
-        					echo "<td> <input type='checkbox' class='CheckBox'> </td>";
-        					echo "<td> <input type='checkbox' class='CheckBox'> </td>";
-        					echo "<td> - - - </td>";
-        					echo"</tr>";
-        				}
-        			}
-        			mysqli_close ($conn);
-        			?>
-        		</table>
-        	</div>
-        </div>
-
-        <!-- The PopUp -->
-		<div id="myModal" class="modal">
-
-			<!-- PopUp content -->
-			<div class="modal-content">
-				<span class="close">&times;</span>
-				<form action="AddLocations.php" class="form-container" method="post">
-					<p>
-					<h1>Add Location</h1>
-					</p>
-				<label for="nameInput"><b>Name:</b></label>
-				<input type="text" placeholder="Enter Name" name="nameInput" id ="nameInput" class="inputlocation" required>
-				<br/>
-				<label for="addressInput"><b>Address:</b></label>
-				<input type="text" placeholder="Enter Address" name="addressInput" id="addressInput" class="inputlocation" required>
-				<br/>
-				<label for="suburbInput"><b>Suburb:</b></label>
-				<input type="text" placeholder="Enter Suburb" name="suburbInput" id="suburbInput" class="inputlocation" required>
-				<br/>
-				<label for="postcodeInput"><b>Postcode:</b></label>
-				<input type="text" placeholder="Enter Postcode" name="postcodeInput" id="postcodeInput" class="inputlocation" maxlength="4" required>
-
-				<label for="postcodeInput"><b>Drop Off:</b></label>
-				<input type='checkbox' class='CheckBox' name="dropOffInput" id="dropOffInput"/>
-
-				<label for="postcodeInput"><b>Pick Up:</b></label>
-				<input type='checkbox' class='CheckBox' name="pickUpInput" id="pickUpInput"/>
-				<br/>
-				<button type="submit" name="submitLocation" id="submitLocation" class="btn, inputlocation">submit</button>
-				</form>
+		<nav>
+			<!--Navigation area-->
+			<div class = "sideNavigation">
+				<a href= "Dashboard.php"> <img src= "img/icons/bulletin-board.png" alt="Dashboard Logo" /> Dashboard </a> <br>
+                <a href = "Customer.php"> <img src= "img/icons/account-group.png" alt="Customer Logo" />  Customer  </a> <br>
+				<?php setOwnerDashboardPrivilege(); ?>
+            <!--<a href="accounts.php"> <img src="img/icons/account.png" alt="Account logo"/> Accounts </a> <br>-->
+                <a href= "Inventory.php"> <img src= "img/icons/bicycle.png" alt="Inventory Logo" />  Inventory </a> <br>
+                <a href="Accessory.php"> <img src="img/icons/accessories.png" alt="Inventory Logo" /> Accessories </a> <br>
+                <a href="BikeTypes.php"> <img src="img/icons/biketypes.png" alt="Bike Types Logo" /> Bike Types </a> <br>
+                <a href="AccessoryTypes.php"> <img src="img/icons/accessorytypes.png" alt="Bike Types Logo" /> Accessory Types </a> <br>
+                <a href= "bookings.php"> <img src= "img/icons/book-open-blank-variant.png" alt="Bookings Logo" /> Bookings </a> <br>
+                <a href= "Block_Out_Date.php"> <img src= "img/icons/calendar.png" alt="Block out date Logo" /> Block Out Dates </a> <br>
+                <a class="active" href= "Locations.php"> <img src= "img/icons/earth.png" alt="Locations Logo" /> Locations </a> <br>
+                <a href= "editpages.php"> <img src= "img/icons/bulletin-board.png" alt="Edit Pages Logo" /> Edit </a> <br>
+				<?php setLogoutButton()?>
+			</div>
+		</nav>
+		
+		<!--Body of the entire content-->
+		<div class="Content">
+			
+			<!-- Trigger/Open The add locations PopUp -->
+			<form method='POST' action='AddLocations.php' event.preventDefault()>
+				<h1> Pick-Up & Drop-Off Locations </h1>
+				<button id='LID' style='float: right;'  class='addLocationModal' name='addLocationModal' type='submit' value='LID'>+ Add Location</button>
+			</form>
+			
+			<!--This handles the confirmation of Update, Add or Delete and Database issues -->
+			<div style="color: red;">
+				<?php
+                //Idea from Jake and Aadesh
+                //this is basically if there is any issues with the database while in middle of the form
+                if(!empty($_GET['db_msg']))
+                {
+                    $db_msg = $_GET['db_msg'];
+                    echo $db_msg;
+                }
+                //this is basically where it starts checking if there is any success, if there is any, it will print it out onto the page that the item that the user has done is completed
+				else if(isset($_GET["add"]))
+				{
+					if ($_GET["add"] == "success")
+					{
+						echo "<p>New location data has successfully been added to the database</p>";
+					}
+				} 
+				else if(isset($_GET["delete"]))
+				{
+					if ($_GET["delete"] == "success")
+					{
+						echo "<p>Location data has been deleted successfully from the database</p>";
+					}
+				}
+				else if(isset($_GET["update"]))
+				{
+					if ($_GET["update"] == "success")
+					{
+						echo "<p>Location data has been updated successfully from the database</p>";
+					}
+				}
+				?>
+			</div>
+			
+			
+			<!--This section is to display the data from the database here-->
+			<table class="TableContent">
+				<tr>
+					<th> Name </th>
+					<th> Address </th>
+					<th> Drop-Off </th>
+					<th> Pick-Up </th>
+					<th> Edit </th>
+				</tr>
+				<?php
+				//this to select all items from the table before showing it
+				$query = "SELECT * FROM `location_table`";
+				$result = mysqli_query($conn,$query);
+				if($result)//if the given query is a success
+				{
+					$record = mysqli_fetch_array($result);
+					if($record)
+					{
+						while ($record)//this is basically retrieveing data and then showing it on screen
+						{
+							//grabbing and putting all the data into variables or putting them together
+							$fulladdress = "";
+							$LID = $record['location_id'];
+							$name = $record['name'];
+							$name = sanitise_input($name);
+							$address = $record['address'];							
+							$address = sanitise_input($address);
+							$suburb = $record['suburb'];
+							$suburb = sanitise_input($suburb);
+							$postcode = $record['post_code'];
+							$postcode = sanitise_input($postcode);
+							$dropOff = $record['drop_off_location'];
+							$pickUp = $record['pick_up_location'];
+							$fulladdress = "$address,  $suburb, $postcode, Vic, Australia";
+							
+							//checking the values from database and turning it into checked so it can be shown on the interface
+							$pickUpResult= checkValue($pickUp);
+							$dropOffResult= checkValue($dropOff);
+							
+							//This is showing each data from database on the website interface
+							echo "<tr>";
+							echo "<td>$name";							
+							echo "</td>";
+							echo "<td>$fulladdress</td>";
+							echo "<td> <input type='checkbox' class='CheckBox' id='dropOffBox' name='dropOffBox' $dropOffResult style='width=auto;'> </td>";
+							echo "<td> <input type='checkbox' class='CheckBox' id='pickUpBox' name='pickUpBox' $pickUpResult style='width=auto;'> </td>";
+							echo "<td>
+							<!-- This is to open a dropdown table -->
+							<div class='dropdown'>
+								<button class='dropbtn' disabled>...</button>
+								<div class='dropdown-content'>
+									<!-- Trigger/Open The Update PopUp -->
+									<form method='POST' action='UpdateLocations.php' event.preventDefault()>
+										<button id='$LID' style='left: 0%'  class='updateLocationModal' name='updateLocationModal' type='submit' value='$LID'>Update</button>
+									</form>
+									
+									<!-- Trigger/Open The Delete PopUp -->
+									<form method='POST' action='UpdateLocations.php' event.preventDefault()>
+										<button id=$LID style='left: 0%'  class='deleteLocationModal' name='deleteLocationModal'  type='submit' value='$LID'>Delete</button>
+									</form>
+								</div>
+							</div>						
+							</td>";		
+							echo"</tr>";
+							
+							$record = mysqli_fetch_assoc($result);//this is to move onto the next data
+						}
+					}					
+				}
+				else//showing if there is no data or an error from database
+				{
+					echo "<tr>";
+					echo "<td>Data</td>";
+					echo "<td> Does not Exist </td>";
+					echo "<td> <input type='checkbox' class='CheckBox'> </td>";
+					echo "<td> <input type='checkbox' class='CheckBox'> </td>";
+					echo "<td>...</td>";
+					echo"</tr>";
+				}
+				?>
+			</table>
+			
+			<!-- The Add Locations PopUp (with content) -->
+			<div id="addModal" class="modal"
+				 <?php
+				 //checks to see if there was any errors and if there was, it will continue to display the modal
+				 if(isset($_GET["add"]))
+				 {
+					 if ($_GET["add"] == "true")
+					 {
+						 echo "style = 'display:inline-block'";
+					 }
+					 else if ($_GET["add"] == "false")
+					 {
+						 echo "style = 'display:inline-block'";
+					 }
+				 }
+				 ?>>
+				
+				<!-- PopUp content for adding location-->
+				<div class="modal-content">
+					<!--<span class="addclose" href="locations.php">&times;</span>-->
+					<a href="locations.php" style="text-decoration: none;text-decoration-color:beige;">&times;</a>
+					<form action="AddLocations.php" class="form-container" method="post">
+						<p>
+						<h1 style="margin-left: 8%">Add Location</h1>
+						</p>
+					<?php
+					$addname="";
+					$addaddress="";
+					$addsuburb="";
+					$addpostcode="";
+					//this is to show if there is an error from validating codes
+					if ($_GET["add"] == "false")
+					{
+						if(!empty($_GET["err_msg"]))
+						{
+							$err_msg = $_GET["err_msg"];
+							echo "<div style='color: red'>$err_msg</div>";
+							
+							//this is to retrieve data from the previous page as the user has failed to pass a validation check
+							$addname=$_GET["name"];
+							$addaddress=$_GET["address"];
+							$addsuburb=$_GET["suburb"];
+							$addpostcode=$_GET["postcode"];
+							$addname=sanitise_input($addname);
+							$addaddress=sanitise_input($addaddress);
+							$addsuburb=sanitise_input($addsuburb);
+							$addpostcode=sanitise_input($addpostcode);
+						}
+					}
+					
+					
+					echo"<label for='nameInput'><b>Name:</b></label>
+					<input type='text' placeholder='Enter Name' name='nameInput' id ='nameInput' class='inputlocation' value='$addname' required>
+					<br/>";
+					echo"<label for='addressInput'><b>Address:</b></label>
+					<input type='text' placeholder='Enter Address' name='addressInput' id='addressInput' class='inputlocation' value='$addaddress' required>
+					<br/>";
+					echo"<label for='suburbInput'><b>Suburb:</b></label>
+					<input type='text' placeholder='Enter Suburb' name='suburbInput' id='suburbInput' class='inputlocation' value='$addsuburb'required>
+					<br/>";
+					echo"<label for='postcodeInput'><b>Postcode:</b></label>
+					<input type='text' placeholder='Enter Postcode' name='postcodeInput' id='postcodeInput' class='inputlocation' maxlength='4' value='$addpostcode' required>
+					<br/>"	
+					?>		
+					<label for="dropOffInput"><b>Drop Off:</b></label> 
+					<input type='checkbox' class='CheckBox' name="dropOffInput" id="dropOffInput"/>
+					
+					<label for="pickUpInput"><b>Pick Up:</b></label>
+					<input type='checkbox' class='CheckBox' name="pickUpInput" id="pickUpInput"/>
+					<br/>
+					<button type="submit" name="submitLocation" id="submitLocation" class="btn, inputlocation" style='margin-left: 12%;'>Add Location</button>
+					</form>
+			</div>
 		</div>
+		
+		<!-- The PopUp for update locations-->
+		<div id='updateModal' class='modal' <?php
+						//checks to see if there was any errors and if there was, it will continue to display the modal
+						if(isset($_GET["update"]))
+						{
+							if ($_GET["update"] == "true")
+							{
+								echo "style = 'display:inline-block'";
+							}
+							else if ($_GET["update"] == "false")
+							{
+								echo "style = 'display:inline-block'";
+							}
+						}
+			 ?>>
+			
+			<!-- Update PopUp content -->
+			<div class='modal-content' style="width: 14em;">
+				<!--<span class='updateclose'>&times;</span>-->
+				<a href="locations.php" class='updateclose' style="text-decoration: none;text-decoration-color:beige;">&times;</a>
+				<p>
+				<h1>Update Location</h1>
+				</p>
+			<?php
+			$LID = $_SESSION['LID'];
+			
+			$query = "SELECT * FROM `location_table` WHERE `location_id` = $LID";
+			$result = mysqli_query($conn,$query);
+			if ($result)//if query success
+			{
+				$record = mysqli_fetch_array($result);
+				//this is basically retrieveing data and then showing it on screen
+				while ($record)
+				{
+					//grabbing and putting all the data into variables or putting them together
+					$updateaddress = "";
+					$updatename = $record['name'];
+					$updatename = sanitise_input($updatename);
+					$updateaddress = $record['address'];
+					$updateaddress = sanitise_input($updateaddress);
+					$updateaddress = str_replace("'", "`",$updateaddress);
+					$updatesuburb = $record['suburb'];
+					$updatesuburb = sanitise_input($updatesuburb);
+					$updatepostcode = $record['post_code'];
+					$updatepostcode = sanitise_input($updatepostcode);
+					$dropOffupdate = $record['drop_off_location'];
+					$pickUpUpdate = $record['pick_up_location'];
+					
+					//checking the values from database and turning it into checked so it can be shown on the interface
+					$updatePickup= checkValue($pickUpUpdate);
+					$updateDropoff= checkValue($dropOffupdate);
+					
+					if ($_GET["update"] == "false")
+					{
+						if(!empty($_GET["err_msg"]))
+						{
+							$err_msg = $_GET["err_msg"];
+							echo "<div style='color: red'>$err_msg</div>";
+						}
+					}
+					//This is showing each data from database on the website interface
+					echo"<form method='POST' action='UpdateLocations.php'>";
+					echo"<input type='hidden' id='LID' name='LID' value='$LID'>";
+					
+					echo"<label for='nameupdate'><b>Name:</b></label>
+					<input type='text' name='nameupdate' id ='nameupdate' value='$updatename' required><br/>";
+					
+					echo"<label for='addressupdate'><b>Address:</b></label>
+					<input type='text' placeholder='Enter Address' name='addressupdate' id='addressupdate' class='inputlocation' value='$updateaddress' required>
+					<br/>";
+					
+					echo "<label for='suburbupdate'><b>Suburb:</b></label>
+					<input type='text' placeholder='Enter Suburb' name='suburbupdate' id='suburbupdate' class='inputlocation' value='$updatesuburb' required>
+					<br/>";
+					
+					echo"<label for='postcodeUpdate'><b>Postcode:</b></label>
+					<input type='text' placeholder='EnterPostcode' name='postcodeUpdate' id='postcodeUpdate' class='inputlocation' maxlength='4' value='$updatepostcode' required>
+					<br/>";
+					
+					echo"<label for='dropOffBox'><b>Drop Off Location:</b></label>
+					<input type='checkbox' class='CheckBox' id='dropOffBox' name='dropOffBox' $updateDropoff><br/>";
+					
+					echo"<label for='pickUpBox'><b>Pick Up Location:</b></label>
+					<input type='checkbox' class='CheckBox' id='pickUpBox' name='pickUpBox' $updatePickup> <br/>";
+					
+					echo"<button type='submit' name='updateLocation' id='updateLocation' class='btn' style='margin-left: 28%;'>Update</button>
+					</form>";
+					
+					//this is to move onto the next data
+					$record = mysqli_fetch_assoc($result);
+				}						
+			}
+			
+			?>
+		</div>
+		</div>
+	<!--This is to confirm deleting location data from the database-->
+	<!-- The PopUp for Delete item-->
+	<div id='deleteModal'class='modal' <?php
+		 //Used to redirect back to the form once the first button has been pressed
+		 //Idea and code from Jake and Aadesh
+		 if(isset($_GET["delete"]))
+		 {
+			 if ($_GET["delete"] == "true")
+			 {
+				 echo "style = 'display:inline-block'";
+			 }
+			 else
+			 {
+				 echo "style = 'display:none'";
+			 }
+		 }
+		 ?>>
+		
+		<!--This section is to have a form to Delete the location data-->
+		<!-- PopUp Delete confirm content -->
+		<div class='modal-content'>
+			<!--<span class='deleteclose'>&times;</span>-->
+			<a href="locations.php" style="text-decoration: none;text-decoration-color:beige;">&times;</a>
+			<p>
+			<h1 style="margin-left: 15%;">Delete Location</h1>
+			</p>
+		<form method='POST' action='UpdateLocations.php' event.preventDefault()>
+			<?php
+			if (isset($_SESSION['LID']))
+			{
+				$LID = $_SESSION['LID'];
+				echo"<input type='hidden' id='LID' name='LID' value='$LID'>";
+				echo "<h2  style='text-align: center;'>You are going to delete id: $LID</h2>";
+			}
+			else
+			{
+				echo "<h2>You are deleting nothing</h2>";
+			}
+			?>
+			
+			<!--this code is borrowed and modified from Aadesh-->
+			<button style='width: 40%; margin-left: 28%; position: relative;' type='submit' name='deleteLocation' id='deleteLocation'>Yes</button>
+			<button style='width: 40%; margin-left: 28%; position: relative; background-color: red;' type='submit' name='cancelDeleteLocation' id='cancelDeleteLocation'>No</button>
+		</form>
+	</div>
+	</div>
+
+</div>
+
+
+<?php
+mysqli_close ($conn);?>
 	</body>
-    <script src="scripts/FormOpenOrClose.js"></script>
-    <script>
-            /* When the user clicks on the button,
-toggle between hiding and showing the dropdown content */
-        function myFunction() {
-            document.getElementById("myDropdown").classList.toggle("show");
-        }
-</script>
 </html>

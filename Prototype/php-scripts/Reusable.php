@@ -10,10 +10,12 @@ Contributor:
 
 <?php //This page is where if there is PHP code shared 2 or more pages, it will be stored here
 //this is to santise the code so it can avoid any attacks from outside sources
-function sanitise_input( $data ) {
-  $data = trim( $data );
-  $data = stripslashes( $data );
-  $data = htmlspecialchars( $data );
+function sanitise_input( $data ) 
+{
+	$data = trim( $data );	
+	$data = stripslashes( $data );
+	$data = htmlspecialchars( $data );	
+	$data = str_replace("'", "`",$data);
   return ( $data );
 }
 

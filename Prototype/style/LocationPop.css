@@ -26,7 +26,7 @@ Contributor:
   padding: 50px;
   border: 1px solid #888;
 */
-  width: fit-content;
+  width: 20em;
   margin: auto;
 }
 /* The Close Button */
@@ -42,7 +42,7 @@ Contributor:
   cursor: pointer;
 }
 /*this is to keep the button on the right side*/
-#myBtn {
+#addBtn {
   float: right;
   left: 0%;
 }
