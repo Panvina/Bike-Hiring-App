@@ -83,7 +83,7 @@
     flex: none;
     display: block;
     position: relative;
-    width: 96px;
+    width: 6.7vw;
 }
 .timetable > section > header li .time-label {
     display: block;
@@ -137,11 +137,11 @@
 }
 .timetable ul.room-timeline li:before {
     background-image: linear-gradient(90deg, #e5e5e5 1px, transparent 0);
-    background-size: 24px auto;
+    background-size: 1.675vw auto;
 }
 .timetable ul.room-timeline li:after {
     background-image: linear-gradient(90deg, #e5e5e5, #e5e5e5 1px, #f4f4f4 0, #f4f4f4 2px, #e5e5e5 0, #e5e5e5 3px, transparent 0, transparent);
-    background-size: 96px auto;
+    background-size: 6.7vw auto;
     background-position: -2px 0;
 }
 .timetable .time-entry {
@@ -171,9 +171,9 @@
     transform: translateY(-50%);
     display: none;
 }
-.timetable .time-entry:hover {
-    background-color: #e74030;
-}
+/* .timetable .time-entry:hover {
+    background-color: #2abb7f;
+} */
 .timetable .time-entry:hover small.name {
     position: relative;
     top: 50%;

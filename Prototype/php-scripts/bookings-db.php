@@ -26,7 +26,7 @@ Contributor(s): Dabin Lee @ icelasersparr@gmail.com
 		 */
 		public function getBookingDisplayColumns()
 		{
-			$cols = "Booking ID,Bike Name,Customer Name,Start Date,Start Time,End Date,End Time,Duration,Pick Up,Drop Off,Price($)";
+			$cols = "Booking ID,Bike Name,Customer Name,Start Date,Start Time,End Date,End Time,Duration<br>(Hours),Pick Up,Drop Off,Price($)";
 
 			return $cols;
 		}

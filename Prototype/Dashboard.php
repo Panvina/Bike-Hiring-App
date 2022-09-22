@@ -128,8 +128,7 @@ Contributor(s):
                 </div>
                 <br>
 
-                <!--This calendar section is done by Clement where it is showing the current bookings as an event scheduler and it is hard code since it is to demonstrate the potential type of thing-->
-                <!-- Current bookings section -->
+                <!-- Current bookings section (Using open source GPL license timetable schedule, courtesy of Grible and friou) -->
                 <h1 style="line-height: 0px; margin-bottom: 1.5%; margin-top: 2em; "><strong> Current Bookings: </strong></h1>
     			<div class="timetable"></div>
         	</div>
@@ -246,6 +245,31 @@ Contributor(s):
         var renderer = new Timetable.Renderer(timetable);
         renderer.draw('.timetable');
 
+        // Dabin's custom edge to edge timetable code
+        var timeScope = document.getElementsByClassName("syncscroll").getElementsByTagName("header").getElementsByTagName("ul")[0];
+        var timeScopeWidth = timeScope.offsetWidth;
+        var timeScopeDiff = (17.0 - 9.0);
+        var timeScopeSectionWidth = timeScopeWidth / timeScopeDiff;
+
+        // add CSS styling into HTML
+        var styleElem = document.head.appendChild(document.createElement("style"));
+        styleElem.innerHTML =
+            `.timetable > section > header li {
+                flex: none;
+                display: block;
+                position: relative;
+                width: ${timeScopeSectionWidth};
+            }
+            .timetable ul.room-timeline li:before {
+                background-image: linear-gradient(90deg, #e5e5e5 1px, transparent 0);
+                background-size: ${timeScopeSectionWidth/4}px auto;
+            }
+            .timetable ul.room-timeline li:after {
+                background-image: linear-gradient(90deg, #e5e5e5, #e5e5e5 1px, #f4f4f4 0, #f4f4f4 2px, #e5e5e5 0, #e5e5e5 3px, transparent 0, transparent);
+                background-size: ${timeScopeSectionWidth}px auto;
+                background-position: -2px 0;
+            }`;
+
         function decrementDate()
         {
             <?php
@@ -262,13 +286,5 @@ Contributor(s):
             ?>
             window.location.replace("dashboard.php?date=<?php echo $nextDay ?>");
         }
-    </script>
-    <script>
-      (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
-      function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
-      e=o.createElement(i);r=o.getElementsByTagName(i)[0];
-      e.src='//www.google-analytics.com/analytics.js';
-      r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-      ga('create','UA-37417680-5');ga('send','pageview');
     </script>
 </html>
