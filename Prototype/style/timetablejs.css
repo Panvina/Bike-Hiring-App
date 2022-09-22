@@ -19,7 +19,7 @@
 }
 .timetable > aside {
     flex: none;
-    max-width: 30%;
+    width: 25%;
     padding: 0 !important;
     margin-top: 46px;
     border-right: 5px solid transparent;
@@ -145,7 +145,7 @@
     background-position: -2px 0;
 }
 .timetable .time-entry {
-    background-color: #ec6a5e;
+    background-color: #aaecd0;
     transition: background-color 0.2s;
     height: 45px;
     display: block;
@@ -154,8 +154,9 @@
     padding: 0 10px;
     white-space: normal;
     overflow: hidden;
-    color: #fff;
-    border: 1px solid #e32c1b;
+    color: #000;
+    border: 1px solid #2abb7f;
+    border-radius: 5px;
     transform-style: preserve-3d;
 }
 .timetable .time-entry small.name {

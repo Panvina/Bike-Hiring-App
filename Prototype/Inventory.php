@@ -97,7 +97,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                             <th> Bike Status </th>
                             <th> Safety Check </th>
                             <th> Description </th>
-                            <th> Action </th>
+                            <th> Edit </th>
                         </tr>";
 
                 // Printing data of all table columns by fetching from database

@@ -92,7 +92,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                                 <th> Accessory Price ($ p/h)</th>
                                 <th> Availability Status</th>
                                 <th> Safety Status </th>
-                                <th> Action </th>
+                                <th> Edit </th>
                             </tr>";
 
                     while ($row = $accessoryInventory->fetch_assoc()) {

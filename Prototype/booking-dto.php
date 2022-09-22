@@ -100,7 +100,7 @@
             $login = $this->getUsername();
             $dbCon = new DBConnection('booking_table');
             $detail = $dbCon->get('*',("user_name = '$login'"));
-            for ($i =0; $i<count($detail); $i++){            
+            for ($i =0; $i<count($detail); $i++){
                 $oneDiArray = $detail[$i];
                 array_push($this->bookingid,$oneDiArray['booking_id']);
                 array_push($this->startT,$oneDiArray['start_date'] .": ". $oneDiArray['start_time']);
@@ -115,12 +115,12 @@
 
 
         function printDetails($array){
-            
+
             if (count($array)< 1){
                 echo "<p>No current booking/s.</p>";
             }else{
-                for ($i =0; $i<count($array); $i++){  
-                    $bookingid =$this->bookingid[$i];                   
+                for ($i =0; $i<count($array); $i++){
+                    $bookingid =$this->bookingid[$i];
                     $bikeid = $this->getBookingBikeID($bookingid);
                     $bikeName = $this->getBikeName($bikeid);
                     $bikeid = implode(", ",$bikeid);
@@ -135,7 +135,7 @@
                     $fee=$this->fee[$i];
 
                     echo "
-                    <h3>Booking ID: $bookingid</h3> 
+                    <h3>Booking ID: $bookingid</h3>
                     <div class='text'>
                         <div class='text-col'>
                             <p><b>Bike ID:</b> $bikeid</p>
@@ -154,7 +154,7 @@
                         <input type='submit' name='cancelBooking'
                         class='button' value='Cancel this Booking' />
                     </form>
-                    <hr>     
+                    <hr>
                  ";
                 }
             }

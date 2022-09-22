@@ -88,7 +88,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                             <th> Bike Type ID </th>
                             <th> Bike Type Name </th>
                             <th> Description </th>
-                            <th> Action </th>
+                            <th> Edit </th>
                         </tr>";
 
                 while ($row = $accessoryType->fetch_assoc()) {
