@@ -1,7 +1,7 @@
 <?php
-/* Reference = https://www.w3schools.com/howto/howto_css_modals.asp */
 /* Code completed by Aadesh Jagannathan - 102072344*/
 /* Styling reused from Jake's dashboard pages*/
+/* Reference = https://www.w3schools.com/howto/howto_css_modals.asp */
 
 // Enabling session
 session_start();
@@ -23,6 +23,8 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 <html>
 <!-- Styling reused from Jake's dashboard pages -->
 <link rel="stylesheet" href="style/Jake_style.css">
+<!-- Styling unique to Inventory pages-->
+<link rel="stylesheet" href="style/inventory-style.css">
 
 <head>
     <!-- header -->
@@ -77,14 +79,20 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
             <a href= "editpages.php"> <img src= "img/icons/bulletin-board.png" alt="Edit Pages Logo" /> Edit </a> <br>
             <?php setLogoutButton()?>
         </div>
-    </nav>
+    </nav> 
 
     <!-- Block of content in center -->
-    <div class="Content">
-        <h1> All Items </h1>
-
-        <!-- Add Item pop up -->
-        <button type="button" id="addItem">+ Add Bike</button>
+    <div class="Content">  
+        <!-- Content above the data table-->     
+        <div id="content-header">
+            <div id="header-text">
+            <h1> All Bikes </h1>
+            </div>
+            <div id="header-button">
+            <!-- Add Item pop up -->
+            <button type="button" id="addItem" style="margin-left: 68;">+ Add Bike</button>
+            </div>
+        </div>
 
         <!-- List of available bookings -->
         <table class="TableContent">
@@ -149,9 +157,9 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                         <button class='dropbtn' disabled>...</button>
                             <div class='dropdown-content'>
                             <!-- Yes or No selection as dropdown for safety check -->
-                            <form action='inventory-updatescript.php' method='POST' event.preventDefault() > <button type='submit' id= '$primaryKey' class='UpdateItem' name='updateItem' 
+                            <form action='php-scripts/inventory-updatescript.php' method='POST' event.preventDefault() > <button type='submit' id= '$primaryKey' class='UpdateItem' name='updateItem' 
                                 value='$primaryKey'> Update </button> </form>
-                            <form action='inventory-deletescript.php' method='POST' event.preventDefault()> <button type='submit' id='$primaryKey' name='deleteItem' class='DeleteItem' 
+                            <form action='php-scripts/inventory-deletescript.php' method='POST' event.preventDefault()> <button type='submit' id='$primaryKey' name='deleteItem' class='DeleteItem' 
                                 value = '$primaryKey'> Delete </button> </form>
                              </div>
                         </div>";
@@ -195,7 +203,8 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
         <!-- Content within popup -->
         <div class="modal-content">
             <span class="Insertclose">&times;</span>
-            <form action="inventory-addscript.php" method="post">
+            <form action="php-scripts/inventory-addscript.php" method="post">
+            <h1> Add a Bike </h1>
                 <div>
                 <span class="error"> 
                         <?php 
@@ -215,7 +224,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                 </div>
 
                 <div>
-                    <h2>Name</h2>
+                    <h2>Name: </h2>
                     <input placeholder="Bike's name..." type="text" name="name">
                     <span class="error"> 
                         <?php 
@@ -237,8 +246,8 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 
                 <div>
                     <!-- Bike type options displayed as a dropdown by fetching from bike type table in db-->
-                    <h2>Bike Type ID</h2>
-                    <select placeholder="Bike's Type..." name="bikeTypeId" type="submit">
+                    <h2>Bike Type ID: </h2>
+                    <select placeholder="Select bike type" name="bikeTypeId" type="submit" style="width:40%;">
                         <option value ="">Select bike type</option>
                         <?php
                         foreach ($bikeTypeOption as $option) {
@@ -266,7 +275,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 
                 <div>
                     <!-- Helmet options displayed as a dropdown by fetching from accessory type table in db-->
-                    <h2>Helmet ID</h2>
+                    <h2>Helmet ID: </h2>
                     <select placeholder="Helmet's ID..." name="helmetId" type="submit">
                         <option value ="">Select helmet</option>
                         <?php
@@ -294,7 +303,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                 </div>
 
                 <div>
-                    <h2>Price p/h</h2>
+                    <h2>Price p/h: </h2>
                     <input placeholder="Price per hour..." type="text" name="price">
                     <span class="error">
                     <?php 
@@ -324,7 +333,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                 </div> -->
 
                 <div>
-                    <h2>Safety Status</h2>
+                    <h2>Safety Status: </h2>
                     <label class="switch"  style='left: 10px; bottom:5px;' >
                     <input type="hidden" name="safetyInspect" value="0">
                     <input type="checkbox" name="safetyInspect" value="1">
@@ -332,8 +341,8 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     </label>
                 </div>
 
-                <div>
-                    <h2>Description</h2><br>
+                <div id='modal-description-cont'>
+                    <h2>Description: </h2><br>
                     <textarea  style='width: 220px; height: 50px' placeholder="Description about the bike..." name="description"></textarea>
                 </div><br>
                 <span class="error"> 
@@ -350,7 +359,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                 </span>
 
                 <div>
-                    <button type="submit" name="AddItem">Add Bike</button>
+                    <button type="submit" name="AddItem">Add</button>
                 </div>
             </form>
         </div>
@@ -370,7 +379,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
         <!-- Content within popup -->
         <div class="modal-content">
             <span class="updateFormClose">&times;</span>
-            <form action="inventory-updatescript.php" method="post" event.preventDefault()>
+            <form action="php-scripts/inventory-updatescript.php" method="post" event.preventDefault()>
                 <div>
                 <span class="error"> 
                         <?php 
@@ -385,12 +394,12 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     </span>
                 </div>
                 <div>
-                    <h2>BikeID</h2>
+                    <h2>BikeID: </h2>
                     <input placeholder="ID of the Bike..." type="text" name="bikeId" readonly value="<?php echo $_SESSION['bike_id'] ?>">
                 </div>
 
                 <div>
-                    <h2>Name</h2>
+                    <h2>Name: </h2>
                     <input placeholder="Bike's name..." type="text" name="name" value="<?php echo $_SESSION['name'] ?>">
                     <span class="error"> 
                         <?php 
@@ -412,7 +421,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 
                 <div>
                     <!-- Bike type options displayed as a dropdown by fetching from bike type table in db-->
-                    <h2>BikeTypeID</h2>
+                    <h2>BikeTypeID: </h2>
                     <select placeholder="Bike's Type..." name="bikeTypeId" type="submit" value="<?php echo $_SESSION['bike_type_id'] ?>">
                         <!-- <option style = 'background-color:#8DEF6E' selected=selected><//?php echo $_SESSION['bike_type_id'];
                         echo "-";
@@ -446,7 +455,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 
                 <div>
                     <!-- Helmet options displayed as a dropdown by fetching from accessory type table in db-->
-                    <h2>HelmetID</h2>
+                    <h2>HelmetID: </h2>
                     <select placeholder="Helmet's ID..." name="helmetId" type="submit" value="<?php echo $_SESSION['helmet_id'] ?>">
                         <?php
                         foreach ($bikeAccessoryOption as $option) {
@@ -474,7 +483,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                 </div>
 
                 <div>
-                    <h2>Price p/h</h2>
+                    <h2>Price p/h: </h2>
                     <input placeholder="Price per hour..." type="text" name="price" value="<?php echo $_SESSION['price_ph'] ?>">
                     <span class="error">
                     <?php 
@@ -505,7 +514,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 
                 <!-- Yes or No selection as dropdown for safety check -->
                 <div>
-                    <h2>Safety Status</h2>
+                    <h2>Safety Status: </h2>
                     <label class="switch"  style='left: 10px; bottom:5px;' >
                     <input type="hidden" name="safetyInspect" value="0">
                     <input type="checkbox" name="safetyInspect" value="1" <?php echo ($_SESSION['safety_inspect']==1 ? 'checked' : '');?>>
@@ -514,7 +523,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                 </div>            
 
                 <div>
-                    <h2>Description</h2><br>
+                    <h2>Description: </h2><br>
                     <textarea style='width: 220px; height: 50px' iplaceholder="Description about the bike..." name="description"><?php echo $_SESSION['description'] ?></textarea>
                 <span class="error"> 
                         <?php 
@@ -531,7 +540,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                 </div><br>
 
                 <div>
-                    <button type="submit" name="submitUpdateItem">Update Item</button>
+                    <button type="submit" name="submitUpdateItem">Update</button>
                 </div>
             </form>
         </div>
@@ -551,7 +560,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
         <div class="modal-content">
             <span class="closeDeleteForm">&times;</span>
             <h1 style="left: -8%; position: relative;"> Do you wish to delete the item? </h1>
-            <form action="inventory-deletescript.php" method="post" event.preventDefault()>
+            <form action="php-scripts/inventory-deletescript.php" method="post" event.preventDefault()>
                 <div>
                     <div style="text-align: center; background-color: none;">
                     <h2>Bike ID :</h2>
@@ -559,7 +568,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     $primaryKey = $_SESSION["bike_id"];
                     echo "<h1 style='left:-10%; position: relative;'> $primaryKey </h1>";?></div><br>
                     <?php
-                    echo "<form action='inventory-deletescript.php' method='POST' event.preventDefault()>
+                    echo "<form action='php-scripts/inventory-deletescript.php' method='POST' event.preventDefault()>
                       <button style='width: 40%; left: -10%; position: relative;' type='submit' id='$primaryKey' value ='$primaryKey' name='submitDeleteItem'>Yes</button>
                       <button style='width: 40%; left: -10%; position: relative; background-color: red;' type='submit' name='cancelDeleteItem'>No</button> </form>";
                     ?>

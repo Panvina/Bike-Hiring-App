@@ -18,6 +18,8 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 <!DOCTYPE html>
 <html>
 <link rel="stylesheet" href="style/Jake_style.css">
+<!-- Styling unique to Inventory pages-->
+<link rel="stylesheet" href="style/inventory-style.css">
 
 <head>
     <!-- header -->
@@ -76,10 +78,15 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 
     <!-- Block of content in center -->
     <div class="Content">
-        <h1> All Items </h1>
-
-        <!-- Add Item pop up -->
-        <button type="button" id="AddItem">+ Add Accessory Type</button>
+    <div id="content-header">
+            <div id="header-text">
+            <h1> All Accessory Types </h1>
+            </div>
+            <div id="header-button">
+            <!-- Add Item pop up -->
+            <button type="button" id="AddItem" style="margin-left: -57;">+ Add Accessory Type</button>
+            </div>
+        </div>
 
         <!-- List of available bookings -->
         <table class="TableContent">

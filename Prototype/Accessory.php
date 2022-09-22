@@ -21,6 +21,8 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 <!DOCTYPE html>
 <html>
 <link rel="stylesheet" href="style/Jake_style.css">
+<!-- Styling unique to Inventory pages-->
+<link rel="stylesheet" href="style/inventory-style.css">
 
 <head>
     <!-- header -->
@@ -79,10 +81,16 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 
     <!-- Block of content in center -->
     <div class="Content">
-        <h1> All Items </h1>
-
-        <!-- Add Item pop up -->
-        <button type="button" id="addItem">+ Add Accessory</button>
+        <!-- Content above the data table-->     
+        <div id="content-header">
+            <div id="header-text">
+            <h1> All Accessories </h1>
+            </div>
+            <div id="header-button">
+            <!-- Add Item pop up -->
+            <button type="button" id="addItem">+ Add Accessory</button>
+            </div>
+        </div>
 
         <!-- List of available bookings -->
         <table class="TableContent">
@@ -203,7 +211,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     <input placeholder="ID of the Accessory..." type="hidden" name="accessoryId">
                 </div>
                 <div>
-                    <h2>Name</h2>
+                    <h2>Name: </h2>
                     <input placeholder="Accessory's name..." type="text" name="name">
                     <span class="error"> 
                         <?php 
@@ -224,8 +232,8 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                 </div>
 
                 <div>
-                    <h2>AccessoryTypeID</h2><br>
-                    <select placeholder="Accessory's Type..." name="accessoryTypeId" type="submit">
+                    <h2>Accessory Type ID: </h2><br>
+                    <select placeholder="Accessory's Type..." name="accessoryTypeId" type="submit"  style="width: 50%!important;">
                         <option value ="">Select accessory type</option>
                         <?php
                         foreach ($accessoryTypeOption as $option) {
@@ -252,7 +260,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                 </div>
 
                 <div>
-                    <h2>Price p/h</h2>
+                    <h2>Price p/h: </h2>
                     <input placeholder="Price per hour..." type="text" name="price">
                     <span class="error">
                     <?php 
@@ -282,7 +290,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                 </div> -->
 
                 <div>
-                    <h2>Safety Status</h2>
+                    <h2>Safety Status: </h2>
                     <label class="switch"  style='left: 10px; bottom:14px;' >
                     <input type="hidden" name="safetyInspect" value="0">
                     <input type="checkbox" name="safetyInspect" value="1">

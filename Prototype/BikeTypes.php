@@ -18,6 +18,8 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 <!DOCTYPE html>
 <html>
 <link rel="stylesheet" href="style/Jake_style.css">
+<!-- Styling unique to Inventory pages-->
+<link rel="stylesheet" href="style/inventory-style.css">
 
 <head>
     <!-- header -->
@@ -76,10 +78,16 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 
     <!-- Block of content in center -->
     <div class="Content">
-        <h1> All Items </h1>
-
-        <!-- Add Item pop up -->
-        <button type="button" id="AddItem">+ Add Bike Type</button>
+        <!-- Content above the data table-->     
+        <div id="content-header">
+            <div id="header-text">
+            <h1> All Bike Types </h1>
+            </div>
+            <div id="header-button">
+            <!-- Add Item pop up -->
+            <button type="button" id="AddItem" style="margin-left: 7;">+ Add Bike Type</button>
+            </div>
+        </div>
 
         <!-- List of available bookings -->
         <table class="TableContent">
@@ -91,6 +99,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     <tr>
                         <th> Bike Type ID </th>
                         <th> Bike Type Name </th>
+                        <th> Picture ID </th>
                         <th> Description </th>
                         <th> Action </th>
                     </tr>";
@@ -105,6 +114,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                 <tr>
                     <td><?php echo $row["bike_type_id"]; ?></td>
                     <td><?php echo $row["name"]; ?></td>
+                    <td><?php echo $row["picture_id"]; ?></td>
                     <td><?php echo $row["description"]; ?></td>  
                     <td>
                         <?php
@@ -165,7 +175,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     <input placeholder="ID of Bike Type..." type="hidden" name="bikeId">
                 </div>
                 <div>
-                    <h2>Bike Type Name</h2>
+                    <h2>Bike Type Name: </h2>
                     <input placeholder="Name of Bike Type..." type="text" name="name">
                     <span class="error"> 
                         <?php 
@@ -187,7 +197,17 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     </span>
                 </div>
                 <div>
-                    <h2>Description</h2><br>
+                    <h2>Picture ID: </h2>
+                    <select placeholder="Picture's ID..." name="pictureId" type="submit">
+                        <option>Picture ID</option>
+                        <option value="1">1-Mountain</option>
+                        <option value="2">2-Hydro</option>
+                        <option value="3">3-Electric</option>
+                        <option value="4">4-Push</option>
+                    </select>       
+                </div>
+                <div>
+                    <h2>Description: </h2><br>
                     <textarea style='width: 220px; height: 50px' placeholder="Description about the type of bike..." name="description"></textarea>
                     <span class="error"> 
                         <?php 
@@ -205,7 +225,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                 </div><br>
             
             <div>
-                    <button type="submit" name="AddItem">Add Bike Type</button>
+                    <button type="submit" name="AddItem">Add</button>
             </div>
             </form> 
         </div>
@@ -240,12 +260,13 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     </span>
                 </div>
                 <div>
-                    <h2>Bike Type ID</h2>
+                    <h2>Bike Type ID: </h2>
                     <input placeholder="ID of the Accessory..." type="text" name="bikeId" readonly value="<?php echo $_SESSION['bike_type_id'] ?>">
                 </div>
+                
 
                 <div>
-                    <h2>Name</h2>
+                    <h2>Name: </h2>
                     <input placeholder="Name of Bike Type..." type="text" name="name" value="<?php echo $_SESSION['name'] ?>">
                     <span class="error"> 
                         <?php 
@@ -267,7 +288,16 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     </span>
                 </div>
                 <div>
-                    <h2>Description</h2><br>
+                    <h2>Picture ID: </h2>
+                    <select placeholder="Picture's ID..." name="pictureId" type="submit">
+                        <option value="1" <?php if($_SESSION['pictureId'] == 1)echo 'selected'; ?>>1-Mountain</option>
+                        <option value="2" <?php if($_SESSION['pictureId'] == 2)echo 'selected'; ?>>2-Hydro</option>
+                        <option value="3" <?php if($_SESSION['pictureId'] == 3)echo 'selected'; ?>>3-Electric</option>
+                        <option value="4" <?php if($_SESSION['pictureId'] == 4)echo 'selected'; ?>>4-Push</option>
+                    </select>       
+                </div>
+                <div>
+                    <h2>Description: </h2><br>
                     
                     <textarea style='width: 220px; height: 50px' iplaceholder="Description about the bike type..." name="description"><?php echo $_SESSION['description'] ?></textarea>
                     <span class="error"> 
