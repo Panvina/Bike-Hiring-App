@@ -1,4 +1,4 @@
-<?php 
+<?php
     if (!isset($_SESSION)){
         session_start();
     }
@@ -8,7 +8,7 @@
         header("location: index.php");
         exit;
     }
-    
+
     function setOwnerDashboardPrivilege($staffActiveClass="", $accountActiveClass=""){
         if($_SESSION["login-type"] == "owner"){
             echo "<a class='$staffActiveClass' href='staff.php'> <img src='img/icons/staff.png' alt='Staff Logo' /> Staff </a> <br>";
@@ -40,7 +40,7 @@
             display: inline-block;
             margin-left: 10px;
             margin-top: 2px;
-            font-size: 30px;
+            font-size: 1.2vmax;
         }
         .logout:hover{
             background-color: #00b7b1;

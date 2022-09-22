@@ -11,10 +11,39 @@ var addBtn = document.getElementById("AddItem");
 var updateBtn = document.getElementsByClassName("UpdateItem");
 var deleteBtn = document.getElementsByClassName("DeleteItem");
 
-// Getting the close buttons for each modal
-var closeBtn = document.getElementsByClassName("Insertclose")[0];
-var updateCloseBtn = document.getElementsByClassName("updateFormClose")[0];
-var deleteCloseBtn = document.getElementsByClassName("closeDeleteForm")[0];
+// Get the close-btn <span> elements that closes the modal
+var close_btns = document.getElementsByClassName("close-btn");
+
+// When the user clicks on a close button (x), close the modal
+for (let i = 0; i < close_btns.length; i++)
+{
+	close_btns[i].onclick = function()
+	{
+        addPopup.style.display = "none";
+        updatePopup.style.display = "none";
+        deletePopup.style.display = "none";
+        window.location.replace("BikeTypes.php");
+        $_SESSION["ret"] = null;
+	}
+}
+
+alignAddBtn();
+function alignAddBtn()
+{
+    var headerWidth = document.getElementById('content-header').getBoundingClientRect().width;
+
+    var addBtn = document.getElementById('AddItem');
+    var addBtnInfo = addBtn.getBoundingClientRect();
+    var btnWidth = addBtnInfo.width;
+
+    var tableWidth = document.getElementById('data-table').getBoundingClientRect().width;
+
+    var width = (tableWidth - headerWidth - btnWidth - 3) +  "px";
+
+    addBtn.style.left = width;
+}
+
+window.addEventListener('resize', alignAddBtn);
 
 // Opening the modals based on button click
 addBtn.onclick = function(){
@@ -34,22 +63,3 @@ for (var i = 0; i < deleteBtn.length; i++)
     deletePopup.style.display = "block";
   }
 }
-
-// Closing the modals based on button click
-closeBtn.onclick = function(){
-    addPopup.style.display = "none";
-    window.location.replace("BikeTypes.php");
-    $_SESSION["ret"] = null;
-}
-
-updateCloseBtn.onclick = function(){
-    updatePopup.style.display = "none";
-    window.location.replace("BikeTypes.php");
-    $_SESSION["ret"] = null;
-  }
-
-  deleteCloseBtn.onclick = function(){
-    deletePopup.style.display = "none";
-    window.location.replace("BikeTypes.php");
-    $_SESSION["ret"] = null;
-  }

@@ -53,8 +53,6 @@ for (let i = 0; i < close_btns.length; i++)
 	}
 }
 
-alignAddBtn();
-
 // Set display of a HTML element to block (visible)
 function showModal(modalElement)
 {
@@ -67,6 +65,7 @@ function hideModal(modalElement)
 	modalElement.style.display = "none";
 }
 
+alignAddBtn();
 function alignAddBtn()
 {
     var headerWidth = document.getElementById('content-header').getBoundingClientRect().width;

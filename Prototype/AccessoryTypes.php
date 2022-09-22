@@ -15,9 +15,9 @@ include_once "user-privilege.php";
 $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 ?>
 
-<!DOCTYPE html>
 <html>
-<link rel="stylesheet" href="style/Jake_style.css">
+<link rel="stylesheet" href="style/dashboard-style.css">
+<link rel="stylesheet" href="style/popup.css">
 
 <head>
     <!-- header -->
@@ -55,80 +55,76 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
     }
     ?>
 
-    <!-- Side navigation -->
-    <nav>
-        <div class="sideNavigation">
-            <a href= "Dashboard.php"> <img src= "img/icons/bulletin-board.png" alt="Dashboard Logo" /> Dashboard </a> <br>
-            <a href = "Customer.php"> <img src= "img/icons/account-group.png" alt="Customer Logo" />  Customer  </a> <br>
-            <?php setOwnerDashboardPrivilege(); ?>
-            <!--<a href="accounts.php"> <img src="img/icons/account.png" alt="Account logo"/> Accounts </a> <br>-->
-            <a href= "Inventory.php"> <img src= "img/icons/bicycle.png" alt="Inventory Logo" />  Inventory </a> <br>
-            <a href="Accessory.php"> <img src="img/icons/accessories.png" alt="Inventory Logo" /> Accessories </a> <br>
-            <a href="BikeTypes.php"> <img src="img/icons/biketypes.png" alt="Bike Types Logo" /> Bike Types </a> <br>
-            <a class="active" href="AccessoryTypes.php"> <img src="img/icons/accessorytypes.png" alt="Bike Types Logo" /> Accessory Types </a> <br>
-            <a href= "bookings.php"> <img src= "img/icons/book-open-blank-variant.png" alt="Bookings Logo" /> Bookings </a> <br>
-            <a href= "Block_Out_Date.php"> <img src= "img/icons/calendar.png" alt="Block out date Logo" /> Block Out Dates </a> <br>
-            <a href= "Locations.php"> <img src= "img/icons/earth.png" alt="Locations Logo" /> Locations </a> <br>
-            <a href= "editpages.php"> <img src= "img/icons/bulletin-board.png" alt="Edit Pages Logo" /> Edit </a> <br>
-            <?php setLogoutButton()?>
-        </div>
-    </nav>
+    <div class="grid-container">
+    	<div class="menu">
+    		<a href= "Dashboard.php"> <img src= "img/icons/bulletin-board.png" alt="Dashboard Logo" /> Dashboard </a> <br>
+    		<a href = "Customer.php"> <img src= "img/icons/account-group.png" alt="Customer Logo" />  Customer  </a> <br>
+    		<?php setOwnerDashboardPrivilege(); ?>
+    		<a href= "Inventory.php"> <img src= "img/icons/bicycle.png" alt="Inventory Logo" />  Inventory </a> <br>
+    		<a href="Accessory.php"> <img src="img/icons/accessories.png" alt="Inventory Logo" /> Accessories </a> <br>
+    		<a href="BikeTypes.php"> <img src="img/icons/biketypes.png" alt="Bike Types Logo" /> Bike Types </a> <br>
+    		<a class="active" href="AccessoryTypes.php"> <img src="img/icons/accessorytypes.png" alt="Bike Types Logo" /> Accessory Types </a> <br>
+    		<a href= "bookings.php"> <img src= "img/icons/book-open-blank-variant.png" alt="Bookings Logo" /> Bookings </a> <br>
+    		<a href= "Block_Out_Date.php"> <img src= "img/icons/calendar.png" alt="Block out date Logo" /> Block Out Dates </a> <br>
+    		<a href= "Locations.php"> <img src= "img/icons/earth.png" alt="Locations Logo" /> Locations </a> <br>
+    		<a href= "editpages.php"> <img src= "img/icons/bulletin-board.png" alt="Edit Pages Logo" /> Edit </a> <br>
+    		<?php setLogoutButton()?>
+    	</div>
+    	<div class="main">
+            <h1 id="content-header"> All Items </h1>
 
-    <!-- Block of content in center -->
-    <div class="Content">
-        <h1> All Items </h1>
+            <!-- Add Item pop up -->
+            <button type="button" id="AddItem">+ Add Accessory Type</button>
 
-        <!-- Add Item pop up -->
-        <button type="button" id="AddItem">+ Add Accessory Type</button>
+            <!-- List of available bookings -->
+            <table class="TableContent" id="data-table">
+                <?php
+                // Fetching all column data from the Accessory type table
+                $accessoryType = $conn->query("SELECT * FROM accessory_type_table");
 
-        <!-- List of available bookings -->
-        <table class="TableContent">
-            <?php
-            // Fetching all column data from the Accessory type table
-            $accessoryType = $conn->query("SELECT * FROM accessory_type_table");
+                echo "
+                        <tr>
+                            <th> Accessory Type ID </th>
+                            <th> Accessory Type Name </th>
+                            <th> Description </th>
+                            <th> Action </th>
+                        </tr>";
 
-            echo "
+                while ($row = $accessoryType->fetch_assoc()) {
+
+                    // Setting the primary key value based on table's primary key
+                    $primaryKey = $row["accessory_type_id"];
+                    $_SESSION["primaryKey"] = $primaryKey;
+
+                ?>
                     <tr>
-                        <th> Accessory Type ID </th>
-                        <th> Accessory Type Name </th>
-                        <th> Description </th>
-                        <th> Action </th>
-                    </tr>";
+                        <td><?php echo $row["accessory_type_id"]; ?></td>
+                        <td><?php echo $row["name"]; ?></td>
+                        <td><?php echo $row["description"]; ?></td>
+                        <td class="editcolumn">
+                            <?php
+                            echo "
+                            <div class='dropdown'>
+                            <button class='dropbtn' disabled>...</button>
+                                <div class='dropdown-content'>
+                                <form action='php-scripts/accessorytype-modifyscript.php' method='POST' event.preventDefault() > <button type='submit' id= '$primaryKey' class='dropdown-element' name='updateItem'
+                                    value='$primaryKey'> Update </button> </form>
+                                <form action='php-scripts/accessorytype-modifyscript.php' method='POST' event.preventDefault()> <button type='submit' id='$primaryKey' name='deleteItem' class='dropdown-element'
+                                    value = '$primaryKey'> Delete </button> </form>
+                                </div>
+                            </div>";
 
-            while ($row = $accessoryType->fetch_assoc()) {
-
-                // Setting the primary key value based on table's primary key
-                $primaryKey = $row["accessory_type_id"];
-                $_SESSION["primaryKey"] = $primaryKey;
-                
-            ?>
-                <tr>
-                    <td><?php echo $row["accessory_type_id"]; ?></td>
-                    <td><?php echo $row["name"]; ?></td>
-                    <td><?php echo $row["description"]; ?></td>  
-                    <td>
-                        <?php
-                        echo "
-                        <div class='dropdown'>
-                        <button class='dropbtn' disabled>...</button>
-                            <div class='dropdown-content'>
-                            <form action='php-scripts/accessorytype-modifyscript.php' method='POST' event.preventDefault() > <button type='submit' id= '$primaryKey' class='UpdateItem' name='updateItem' 
-                                value='$primaryKey'> Update </button> </form>
-                            <form action='php-scripts/accessorytype-modifyscript.php' method='POST' event.preventDefault()> <button type='submit' id='$primaryKey' name='deleteItem' class='DeleteItem' 
-                                value = '$primaryKey'> Delete </button> </form>
-                            </div>
-                        </div>";
-
-                        ?>
-                    </td>
-                </tr>
-            <?php
-            }
-            ?>
-        </table>
+                            ?>
+                        </td>
+                    </tr>
+                <?php
+                }
+                ?>
+            </table>
+    	</div>
     </div>
 
-    <div id="AddAccessoryModal" class="modal"<?php
+    <div id="AddAccessoryModal" class="modal-overlay"<?php
             // Ensures modal stays open when "insert" is set to print errors
             if(isset($_GET["insert"]))
             {
@@ -143,11 +139,11 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
             }
         ?>>
         <div class="modal-content">
-            <span class="Insertclose">&times;</span>
+            <span class="close-btn">&times;</span>
             <form action="php-scripts/accessorytype-addscript.php" method="post">
                 <div>
-                    <span class="error"> 
-                        <?php 
+                    <span class="error">
+                        <?php
                             if (isset($_GET["insert"]))
                             {
                                 if ($_GET["insert"] == "empty")
@@ -159,14 +155,14 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     </span>
                 </div>
                 <div>
-                    <!-- <h2>Accessory Type ID</h2> -->
+                    <!-- <label>Accessory Type ID</label> -->
                     <input placeholder="ID of accessory type..." type="hidden" name="accessoryId">
                 </div>
                 <div>
-                    <h2>Accessory Type Name</h2>
+                    <label>Accessory Type Name</label>
                     <input placeholder="Name of accessory type..." type="text" name="name">
-                    <span class="error"> 
-                        <?php 
+                    <span class="error">
+                        <?php
                             if (isset($_GET["insert"]))
                             {
                                 $name = $_GET["insert"];
@@ -183,10 +179,10 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     </span>
                 </div>
                 <div>
-                    <h2>Description</h2><br>
+                    <label>Description</label><br>
                     <textarea style='width: 220px; height: 50px' placeholder="Description about the type of accessory..." name="description"></textarea>
-                    <span class="error"> 
-                        <?php 
+                    <span class="error">
+                        <?php
                             if (isset($_GET["insert"]))
                             {
                                 $description = $_GET["insert"];
@@ -198,16 +194,16 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                         ?>
                     </span>
                 </div><br>
-            
+
             <div>
                     <button type="submit" name="AddItem">Add Accessory Type</button>
             </div>
-            </form> 
+            </form>
         </div>
     </div>
 
     <!-- Modal to update inventory records (In progress) -->
-    <div id="UpdateAccessoryModal" class="modal" <?php
+    <div id="UpdateAccessoryModal" class="modal-overlay" <?php
 
                                                     if (isset($_GET["update"])) {
                                                         if ($_GET["update"] != "true") {
@@ -218,11 +214,11 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                                                     }
                                                     ?>>
         <div class="modal-content">
-            <span class="updateFormClose">&times;</span>
+            <span class="close-btn">&times;</span>
             <form action="php-scripts/accessorytype-modifyscript.php" method="post" event.preventDefault()>
                 <div>
-                <span class="error"> 
-                        <?php 
+                <span class="error">
+                        <?php
                             if (isset($_GET["update"]))
                             {
                                 if ($_GET["update"] == "empty")
@@ -234,15 +230,15 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     </span>
                 </div>
                 <div>
-                    <h2>Accessory Type ID</h2>
+                    <label>Accessory Type ID</label>
                     <input placeholder="ID of the accessory..." type="text" name="accessoryId" readonly value="<?php echo $_SESSION['accessory_type_id'] ?>">
                 </div>
 
                 <div>
-                    <h2>Name</h2>
+                    <label>Name</label>
                     <input placeholder="Name of accessory type..." type="text" name="name" value="<?php echo $_SESSION['name'] ?>">
-                    <span class="error"> 
-                        <?php 
+                    <span class="error">
+                        <?php
                             if (isset($_GET["update"]))
                             {
                                 $name = $_GET["update"];
@@ -259,10 +255,10 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     </span>
                 </div>
                 <div>
-                    <h2>Description</h2><br>
+                    <label>Description</label><br>
                     <textarea style='width: 220px; height: 50px' placeholder="Description about the accessory type..." name="description"><?php echo $_SESSION['description'] ?></textarea>
-                    <span class="error"> 
-                        <?php 
+                    <span class="error">
+                        <?php
                             if (isset($_GET["update"]))
                             {
                                 $description = $_GET["update"];
@@ -281,9 +277,9 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
             </form>
         </div>
     </div>
-    
+
     <!-- Modal to delete inventory records -->
-    <div id="DeleteAccessoryModal" class="modal" <?php
+    <div id="DeleteAccessoryModal" class="modal-overlay" <?php
 
                                                     if (isset($_GET["delete"])) {
                                                         if ($_GET["delete"] != "true") {
@@ -294,19 +290,19 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                                                     }
                                                     ?>>
         <div class="modal-content">
-            <span class="closeDeleteForm">&times;</span>
-            <h1 style="left: -8%; position: relative;"> Do you wish to delete the accessory type? </h1>
+            <span class="close-btn">&times;</span>
+            <h2 > Do you wish to delete the accessory type? </h2>
             <form action="php-scripts/accessorytype-modifyscript.php" method="post" event.preventDefault()>
                 <div>
                     <div style="text-align: center; background-color: none;">
-                    <h2>Accessory Type ID:</h2>
+                    <label>Accessory Type ID:</label>
                     <?php
                     $primaryKey = $_SESSION["accessory_type_id"];
-                    echo "<h1 style='left:-10%; position: relative;'> $primaryKey </h1>";?></div><br>
+                    echo "<h2> $primaryKey </h2>";?></div><br>
                     <?php
                     echo "<form action='php-scripts/accessorytype-modifyscript.php' method='POST' event.preventDefault()>
-                      <button style='width: 40%; left: -10%; position: relative;' type='submit' id='$primaryKey' value ='$primaryKey' name='submitDeleteItem'>Yes</button>
-                      <button style='width: 40%; left: -10%; position: relative; background-color: red;' type='submit' name='cancelDeleteItem'>No</button> </form>";
+                      <button style='width: 40%;' type='submit' id='$primaryKey' value ='$primaryKey' name='submitDeleteItem'>Yes</button>
+                      <button style='width: 40%; background-color: red;' type='submit' name='cancelDeleteItem'>No</button> </form>";
                     ?>
             </form>
         </div>
