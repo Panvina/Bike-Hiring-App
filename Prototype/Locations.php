@@ -8,8 +8,8 @@ Contributor(s):
 	- Jake Hipworth @ 102090870@student.swin.edu.au (Navigation section and Styles)
 -->
 <?php
-    //enabling the user privilege of certain tabs. Added by Vina Touch 101928802
-    include_once "user-privilege.php";
+    // dashboard side menu import (Dabin)
+    include_once("php-scripts/dashboard-menu.php");
 ?>
 <!DOCTYPE html>
 <html>
@@ -40,18 +40,7 @@ Contributor(s):
 	<body>
         <div class="grid-container">
         	<div class="menu">
-        		<a href= "Dashboard.php"> <img src= "img/icons/bulletin-board.png" alt="Dashboard Logo" /> Dashboard </a> <br>
-        		<a href = "Customer.php"> <img src= "img/icons/account-group.png" alt="Customer Logo" />  Customer  </a> <br>
-        		<?php setOwnerDashboardPrivilege(); ?>
-        		<a href= "Inventory.php"> <img src= "img/icons/bicycle.png" alt="Inventory Logo" />  Inventory </a> <br>
-        		<a href="Accessory.php"> <img src="img/icons/accessories.png" alt="Inventory Logo" /> Accessories </a> <br>
-        		<a href="BikeTypes.php"> <img src="img/icons/biketypes.png" alt="Bike Types Logo" /> Bike Types </a> <br>
-        		<a href="AccessoryTypes.php"> <img src="img/icons/accessorytypes.png" alt="Bike Types Logo" /> Accessory Types </a> <br>
-        		<a href= "bookings.php"> <img src= "img/icons/book-open-blank-variant.png" alt="Bookings Logo" /> Bookings </a> <br>
-        		<a href= "Block_Out_Date.php"> <img src= "img/icons/calendar.png" alt="Block out date Logo" /> Block Out Dates </a> <br>
-        		<a class="active" href= "Locations.php"> <img src= "img/icons/earth.png" alt="Locations Logo" /> Locations </a> <br>
-        		<a href= "editpages.php"> <img src= "img/icons/bulletin-board.png" alt="Edit Pages Logo" /> Edit </a> <br>
-        		<?php setLogoutButton()?>
+        		<?php printMenu("location"); ?>
         	</div>
         	<div class="main">
                 <h1> Pick-Up & Drop-Off Locations </h1>
