@@ -40,7 +40,7 @@
         $pk = $_POST["submitDeleteStaff"];
         //creates the query to delete the same row in the account table
         $accountQuery = "DELETE FROM accounts_table WHERE user_name = '$pk'";
-    
+
         //starts the transaction for the query for database security
         $conn->runQuery("START TRANSACTION;");
 
@@ -62,13 +62,13 @@
             $conn->runQuery("COMMIT;");
             header("Location: ../staff.php?delete=true");
             exit();
-        }          
+        }
     }
 
     //If the no button was pressed, redirects back to the customer page
     if (isset($_POST["CancelDeleteStaff"]))
     {
-     header("Location: staff.php?");
+     header("Location: ../staff.php");
      exit();
     }
-?> 
+?>

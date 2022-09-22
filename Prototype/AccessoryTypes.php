@@ -295,15 +295,18 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
             <form action="php-scripts/accessorytype-modifyscript.php" method="post" event.preventDefault()>
                 <div>
                     <div style="text-align: center; background-color: none;">
-                    <label>Accessory Type ID:</label>
-                    <?php
-                    $primaryKey = $_SESSION["accessory_type_id"];
-                    echo "<h2> $primaryKey </h2>";?></div><br>
+                        <label>Accessory Type ID:</label>
+                        <?php
+                            $primaryKey = $_SESSION["accessory_type_id"];
+                            echo "<label> $primaryKey </label>";
+                        ?>
+                    </div><br>
                     <?php
                     echo "<form action='php-scripts/accessorytype-modifyscript.php' method='POST' event.preventDefault()>
                       <button style='width: 40%;' type='submit' id='$primaryKey' value ='$primaryKey' name='submitDeleteItem'>Yes</button>
                       <button style='width: 40%; background-color: red;' type='submit' name='cancelDeleteItem'>No</button> </form>";
                     ?>
+                </div>
             </form>
         </div>
     </div>

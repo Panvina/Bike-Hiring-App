@@ -14,10 +14,9 @@
     //create the connection with the database
     $conn = new DBConnection("accounts_table");
 ?>
-<!DOCTYPE html>
 <html>
-<link rel="stylesheet" href="style/Jake_style.css">
-
+<link rel="stylesheet" href="style/dashboard-style.css">
+<link rel="stylesheet" href="style/popup.css">
 <head>
     <!-- Header -->
     <title> Accounts </title>
@@ -25,13 +24,11 @@
 </head>
 
 <body>
-    <!-- Side navigation -->
-    <nav>
-        <div class="sideNavigation">
+    <div class="grid-container">
+        <div class="menu">
             <a href= "Dashboard.php"> <img src= "img/icons/bulletin-board.png" alt="Dashboard Logo" /> Dashboard </a> <br>
             <a href = "Customer.php"> <img src= "img/icons/account-group.png" alt="Customer Logo" />  Customer  </a> <br>
-            <?php setOwnerDashboardPrivilege("", "active");?>
-            <!--<a class="active" href="accounts.php"> <img src="img/icons/account.png" alt="Account logo"/> Accounts </a> <br>-->
+            <?php setOwnerDashboardPrivilege("", "active"); ?>
             <a href= "Inventory.php"> <img src= "img/icons/bicycle.png" alt="Inventory Logo" />  Inventory </a> <br>
             <a href="Accessory.php"> <img src="img/icons/accessories.png" alt="Inventory Logo" /> Accessories </a> <br>
             <a href="BikeTypes.php"> <img src="img/icons/biketypes.png" alt="Bike Types Logo" /> Bike Types </a> <br>
@@ -40,119 +37,117 @@
             <a href= "Block_Out_Date.php"> <img src= "img/icons/calendar.png" alt="Block out date Logo" /> Block Out Dates </a> <br>
             <a href= "Locations.php"> <img src= "img/icons/earth.png" alt="Locations Logo" /> Locations </a> <br>
             <a href= "editpages.php"> <img src= "img/icons/bulletin-board.png" alt="Edit Pages Logo" /> Edit </a> <br>
-            <?php setLogoutButton();?>
+            <?php setLogoutButton()?>
         </div>
-    </nav>
+        <div class="main">
+            <h1> Roles </h1>
+                <table class="TableContent">
+                    <tr>
+                        <th> Role </th>
+                        <th> Description </th>
+                    </tr>
+                    <!-- Print roles (Dabin) -->
+                    <?php
+                        // Get roles
+                        $tmpCon = new DBConnection("authorisation_table");
+                        $rows = $tmpCon->get("*");
+                        for($i = 0; $i < count($rows); $i++)
+                        {
+                            $row = $rows[$i];
 
-    <!-- Block of content in center -->
-    <div class="Content">
-        <h1> Roles </h1>
-            <table class="TableContent">
+                            $roleId = $row["role_id"];
+                            $desc = $row["description"];
+                            echo "<tr>";
+                            echo "<td>$roleId</td>";
+                            echo "<td>$desc</td>";
+                            echo "</tr>";
+                        }
+                    ?>
+                </table>
+            <h1> All Accounts</h1>
+
+            <!-- List of current customers -->
+            <table class="TableContent" id="data-table">
                 <tr>
-                    <th> Role </th>
-                    <th> Description </th>
-                </tr>
-                <!-- Print roles (Dabin) -->
-                <?php
-                    // Get roles
-                    $tmpCon = new DBConnection("authorisation_table");
-                    $rows = $tmpCon->get("*");
-                    for($i = 0; $i < count($rows); $i++)
-                    {
-                        $row = $rows[$i];
+                    <?php
+                        //Fetch data done by Alex, altered by Jake for customer table
+                        //establishes the collumns in the table to be used in the query
+                        $cols = "user_name, role_id";
+                        //get the data from the table
+                        $rows = $conn->get($cols);
 
-                        $roleId = $row["role_id"];
-                        $desc = $row["description"];
+                        //establish the headings that will be used to display the data in the table
+                        $tableHeadings = "User Name, Role";
+
+                        //data validation to remove ',' for querying and displaying data in the table
+                        $cols = explode(',', $cols);
+                        $tableHeadings = explode(',', $tableHeadings);
+
+                        $count = count($cols);
+                        for($x = 0; $x < $count; $x++)
+                        {
+                            $col = trim($tableHeadings[$x]);
+                            echo "<th> $col </th>";
+                        }
+                        echo "<th> Edit </th>"
+                    ?>
+                </tr>
+                <?php
+                    if ($rows == null)
+                    {
+                        $rows = array();
+                        $tmp = array();
+                        for($x = 0; $x < count($cols); $x++)
+                        {
+                            array_push($tmp, "null");
+                        }
+                        array_push($rows, $tmp);
+                    }
+
+                    $keys = array_keys($rows[0]);
+
+                    $primaryColumn = "user_name";
+
+                    for($x = 0; $x < count($rows); $x++)
+                    {
                         echo "<tr>";
-                        echo "<td>$roleId</td>";
-                        echo "<td>$desc</td>";
+                        for($y = 0; $y < count($keys); $y++)
+                        {
+                            $row = $rows[$x];
+                            $key = $keys[$y];
+                            $data = $row[$key];
+                            echo "<td> $data </td>";
+
+                            if($key == $primaryColumn)
+                            {
+                                $primaryKey = $data;
+                            }
+                        }
+                        $_SESSION["primaryKey"] = $primaryKey;
+                        //Creates the dropdown box with the buttons used for updating and deleting
+                        //Clemeant created the drop down box. Jake repurposed it and changed the style and functionality to suit current methods
+                        echo
+                            "<td class='editcolumn'>
+                            <div class='dropdown'>
+                                <button class='dropbtn' disabled>...</button>
+                                <div class='dropdown-content'>
+                                    <form action='php-scripts\accounts-update-script.php' method='POST' event.preventDefault() > <button type='submit' id= '$primaryKey' class='dropdown-element' name='UpdateButton'
+                                    value='$primaryKey'> Update </button> </form>
+                                    <form action='php-scripts\account-delete-script.php' method='POST' event.preventDefault()> <button type='submit' name='deleteButton' id='$primaryKey' class='dropdown-element'
+                                    value = '$primaryKey'> Delete </button> </form>
+                                </div>
+                            </div>
+                            </td>";
+
                         echo "</tr>";
                     }
                 ?>
             </table>
-        <h1> All Accounts</h1>
-
-        <!-- List of current customers -->
-        <table class="TableContent">
-            <tr>
-                <?php
-                    //Fetch data done by Alex, altered by Jake for customer table
-                    //establishes the collumns in the table to be used in the query
-                    $cols = "user_name, role_id";
-                    //get the data from the table
-                    $rows = $conn->get($cols);
-
-                    //establish the headings that will be used to display the data in the table
-                    $tableHeadings = "User Name, Role";
-
-                    //data validation to remove ',' for querying and displaying data in the table
-                    $cols = explode(',', $cols);
-                    $tableHeadings = explode(',', $tableHeadings);
-
-                    $count = count($cols);
-                    for($x = 0; $x < $count; $x++)
-                    {
-                        $col = trim($tableHeadings[$x]);
-                        echo "<th> $col </th>";
-                    }
-                    echo "<th> Edit </th>"
-                ?>
-            </tr>
-            <?php
-                if ($rows == null)
-                {
-                    $rows = array();
-                    $tmp = array();
-                    for($x = 0; $x < count($cols); $x++)
-                    {
-                        array_push($tmp, "null");
-                    }
-                    array_push($rows, $tmp);
-                }
-
-                $keys = array_keys($rows[0]);
-
-                $primaryColumn = "user_name";
-
-                for($x = 0; $x < count($rows); $x++)
-                {
-                    echo "<tr>";
-                    for($y = 0; $y < count($keys); $y++)
-                    {
-                        $row = $rows[$x];
-                        $key = $keys[$y];
-                        $data = $row[$key];
-                        echo "<td> $data </td>";
-
-                        if($key == $primaryColumn)
-                        {
-                            $primaryKey = $data;
-                        }
-                    }
-                    $_SESSION["primaryKey"] = $primaryKey;
-                    //Creates the dropdown box with the buttons used for updating and deleting
-                    //Clemeant created the drop down box. Jake repurposed it and changed the style and functionality to suit current methods
-                    echo
-                        "<td>
-                        <div class='dropdown'>
-                            <button class='dropbtn' disabled>...</button>
-                            <div class='dropdown-content'>
-                                <form action='php-scripts\accounts-update-script.php' method='POST' event.preventDefault() > <button type='submit' id= '$primaryKey' class='UpdateButton' name='UpdateButton'
-                                value='$primaryKey'> Update </button> </form>
-                                <form action='php-scripts\account-delete-script.php' method='POST' event.preventDefault()> <button type='submit' name='deleteButton' id='$primaryKey' class='deleteButton'
-                                value = '$primaryKey'>Delete </button> </form>
-                            </div>
-                        </div>
-                        </td>";
-
-                    echo "</tr>";
-                }
-            ?>
-        </table>
+        </div>
     </div>
 
      <!-- Create the initial window for the pop up -->
-    <div id="UpdateCustomerModal" class="modal" <?php
+    <div id="UpdateCustomerModal" class="modal-overlay" <?php
             //checks to see if there was any errors and if there was, it will continue to display the modal
             if(isset($_GET["update"]))
             {
@@ -170,18 +165,18 @@
         <!-- Creates the content within the pop up -->
         <div class="modal-content" >
 
-            <span class="updateFormClose">&times;</span>
+            <span class="close-btn">&times;</span>
             <form action="php-scripts\accounts-update-script.php" method="POST" event.preventDefault()>
 
-                <h1> Update a customer </h1>
+                <h2> Update a customer </h2>
                 <div>
                     <!-- //Made User name not editable to ensure database intergrity  -->
-                    <h2> User Name: </h2>
+                    <label> User Name: </label>
                     <input type="text" name="userName" readonly value = "<?php echo $_SESSION['user_name'];?>">
                 </div>
                 <div>
                     <!-- Name input validation, checks based on error and displays accurate error message -->
-                    <h2> roleID: </h2>
+                    <label> roleID: </label>
                     <input type="text" name="role_id" value = "<?php echo $_SESSION['role_id'];?>">
                     <span class="error">
                         <?php
@@ -203,7 +198,7 @@
 
                 <div>
                     <!-- Name input validation, checks based on error and displays accurate error message -->
-                    <h2> Password: </h2>
+                    <label> Password: </label>
                     <input type="password" name="password" value = "<?php echo $_SESSION['password'];?>">
                     <span class="error">
                         <?php
@@ -233,7 +228,7 @@
     </div>
 
     <!-- Create the initial window for the pop up -->
-    <div id="DeleteCustomerModal" class="modal"
+    <div id="DeleteCustomerModal" class="modal-overlay"
         <?php
             //Used to redirect back to the form once the first button has been pressed
             if(isset($_GET["delete"]))
@@ -250,15 +245,15 @@
         ?>>
         <!-- Creates the content within the pop up -->
         <div class="modal-content" >
-            <span class="closeDeleteForm">&times;</span>
-            <h1 style="left: -8%; position: relative;"> Do you wish to delete the following customer? </h1>
+            <span class="close-btn">&times;</span>
+            <h2> Do you wish to delete the following customer? </h2>
             <!-- creates the yes and no button and parses the primary key back to be deleted  -->
             <?php
                 $pk = $_SESSION["user_name"];
-                echo "<h1 style='float: center; display: block; text-align: center;  padding-left: 5%; padding-right: 20%; position: relative; word-wrap: break-word;'> $pk </h1>";
+                echo "<label style='word-wrap: break-word;'> $pk </label>";
                 echo "<form action='php-scripts\account-delete-script.php' method='POST' event.preventDefault()>
-                      <button style='width: 40%; left: -10%; position: relative;' type='submit' id='$pk' value ='$pk' name='submitDeleteAccount'>Yes</button>
-                      <button style='width: 40%; left: -10%; position: relative; background-color: red;' type='submit' name='CancelDeleteAccount'>No</button> </form>";
+                      <button style='width: 40%;' type='submit' id='$pk' value ='$pk' name='submitDeleteAccount'>Yes</button>
+                      <button style='width: 40%; background-color: red;' type='submit' name='CancelDeleteAccount'>No</button> </form>";
             ?>
         </div>
     </div>

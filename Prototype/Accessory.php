@@ -429,19 +429,22 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
         ?>>
             <div class="modal-content">
                 <span class="close-btn">&times;</span>
-                <h2 style="left: -8%; position: relative;"> Do you wish to delete the item? </h2>
+                <h2> Do you wish to delete the item? </h2>
                 <form action="php-scripts/accessory-deletescript.php" method="post" event.preventDefault()>
                     <div>
                         <div style="text-align: center; background-color: none;">
-                        <label>Accessory ID :</label>
-                        <?php
-                        $primaryKey = $_SESSION["accessory_id"];
-                        echo "<h2 style='left:-10%; position: relative;'> $primaryKey </h2>";?></div><br>
+                            <label>Accessory ID :</label>
+                            <?php
+                                $primaryKey = $_SESSION["accessory_id"];
+                                echo "<label> $primaryKey </label>";
+                            ?>
+                        </div><br>
                         <?php
                         echo "<form action='php-scripts/accessory-deletescript.php' method='POST' event.preventDefault()>
-                          <button style='width: 40%; left: -10%; position: relative;' type='submit' id='$primaryKey' value ='$primaryKey' name='submitDeleteItem'>Yes</button>
-                          <button style='width: 40%; left: -10%; position: relative; background-color: red;' type='submit' name='cancelDeleteItem'>No</button> </form>";
+                          <button style='width: 40%;' type='submit' id='$primaryKey' value ='$primaryKey' name='submitDeleteItem'>Yes</button>
+                          <button style='width: 40%; background-color: red;' type='submit' name='cancelDeleteItem'>No</button> </form>";
                         ?>
+                    </div>
                 </form>
             </div>
         </div>

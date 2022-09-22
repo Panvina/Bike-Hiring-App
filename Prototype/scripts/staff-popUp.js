@@ -32,18 +32,11 @@ for (var i = 0; i < deleteBtn.length; i++)
   }
 }
 
-// When the user clicks on <span> (x), close the modal
-staffInsertSpan.onclick = function() {
-  staffInsertModal.style.display = "none";
-  window.location.replace("staff.php");
-  $_SESSION["ret"] = null;
-}
-
-
 for (let i = 0; i < closeModalSpans.length; i++)
 {
     closeModalSpans[i].onclick = function()
     {
+        staffInsertModal.style.display = "none";
         deleteModal.style.display = "none";
         updateModal.style.display = "none";
         window.location.replace("staff.php");
