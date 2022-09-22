@@ -5,15 +5,15 @@ Project Description: A website for hiring bikes. Front-end accompanied by an adm
 Contributor:
  	- Clement Cheung @ 103076376@student.swin.edu.au
 	- Jake Hipworth @ 102090870@student.swin.edu.au*/
-  
+
 
 /* Worked on by Jake */
-body{
+body {
   background-color: #eaf7f6;
 }
 
 /* Worked on by Jake */
-.sideNavigation{
+.sideNavigation {
   width: 16.5%;
   margin: auto;
   height: 1000px;
@@ -43,7 +43,7 @@ body{
 }
 
 /* Worked on by Jake */
-.header{
+.header {
   font-size: 40px;
   text-align: center;
   height: 100px;
@@ -52,16 +52,16 @@ body{
 
 /* Worked on by Jake */
 #Logo {
-    height: 135px;
-    float: left;
-    position: absolute;
-    top: 0px;
-    left: 0px;
+  height: 135px;
+  float: left;
+  position: absolute;
+  top: 0px;
+  left: 0px;
 }
 
 /* Worked on by Jake  */
 /* Modified by Clement */
-.Content{
+.Content {
   padding-left: 175px;
   padding-right: 175px;
   background-color: white;
@@ -72,7 +72,7 @@ body{
   display: inline-block;
 }
 
- /* Worked on by Jake  */
+/* Worked on by Jake  */
 /* Modified by Clement */
 /*check this one*/
 .Content input[type=text] {
@@ -82,18 +82,18 @@ body{
   margin-top: 0%;
   position: none;
   margin-right: 2%;
-/*  height: auto;*/
+  /*  height: auto;*/
 }
 
 /* Worked on by Jake */
-.Content h1{
+.Content h1 {
   display: inline-block;
 }
 
 /* Worked on by Jake  */
 /* Modified by Clemenmt */
 
-.Content img{
+.Content img {
   display: inline-block;
   margin-top: 2.3%;
   float: right;
@@ -103,7 +103,7 @@ body{
 
 /* Worked on by Jake */
 /* Modified by Clement */
-.Content button{
+.Content button {
   display: inline-block;
   margin-top: 2%;
   margin-bottom: 2%;
@@ -114,61 +114,61 @@ body{
   border: none;
   color: white;
   font-size: 25px;
-/*  border: solid white;*/
+  /*  border: solid white;*/
   border-width: thin;
 }
 
 /* Worked on by Jake */
-.Date{
+.Date {
   font-size: 20px;
-  
+
   padding-top: .1%;
   position: absolute;
 }
 
 /* Worked on by Jake */
-.Content #rightArrow{
+.Content #rightArrow {
   left: 212%;
 }
 
 /* Worked on by Jake */
-.Content #leftArrow{
+.Content #leftArrow {
   left: -75%;
 }
 
 /* Worked on by Jake */
-.Content #calendar{
+.Content #calendar {
   left: -70%;
 }
 
 /* Worked on by Jake */
-.Headings{
+.Headings {
   font-size: 30px;
   text-align: center;
-  display:inline-block;
+  display: inline-block;
   padding-inline: 8%;
 }
 
 /* Worked on by Jake */
-.DashboardInformationContainer{
-  display:inline-block;
-  width: 100%; 
+.DashboardInformationContainer {
+  display: inline-block;
+  width: 100%;
   height: auto;
   background-color: lightgray;
   display: table;
   border: solid white;
-  
+
 }
 
 /* Worked on by Jake */
-.DashboardInformation{
+.DashboardInformation {
   width: auto;
   height: auto;
   background-color: lightgray;
-  display:table-cell;
+  display: table-cell;
   border: solid white;
   text-align: center;
-  
+
 }
 
 /* Worked on by Jake */
@@ -177,27 +177,27 @@ nav a {
 }
 
 /* Worked on by Jake */
-.TableContent{
+.TableContent {
   border-collapse: collapse;
   width: 100%;
 }
 
 /* Worked on by Jake */
-.TableContent th, td{
+.TableContent th, td {
   text-align: center;
   border: 2px solid black;
   padding: 8px;
 }
 
-/* Worked on by Jake */
-.CheckBox{
-  height: 25px;
+/* Worked on by Jake and modified by Clement*/
+.CheckBox {
+  height: 2em;
   width: 25px;
   accent-color: black;
 }
 
 /* Worked on by Jake */
-.CheckBox:hover{
+.CheckBox:hover {
   cursor: pointer;
 }
 
@@ -207,38 +207,45 @@ nav a {
   z-index: 1;
   left: 0;
   top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  width: 100%;
+  /* Full width */
+  height: 100%;
+  /* Full height */
+  overflow: auto;
+  /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0);
+  /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4);
+  /* Black w/ opacity */
 }
 
 /* Modal Content/Box */
 .modal-content {
-  margin: 5% auto; /* 15% from the top and centered */
-  margin-left: 45%;
+  margin: 5% auto;
+  /* 15% from the top and centered */
+  /* margin-left: 45%; */
   padding: 20px;
   border: 1px solid #888;
-  width: 20%; /* Could be more or less, depending on screen size */
+  width: 20%;
+  /* Could be more or less, depending on screen size */
   background-color: #eaf7f6;
 }
 
-.modal-content h2, input[type=text]{
- /* display:inline-block; */
- text-align: center;
+.modal-content h2, input[type=text] {
+  /* display:inline-block; */
+  text-align: center;
+  height: 2em;
+  margin-bottom: 5%;
 }
 
-.modal-content h1{
-  display:inline-block;
+.modal-content h1 {
   text-align: center;
-/*  margin-left: 15%;*/
- }
+}
 
-.modal-content button{
-  display:inline-block;
-  text-align: center;  
-	margin-left: 20%;
+.modal-content button {
+  display: inline-block;
+  text-align: center;
+  margin-left: 20%;
   background-color: darkcyan;
   border: none;
   color: white;
@@ -246,7 +253,7 @@ nav a {
   border: solid white;
   border-width: thin;
   cursor: pointer;
- }
+}
 
 /* The Close Button */
 .Insertclose,
@@ -267,42 +274,43 @@ nav a {
 .deleteButton:hover,
 .deleteButton:focus,
 .closeDeleteForm:hover,
-.closeDeleteForm:focus{
+.closeDeleteForm:focus {
   color: black;
   text-decoration: none;
   cursor: pointer;
 }
 
-.echo{
+.echo {
   color: red;
   font-size: 25px;
   margin-left: 45%;
   position: absolute;
-  z-index: 1; left: 0;
+  z-index: 1;
+  left: 0;
   top: 0;
   padding-top: 5%;
 }
 
-.UpdateButton, .deleteButton{
+.UpdateButton, .deleteButton {
   background-color: darkcyan !important;
   border: none !important;
-  color: white!important;
-  font-size: 20px!important;
-  border: solid white!important;
-  border-width: thin!important;
-  cursor: pointer!important;
-  left: -2%!important;
+  color: white !important;
+  font-size: 20px !important;
+  border: solid white !important;
+  border-width: thin !important;
+  cursor: pointer !important;
+  left: -2% !important;
 }
 
-.AccountUpdateButton{
+.AccountUpdateButton {
   background-color: darkcyan !important;
   border: none !important;
-  color: white!important;
-  font-size: 21px!important;
-  border: solid white!important;
-  border-width: thin!important;
-  cursor: pointer!important;
-  left: -2%!important;
+  color: white !important;
+  font-size: 21px !important;
+  border: solid white !important;
+  border-width: thin !important;
+  cursor: pointer !important;
+  left: -2% !important;
 }
 
 .error {
@@ -312,14 +320,14 @@ nav a {
 
 /* Repurposed clemeants CSS to current style */
 .dropbtn {
- background-color: darkcyan !important;
+  background-color: darkcyan !important;
   border: none !important;
-  color: white!important;
-  font-size: 20px!important;
-  border: solid white!important;
-  border-width: thin!important;
-  cursor: pointer!important;
-  left: 3%!important;
+  color: white !important;
+  font-size: 20px !important;
+  border: solid white !important;
+  border-width: thin !important;
+  cursor: pointer !important;
+  left: 3% !important;
 }
 
 /* Clements drop down box css styling */
@@ -335,7 +343,7 @@ nav a {
   background-color: #f1f1f1;
   min-width: 160px;
   min-height: 100px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
 }
 
@@ -348,14 +356,20 @@ nav a {
 }
 
 /* Clements drop down box css styling */
-.dropdown-content a:hover {background-color: #ddd;}
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
 
-.dropdown:hover .dropdown-content {display: block;}
+.dropdown:hover .dropdown-content {
+  display: block;
+}
 
-.dropdown:hover .dropbtn {background-color: #3e8e41;}
+.dropdown:hover .dropbtn {
+  background-color: #3e8e41;
+}
 
 /* Aadesh's custom button styling */
-#UpdateItem{
+#UpdateItem {
   background-color: darkcyan;
   border: none;
   color: white;
@@ -367,15 +381,15 @@ nav a {
 }
 
 
-.UpdateItem, .DeleteItem{
+.UpdateItem, .DeleteItem {
   background-color: darkcyan !important;
   border: none !important;
-  color: white!important;
-  font-size: 20px!important;
-  border: solid white!important;
-  border-width: thin!important;
-  cursor: pointer!important;
-  left: -2%!important;
+  color: white !important;
+  font-size: 20px !important;
+  border: solid white !important;
+  border-width: thin !important;
+  cursor: pointer !important;
+  left: -2% !important;
 }
 
 /* Aadesh's custom switch styling */
@@ -386,7 +400,7 @@ nav a {
   height: 28px;
 }
 
-.switch input { 
+.switch input {
   opacity: 0;
   width: 0;
   height: 0;
@@ -416,15 +430,15 @@ nav a {
   transition: .4s;
 }
 
-input:checked + .slider {
+input:checked+.slider {
   background-color: #80ee6a;
 }
 
-input:focus + .slider {
+input:focus+.slider {
   box-shadow: 0 0 1px #80ee6a;
 }
 
-input:checked + .slider:before {
+input:checked+.slider:before {
   -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);
   transform: translateX(26px);
@@ -439,7 +453,6 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 
-.form-container
-{
-	margin-left: 15%;
+.form-container {
+  text-align: center;
 }

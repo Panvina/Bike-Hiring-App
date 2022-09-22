@@ -1,4 +1,5 @@
 @charset "utf-8";
+
 /* CSS Document */
 /* Project Name: Inverloch Bike Hire
 Project Description: A website for hiring bikes. Front-end accompanied by an admin dashboard.
@@ -10,6 +11,7 @@ This page is completely done by Clement */
 .errors {
   color: #FF0004;
 }
+
 /*These are for contact.us page*/
 /*Contact Us Page info*/
 /*This is mainly setting up the looks of the page*/
@@ -19,23 +21,28 @@ This page is completely done by Clement */
   margin-left: auto;
   margin-right: auto;
 }
+
 #headercomment {
   text-align: right;
   text-decoration-color: black;
 }
+
 #headercomment a {
   text-decoration: none;
   color: #000000;
   font-weight: bolder;
 }
+
 #headercomment h2 {
   font-weight: lighter;
 }
+
 #contactInfo p, #contactInfo table {
   font-size: 15px;
   table-layout: auto;
   word-wrap: normal;
 }
+
 /*Decoratintg the buttons*/
 .submitbutton {
   background-color: #172026;
@@ -45,30 +52,46 @@ This page is completely done by Clement */
   font-size: 15px;
   width: 30%;
 }
+
 /*Idea from https://www.w3schools.com/howto/howto_css_equal_height.asp*/
-#Conactbox1 /*This is mainly a box containing contact info*/ {
+
+/*This is mainly a box containing contact info*/
+#Conactbox1 {
   background-color: #aaecd0;
   float: left;
 }
-#Conactbox2 /*This is mainly a box containing the fourm*/ {
+
+/*This is mainly a box containing the fourm*/
+#Conactbox2 {
   background-color: #ebf7f7;
   float: left;
 }
-.Contactbox /*This is mainly to hold data of both containers*/ {
+
+/*This is mainly to hold data of both containers*/
+.Contactbox {
   flex: 10;
 }
-#contactbox /*This contains both Contact information and fourm of the contianer*/ {
+
+/*This contains both Contact information and fourm of the contianer*/
+#contactbox {
   display: flex;
   width: 100%;
 }
-.textcentral /*This mainly aline the text in the containers*/ {
+
+
+/*This mainly aline the text in the containers*/
+.textcentral {
   margin: auto;
   width: 70%;
   padding: 5%;
 }
-#faq /*Mainly set to make it seperate from the container above*/ {
+
+
+/*Mainly set to make it seperate from the container above*/
+#faq {
   float: none;
 }
+
 /*this makes all the imputs to the correct length and remove any outlines*/
 .fourmsize {
   border-top-style: hidden;
@@ -77,9 +100,11 @@ This page is completely done by Clement */
   border-bottom-style: hidden;
   width: 100%;
 }
+
 label {
   font-weight: bold;
 }
+
 /*These code is going to be moved to CSS in a later date
 		code from: https://www.w3schools.com/howto/howto_js_collapsible.asp
 		*/
@@ -93,30 +118,35 @@ label {
   text-align: left;
   outline: none;
 }
+
 .collapsible, .content {
   border-top: 2px solid black;
   width: 100%;
   font-size: 18px;
 }
+
 /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
 .active, .collapsible:hover {
   background-color: #ccc;
 }
+
 /*This is mainly to make it more responsive*/
 /* Style the collapsible content. Note: hidden by default */
 .content {
   padding: 0;
-	padding-left: 18px;
+  padding-left: 18px;
   background-color: white;
   max-height: 0px;
   overflow: hidden;
   transition: max-height 0.2s ease-out;
 }
+
 .imgpadding {
   text-align: center;
   padding-right: 1em;
   padding-bottom: 20%;
 }
+
 /* This is to make sure that on smaller screens, the contact us information still can be seen */
 @media only screen and (max-width: 900px) {
   .Contactbox {
@@ -124,6 +154,7 @@ label {
     width: 100%;
     height: auto;
   }
+
   #contactbox {
     display: block;
   }

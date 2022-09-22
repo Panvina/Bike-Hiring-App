@@ -396,14 +396,34 @@
                     <label> State </label>
                     <!-- Recieves the current value of field that was used instead of wiping it clear -->
                     <?php
+                        
                         if (isset($_SESSION["customerInsertState"]))
                         {
                             $state = $_SESSION["customerInsertState"];
-                            echo "<input type='text' name='state' value='$state'>";
+                            //echo "<input type='text' name='state' value='$state'>";    
+                            echo "<select name='state' id='$state'>;
+                            <option value='$state'>$state</option>;   
+                            <option value='NSW'>NSW</option>;
+                            <option value='NT'>NT</option>;
+                            <option value='QLD'>QLD</option>;
+                            <option value='SA'>TAS</option>;
+                            <option value='WA'>WA</option>;
+                            <option value='VIC' selected>VIC</option>;
+                            </select>";
                         }
                         else
                         {
-                            echo '<input type="text" name="state">';
+                            //echo '<input type="text" name="state">'; 
+                            echo "<select name='state' id='state'>;   
+                            <option value='NSW'>NSW</option>;
+                            <option value='NT'>NT</option>;
+                            <option value='QLD'>QLD</option>;
+                            <option value='SA'>TAS</option>;
+                            <option value='WA'>WA</option>;
+                            <option value='TAS'>WA</option>;
+                            <option value='VIC' selected>VIC</option>;
+                            </select>";
+                            //printStates();
                         }
                     ?>
                     <span class="error">
