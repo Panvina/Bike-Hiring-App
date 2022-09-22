@@ -51,12 +51,12 @@ body{
 }
 
 /* Worked on by Jake */
-#Logo{
-  height: 180px;
-  float: left;
-  position: absolute;
-  top: 0px;
-  left: 0px;
+#Logo {
+    height: 135px;
+    float: left;
+    position: absolute;
+    top: 0px;
+    left: 0px;
 }
 
 /* Worked on by Jake  */
@@ -82,7 +82,7 @@ body{
   margin-top: 0%;
   position: none;
   margin-right: 2%;
-  height: 2%;
+/*  height: auto;*/
 }
 
 /* Worked on by Jake */
@@ -114,7 +114,7 @@ body{
   border: none;
   color: white;
   font-size: 25px;
-  border: solid white;
+/*  border: solid white;*/
   border-width: thin;
 }
 
@@ -232,13 +232,13 @@ nav a {
 .modal-content h1{
   display:inline-block;
   text-align: center;
-  margin-left: 15%;
+/*  margin-left: 15%;*/
  }
 
 .modal-content button{
   display:inline-block;
-  text-align: center;
-  margin-left: 40%;
+  text-align: center;  
+	margin-left: 20%;
   background-color: darkcyan;
   border: none;
   color: white;
@@ -437,4 +437,9 @@ input:checked + .slider:before {
 
 .slider.round:before {
   border-radius: 50%;
+}
+
+.form-container
+{
+	margin-left: 15%;
 }
