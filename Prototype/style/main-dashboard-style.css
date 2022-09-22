@@ -14,7 +14,7 @@
     display:inline-block;
     width: 100%;
     height: auto;
-    background-color: lightgray;
+    background-color: efefef;
     display: table;
     border: solid white;
 }
@@ -22,7 +22,7 @@
 .DashboardInformation{
     width: auto;
     height: auto;
-    background-color: lightgray;
+    background-color: efefef;
     display:table-cell;
     border: solid white;
     text-align: center;
