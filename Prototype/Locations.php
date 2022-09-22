@@ -109,7 +109,7 @@ session_start();
 					<th> Address </th>
 					<th> Drop-Off </th>
 					<th> Pick-Up </th>
-					<th> Action </th>
+					<th> Edit </th>
 				</tr>
 				<?php
 				//this to select all items from the table before showing it
