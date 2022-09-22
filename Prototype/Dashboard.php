@@ -200,7 +200,7 @@ Contributor(s):
     <script>
         var timetable = new Timetable();
 
-        timetable.setScope(8, 18);
+        timetable.setScope(9, 17);
 
         timetable.addLocations([
             <?php
@@ -226,17 +226,6 @@ Contributor(s):
                 }
             ?>
         ]);
-
-        // Date format = YYYY, MM, DD, HH, MM
-        // timetable.addEvent('Sightseeing', 'Rotterdam', new Date(2015,7,17,9,00), new Date(2015,7,17,11,30));
-        // timetable.addEvent('Zumba', 'Madrid', new Date(2015,7,17,12), new Date(2015,7,17,13));
-        // timetable.addEvent('Zumbu', 'Madrid', new Date(2015,7,17,13,30), new Date(2015,7,17,15));
-        // timetable.addEvent('Lasergaming', 'London', new Date(2015,7,17,17,45), new Date(2015,7,17,19,30));
-        // timetable.addEvent('All-you-can-eat grill', 'New York', new Date(2015,7,17,21), new Date(2015,7,18,1,30));
-        // timetable.addEvent('Hackathon', 'Tokyo', new Date(2015,7,17,11,30), new Date(2015,7,17,20));
-        // timetable.addEvent('Tokyo Hackathon Livestream', 'Los Angeles', new Date(2015,7,17,12,30), new Date(2015,7,17,16,15));
-        // timetable.addEvent('Lunch', 'Jakarta', new Date(2015,7,17,9,30), new Date(2015,7,17,11,45));
-        // timetable.addEvent('Cocktails', 'Rotterdam', new Date(2015,7,18,00,00), new Date(2015,7,18,02,00));
 
         <?php
             $today = date("Y/m/d");
@@ -270,18 +259,15 @@ Contributor(s):
 
         function decrementDate()
         {
-            // alert("Test");
             <?php
                 // https://stackoverflow.com/questions/660501/simplest-way-to-increment-a-date-in-php
                 $prevDay=strftime("%d-%m-%Y", strtotime("$date -1 day"));
             ?>
             window.location.replace("dashboard.php?date=<?php echo $prevDay ?>");
-            // window.location.load(true);
         }
 
         function incrementDate()
         {
-            // alert("Test");
             <?php
                 $nextDay=strftime("%d-%m-%Y", strtotime("$date +1 day"));
             ?>
