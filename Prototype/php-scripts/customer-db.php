@@ -40,6 +40,19 @@
 
 			return $ret;
 		}
+
+		public function printStates()
+		{
+			echo "<select name='state' id='state'>;   
+					<option value='NSW'>NSW</option>;
+					<option value='NT'>NT</option>;
+					<option value='QLD'>QLD</option>;
+					<option value='SA'>TAS</option>;
+					<option value='WA'>WA</option>;
+					<option value='TAS'>WA</option>;
+					<option value='VIC' selected>VIC</option>;
+					</select>";
+		}
 	}
 
 ?>
