@@ -70,7 +70,7 @@ function alignAddBtn()
 {
     var headerWidth = document.getElementById('content-header').getBoundingClientRect().width;
 
-    var addBtn = document.getElementById('addItem');
+    var addBtn = document.getElementById('add-booking-btn');
     var addBtnInfo = addBtn.getBoundingClientRect();
     var btnWidth = addBtnInfo.width;
 
