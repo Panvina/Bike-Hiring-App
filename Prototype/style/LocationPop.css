@@ -1,4 +1,5 @@
 @charset "utf-8";
+
 /* CSS Document */
 /* Project Name: Inverloch Bike Hire
 Project Description: A website for hiring bikes. Front-end accompanied by an admin dashboard.
@@ -8,27 +9,38 @@ Contributor:
 /* This is to have the pop out pannels able to pop out easily */
 /* The Modal (background) */
 .modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  padding-top: 50px; /* Location of the box */
+  /* Hidden by default */
+  display: none;
+  /* Stay in place */
+  position: fixed;
+  /* Sit on top */
+  z-index: 1;
+  /* Location of the box */
+  padding-top: 50px;
   left: 0;
   top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0, 0, 0); /* Fallback color */
-  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+  /* Full width */
+  width: 100%;
+  /* Full height */
+  height: 100%;
+  /* Enable scroll if needed */
+  overflow: auto;
+  /* Fallback color */
+  background-color: rgb(0, 0, 0);
+  /* Black w/ opacity */
+  background-color: rgba(0, 0, 0, 0.4);
 }
+
 /* Modal Content */
 .modal-content {
-/*  background-color: #fefefe;
+  /*  background-color: #fefefe;
   padding: 50px;
   border: 1px solid #888;
 */
   width: 20em;
-  /* margin: auto; */
+  margin: auto;
 }
+
 /* The Close Button */
 .close {
   color: #aaaaaa;
@@ -36,16 +48,19 @@ Contributor:
   font-size: 28px;
   font-weight: bold;
 }
+
 .close:hover, .close:focus {
   color: #000;
   text-decoration: none;
   cursor: pointer;
 }
+
 /*this is to keep the button on the right side*/
 #addBtn {
   float: right;
   left: 0%;
 }
+
 .inputlocation {
   display: block;
 }
