@@ -66,7 +66,7 @@ Contributor(s):
                 <br>
                 <div class="DashboardInformationContainer">
                     <!-- Booking summary section -->
-                    <div class="DashboardInformation">
+                    <div class="DashboardInformation dashboard-headers">
                         <h2> Booking Summary </h2>
                         <h3> Total Bookings:
                             <?php

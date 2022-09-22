@@ -11,39 +11,24 @@
 }
 
 .DashboardInformationContainer{
-  display:inline-block;
-  width: 100%;
-  height: auto;
-  background-color: lightgray;
-  display: table;
-  border: solid white;
+    display:inline-block;
+    width: 100%;
+    height: auto;
+    background-color: lightgray;
+    display: table;
+    border: solid white;
 }
 
 .DashboardInformation{
-  width: auto;
-  height: auto;
-  background-color: lightgray;
-  display:table-cell;
-  border: solid white;
-  text-align: center;
-
-}
-/*
-.Date{
-  font-size: 20px;
-
-  padding-top: .1%;
-  position: absolute;
+    width: auto;
+    height: auto;
+    background-color: lightgray;
+    display:table-cell;
+    border: solid white;
+    text-align: center;
 }
 
-.Content #rightArrow{
-  left: 320%;
+.dashboard-headers
+{
+    padding-top: 17px;
 }
-
-.Content #leftArrow{
-  left: -75%;
-}
-
-.Content #calendar{
-  left: -70%;
-} */
