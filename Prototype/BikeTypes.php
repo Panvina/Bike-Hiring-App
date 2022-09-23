@@ -91,8 +91,8 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     <tr>
                         <td><?php echo $row["bike_type_id"]; ?></td>
                         <td><?php echo $row["name"]; ?></td>
-                        <td><?php echo $row["description"]; ?></td>
                         <td><?php echo $row["picture_id"]; ?></td>
+                        <td><?php echo $row["description"]; ?></td>
                         <td class="editcolumn">
                             <?php
                             echo "
