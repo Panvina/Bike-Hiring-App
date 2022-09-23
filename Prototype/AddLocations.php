@@ -29,6 +29,8 @@ if (isset($_POST["submitLocation"])) {
 	$pickupInput = $_POST["pickUpInput"];
 	$pickupValue = isItNull($pickupInput);
 
+
+	//This section is mainly dealing with validation items
 	$err_msg = "";
 
 	//Name valdiation
@@ -50,13 +52,15 @@ if (isset($_POST["submitLocation"])) {
 		$err_msg .= "<p>The postcode you enetered is not a Victorian postcode.</p>";
 	}
 
-	//if validation fails
+	//if there is an validation error, it would be send back to Location.php with an error message
 	if ($err_msg != "") {
 		echo "<p>$err_msg</p>";
 		header("location:Locations.php?err_msg=$err_msg&add=false&name=$nameInput&address=$addressInput&suburb=$suburbInput&postcode=$postcodeInput");
 		exit();
 	}
 
+
+	//This section manages adding new data to database
 	//setting up and connecting to DB
 	$db_msg = "";
 	$host = "localhost";
@@ -90,6 +94,7 @@ if (isset($_POST["submitLocation"])) {
 		$addressInput = mysqli_real_escape_string($conn, $addressInput);
 		$nameInput = mysqli_real_escape_string($conn, $nameInput);
 
+		//this is to set the query before executing it
 		$result = mysqli_query($conn, $query);
 		//create table successful
 		if ($result) {
@@ -106,11 +111,12 @@ if (isset($_POST["submitLocation"])) {
 		} else {
 			$db_msg .= ", Create table operation unsuccessful";
 		}
-		mysqli_close($conn); // Close the database connect
+		// Close the database connect
+		mysqli_close($conn);
 	}
 
-	if ($db_msg != "") //this is to print if there is any errors
-	{
+	//This is to send back to the Location.php if there is any database error
+	if ($db_msg != "") {
 		echo "<p>Add Database eroors: $db_msg</p>";
 		$db_msg = "<p>Location Database errors: $db_msg</p>";
 		header("location:Locations.php?db_msg=$db_msg");

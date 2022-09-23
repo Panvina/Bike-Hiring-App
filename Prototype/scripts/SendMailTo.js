@@ -16,6 +16,7 @@ function lines(text) {
   return text.split("\n");
 }
 
+//this function is mainly to setup the sendto function
 function sendmail() {
   //this function is to both retrieve, manage data and then send email
   var errMsg = "";
@@ -28,6 +29,7 @@ function sendmail() {
   var message = document.getElementById("msg").value;
   var emailto = "s103076376@gmail.com";
 
+  //This section is validations
   //This is to validate email when needed
   var emailvalidate =
     /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
@@ -69,7 +71,7 @@ function sendmail() {
     }
   }
 
-  //check if there is any errors
+  //check if there is any errors, an error message would appear to the user
   if (errMsg != "") {
     alert(errMsg);
     result = false;
