@@ -611,9 +611,9 @@
                     <!-- State input validation, checks based on error and displays accurate error message -->
                     <label> State: </label>
                     <?php 
-                        if (isset($_SESSION["customerInsertState"]))
+                        if (isset($_SESSION["state"]))
                         {
-                            $state = $_SESSION["customerInsertState"];
+                            $state = $_SESSION["state"];
                             printStates($state);
                         }
                         else

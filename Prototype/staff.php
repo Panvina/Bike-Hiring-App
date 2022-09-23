@@ -274,7 +274,17 @@
                         <div>
                             <!-- State input validation, checks based on error and displays accurate error message -->
                             <label> State </label>
-                            <input type="text" name="state" value = "<?php echo $_SESSION['state'];?>">
+                            <?php 
+                                if (isset($_SESSION["state"]))
+                                {
+                                    $state = $_SESSION["state"];
+                                    printStates($state);
+                                }
+                                else
+                                {
+                                    printStates("");
+                                }
+                            ?>
                             <span class="error">
                                 <?php
                                     if (isset($_GET["update"]))
@@ -575,11 +585,11 @@
                         if (isset($_SESSION["staffInsertState"]))
                         {
                             $state = $_SESSION["staffInsertState"];
-                            echo "<input type='text' name='state' value='$state'>";
+                            printStates($state);
                         }
                         else
                         {
-                            echo '<input type="text" name="state">';
+                            printStates("");
                         }
                     ?>
                     <span class="error">
