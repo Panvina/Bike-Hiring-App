@@ -9,12 +9,13 @@ h1, #panel1 h3{
     text-transform: uppercase;
 }
 
-p, nav.footerNav li {
+p, nav.footerNav li, span,label {
     font-family: Comfortaa, 'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
 }
-button {
+button, .acc-button {
     font-family: OpenSansBold, serif;
     text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 nav.mainNav li {

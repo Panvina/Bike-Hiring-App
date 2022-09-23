@@ -142,6 +142,21 @@ font-size: 25px;
     color: #172026;
 }
 
+/*style all the buttons*/
+.acc-button {
+    background-color: #172026;
+    color: white;
+    font-size: 18px;
+    padding: 5px 15px 5px 15px;
+    border-radius: 5px;
+    border-width: 0px;
+}
+
+.acc-button:hover{
+    background-color: #00b7b1;
+    color: white;
+    border-width: 0px;
+}
 
 /*About page Container alignment styling*/
 

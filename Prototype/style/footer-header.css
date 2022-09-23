@@ -1,6 +1,9 @@
+/*Completed by Vina Touch: 101928802*/
+
 /*Styling the header and the footer of the pages*/
 html, body{
     overflow-x: hidden;
+    margin: 0;
 }
 
 /* Divides div into 2 columns for header content*/
@@ -9,26 +12,23 @@ html, body{
     width: 50%;
 }
 
-/* .cta {
-    background-image: url('../img/heading.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
-    padding-bottom: 50px;
-    text-align: center;
-    font-size: 20px;
-} */
 
 h1{
     margin-top: 50px;
 }
 
-nav.mainNav li{
+/*main nav styling*/
+.nav-wrapper li{
     display:inline-block;
-    padding:10px;
     font-size:22px;
     text-decoration: none;
+    margin-top: 15px;
 }
 
+/*the header that contains the logo and the main nav*/
+header{
+    height: 104px;
+}
 /*hide the sub nav when main nav is not hovered*/
 #subNav{
     display: none;
@@ -40,6 +40,7 @@ nav.mainNav li{
     background: white;
 }
 
+/*sub-menu styling*/
 #menu li li{
     font-size: 16px;
     float: none;
@@ -56,64 +57,52 @@ nav.mainNav li{
     color:inherit;
 }
 
+
 #menu a:hover{
     color: #00b7b1;
 }
-  
+
+/*style the hover effect on the navigation texts only - not the button*/
+.nav-text:hover:after{
+    content: "";
+    background: none repeat scroll 0 0 #00b7b1;
+    bottom: -10px;
+    display: block;
+    height: 1px;
+    position: relative;
+    width: 30px;
+
+}
+
+
   /* The sticky class is added to the navbar with JS when it reaches its scroll position */
 .sticky {
     position: fixed;
     top: 0;
     width: 100%;
-    transition: padding 1s;
-    background: #eaf7f6;
+    background-color: #eaf7f6;
+    transition: background-color 0.5s ease;
   }
 
-/*#login:before{
-    content: "";
-    display: table;
-    clear: both;
-}
-#login{
-    font-size:20px;
-    padding: 5px 10px 5px 10px;
-    margin-left: 1em;
-    border-style: solid;
-    border-width: 1px;
-    border-radius: 5px;
-    border-color: #172026;
-}*/
-
-.logo, #panel1{
+.logo{
     padding-left: 20em;
 }
 
-div.column1 #panel1, img, p, .cta{
-    padding-top: 5px;
-}
-div.column1 p{
-    padding-left: 10em;
-}
-nav.mainNav{
-    padding-top: 1em;
-}
-
-.row:after {
-    content: "";
-    display: table;
-    clear: both;
-  }
-
-.button {
+/*style all the buttons*/
+.button, .acc-button {
     background-color: #172026;
     color: white;
     font-size: 18px;
-    padding: 15px 20px 15px 20px;
     border-radius: 5px;
     border-width: 0px;
 }
+.button{
+    padding: 10px 20px 10px 20px;
+}
+.acc-button {
+    padding: 5px 15px 5px 15px;}
 
-.button:hover{
+.button:hover, .acc-button:hover{
     background-color: #00b7b1;
     color: white;
     border-width: 0px;

@@ -118,7 +118,7 @@
                         <p>$email</p></div>
                     </div><br>";
                 echo "<form action = 'booking-summary.php' method = 'POST' >
-                    <button type='submit' name='updateButton'>Update my Details</button>
+                    <button class='acc-button' type='submit' name='updateButton'>Update my Details</button>
                     </form>";
             }else{
                 echo "<form action = 'booking-summary.php' method = 'POST' >
@@ -137,8 +137,8 @@
                             <input type='text' name='email' value='$email'/></div>        
 
                 </div>
-                <button type='submit' name='updateDatabaseButton'>Update</button>
-                <a href='booking-summary.php'><button type='text'>Cancel</button></a><br>
+                <button class='acc-button' type='submit' name='updateDatabaseButton'>Update</button>
+                <a href='booking-summary.php'><button class='acc-button' type='text'>Cancel</button></a><br>
                 </form>";
             }?>
         </div>

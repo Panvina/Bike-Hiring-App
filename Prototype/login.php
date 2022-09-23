@@ -8,7 +8,7 @@
     </head>
     <body>
         <!-- Trigger/Open The Modal -->
-        <button id="login-launch-btn">Account</button>
+        <button class='acc-button' id="login-launch-btn">Account</button>
         <!--<br/>
         <button style="margin-top: 10px;" id="create-account-launch-btn">Create Account</button>-->
 

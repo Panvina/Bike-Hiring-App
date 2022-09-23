@@ -152,7 +152,7 @@
                     <form method='post' action='booking-summary.php' class='confirm'>
                         <input type='hidden' name='cancelBookingID' value='$bookingid'>
                         <input type='submit' name='cancelBooking'
-                        class='button' value='Cancel this Booking' />
+                        class='acc-button' value='Cancel this Booking' />
                     </form>
                     <hr>
                  ";
