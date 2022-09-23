@@ -413,5 +413,75 @@ Contributor(s): Dabin Lee @ icelasersparr@gmail.com
 
 			return $success;
 		}
+
+		//Jake.H Prints out and assigned selected box based on states
+		public function printStates($state)
+		{
+			echo "<select name='state' id='state'>;";
+			if ($state == "NSW")
+			{
+				echo "<option value='NSW' Selected>NSW</option>;";
+			}
+			else
+			{
+				echo "<option value='NSW'>NSW</option>;";
+			}
+
+			if ($state == "NT")
+			{
+				echo "<option value='NT' Selected>NT</option>;";
+			}
+			else
+			{
+				echo "<option value='NT'>NT</option>;";
+			}
+
+			if ($state == "QLD")
+			{
+				echo "<option value='QLD' Selected>QLD</option>;";
+			}
+			else
+			{
+				echo "<option value='QLD'>QLD</option>;";
+			}
+
+			if ($state == "SA")
+			{
+				echo "<option value='SA' Selected>TAS</option>;";
+			}
+			else
+			{
+				echo "<option value='SA'>TAS</option>;";
+			}
+			
+			if ($state == "WA")
+			{
+				echo "<option value='WA' Selected>WA</option>;";
+			}
+			else
+			{
+				echo "<option value='WA'>WA</option>;";
+			}
+
+			if ($state == "TAS")
+			{
+				echo "<option value='TAS' Selected>WA</option>;";
+			}
+			else
+			{
+				echo "<option value='TAS'>WA</option>;";
+			}
+					
+			if ($state == "VIC")
+			{
+				echo "<option value='VIC' selected>VIC</option>;";
+			}
+			else
+			{
+				echo "<option value='VIC'>VIC</option>;";
+			}
+					
+			echo "</select>";
+		}
 	}
 ?>

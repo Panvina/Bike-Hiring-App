@@ -223,7 +223,6 @@
 			return $ret;
 		}
 
-		
 		/**
 		 *	Prints a table. For testing.
 		 *	Parameters:
@@ -336,4 +335,5 @@
 
 		$conn->printRows("bike_type_table");
 	}
+
 ?>

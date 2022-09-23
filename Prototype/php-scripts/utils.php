@@ -314,4 +314,81 @@ Contributor(s):
 		}
 		return implode($pass); //turn the array into a string
 	}
+
+	//Jake.H Prints out and assigned selected box based on states
+	function printStates($state)
+	{
+		echo "<select name='state' id='state'>;";
+		//checks to see if the state is VIC then make it selected
+		if ($state == "VIC")
+		{
+			echo "<option value='VIC' selected>VIC</option>;";
+		}
+		else
+		{
+			echo "<option value='VIC'>VIC</option>;";
+		}
+
+		//checks to see if the state is NSW then make it selected
+		if ($state == "NSW")
+		{
+			echo "<option value='NSW' Selected>NSW</option>;";
+		}
+		else
+		{
+			echo "<option value='NSW'>NSW</option>;";
+		}
+
+		//checks to see if the state is NT then make it selected
+		if ($state == "NT")
+		{
+			echo "<option value='NT' Selected>NT</option>;";
+		}
+		else
+		{
+			echo "<option value='NT'>NT</option>;";
+		}
+
+		//checks to see if the state is QLD then make it selected
+		if ($state == "QLD")
+		{
+			echo "<option value='QLD' Selected>QLD</option>;";
+		}
+		else
+		{
+			echo "<option value='QLD'>QLD</option>;";
+		}
+
+		//checks to see if the state is SA then make it selected
+		if ($state == "SA")
+		{
+			echo "<option value='SA' Selected>SA</option>;";
+		}
+		else
+		{
+			echo "<option value='SA'>SA</option>;";
+		}
+
+		//checks to see if the state is WA then make it selected
+		if ($state == "WA")
+		{
+			echo "<option value='WA' Selected>WA</option>;";
+		}
+		else
+		{
+			echo "<option value='WA'>WA</option>;";
+		}
+
+		//checks to see if the state is TAS then make it selected
+		if ($state == "TAS")
+		{
+			echo "<option value='TAS' Selected>TAS</option>;";
+		}
+		else
+		{
+			echo "<option value='TAS'>TAS</option>;";
+		}
+						
+		echo "</select>";
+	}
 ?>
