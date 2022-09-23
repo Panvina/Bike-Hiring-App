@@ -11,20 +11,21 @@ This page is completely done by Clement */
 /*This is to make sure that if it does overflow, it can keep data inside the area */
 pre {
   max-width: 100%;
-  overflow:scroll;
-  font-family:'Times New Roman', Times, serif;
-	margin-top: 0px;
+  overflow: scroll;
+  font-family: 'Times New Roman', Times, serif;
+  margin-top: 0px;
 }
+
 /*This is to put a background of the calendar bookings*/
-.background
-{
-	margin-bottom: 2rem;
+.background {
+  margin-bottom: 2rem;
 }
+
 /*This is to keep it in the container and have a proper setup of where data can be put in*/
 .scheduleContainer {
   display: grid;
   /* border-radius: 2.5rem; */
-	background-color: #d3d3d3;
+  background-color: #d3d3d3;
   grid-gap: 0.2rem;
   /*	This is to change the collumns and its size of the table*/
   grid-template-columns: repeat(auto-fit, 1fr);
@@ -32,8 +33,8 @@ pre {
   grid-template-rows: 0 0 repeat(18, 1fr);
 
 
-/*	This is to give spacing on the right and bottom so time can show clearer*/
-	padding: 1rem 2rem 0rem 0.5rem;
+  /*	This is to give spacing on the right and bottom so time can show clearer*/
+  padding: 1rem 2rem 0rem 0.5rem;
   grid-template-areas:
     "time800 stage"
     "time830 stage"
@@ -55,6 +56,7 @@ pre {
     "time1630 stage"
     "time1700 stage";
 }
+
 /**
  * Time
 * basically setting up rows
@@ -63,66 +65,84 @@ pre {
   display: flex;
   align-items: center;
   padding: 0rem;
-padding-right: 0.5rem;
+  padding-right: 0.5rem;
 }
-.time
-{
+
+.time {
   height: 100%;
   font-size: 1.25rem;
   font-weight: bold;
   border-top: thin dotted #2E2E2E;
 }
+
 .time.start-900 {
   grid-area: time900;
 }
+
 .time.start-930 {
   grid-area: time930;
 }
+
 .time.start-1000 {
   grid-area: time1000;
 }
+
 .time.start-1030 {
   grid-area: time1030;
 }
+
 .time.start-1100 {
   grid-area: time1100;
 }
+
 .time.start-1130 {
   grid-area: time1130;
 }
+
 .time.start-1200 {
   grid-area: time1200;
 }
+
 .time.start-1230 {
   grid-area: time1230;
 }
+
 .time.start-1300 {
   grid-area: time1300;
 }
+
 .time.start-1330 {
   grid-area: time1330;
 }
+
 .time.start-1400 {
   grid-area: time1400;
 }
+
 .time.start-1430 {
   grid-area: time1430;
 }
+
 .time.start-1500 {
   grid-area: time1500;
 }
+
 .time.start-1530 {
   grid-area: time1530;
 }
+
 .time.start-1600 {
   grid-area: time1600;
 }
+
 .time.start-1630 {
   grid-area: time1630;
 }
+
 .time.start-1700 {
   grid-area: time1700;
 }
+
 .time[class*="30"]:not(.start-1300) {
   color: #464646;
 }
@@ -135,9 +155,9 @@ padding-right: 0.5rem;
 .event {
   display: flex;
   justify-content: center;
-/*	if using row, it position data to top of the grid
+  /*	if using row, it position data to top of the grid
 	if using collumns, it positions data middle of its grid*/
-/*    flex-direction: column;*/
+  /*    flex-direction: column;*/
   flex-direction: row;
   padding: 0.5rem 0.5rem;
   background-color: forestgreen;
@@ -145,7 +165,7 @@ padding-right: 0.5rem;
   border: 0.2em solid #000000;
   font-size: 1rem;
   line-height: 1.25;
-	text-align: center;
+  text-align: center;
 }
 
 .event span {
@@ -157,51 +177,67 @@ padding-right: 0.5rem;
 .event.start-900 {
   grid-row-start: time900;
 }
+
 .event.start-930 {
   grid-row-start: time930;
 }
+
 .event.start-1000 {
   grid-row-start: time1000;
 }
+
 .event.start-1030 {
   grid-row-start: time1030;
 }
+
 .event.start-1100 {
   grid-row-start: time1100;
 }
+
 .event.start-1130 {
   grid-row-start: time1130;
 }
+
 .event.start-1200 {
   grid-row-start: time1200;
 }
+
 .event.start-1230 {
   grid-row-start: time1230;
 }
+
 .event.start-1300 {
   grid-row-start: time1300;
 }
+
 .event.start-1330 {
   grid-row-start: time1330;
 }
+
 .event.start-1400 {
   grid-row-start: time1400;
 }
+
 .event.start-1430 {
   grid-row-start: time1430;
 }
+
 .event.start-1500 {
   grid-row-start: time1500;
 }
+
 .event.start-1530 {
   grid-row-start: time1530;
 }
+
 .event.start-1600 {
   grid-row-start: time1600;
 }
+
 .event.start-1630 {
   grid-row-start: time1630;
 }
+
 .event.start-1700 {
   grid-row-start: time1700;
 }
@@ -210,51 +246,67 @@ padding-right: 0.5rem;
 .event.end-900 {
   grid-row-end: time900;
 }
+
 .event.end-930 {
   grid-row-end: time930;
 }
+
 .event.end-1000 {
   grid-row-end: time1000;
 }
+
 .event.end-1030 {
   grid-row-end: time1030;
 }
+
 .event.end-1100 {
   grid-row-end: time1100;
 }
+
 .event.end-1130 {
   grid-row-end: time1130;
 }
+
 .event.end-1200 {
   grid-row-end: time1200;
 }
+
 .event.end-1230 {
   grid-row-end: time1230;
 }
+
 .event.end-1300 {
   grid-row-end: time1300;
 }
+
 .event.end-1330 {
   grid-row-end: time1330;
 }
+
 .event.end-1400 {
   grid-row-end: time1400;
 }
+
 .event.end-1430 {
   grid-row-end: time1430;
 }
+
 .event.end-1500 {
   grid-row-end: time1500;
 }
+
 .event.end-1530 {
   grid-row-end: time1530;
 }
+
 .event.end-1600 {
   grid-row-end: time1600;
 }
+
 .event.end-1630 {
   grid-row-end: time1630;
 }
+
 .event.end-1700 {
   grid-row-end: time1700;
 }
@@ -269,19 +321,23 @@ padding-right: 0.5rem;
   background-color: #00b7b1;
   color: black;
 }
+
 /*This is to set the color to each bookings and each color represent different statuses of the booking*/
 .event.stage-booked {
   background-color: forestgreen;
   color: black;
 }
+
 .event.stage-confirm {
   background-color: darkblue;
   color: white;
 }
+
 .event.stage-checkedOut {
   background-color: red;
   color: white;
 }
+
 .event.stage-provisional {
   background-color: black;
   color: white;

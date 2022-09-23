@@ -5,6 +5,7 @@ Project Description: A website for hiring bikes. Front-end accompanied
 File Description: Show both the functions and locations information
 Contributor(s):
 	- Clement Cheung @ 103076376@student.swin.edu.au
+	- Dabin Lee @ icelasersparr@gmail.com
 	- Jake Hipworth @ 102090870@student.swin.edu.au (Navigation section and Styles)
 -->
 <?php
@@ -20,7 +21,7 @@ include_once("php-scripts/dashboard-menu.php");
 	<h1 class="header"> <a href="index.php"><img src="img/photos/Inverloch_Logo3.png" alt="Inverloch Logo" id="Logo" /></a> Locations </h1>
 	<script src="scripts/FormOpenOrClose.js"></script>
 	<link rel="stylesheet" href="style/Jake_Location_style.css">
-	<!-- <link rel="stylesheet" href="style/LocationPop.css"> -->
+	<!-- <link rel="stylesheet" href="style/LocationPop.css"> To be removed-->
 	<link rel="stylesheet" href="style/popup.css">
 	<link rel="stylesheet" href="style/dashboard-style.css">
 	<?php
@@ -47,9 +48,9 @@ include_once("php-scripts/dashboard-menu.php");
 			<?php printMenu("location"); ?>
 		</div>
 		<div class="main">
-			<!-- Trigger/Open The add locations PopUp -->
 			<form method='POST' action='AddLocations.php' event.preventDefault()>
 				<h1> Pick-Up and Drop-Off Locations </h1>
+				<!-- Trigger/Open The Adding New locations PopUp -->
 				<button id='LID' class='addLocationModal' name='addLocationModal' type='submit' value='LID' style="float: right; left:0%; ">+ Add Location</button>
 			</form>
 
@@ -82,7 +83,7 @@ include_once("php-scripts/dashboard-menu.php");
 
 			<!-- List of locations -->
 			<table class="TableContent" id="data-table">
-				<!-- Put your table here -->
+				<!-- Location Tables Start here -->
 				<tr>
 					<th> Name </th>
 					<th> Address </th>
@@ -98,8 +99,8 @@ include_once("php-scripts/dashboard-menu.php");
 				{
 					$record = mysqli_fetch_array($result);
 					if ($record) {
-						while ($record) //this is basically retrieveing data and then showing it on screen
-						{
+						//this is basically retrieveing data and then showing it on screen
+						while ($record) {
 							//grabbing and putting all the data into variables or putting them together
 							$fulladdress = "";
 							$LID = $record['location_id'];
@@ -148,7 +149,8 @@ include_once("php-scripts/dashboard-menu.php");
 							</td>";
 							echo "</tr>";
 
-							$record = mysqli_fetch_assoc($result); //this is to move onto the next data
+							//this is to move onto the next data
+							$record = mysqli_fetch_assoc($result);
 						}
 					}
 				} else //showing if there is no data or an error from database
@@ -169,7 +171,8 @@ include_once("php-scripts/dashboard-menu.php");
 
 		<!-- Add Locations modal popup -->
 		<div id="addModal" class="modal" <?php
-											//checks to see if there was any errors and if there was, it will continue to display the modal
+											//this is to check if the button is selected, if thats the case, the modal popup will happen
+											//Idea and code from Aadesh and Jake
 											if (isset($_GET["add"])) {
 												if ($_GET["add"] == "true") {
 													echo "style = 'display:inline-block'";
@@ -236,9 +239,10 @@ include_once("php-scripts/dashboard-menu.php");
 			</div>
 		</div>
 
-		<!-- The PopUp for update locations-->
+		<!-- Update Locations modal popup -->
 		<div id='updateModal' class='modal' <?php
-											//checks to see if there was any errors and if there was, it will continue to display the modal
+											//this is to check if the button is selected, if thats the case, the modal popup will happen
+											//Idea and code from Aadesh and Jake
 											if (isset($_GET["update"])) {
 												if ($_GET["update"] == "true") {
 													echo "style = 'display:inline-block'";
@@ -327,10 +331,10 @@ include_once("php-scripts/dashboard-menu.php");
 
 		<!--This is to confirm deleting location data from the database-->
 
-		<!-- The PopUp for Delete item-->
+		<!-- Confirming Delete Locations modal popup -->
 		<div id='deleteModal' class='modal' <?php
-											//Used to redirect back to the form once the first button has been pressed
-											//Idea and code from Jake and Aadesh
+											//this is to check if the button is selected, if thats the case, the modal popup will happen
+											//Idea and code from Aadesh and Jake
 											if (isset($_GET["delete"])) {
 												if ($_GET["delete"] == "true") {
 													echo "style = 'display:inline-block'";
@@ -365,6 +369,7 @@ include_once("php-scripts/dashboard-menu.php");
 					}
 					?>
 
+					<!--This two button is mainly to show confirmation if its ok to delete the location row or not  -->
 					<!--this code is borrowed and modified from Aadesh-->
 					<button style='width: 40%; margin-left: 28%; position: relative;' type='submit' name='deleteLocation' id='deleteLocation'>Yes</button>
 					<button style='width: 40%; margin-left: 28%; position: relative; background-color: red;' type='submit' name='cancelDeleteLocation' id='cancelDeleteLocation'>No</button>
@@ -374,6 +379,8 @@ include_once("php-scripts/dashboard-menu.php");
 	</div>
 
 	<?php
+
+	//this is mainly to close off the database
 	mysqli_close($conn);
 	?>
 </body>

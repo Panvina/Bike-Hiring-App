@@ -18,6 +18,8 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 <html>
 <link rel="stylesheet" href="style/dashboard-style.css">
 <link rel="stylesheet" href="style/popup.css">
+<!-- Styling unique to Inventory pages-->
+<link rel="stylesheet" href="style/inventory-style.css">
 
 <head>
     <!-- header -->
@@ -60,7 +62,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
     		<?php printMenu("accessorytype"); ?>
     	</div>
     	<div class="main">
-            <h1 id="content-header"> All Items </h1>
+            <h1 id="content-header"> All Accessory Types </h1>
 
             <!-- Add Item pop up -->
             <button type="button" id="AddItem">+ Add Accessory Type</button>
@@ -143,12 +145,13 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                         ?>
                     </span>
                 </div>
+                <h2>Add Accessory Type</h2>
                 <div>
                     <!-- <label>Accessory Type ID</label> -->
                     <input placeholder="ID of accessory type..." type="hidden" name="accessoryId">
                 </div>
                 <div>
-                    <label>Accessory Type Name</label>
+                    <label>Name</label>
                     <input placeholder="Name of accessory type..." type="text" name="name">
                     <span class="error">
                         <?php
@@ -167,6 +170,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                         ?>
                     </span>
                 </div>
+                <br>
                 <div>
                     <label>Description</label><br>
                     <textarea style='width: 220px; height: 50px' placeholder="Description about the type of accessory..." name="description"></textarea>
@@ -185,7 +189,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                 </div><br>
 
             <div>
-                    <button type="submit" name="AddItem">Add Accessory Type</button>
+                    <button type="submit" name="AddItem">Add</button>
             </div>
             </form>
         </div>
@@ -218,11 +222,12 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                         ?>
                     </span>
                 </div>
+                <h2>Update Accessory Type</h2>
                 <div>
                     <label>Accessory Type ID</label>
                     <input placeholder="ID of the accessory..." type="text" name="accessoryId" readonly value="<?php echo $_SESSION['accessory_type_id'] ?>">
                 </div>
-
+                <br>            
                 <div>
                     <label>Name</label>
                     <input placeholder="Name of accessory type..." type="text" name="name" value="<?php echo $_SESSION['name'] ?>">
@@ -243,6 +248,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                         ?>
                     </span>
                 </div>
+                <br>
                 <div>
                     <label>Description</label><br>
                     <textarea style='width: 220px; height: 50px' placeholder="Description about the accessory type..." name="description"><?php echo $_SESSION['description'] ?></textarea>
@@ -261,7 +267,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                 </div><br>
 
                 <div>
-                    <button type="submit" name="submitUpdateItem">Update Accessory</button>
+                    <button type="submit" name="submitUpdateItem">Update</button>
                 </div>
             </form>
         </div>

@@ -75,6 +75,7 @@ if (isset($_POST["updateLocation"]) || isset($_POST["deleteLocation"])) {
 		$db_msg .= "<p>Connection Failed</p>";
 		exit();
 	} else {
+		//This function is to delete location data/row from the database
 		//the delete button is clicked
 		if (isset($_POST["deleteLocation"])) {
 			//this query is to delete the location data that the admin want to remove
@@ -90,9 +91,9 @@ if (isset($_POST["updateLocation"]) || isset($_POST["deleteLocation"])) {
 			}
 		}
 
-		//this query is to update the location data that the admin want to update
-		if (isset($_POST["updateLocation"])) //updating the checkboxes send
-		{
+		//This function is to update the location data that the admin want to update
+		//The button to update location is click send
+		if (isset($_POST["updateLocation"])) {
 			//this is to make sure that any extra special characters when added to the database is possible
 			$name = mysqli_real_escape_string($conn, $name);
 			$address = mysqli_real_escape_string($conn, $address);
@@ -112,7 +113,7 @@ if (isset($_POST["updateLocation"]) || isset($_POST["deleteLocation"])) {
 	}
 
 
-	//this is to print if there is any errors
+	//This is to send back to Location page if there is any database error
 	if ($db_msg != "") {
 		echo "Database connection issue: $db_msg";
 		$db_msg = "<p>Database connection issue: $db_msg</p>";
@@ -123,6 +124,7 @@ if (isset($_POST["updateLocation"]) || isset($_POST["deleteLocation"])) {
 
 
 //this is so that the Update and delete modal can appear
+//idea and modification from this last section is from Aadesh and Jake
 if (isset($_POST["updateLocationModal"])) {
 	//this is to also set the location chosen
 	$LID = $_POST["updateLocationModal"];

@@ -1,7 +1,7 @@
 <?php
     session_start();
-    include 'php-scripts/backend-connection.php';
-    include("php-scripts/inventory-util.php");
+    include 'backend-connection.php';
+    include("inventory-util.php");
     $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 
     $bikeId = $_POST["bikeId"];
@@ -22,42 +22,42 @@
         //Check if all the fields are empty
        if(empty($_POST["name"]) && empty($_POST["bikeTypeId"]) && empty($_POST["helmetId"]) && empty($_POST["price"]) && empty($_POST["description"]))
         {
-            header("Location: Inventory.php?insert=empty");
+            header("Location:../Inventory.php?insert=empty");
         }
         //Check if the name field is empty
         else if(empty($_POST["name"]))
         {
-            header("Location: Inventory.php?insert=emptyName");
+            header("Location:../Inventory.php?insert=emptyName");
         }
         //Check if the bike type id is empty
         else if (empty($_POST["bikeTypeId"]))
         {
-            header("Location: Inventory.php?insert=emptyType");
+            header("Location:../Inventory.php?insert=emptyType");
         }
         //Check if the helmet id is empty
         else if (empty($_POST["helmetId"]))
         {
-            header("Location: Inventory.php?insert=emptyHelmet");
+            header("Location:../Inventory.php?insert=emptyHelmet");
         }
         //Check if the price field is empty
         else if (empty($_POST["price"]))
         {
-            header("Location: Inventory.php?insert=emptyPrice");
+            header("Location:../Inventory.php?insert=emptyPrice");
         }
         //Check if only the description field is empty
         else if (empty($_POST["description"])) 
         {
-           header("Location: Inventory.php?insert=emptyDescription");
+           header("Location:../Inventory.php?insert=emptyDescription");
         }
         //Check if the name field has only alphabets
         else if (!validName($_POST["name"])) 
         {
-           header("Location: Inventory.php?insert=invalidName");
+           header("Location:../Inventory.php?insert=invalidName");
         }
         //Check if the price field has only integers and decimals
         else if (!validPrice($_POST["price"]))
         {
-            header("Location: Inventory.php?insert=invalidPrice");
+            header("Location:../Inventory.php?insert=invalidPrice");
         }
         else 
         {
@@ -83,7 +83,7 @@
         $query = "INSERT INTO `bike_inventory_table` ($cols) VALUES ($data)";
         $results = mysqli_query($conn,$query);
         
-        header("Location: Inventory.php?insert=true");
+        header("Location:../Inventory.php?insert=true");
     
         mysqli_close($conn);
     }
