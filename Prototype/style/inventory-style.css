@@ -1,0 +1,125 @@
+/*
+Project Name: Inverloch Bike Hire
+File Description: Stylesheet specific to inventory pages including inventory, accessory, accessory type & bike types.
+Created by: Aadesh Jagannathan @102072344@student.swin.edu.au
+*/
+
+/* Styling for the header content in all inventory pages*/
+/* #content-header{
+   width: 100%;
+   height: 60px;
+   display: grid;
+   grid-template-columns: 2;
+   grid-template-columns:50% 50%;
+}
+
+#header-button{
+    padding-top: 12; 
+} */
+
+/*Styling for the dropdown in add and update modals*/
+.modal-content select{
+    height:22px;
+    font-size: 14px;
+    width:40%;
+    text-align: left;
+    
+}
+
+.modal-content input{
+    margin-top: 10px;
+  
+}
+
+/*Styling for the input text boxes in add and update modals*/
+.modal-content input[type=text]{
+    
+    /* padding-bottom: 10px;
+    font-size: 14px; */
+}
+
+/*Styling for the text areas in add and update modals*/
+.modal-content textarea{
+    font-size: 14.5px;
+}
+
+#modal-description-cont{
+    justify-content: center;
+}
+
+/* Aadesh's custom switch styling */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 54px;
+    height: 28px;
+  }
+  
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgb(252, 93, 93);
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  input:checked + .slider {
+    background-color: #80ee6a;
+  }
+  
+  input:focus + .slider {
+    box-shadow: 0 0 1px #80ee6a;
+  }
+  
+  input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+  }
+  
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 34px;
+  }
+  
+  .slider.round:before {
+    border-radius: 50%;
+  }
+
+  .error{
+    color: red;
+  }
+  
+  .echo{
+    color: red;
+    font-size: 25px;
+    margin-left: 45%;
+    position: absolute;
+    z-index: 1; left: 0;
+    top: 0;
+    padding-top: 5%;
+  }
+  
+

@@ -6,6 +6,7 @@
     $conn = new mysqli("localhost", "root", "", "bike_hiring_system") or die(mysqli_error($mysqli));
 
     $bikeId = $_POST["bikeId"];
+    $pictureId = $_POST["pictureId"];
     //$name = $_POST["name"];
     //$description = $_POST["description"];
     if(isset($_POST['AddItem'])){
@@ -43,8 +44,8 @@
     }
     else
     {
-        $cols = "`bike_type_id`, `name`, `description`";
-        $data = "'$bikeId', '$name', '$description'";
+        $cols = "`bike_type_id`, `name`, `picture_id`, `description`";
+        $data = "'$bikeId', '$name', '$pictureId', '$description'";
         
         $query = "INSERT INTO `bike_type_table` ($cols) VALUES ($data)";
         $results = mysqli_query($conn,$query);
@@ -57,7 +58,7 @@
         }
         else
         {
-            header("Location: ../AccessoryTypes.php?insert=false");
+            header("Location: ../BikeTypes.php?insert=false");
             exit();
         }
    

@@ -4,13 +4,14 @@
     session_start();
     //include database functions
     include_once("php-scripts/backend-connection.php");
+    include_once("php-scripts/customer-db.php");
     include_once "php-scripts/utils.php";
 
     // dashboard side menu import (Dabin)
     include_once("php-scripts/dashboard-menu.php");
 
     //create the connection with the database
-    $conn = new DBConnection("customer_table");
+    $conn = new CustomerDBConnection();
 ?>
 <!DOCTYPE html>
 <html>
@@ -395,15 +396,15 @@
                     <!-- State input validation, checks based on error and displays accurate error message -->
                     <label> State </label>
                     <!-- Recieves the current value of field that was used instead of wiping it clear -->
-                    <?php
+                    <?php        
                         if (isset($_SESSION["customerInsertState"]))
                         {
                             $state = $_SESSION["customerInsertState"];
-                            echo "<input type='text' name='state' value='$state'>";
+                            printStates($state);
                         }
                         else
                         {
-                            echo '<input type="text" name="state">';
+                            printStates("");
                         }
                     ?>
                     <span class="error">
@@ -609,7 +610,17 @@
                 <div>
                     <!-- State input validation, checks based on error and displays accurate error message -->
                     <label> State: </label>
-                    <input type="text" name="state" value = "<?php echo $_SESSION['state'];?>">
+                    <?php 
+                        if (isset($_SESSION["state"]))
+                        {
+                            $state = $_SESSION["state"];
+                            printStates($state);
+                        }
+                        else
+                        {
+                            printStates("");
+                        }
+                    ?>
                     <span class="error">
                         <?php
                             if (isset($_GET["update"]))

@@ -19,6 +19,8 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 <html>
 <link rel="stylesheet" href="style/dashboard-style.css">
 <link rel="stylesheet" href="style/popup.css">
+<!-- Styling unique to Inventory pages-->
+<link rel="stylesheet" href="style/inventory-style.css">
 
 <head>
     <!-- header -->
@@ -61,7 +63,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
     		<?php printMenu("biketype"); ?>
     	</div>
     	<div class="main">
-            <h1 id="content-header"> All Items </h1>
+            <h1 id="content-header"> All Bike Types </h1>
 
             <!-- Add Item pop up -->
             <button type="button" id="AddItem">+ Add Bike Type</button>
@@ -76,6 +78,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                         <tr>
                             <th> Bike Type ID </th>
                             <th> Bike Type Name </th>
+                            <th> Picture ID </th>
                             <th> Description </th>
                             <th> Edit </th>
                         </tr>";
@@ -90,6 +93,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     <tr>
                         <td><?php echo $row["bike_type_id"]; ?></td>
                         <td><?php echo $row["name"]; ?></td>
+                        <td><?php echo $row["picture_id"]; ?></td>
                         <td><?php echo $row["description"]; ?></td>
                         <td class="editcolumn">
                             <?php
@@ -146,12 +150,13 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                         ?>
                     </span>
                 </div>
+                <h2>Add Bike Type</h2>
                 <div>
                     <!-- <label>Bike Type ID</label> -->
                     <input placeholder="ID of Bike Type..." type="hidden" name="bikeId">
-                </div>
+                </div>              
                 <div>
-                    <label>Bike Type Name</label>
+                    <label>Name</label>
                     <input placeholder="Name of Bike Type..." type="text" name="name">
                     <span class="error">
                         <?php
@@ -172,6 +177,19 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                         ?>
                     </span>
                 </div>
+                <br>
+                <div>
+                    <label>Picture ID: </label>
+                    <select placeholder="Picture's ID..." name="pictureId" type="submit">
+                        <option>Picture ID</option>
+                        <option value="1">1 - E-bike(StepThrough)</option>
+                        <option value="2">2 - E-bike(StepOver)</option>
+                        <option value="3">3 - Standard(StepThrough)</option>
+                        <option value="4">4 - Standard(StepOver)</option>
+                        <option value="5">5 - Mountain-bike(HardTail)</option>
+                    </select>       
+                </div>
+                <br>
                 <div>
                     <label>Description</label><br>
                     <textarea style='width: 220px; height: 50px' placeholder="Description about the type of bike..." name="description"></textarea>
@@ -191,7 +209,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                 </div><br>
 
             <div>
-                    <button type="submit" name="AddItem">Add Bike Type</button>
+                    <button type="submit" name="AddItem">Add</button>
             </div>
             </form>
         </div>
@@ -225,11 +243,12 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                         ?>
                     </span>
                 </div>
+                <h2>Update Bike Type</h2>
                 <div>
                     <label>Bike Type ID</label>
                     <input placeholder="ID of the Accessory..." type="text" name="bikeId" readonly value="<?php echo $_SESSION['bike_type_id'] ?>">
                 </div>
-
+                <br>            
                 <div>
                     <label>Name</label>
                     <input placeholder="Name of Bike Type..." type="text" name="name" value="<?php echo $_SESSION['name'] ?>">
@@ -252,6 +271,18 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                         ?>
                     </span>
                 </div>
+                <br>
+                <div>
+                    <label>Picture ID</label>
+                    <select placeholder="Picture's ID..." name="pictureId" type="submit">
+                        <option value="1" <?php if($_SESSION['pictureId'] == 1)echo 'selected'; ?>>1 - E-bike(StepThrough)</option>
+                        <option value="2" <?php if($_SESSION['pictureId'] == 2)echo 'selected'; ?>>2 - E-bike(StepOver)</option>
+                        <option value="3" <?php if($_SESSION['pictureId'] == 3)echo 'selected'; ?>>3 - Standard(StepThrough)</option>
+                        <option value="4" <?php if($_SESSION['pictureId'] == 4)echo 'selected'; ?>>4 - Standard(StepOver)</option>
+                        <option value="5" <?php if($_SESSION['pictureId'] == 5)echo 'selected'; ?>>5 - Mountain-bike(HardTail)</option>
+                    </select>       
+                </div>
+                <br>
                 <div>
                     <label>Description</label><br>
 
@@ -272,7 +303,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                 </div><br>
 
                 <div>
-                    <button type="submit" name="submitUpdateItem">Update Bike</button>
+                    <button type="submit" name="submitUpdateItem">Update</button>
                 </div>
             </form>
         </div>

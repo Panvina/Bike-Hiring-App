@@ -1,7 +1,7 @@
 <?php
     session_start();
-    include_once("php-scripts/backend-connection.php");
-    include_once "php-scripts/utils.php";
+    include_once("backend-connection.php");
+    include_once "utils.php";
     $conn = new mysqli("localhost", "root", "", "bike_hiring_system") or die(mysqli_error($mysqli));
 
     
@@ -18,7 +18,7 @@
 
         $_SESSION["bike_id"] = $fetchData["bike_id"];
         $primaryKey = $_SESSION["bike_id"];
-        header("Location: Inventory.php?delete=$primaryKey");
+        header("Location:../Inventory.php?delete=$primaryKey");
         exit();
     }
 
@@ -30,12 +30,12 @@
         $results = mysqli_query($conn, $query);
 
 
-        header("Location: Inventory.php?delete=true");
+        header("Location:../Inventory.php?delete=true");
     }
 
     if (isset($_POST["cancelDeleteItem"]))
     {
-     header("Location: Inventory.php?");
+     header("Location:../Inventory.php?");
      exit();
     }
 ?> 

@@ -335,4 +335,5 @@
 
 		$conn->printRows("bike_type_table");
 	}
+
 ?>
