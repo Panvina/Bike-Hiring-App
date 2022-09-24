@@ -19,7 +19,7 @@
     if(isset($_POST['AddItem'])){
         /* Form validation for adding records*/
         //Check if all fields are empty
-        if(empty($_POST["name"]) && empty($_POST["description"]))
+        if(empty($_POST["name"]) && empty($_POST["description"]) && empty($_POST["pictureId"]))
         {
             header("Location: ../BikeTypes.php?insert=empty");
         }
@@ -27,6 +27,11 @@
         else if (empty($_POST["name"])) 
         {
            header("Location: ../BikeTypes.php?insert=emptyName");
+        }
+        //Check if only the picture id field is empty
+        else if (empty($_POST["pictureId"])) 
+        {
+           header("Location: ../BikeTypes.php?insert=emptyPictureId");
         }
         //Check if only the description field is empty
         else if (empty($_POST["description"])) 
@@ -57,6 +62,11 @@
         $query = "INSERT INTO `bike_type_table` ($cols) VALUES ($data)";
         $results = mysqli_query($conn,$query);
         
+        //unset all the temporary data stored during form validation
+        unset($_SESSION["tempName"]);
+        unset($_SESSION["tempPictureId"]);
+        unset($_SESSION["tempDescription"]);
+
         //Check to see if query has been successful
         if($results = true)
         {

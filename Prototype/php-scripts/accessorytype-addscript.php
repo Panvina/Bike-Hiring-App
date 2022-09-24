@@ -55,6 +55,10 @@
         
         $query = "INSERT INTO `accessory_type_table` ($cols) VALUES ($data)";
         $results = mysqli_query($conn,$query);
+
+        //unset all the temporary data stored during form validation
+        unset($_SESSION["tempName"]);
+        unset($_SESSION["tempDescription"]);
         
         if($results = true)
         {

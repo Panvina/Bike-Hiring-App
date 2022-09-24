@@ -71,8 +71,23 @@
         
         $query = "INSERT INTO `accessory_inventory_table` ($cols) VALUES ($data)";
         $results = mysqli_query($conn,$query);
+
+        //unset all the temporary data stored during form validation
+        unset($_SESSION["tempName"]);
+        unset($_SESSION["tempAccessoryTypeId"]);
+        unset($_SESSION["tempPrice"]);
+        unset($_SESSION["tempSafetyInspect"]);
         
-        header("Location: ../Accessory.php?insert=true");
+        if($results = true)
+        {
+            header("Location: ../Accessory.php?insert=true");
+            exit();
+        }
+        else
+        {
+            header("Location: ../Accessory.php?insert=false");
+            exit();
+        }
     
         mysqli_close($conn);
     }

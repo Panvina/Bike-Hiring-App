@@ -195,9 +195,18 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     <label>Picture ID: </label>
                     <?php
                      if (isset($_SESSION["tempPictureId"]))
-                     {                       
+                     {                     
                      ?>
-                        <select placeholder="Picture's ID..." name="pictureId" type="submit">
+                     <select placeholder="Picture's ID..." name="pictureId" type="submit">
+                     <?php
+                                if(!isset($_SESSION['tempPictureId'][0]))
+                                {
+                                ?>
+                                    <option value="">Select Picture ID</option>  
+                                <?php
+                                }
+                                ?>
+                        
                         <option value="1" <?php if($_SESSION['tempPictureId'] == 1)echo 'selected'; ?>>1 - E-bike(StepThrough)</option>
                         <option value="2" <?php if($_SESSION['tempPictureId'] == 2)echo 'selected'; ?>>2 - E-bike(StepOver)</option>
                         <option value="3" <?php if($_SESSION['tempPictureId'] == 3)echo 'selected'; ?>>3 - Standard(StepThrough)</option>
@@ -210,7 +219,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                      {
                      ?>
                         <select placeholder="Picture's ID..." name="pictureId" type="submit">
-                        <option>Picture ID</option>
+                        <option value="">Picture ID</option>
                         <option value="1">1 - E-bike(StepThrough)</option>
                         <option value="2">2 - E-bike(StepOver)</option>
                         <option value="3">3 - Standard(StepThrough)</option>
@@ -219,7 +228,20 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                         </select>
                      <?php
                      }
-                     ?>                        
+                     ?> 
+                     <span class="error">
+                        <?php
+                            if (isset($_GET["insert"]))
+                            {
+                                //Checks and prints an error if the description field empty
+                                $description = $_GET["insert"];
+                                if ($description == "emptyPictureId")
+                                {
+                                    echo '<p class = "error">* Please select a picture ID!</p>';
+                                }
+                            }
+                        ?>
+                    </span>                       
                 </div>
                 <br>
                 <div>
@@ -243,8 +265,8 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                             if (isset($_GET["insert"]))
                             {
                                 //Checks and prints an error if the description field empty
-                                $description = $_GET["insert"];
-                                if ($description == "emptyDescription")
+                                $pictureId = $_GET["insert"];
+                                if ($pictureId == "emptyDescription")
                                 {
                                     echo '<p class = "error">* Please fill the description field!</p>';
                                 }
@@ -325,7 +347,20 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                         <option value="3" <?php if($_SESSION['pictureId'] == 3)echo 'selected'; ?>>3 - Standard(StepThrough)</option>
                         <option value="4" <?php if($_SESSION['pictureId'] == 4)echo 'selected'; ?>>4 - Standard(StepOver)</option>
                         <option value="5" <?php if($_SESSION['pictureId'] == 5)echo 'selected'; ?>>5 - Mountain-bike(HardTail)</option>
-                    </select>       
+                    </select> 
+                    <span class="error">
+                        <?php
+                            if (isset($_GET["insert"]))
+                            {
+                                //Checks and prints an error if the picture id is not selected
+                                $pictureId = $_GET["insert"];
+                                if ($pictureId == "emptyPictureId")
+                                {
+                                    echo '<p class = "error">* Please select a picture ID!</p>';
+                                }
+                            }
+                        ?>
+                    </span>      
                 </div>
                 <br>
                 <div>

@@ -96,7 +96,17 @@
         unset($_SESSION["tempSafetyInspect"]);
         unset($_SESSION["tempDescription"]);
 
-        header("Location:../Inventory.php?insert=true");
+        if($results = true)
+        {
+            header("Location: ../Inventory.php?insert=true");
+            exit();
+        }
+        else
+        {
+            header("Location: ../Inventory.php?insert=false");
+            exit();
+        }
+    
     
         mysqli_close($conn);
     }
