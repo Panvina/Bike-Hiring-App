@@ -57,9 +57,7 @@
         wrapAround:true,
         freeScroll:true
         });</script>
-    </div>
-    <br>
-    <br>
+    </div><br><br><br>
     <?php include 'footer.php'?>
 </body>
 </html>
