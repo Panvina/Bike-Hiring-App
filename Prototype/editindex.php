@@ -85,7 +85,7 @@ body{
                     while ($row = $locationQuery->fetch_assoc()) {
                         $edit_name = $row["edit_name"];
                         $edit_content = $row["edit_content"];
-                        echo '<div class="HomeImg"><img id="home_image_id" style= "height: 100%; width: 100%;" src="' . $edit_content . '" alt="About Us"/></div>';
+                        echo '<div class="HomeImg"><img class="filled-img" id="home_image_id" style= "height: 100%; width: 100%;" src="' . $edit_content . '" alt="About Us"/></div>';
                     }
                     ?>
             <!--<div class='HomeImg'><img style= "height: 100%; width: 100%;" src="./img/photos/5.jpg" alt="About Us"/></div>-->
@@ -111,11 +111,11 @@ body{
                 <a href = "contactus.php"><button class="button">Contact Us</button></a>
                 </div>
             </div>  
-            <div class='HomeImg'><img style= "height: 100%; width: 100%;" src="./img/photos/2.jpg" alt="About Us"/></div>
+            <div class='HomeImg'><img class="filled-img" style= "height: 100%; width: 100%;" src="./img/photos/needhelp.jpg" alt="About Us"/></div>
         </div> 
 
         <div class='HomeMainCont'>  
-            <div class='HomeImg'><img style= "height: 100%; width: 100%;" src="./img/photos/6.jpg" alt="About Us"/></div>
+            <div class='HomeImg'><img class="filled-img" style= "height: 100%; width: 100%;" src="./img/photos/new-to-inverloch.jpg" alt="About Us"/></div>
             <div class='HomeTxt'><h1 id="HomeHeader">NEW TO INVERLOCH?</h1>
                 <div class='HomeDesc'><p>With so much to explore in the Bass Coast and South Gippsland, you are truly spoilt for choice. Take a trek up to Eagle’s Nest for a magnificent coastal outlook, or how about a re-energising walk along the beach that stretches as far as the eye can see.</p>
                 <a href = "About.php"><button class="button">Learn More</button></a>

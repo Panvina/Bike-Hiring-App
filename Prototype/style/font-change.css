@@ -1,18 +1,23 @@
+/*Completed by Vina Touch: 101928802*/
+
 @font-face { font-family: Lato;  src: url('../fonts/Lato.ttf'); } 
 @font-face { font-family: OpenSansLight; src: url('../fonts/OpenSansLight.ttf'); } 
 @font-face { font-family: OpenSansBold; src: url('../fonts/OpenSansBold.ttf'); } 
 @font-face { font-family: Coolvetica; src: url('../fonts/Coolvetica.otf'); }
 @font-face { font-family: Comfortaa; src: url('../fonts/Comfortaa.ttf'); }
 
-h1, #panel1 h3{
+h1, h2, h3{
     font-family: Lato, 'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+    color: #172026;
+}
+h1{
     text-transform: uppercase;
 }
 
 p, nav.footerNav li, span,label {
     font-family: Comfortaa, 'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
 }
-button, .acc-button {
+button, .acc-button, #sub-button {
     font-family: OpenSansBold, serif;
     text-transform: uppercase;
     letter-spacing: 1px;

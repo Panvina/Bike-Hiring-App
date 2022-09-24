@@ -1,3 +1,7 @@
+#form-div{
+  min-height: 100%;
+  overflow-y: hidden;
+}
 /*Styling the no-details-account page*/
 .addressBox{
   width: 20%;
@@ -36,9 +40,10 @@ input {
   margin-left: 4em;
   background-color: #172026;
   color: #fff;
-  font-size: 20px;
+  font-size: 18px;
   padding: 5px 10px 5px 10px;
   border: none;
+  border-radius: 5px;
 }
 
 #sub-button:hover{

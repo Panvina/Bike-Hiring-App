@@ -69,7 +69,7 @@
     </div>
         <div class="form-div"><?php 
             if ($error == "none"){
-                echo "<h3 class='no-details-form'>Before you proceed, we require more of your details. These will be used for your future bookings.</h3>";
+                echo "<h3 class='no-details-form'>Before you proceed, we require more of your details. These will be used for your future bookings.</h3><br><br>";
             }else{
                 echo "<p class='no-details-form' style='color:red;font-size: 12px;'>$error</p>";
             }
@@ -87,8 +87,8 @@
             <input type="text" name ="state"/><br><br>
             <label for="licence_number">Licence Number: </label>
             <input type="text" name ="licence_number"/><br><br>
-            <input id="sub-button" type="submit" value="Submit"/>
-        </form></div>
+            <input id="sub-button" type="submit" value="Submit"/><br><br>
+        </form></div></div>
         <footer><?php include 'footer.php'?></footer>
     </body>
 </html>

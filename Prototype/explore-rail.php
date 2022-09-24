@@ -39,14 +39,14 @@
                     <!-- <div class="location-image-container" style="background-image: url('img/photos/1.jpg'); background-size: contain; background-repeat: no-repeat; width: 100%; height: 0; padding-top: 66.64%; margin-bottom: 0px;"
                         <a/>
                     </div> -->
-                    <img src="img/photos/6.jpg" class="no-separation" alt="nothing" width="579" height="390">
+                    <img src="img/photos/BassCoastRailTrail.jpg" class="no-separation" alt="nothing" width="579" height="390">
                     <div class="location-description">
                         <h3 class="location-container-header">Name: Bass Coast Rail Trail</h3>
                         <p class="location-container-content">Location: Anderson to Wonthaggi</p>
                     </div>
                 </div>
                 <div class="right-location-container">
-                    <img src="img/photos/2.jpg" class="no-separation" alt="nothing" width="579" height="390">
+                    <img src="img/photos/GreatSouthernRailTrail.jpg" class="no-separation" alt="nothing" width="579" height="390">
                     <div class="location-description">
                         <h3 class="location-container-header">Name: Great Southern Rail Trail</h3>
                         <p class="location-container-content">Location: Leongatha to Port Welshpool</p>
@@ -64,19 +64,17 @@
                     <!-- <div class="location-image-container" style="background-image: url('img/photos/1.jpg'); background-size: contain; background-repeat: no-repeat; width: 100%; height: 0; padding-top: 66.64%; margin-bottom: 0px;"
                         <a/>
                     </div> -->
-                    <img src="img/photos/3.jpg" class="no-separation" alt="nothing" width="579" height="390">
+                    <img src="img/photos/sanremo.jpg" class="no-separation" alt="nothing" width="579" height="390">
                     <div class="location-description">
                         <h3 class="location-container-header">Name: San Remo to Cowes Cycling Track</h3>
                         <p class="location-container-content">Location: Phillip Island</p>
-                        <button class="location-details-button">Details</button>
                     </div>
                 </div>
                 <div class="right-location-container">
-                    <img src="img/photos/4.jpg" class="no-separation" alt="nothing" width="579" height="390">
+                    <img src="img/photos/hinterland.jpg" class="no-separation" alt="nothing" width="579" height="390">
                     <div class="location-description">
                         <h3 class="location-container-header">Name: Bass Coast Hinterland Road Cycling</h3>
                         <p class="location-container-content">Location: Inverloch</p>
-                        <button class="location-details-button">Details</button>
                     </div>
                 </div>
             </div>
@@ -86,18 +84,14 @@
             </div>
 
             <div class='SubExploreMainCont'>  
-            <div class='SubExploreImg'><img style= 'height: 100%; width: 100%; 'src="./img/photos/1.jpg" alt="About Us"/></div>
-                <div class='SubExploreTxt'><h1 id="SubExploreHeader">FEELING ADVENTUROUS?</h1>
-                    <div class='SubExploreDesc'><p>Explore the rail trails next!</p>
-                        <a href = "explore-rail.php"><button class="button">Discover More</button></a>
+            <div class='SubExploreImg'><img class="filled-img" style= 'height: 100%; width: 100%; 'src="./img/photos/region.jpg" alt="About Us"/></div>
+                <div class='SubExploreTxt'><h1 id="SubExploreHeader">YOUR NEW JOURNEY?</h1>
+                    <div class='SubExploreDesc'><p>Explore the surrounds of our region!</p>
+                        <a href = "explore-local.php"><button class="button">EXPLORE</button></a>
                     </div>  
                 </div>
             </div>
-
-            <!-- separator  -->
-            <div class="location-container-separator">
-            </div>
-        </div>
+        </div><br><br>
         <footer><?php include 'footer.php'?></footer>
     </body>
 </html>
