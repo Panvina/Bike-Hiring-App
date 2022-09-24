@@ -152,7 +152,20 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                 </div>
                 <div>
                     <label>Name</label>
-                    <input placeholder="Name of accessory type..." type="text" name="name">
+                    <?php
+                        if (isset($_SESSION["tempName"]))
+                        {
+                        ?>            
+                            <input placeholder="Name of accessory type..." type="text" name="name" value=<?php echo $_SESSION["tempName"];?>>
+                        <?php
+                        }
+                        else
+                        {
+                        ?>
+                            <input placeholder="Name of accessory type..." type="text" name="name">
+                        <?php
+                        }
+                    ?>
                     <span class="error">
                         <?php
                             if (isset($_GET["insert"]))
@@ -173,7 +186,20 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                 <br>
                 <div>
                     <label>Description</label><br>
-                    <textarea style='width: 220px; height: 50px' placeholder="Description about the type of accessory..." name="description"></textarea>
+                    <?php    
+                    if(isset($_SESSION["tempDescription"]))
+                    {
+                    ?>
+                        <textarea style='width: 220px; height: 50px' placeholder="Description about the type of accessory..." name="description"><?php echo $_SESSION['tempDescription'] ?></textarea>
+                    <?php
+                    }
+                    else
+                    {
+                    ?>
+                        <textarea style='width: 220px; height: 50px' placeholder="Description about the type of accessory..." name="description"></textarea>
+                    <?php
+                    }
+                    ?>
                     <span class="error">
                         <?php
                             if (isset($_GET["insert"]))

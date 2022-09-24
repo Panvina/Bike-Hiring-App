@@ -4,6 +4,14 @@
     include("inventory-util.php");
     $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 
+    //temporary session variables are created to retain input data when performing validation checks
+    $_SESSION["tempName"] = $_POST["name"];
+    $_SESSION["tempBikeTypeId"] = explode("-",$_POST["bikeTypeId"],2);
+    $_SESSION["tempHelmetId"] = explode("-",$_POST["helmetId"],2);
+    $_SESSION["tempPrice"] = $_POST["price"];
+    $_SESSION["tempSafetyInspect"] = $_POST["safetyInspect"];
+    $_SESSION["tempDescription"] = $_POST["description"];
+
     $bikeId = $_POST["bikeId"];
     //$name = $_POST["name"];
     //$bikeTypeId = $_POST["bikeTypeId"];
@@ -12,9 +20,6 @@
     $safetyInspect = $_POST["safetyInspect"];
     //$description = $_POST["description"];
 
-
-    //$tempHelmetId = explode("-",$helmetId,2);
-    //$tempBikeTypeId = explode("-",$bikeTypeId,2);
     
     
     if(isset($_POST['AddItem'])){
@@ -83,6 +88,14 @@
         $query = "INSERT INTO `bike_inventory_table` ($cols) VALUES ($data)";
         $results = mysqli_query($conn,$query);
         
+        //unset all the temporary data stored during form validation
+        unset($_SESSION["tempName"]);
+        unset($_SESSION["tempBikeTypeId"]);
+        unset($_SESSION["tempHelmetId"]);
+        unset($_SESSION["tempPrice"]);
+        unset($_SESSION["tempSafetyInspect"]);
+        unset($_SESSION["tempDescription"]);
+
         header("Location:../Inventory.php?insert=true");
     
         mysqli_close($conn);

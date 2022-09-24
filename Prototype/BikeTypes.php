@@ -157,7 +157,20 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                 </div>              
                 <div>
                     <label>Name</label>
-                    <input placeholder="Name of Bike Type..." type="text" name="name">
+                    <?php
+                        if (isset($_SESSION["tempName"]))
+                        {
+                        ?>            
+                            <input placeholder="Name of Bike Type..." type="text" name="name" value=<?php echo $_SESSION["tempName"];?>>
+                        <?php
+                        }
+                        else
+                        {
+                        ?>
+                            <input placeholder="Name of Bike Type..." type="text" name="name">
+                        <?php
+                        }
+                    ?>
                     <span class="error">
                         <?php
                             if (isset($_GET["insert"]))
@@ -180,19 +193,51 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                 <br>
                 <div>
                     <label>Picture ID: </label>
-                    <select placeholder="Picture's ID..." name="pictureId" type="submit">
+                    <?php
+                     if (isset($_SESSION["tempPictureId"]))
+                     {                       
+                     ?>
+                        <select placeholder="Picture's ID..." name="pictureId" type="submit">
+                        <option value="1" <?php if($_SESSION['tempPictureId'] == 1)echo 'selected'; ?>>1 - E-bike(StepThrough)</option>
+                        <option value="2" <?php if($_SESSION['tempPictureId'] == 2)echo 'selected'; ?>>2 - E-bike(StepOver)</option>
+                        <option value="3" <?php if($_SESSION['tempPictureId'] == 3)echo 'selected'; ?>>3 - Standard(StepThrough)</option>
+                        <option value="4" <?php if($_SESSION['tempPictureId'] == 4)echo 'selected'; ?>>4 - Standard(StepOver)</option>
+                        <option value="5" <?php if($_SESSION['tempPictureId'] == 5)echo 'selected'; ?>>5 - Mountain-bike(HardTail)</option>
+                        </select>       
+                     <?php
+                     }
+                     else
+                     {
+                     ?>
+                        <select placeholder="Picture's ID..." name="pictureId" type="submit">
                         <option>Picture ID</option>
                         <option value="1">1 - E-bike(StepThrough)</option>
                         <option value="2">2 - E-bike(StepOver)</option>
                         <option value="3">3 - Standard(StepThrough)</option>
                         <option value="4">4 - Standard(StepOver)</option>
                         <option value="5">5 - Mountain-bike(HardTail)</option>
-                    </select>       
+                        </select>
+                     <?php
+                     }
+                     ?>                        
                 </div>
                 <br>
                 <div>
                     <label>Description</label><br>
-                    <textarea style='width: 220px; height: 50px' placeholder="Description about the type of bike..." name="description"></textarea>
+                    <?php    
+                    if(isset($_SESSION["tempDescription"]))
+                    {
+                    ?>
+                        <textarea style='width: 220px; height: 50px' placeholder="Description about the type of bike..." name="description"><?php echo $_SESSION['tempDescription'] ?></textarea>
+                    <?php
+                    }
+                    else
+                    {
+                    ?>
+                        <textarea style='width: 220px; height: 50px' placeholder="Description about the type of bike..." name="description"></textarea>
+                    <?php
+                    }
+                    ?>
                     <span class="error">
                         <?php
                             if (isset($_GET["insert"]))

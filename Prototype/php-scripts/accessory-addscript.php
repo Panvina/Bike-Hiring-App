@@ -4,6 +4,12 @@
     include("inventory-util.php");
     $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 
+     //temporary session variables are created to retain input data when performing validation checks
+     $_SESSION["tempName"] = $_POST["name"];
+     $_SESSION["tempAccessoryTypeId"] = explode("-",$_POST["accessoryTypeId"],2);
+     $_SESSION["tempPrice"] = $_POST["price"];
+     $_SESSION["tempSafetyInspect"] = $_POST["safetyInspect"];
+    
     $accessoryId = $_POST["accessoryId"];
     //$name = $_POST["name"];
     //$accessoryTypeId = $_POST["accessoryTypeId"];

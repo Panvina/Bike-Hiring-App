@@ -5,10 +5,17 @@
     include("inventory-util.php");
     $conn = new mysqli("localhost", "root", "", "bike_hiring_system") or die(mysqli_error($mysqli));
 
+    //temporary session variables are created to retain input data when performing validation checks
+    $_SESSION["tempName"] = $_POST["name"];
+    $_SESSION["tempPictureId"] = $_POST["pictureId"];
+    $_SESSION["tempDescription"] = $_POST["description"];
+
+
     $bikeId = $_POST["bikeId"];
     $pictureId = $_POST["pictureId"];
     //$name = $_POST["name"];
     //$description = $_POST["description"];
+
     if(isset($_POST['AddItem'])){
         /* Form validation for adding records*/
         //Check if all fields are empty

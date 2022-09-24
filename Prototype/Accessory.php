@@ -192,7 +192,20 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     </div>
                     <div>
                         <label>Name</label>
-                        <input placeholder="Accessory's name..." type="text" name="name">
+                        <?php
+                        if (isset($_SESSION["tempName"]))
+                        {
+                        ?>            
+                            <input placeholder="Accessory's name..." type="text" name="name" value=<?php echo $_SESSION["tempName"];?>>
+                        <?php
+                        }
+                        else
+                        {
+                        ?>
+                            <input placeholder="Accessory's name..." type="text" name="name">
+                        <?php
+                        }
+                        ?>
                         <span class="error">
                             <?php
                                 if (isset($_GET["insert"]))
@@ -213,18 +226,47 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     <br>
                     <div>
                         <label>Accessory Type ID</label>
-                        <select placeholder="Accessory's Type..." name="accessoryTypeId" type="submit">
-                            <option value ="">Select accessory type</option>
+                        <?php
+                        if (isset($_SESSION["tempAccessoryTypeId"]))
+                        {               
+                            ?>           
+                                <select placeholder="Accessory's Type..." name="accessoryTypeId" type="submit" value="<?php echo $_SESSION['tempAccessoryTypeId'][0] ?>">
+                                <?php
+                                if($_SESSION['tempAccessoryTypeId'][0]==null)
+                                {
+                                ?>
+                                    <option value ="">Select accessory type</option>  
+                                <?php
+                                }
+                                foreach ($accessoryTypeOption as $option) {
+                                $selected = $_SESSION['tempAccessoryTypeId'][0]===$option['accessory_type_id'] ? 'selected' : '';
+                                ?>
+                                    <option <?php echo $selected ?>><?php echo $option['accessory_type_id'];
+                                            echo "-";
+                                            echo  $option['name']; ?> </option>
+                                <?php
+                                }
+                                ?>
+                            </select>
                             <?php
-                            foreach ($accessoryTypeOption as $option) {
+                        }
+                        else
+                        {
                             ?>
-                                <option><?php echo $option['accessory_type_id'];
-                                        echo "-";
-                                        echo  $option['name']; ?> </option>
-                            <?php
-                            }
-                            ?>
-                        </select>
+                            <select placeholder="Accessory's Type..." name="accessoryTypeId" type="submit">
+                                <option value ="">Select accessory type</option>
+                                <?php
+                                foreach ($accessoryTypeOption as $option) {
+                                ?>
+                                    <option><?php echo $option['accessory_type_id'];
+                                            echo "-";
+                                            echo  $option['name']; ?> </option>
+                                <?php
+                                }
+                                ?>
+                            </select> <?php
+                        }
+                    ?>                                   
                         <span class="error">
                             <?php
                                 if (isset($_GET["insert"]))
@@ -241,7 +283,20 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     <br>            
                     <div>
                         <label>Price p/h</label>
-                        <input placeholder="Price per hour..." type="text" name="price">
+                        <?php    
+                        if(isset($_SESSION["tempPrice"]))
+                        {
+                        ?>
+                            <input placeholder="Price per hour..." type="text" name="price" value="<?php echo $_SESSION["tempPrice"]; ?>"> 
+                        <?php 
+                        }
+                        else
+                        {
+                        ?>
+                            <input placeholder="Price per hour..." type="text" name="price">
+                        <?php
+                        }
+                        ?>
                         <span class="error">
                         <?php
                                 if (isset($_GET["insert"]))
@@ -271,11 +326,28 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 
                     <div>
                         <label>Safety Status</label>
-                        <label class="switch"  style='left: 10px; bottom:14px;' >
-                        <input type="hidden" name="safetyInspect" value="0">
-                        <input type="checkbox" name="safetyInspect" value="1">
-                        <span class="slider round"></span>
-                        </label>
+                        <?php    
+                        if(isset($_SESSION["tempSafetyInspect"]))
+                        {
+                        ?>
+                        <label class="switch"  style='left: 10px; bottom:5px;' >
+                            <input type="hidden" name="safetyInspect" value="0">
+                            <input type="checkbox" name="safetyInspect" value="1" <?php echo ($_SESSION['tempSafetyInspect']==1 ? 'checked' : '');?>>
+                            <span class="slider round"></span>
+                            </label> 
+                        <?php
+                        }
+                        else
+                        {
+                        ?>
+                            <label class="switch"  style='left: 10px; bottom:8px;' >
+                            <input type="hidden" name="safetyInspect" value="0">
+                            <input type="checkbox" name="safetyInspect" value="1">
+                            <span class="slider round"></span>
+                            </label>
+                        <?php
+                        }
+                        ?>     
                     </div>
 
                 <div>
@@ -317,7 +389,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                         <label>Accessory ID</label>
                         <input placeholder="ID of the Accessory..." type="text" name="accessoryId" readonly value="<?php echo $_SESSION['accessory_id'] ?>">
                     </div>
-
+                    <br>            
                     <div>
                         <label>Name</label>
                         <input placeholder="Accessory's name..." type="text" name="name" value="<?php echo $_SESSION['name'] ?>">
@@ -338,9 +410,9 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                             ?>
                         </span>
                     </div>
-
+                    <br>
                     <div>
-                        <label>Accessory Type ID</label><br>
+                        <label>Accessory Type ID</label>
                         <select placeholder="Accessory's Type..." name="accessoryTypeId" type="submit" value="<?php echo $_SESSION['accessory_type_id'] ?>">
                             <?php
                             foreach ($accessoryTypeOption as $option) {
@@ -366,7 +438,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                             ?>
                         </span>
                     </div>
-
+                    <br>
                     <div>
                         <label>Price p/h</label>
                         <input placeholder="Price per hour..." type="text" name="price" value="<?php echo $_SESSION['price_ph'] ?>">
@@ -385,7 +457,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                                 }
                             ?>
                     </div>
-
+                    <br>
                     <div>
                         <!-- <label>Safety Inspect</label>
                         <select placeholder="Safety status..." name="safetyInspect" type="text" value="<//?php echo $_SESSION['safety_inspect'] ?>">
@@ -401,7 +473,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                         <span class="slider round"></span>
                         </label>
                     </div>
-
+                    <br>
                     <div>
                         <button type="submit" name="submitUpdateItem">Update</button>
                     </div>
