@@ -31,7 +31,7 @@
                         {
                             echo '<p class="error">Invalid email</p>';
                         }elseif($loginVar =="userNotFound"){
-                            echo'<p class="error">Your username or password is incorrect!</p>';
+                            echo '<p class="error">Your username or password is incorrect!</p>';
                         }
                     }
                 ?>
@@ -178,7 +178,7 @@
 
                     if ($caVar != "success")
                     {
-                        echo '<script>var create_account_modal = document.getElementById("create-account-overlay"); 
+                        echo '<script>var create_account_modal = document.getElementById("create-account-overlay");
                         create_account_modal.style.display = "block";</script>';
                     }
                 }

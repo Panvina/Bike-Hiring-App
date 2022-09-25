@@ -284,7 +284,7 @@ font-size: 25px;
     display: grid;
     grid-template-columns:65% 35%;
     width: 95%;
-    margin: 0 auto;   
+    margin: 0 auto;
     overflow:visible;
 }
 
@@ -438,6 +438,7 @@ input::placeholder
 .modal-content-header
 {
     font-size: 30px;
+    margin-bottom: 0px;
 }
 
 .modal-btn
@@ -464,7 +465,9 @@ input::placeholder
 {
     color: red;
     position: relative;
-    transform: translate(12%, -15%);
+    /* transform: translate(12%, -15%); */
+    text-align: center;
+    padding-bottom: 20px;
 }
 
 .explore-rail-description
