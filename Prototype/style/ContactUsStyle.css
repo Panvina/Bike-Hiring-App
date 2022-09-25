@@ -120,7 +120,7 @@ label {
 }
 
 .collapsible, .content {
-  border-top: 1px dashed #eaf7f6;
+  border-top: 3px dashed #eaf7f6;
   width: 100%;
   font-size: 18px;
 }
