@@ -284,7 +284,7 @@ font-size: 25px;
     display: grid;
     grid-template-columns:65% 35%;
     width: 95%;
-    margin: 0 auto;
+    margin: 0 auto;   
     overflow:visible;
 }
 
@@ -438,7 +438,6 @@ input::placeholder
 .modal-content-header
 {
     font-size: 30px;
-    margin-bottom: 0px;
 }
 
 .modal-btn
@@ -460,14 +459,13 @@ input::placeholder
     background-color: #eaf7f6;
     color: #172026;
 }
-
+.modal-overlay .error{
+    text-align: center;
+    margin-bottom: 40px;
+}
 .error
 {
     color: red;
-    position: relative;
-    /* transform: translate(12%, -15%); */
-    text-align: center;
-    padding-bottom: 20px;
 }
 
 .explore-rail-description

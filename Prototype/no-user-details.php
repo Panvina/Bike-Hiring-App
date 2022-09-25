@@ -83,8 +83,19 @@
             <input type="text" name ="suburb"/><br><br>
             <label for="post_code">Post Code:</label>
             <input type="text" name ="post_code"/><br><br>        
+            <div id='state'>
             <label for="state">State: </label>
-            <input type="text" name ="state"/><br><br>
+            <select name="state">
+            <option value="" selected disabled hidden>---</option>
+            <option value="ATC">ACT</option>
+            <option value="NSW">NSW</option>
+            <option value="NT">NT</option>
+            <option value="QLD">QLD</option>
+            <option value="SA">SA</option>
+            <option value="TAS">TAS</option>
+            <option value="VIC">VIC</option>
+            <option value="WA">WA</option>
+            </select></div><br>
             <label for="licence_number">Licence Number: </label>
             <input type="text" name ="licence_number"/><br><br>
             <input id="sub-button" type="submit" value="Submit"/><br><br>

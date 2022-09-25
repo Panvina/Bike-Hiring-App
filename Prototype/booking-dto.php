@@ -6,7 +6,9 @@
         private $bookingid=array();
         private $accessory= array();
         private $startT = array();
-        private $endT=array();
+        private $endT=array();        
+        private $startD = array();
+        private $endD=array();
         private $duration=array();
         private $pickupLoc=array();
         private $dropOffLoc=array();
@@ -33,6 +35,12 @@
         }
         function getEndT(){
             return $this->endT;
+        }        
+        function getStartD(){
+            return $this->startD;
+        }
+        function getEndD(){
+            return $this->endD;
         }
         function getDuration(){
             return $this->duration;
@@ -79,7 +87,7 @@
             $bikeName = array();
             foreach ($bikeid as $row){
                 $name = $dbCon->get('name',("bike_id = '$row'"));
-                array_push($bikeName, $name[0]['name']);
+                array_push($bikeName, $row . " ".$name[0]['name']);
             }
             return $bikeName;
         }
@@ -103,8 +111,10 @@
             for ($i =0; $i<count($detail); $i++){
                 $oneDiArray = $detail[$i];
                 array_push($this->bookingid,$oneDiArray['booking_id']);
-                array_push($this->startT,$oneDiArray['start_date'] .": ". $oneDiArray['start_time']);
-                array_push($this->endT,$oneDiArray['end_date'].": ". $oneDiArray['expected_end_time']);
+                array_push($this->startD,$oneDiArray['start_date']);
+                array_push($this->startT,$oneDiArray['start_time']);
+                array_push($this->endD,$oneDiArray['end_date']);
+                array_push($this->endT,$oneDiArray['expected_end_time']);
                 array_push($this->duration,$oneDiArray['duration_of_booking']);
                 array_push($this->pickupLoc,$oneDiArray['pick_up_location']);
                 array_push($this->dropOffLoc,$oneDiArray['drop_off_location']);
@@ -123,12 +133,14 @@
                     $bookingid =$this->bookingid[$i];
                     $bikeid = $this->getBookingBikeID($bookingid);
                     $bikeName = $this->getBikeName($bikeid);
-                    $bikeid = implode(", ",$bikeid);
+                    //$bikeid = implode(", ",$bikeid);
                     $bikeName = implode(", ",$bikeName);
                     $bikeAccessory = $this->getBikeAccessory($bookingid);
                     $bikeAccessory = implode(", ",$bikeAccessory);
                     $startT= $this->startT[$i];
                     $endT=$this->endT[$i];
+                    $startD= $this->startD[$i];
+                    $endD=$this->endD[$i];
                     $dur=$this->duration[$i];
                     $puLoc=$this->getPickUpLocNameAddress($this->pickupLoc[$i]);
                     $doLoc=$this->getDropOffLocNameAddress($this->dropOffLoc[$i]);
@@ -138,22 +150,24 @@
                     <h3>Booking ID: $bookingid</h3>
                     <div class='text'>
                         <div class='text-col'>
-                            <p><b>Bike ID:</b> $bikeid</p>
                             <p><b>Bike Name:</b> $bikeName</p>
                             <p><b>Bike Accessory:</b> $bikeAccessory</p><br>
-                            <p><b>Start Date and Time:</b> $startT</p>
-                            <p><b>End Date and time:</b> $endT</p>
-                            <p><b>Duration:</b> $dur</p></div>
+                            <p><b>Start Date:</b> $startD</p>
+                            <p><b>Start Time:</b> $startT</p>
+                            <p><b>End Date:</b> $endD</p>   
+                            <p><b>End time:</b> $endT</p>
+                            <p><b>Duration:</b> $dur hour/s</p></div>
                         <div class='text-col'>
                             <p><b>Pick-up Location:</b> $puLoc</p>
-                            <p><b>Drop-off Location:</b> $doLoc</p><br>
+                            <p><b>Drop-off Location:</b> $doLoc</p>
+                            <hr>
                             <p><b>Booking Fee:</b> $$fee</p></div>
                     </div>
                     <form method='post' action='booking-summary.php' class='confirm'>
                         <input type='hidden' name='cancelBookingID' value='$bookingid'>
                         <input type='submit' name='cancelBooking'
-                        class='acc-button' value='Cancel this Booking' />
-                    </form>
+                        class='acc-button cancel-booking-button' value='Cancel this Booking' />
+                    </form><br>
                     <hr>
                  ";
                 }

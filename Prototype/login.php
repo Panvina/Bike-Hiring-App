@@ -31,7 +31,7 @@
                         {
                             echo '<p class="error">Invalid email</p>';
                         }elseif($loginVar =="userNotFound"){
-                            echo '<p class="error">Your username or password is incorrect!</p>';
+                            echo'<p class="error">Your username or password is incorrect!</p>';
                         }
                     }
                 ?>
@@ -156,7 +156,7 @@
                         <input name="ca-privacy-policy" type="checkbox"/> I agree to the <a href="https://www.blank.org">privacy policy</a>
                     </label> -->
                     <br>
-                    <button type="submit" name="ca-submit" class="centre-element modal-btn login-btn" style="position: relative; transform: translate(-50%, 15px)">Create</button>
+                    <button type="submit" name="ca-submit" class="centre-element modal-btn login-btn" style="position: relative;">Create</button>
                 </form>
             </div>
         </div>
@@ -178,7 +178,7 @@
 
                     if ($caVar != "success")
                     {
-                        echo '<script>var create_account_modal = document.getElementById("create-account-overlay");
+                        echo '<script>var create_account_modal = document.getElementById("create-account-overlay"); 
                         create_account_modal.style.display = "block";</script>';
                     }
                 }

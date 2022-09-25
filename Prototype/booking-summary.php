@@ -23,7 +23,7 @@
     if (isset($_GET['msg'])){
         $msg = $_GET['msg'];
         if ($msg=="success"){
-            $msg="<p class='success'>Your details have been updated!</p>";
+            $msg="<p style='color:green;'>Your details have been updated!</p>";
         }
     }
     if (isset($_POST['updateDatabaseButton'])){
@@ -41,7 +41,7 @@
                 header("Location: booking-summary.php?msg=success");
                 exit();
             }else{
-                $msg="<p>Your details cannot be updated!</p>".$msg;
+                $msg="<p style='color:red;'>Your details cannot be updated!</p>".$msg;
             }
         }
     }
@@ -108,7 +108,7 @@
                 echo "$msg";
             }
             if (!isset($_POST['updateButton'])){
-                echo "<div class='text' id=toUserDetails''>
+                echo "<div class='text' id='toUserDetails'>
                         <div class='text-col2'><h4>Name:</h4><p>$name</p><br>
                         <h4>Residential Address:</h4>
                         <p>$wholeAddress</p></div>
@@ -118,7 +118,7 @@
                         <p>$email</p></div>
                     </div><br>";
                 echo "<form action = 'booking-summary.php' method = 'POST' >
-                    <button class='acc-button' type='submit' name='updateButton'>Update my Details</button>
+                    <button class='acc-button booking-details-buttons' type='submit' name='updateButton'>Update my Details</button>
                     </form>";
             }else{
                 echo "<form action = 'booking-summary.php' method = 'POST' >
@@ -130,15 +130,26 @@
                             <input type='text' name ='street_address' placeholder='street' value='$address'/><br>
                             <input class='addressBox' type='text' name ='suburb' placeholder='suburb' value='$suburb'/>
                             <input class='addressBox' type='text' name ='post_code' placeholder='post code' value='$pcode'/>      
-                            <input class='addressBox' type='text' name ='state' placeholder='state' value='$state'/></div>
-                        <div class='text-col' id='text-field-col-2'><h4>Phone Number:</h4>
+                            <select id='state' name='state'>
+                            <option value='$state' selected hidden>$state</option>
+                            <option value='ATC'>ACT</option>
+                            <option value='NSW'>NSW</option>
+                            <option value='NT'>NT</option>
+                            <option value='QLD'>QLD</option>
+                            <option value='SA'>SA</option>
+                            <option value='TAS'>TAS</option>
+                            <option value='VIC'>VIC</option>
+                            <option value='WA'>WA</option>
+                            </select>
+                            </div>
+                            <div class='text-col' id='text-field-col-2'><h4>Phone Number:</h4>
                             <input type='text' name='pnum' value='0$pnum'/><br>
                             <h4>Email:</h4>
                             <input type='text' name='email' value='$email'/></div>        
 
-                </div>
-                <button class='acc-button' type='submit' name='updateDatabaseButton'>Update</button>
-                <a href='booking-summary.php'><button class='acc-button' type='text'>Cancel</button></a><br>
+                </div><br>
+                <button class='acc-button booking-details-buttons' type='submit' name='updateDatabaseButton'>Update</button>
+                <a href='booking-summary.php'><button class='acc-button booking-details-buttons' type='text'>Cancel</button></a><br>
                 </form>";
             }?>
         </div>
