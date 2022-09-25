@@ -31,7 +31,7 @@
                                 <li><a class="nav-text" href="index.php">Home</a></li>
                                 <li><a class="nav-text" href="makeabooking.php">Hire</a></li>
                                 <li><a class="nav-text" href="about.php">About Inverloch</a></li>
-                                <li><a class="nav-text" href="explore.php">About Cycling</a>
+                                <li><a class="nav-text explore-link" href="explore.php">About Cycling</a>
                                     <ul id="subNav">
                                         <li><a href="explore-local.php">Cycling in Out Region</a></li>
                                         <li><a href="explore-rail.php">Rail Trails</a></li>

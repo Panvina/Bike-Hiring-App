@@ -28,7 +28,7 @@
         </div>
         
         <div class='ExploreMainCont'>  
-            <div class='ExploreImg'><img style= 'height: 100%; width: 100%; 'src="./img/photos/2.jpg" alt="About Us"/></div>
+            <div class='ExploreImg'><img style= 'height: 100%; width: 100%; 'src="./img/photos/region.jpg" alt="About Us"/></div>
             <div class='ExploreTxt'><h1 id="ExploreHeader">CYCLING IN OUR REGION</h1>
                 <div class='ExploreDesc'><p>Discover sights unseen from the highways, and fill your basket with gourmet treats from small producers all across Gippsland. Sit a while on riverbanks and seashores, and experience the beauty of the peaceful surroundings.</p>
                 <a href = "explore-local.php"><button class="button">Learn More</button></a>
@@ -42,7 +42,7 @@
                 <a href = "explore-rail.php"><button style="padding: bottom 20px;"class="button">Explore</button></a>
                 </div>
             </div>  
-            <div class='ExploreImg'><img style= 'height: 100%; width: 100%; 'src="./img/photos/2.jpg" alt="About Us"/></div>
+            <div class='ExploreImg'><img style= 'height: 100%; width: 100%; 'src="./img/photos/railtrail.jpg" alt="About Us"/></div>
         </div> 
     </div>
     <?php include 'footer.php'?>
