@@ -110,7 +110,7 @@ label {
 		*/
 /* Style the button that is used to open and close the collapsible content */
 .collapsible {
-  background-color: #eee;
+  background-color: rgba(234,247,246, 0.4);
   color: #444;
   cursor: pointer;
   padding: 18px;
@@ -120,7 +120,7 @@ label {
 }
 
 .collapsible, .content {
-  border-top: 2px solid black;
+  border-top: 1px dashed #eaf7f6;
   width: 100%;
   font-size: 18px;
 }
