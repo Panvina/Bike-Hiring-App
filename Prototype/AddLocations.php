@@ -41,6 +41,14 @@ if (isset($_POST["submitLocation"])) {
 	//else if ( !preg_match( "/^[a-zA-Z ]{2,25}$/", $nameInput ) ) {
 	//  $err_msg .= "<p>Name of location can only contain max 25 alpha characters.</p>";}
 
+	//Suburb valdiation
+	$suburbInput = sanitise_input($suburbInput);
+	if ($suburbInput == "") {
+		$err_msg .= "<p>Please enter address.</p>";
+	}
+	else if ( !preg_match( "/^[A-Za-z ]+$/", $suburbInput ) ) {
+	 $err_msg .= "<p>Suburb of location can only contain alpha characters.</p>";}
+
 	//postcodes validation
 	$postcodeInput = sanitise_input($postcodeInput);
 	if ($postcodeInput == "") {

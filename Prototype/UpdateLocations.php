@@ -47,6 +47,15 @@ if (isset($_POST["updateLocation"]) || isset($_POST["deleteLocation"])) {
 			$err_msg .= "<p>The postcode you enetered is not a Victorian postcode.</p>";
 		}
 
+		//Suburb valdiation
+		$suburb = sanitise_input($suburb);
+		if ($suburb == "") {
+			$err_msg .= "<p>Please enter address.</p>";
+		} else if (!preg_match("/^[A-Za-z ]+$/", $suburb)) {
+			$err_msg .= "<p>Suburb of location can only contain alpha characters.</p>";
+		}
+
+
 		//if there is an validation error, it would be send back to Location.php with an error message
 		if ($err_msg != "") {
 			echo "<p>$err_msg</p>";
