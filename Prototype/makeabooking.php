@@ -36,7 +36,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 }
 /* Modal Content */
 .modal-content {
-  background-color: #fefefe;
+  background-color: black;
   margin: auto;
   padding: 20px;
   border: 1px solid #888;
@@ -45,10 +45,11 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 
 /* The Close Button */
 .close {
-  color: #aaaaaa;
+  color: black;
   float: right;
-  font-size: 28px;
+  font-size: 50px;
   font-weight: bold;
+  margin-left: 10px;
 }
 
 .close:hover,
@@ -366,15 +367,16 @@ ul {list-style-type: none;}
                 </div>
                 <br>
                 <form action="makeabookingconfirm.php" method="post">
-                  <label for="timeValue">Start Date:</label>
+                  <label style="font-family: Comfortaa;" for="timeValue">Start Date:</label>
                   <input class="startDateInput" type="text" id="startDateValue" name="startDateValue" value="" readonly>
                   <br><br>
-                  <div style="display:none;" id="endDateContainer">
-                    <label for="timeValue">End Date:</label>
+                  <div style="display:block;" id="endDateContainer">
+                    <label style="font-family: Comfortaa;" for="timeValue">End Date:</label>
+                    <br>
                     <input class="endDateInput" type="text" id="endDateValue" name="endDateValue" value="" readonly>
                     <br><br>
                   </div>
-                  <label for="pickupTimeValue">Pickup Time:</label>
+                  <label style="font-family: Comfortaa;" for="pickupTimeValue">Pickup Time:</label>
                   <select id="pickupTimeValue" name="pickupTimeValue">
                     <option value="none"></option>
                     <option value="9:00:00">9:00 AM</option>
@@ -387,7 +389,7 @@ ul {list-style-type: none;}
                     <option value="16:00:00">4:00 PM</option>
                   </select>
                   <br><br>
-                  <label for="dropoffTimeValue">Dropoff Time:</label>
+                  <label style="font-family: Comfortaa;" for="dropoffTimeValue">Dropoff Time:</label>
                   <select id="dropoffTimeValue" name="dropoffTimeValue">
                     <option value="none"></option>
                     <option value="9:00:00">9:00 AM</option>
@@ -400,7 +402,7 @@ ul {list-style-type: none;}
                     <option value="16:00:00">4:00 PM</option>
                   </select>
                   <br><br>
-                  <label for="pickupLocationValue">Pick-Up Location:</label>
+                  <label style="font-family: Comfortaa;" for="pickupLocationValue">Pick-Up Location:</label>
                   <select id="pickupLocationValue" name="pickupLocationValue">
                     <option value="none"></option>
                   <?php
@@ -417,7 +419,7 @@ ul {list-style-type: none;}
                     ?>
                   </select>
                   <br><br>
-                  <label for="dropoffLocationValue">Drop-Off Location:</label>
+                  <label style="font-family: Comfortaa;" for="dropoffLocationValue">Drop-Off Location:</label>
                   <select id="dropoffLocationValue" name="dropoffLocationValue">
                     <option value="none"></option>
                   <?php
@@ -444,7 +446,7 @@ ul {list-style-type: none;}
                 <br>
                 <?php 
                   echo '<div id="addAccessoryContainer'. $accessoryTypeId .'">';
-                  echo '<a style="font-size:18px;font-family: Comfortaa;color:black;" href="javascript: addAccessory(' . '\'' . $accessoryTypeName . '\'' . ', ' . '\'' . $accessoryTypeId . '\'' .     ')">Add ' . $accessoryTypeName . '</a>';
+                  echo '<a style="font-size:18px;font-family: Comfortaa;color:black;font-weight:bold;" href="javascript: addAccessory(' . '\'' . $accessoryTypeName . '\'' . ', ' . '\'' . $accessoryTypeId . '\'' .     ')">Add ' . $accessoryTypeName . '</a>';
                   echo '</div>';
                 ?>
                 <?php
@@ -486,7 +488,7 @@ ul {list-style-type: none;}
     <div id="myModal" class="modal">
 
     <!-- Modal content -->
-    <div class="modal-content" style="">
+    <div class="modal-content" style="width: 75%;background-color: black;">
       <span class="close">&times;</span>
       <div style="background-color: white; overflow-y: scroll;padding: 50px;">
       <br><br>
@@ -650,7 +652,9 @@ function calculateDuration(){
       bikeListContainer.appendChild(newTextInput);
       bikeListContainer.appendChild(newBikeText);
       newSelectText = document.createElement("p");
-      newSelectText.innerHTML =  bikeName + " Quantity:";
+      //newSelectText.innerHTML =  bikeName + " Quantity:&nbsp;";
+      newSelectText.innerHTML = "Quantity:&nbsp;";
+      newSelectText.style.display = "inline-block";
       document.getElementById("bikeListContainer").appendChild(newSelectText);
       var newArray = [];
       for (var i = 1; i <= bikeInventoryCount; i++) {
@@ -813,7 +817,7 @@ function resetDates(){
         allDates[i].style.backgroundColor = "";
         allDates[i].style.color = "";
       }
-      document.getElementById("endDateContainer").style.display = "none";
+      //document.getElementById("endDateContainer").style.display = "none";
       document.getElementById("endDateValue").value = document.getElementById("startDateValue").value;
       document.getElementById("startDateValue").value = "";
       document.getElementById("endDateValue").value = "";
@@ -871,7 +875,7 @@ for (var i = 0; i < allDates.length; i++) {
     this.className += " active";
     // Set form value for date to clicked date
   });
-  document.getElementById("endDateContainer").style.display = "block";
+  //document.getElementById("endDateContainer").style.display = "block";
   document.getElementById("endDateValue").value = document.getElementsByClassName("active")[0].id;
 }
 setDuration();
