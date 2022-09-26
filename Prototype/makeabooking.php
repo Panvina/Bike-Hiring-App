@@ -454,11 +454,11 @@ ul {list-style-type: none;}
                 ?>
                     <p style="font-size: 24px;">Item List:</p>
                     <div id="itemListContainer" style="">
-                      <p style="font-size: 18px;font-weight: bold;">Bikes:</p>
+                      <p style="font-size: 20px;">Bikes:</p>
                       <div id="bikeListContainer" style="">
                       
                       </div>
-                      <p style="font-size: 18px;font-weight: bold;">Accessories:</p>
+                      <p style="font-size: 20px;">Accessories:</p>
                       <div id="accessoryListContainer" style="">
                       
                       </div>
