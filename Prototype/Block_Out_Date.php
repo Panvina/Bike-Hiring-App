@@ -21,9 +21,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
     <head>
          <!-- Header -->
         <title> Block Out Dates </title>
-        <h1 class="header"> <a href="index.php"><img src="img/photos/Inverloch_Logo3.png" alt="Inverloch Logo" id="Logo" /></a> Block Out Dates </h1>
-
-
+        <h1 style="font-family: Arial;" class="header"> <a href="index.php"><img src="img/photos/Inverloch_Logo3.png" alt="Inverloch Logo" id="Logo" /></a> Block Out Dates </h1>
     </head>
 
     <body>
@@ -36,13 +34,13 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                   <ul>
                     <li class="prev">&#10094;</li>
                     <li class="next">&#10095;</li>
-                    <li style="font-size:14px">June<br>
-                      <span style="font-size:14px">2022</span>
+                    <li style="font-size:14px;font-family: Arial;">June<br>
+                      <span style="font-size:14px;font-family: Arial;">2022</span>
                     </li>
                   </ul>
                 </div>
 
-                <ul class="weekdays" style="font-size:24px;">
+                <ul class="weekdays" style="font-size:24px;font-family: Arial;">
                   <li>M</li>
                   <li>T</li>
                   <li>W</li>
@@ -68,11 +66,11 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                       $date_reason = $row["date_reason"];
                       if ($date_blockout == 0){
                        // echo '<a class="datetest" href="javascript:changeStartDate()"><li><span id="' . $date_value . '" class="date";">' . $date_day .'</span></li></a>';
-                        echo '<a style="text-decoration:none;font-size:24px;" class="datetest" href="javascript: manageDate(' . '\'' . $date_id . '\'' . ', ' . '\'' . $date_blockout . '\'' .     ')"><li><span style="color:black;" id="' . $date_value . '" class ="date">' . $date_day . '</a>';
+                        echo '<a style="text-decoration:none;font-size:24px;" class="datetest" href="javascript: manageDate(' . '\'' . $date_id . '\'' . ', ' . '\'' . $date_blockout . '\'' .     ')"><li><span style="color:black;font-family: Arial;" id="' . $date_value . '" class ="date">' . $date_day . '</a>';
 
                       }else if ($date_blockout == 1){
                         //echo '<a style="pointer-events: none;" class="datetest" href="javascript:changeStartDate()"><li><span style="color:red;" id="' . $date_value . '" class="date";">' . $date_day .'</span></li></a>';
-                        echo '<a style="text-decoration:none;font-size:24px;" class="datetest" href="javascript: manageDate(' . '\'' . $date_id . '\'' . ', ' . '\'' . $date_blockout . '\'' .     ')"><li><span style="color:red;" id="' . $date_value . '" class ="date">' . $date_day . '</a>';
+                        echo '<a style="text-decoration:none;font-size:24px;" class="datetest" href="javascript: manageDate(' . '\'' . $date_id . '\'' . ', ' . '\'' . $date_blockout . '\'' .     ')"><li><span style="font-family: Arial;color:red;" id="' . $date_value . '" class ="date">' . $date_day . '</a>';
                       }
                       ?>
                   <?php
@@ -93,7 +91,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
         </div>
         <input style="display:none;font-size: 24px;" id="unblockDateSubmit" type="submit" value="Unblock Date">
         </form>
-        <p style="font-size:24px;font-weight: bold;">Current Blockout Dates:</p>
+        <p style="font-size:32px;font-weight: bold;font-family: Arial;">Current Blockout Dates:</p>
         <?php
           $blockOutDatesSQL = $conn->query("SELECT * FROM block_out_dates WHERE date_blockout = 1");
           while ($row = $blockOutDatesSQL->fetch_assoc()) {
@@ -105,7 +103,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
               $date_year = $row["date_year"];
               $date_reason = $row["date_reason"];
               echo '<tr>
-                  <td><strong style="font-size:24px;">'.$date_value.'</strong></td>
+                  <td><strong style="font-size:28px;font-family: Arial;">'.$date_value.'</strong></td>
               </tr><br>';
             }
           ?>
@@ -144,6 +142,7 @@ function manageDate(dateid, blockedout){
     var blockoutDateTextFinish = addStr(blockoutDateTextStringToEdit, 4, "/");
     blockoutDateTextFinish = addStr(blockoutDateTextFinish, 7, "/");
     blockoutDateText.innerHTML = blockoutDateTextFinish;
+    blockoutDateText.style.fontFamily = "Arial";
     document.getElementById("blockOutDateAddContainer").appendChild(blockoutDateText);
     } else if (blockedout == 1){
     document.getElementById("blockDateSubmit").style.display = "none";
@@ -160,6 +159,7 @@ function manageDate(dateid, blockedout){
     var blockoutDateTextFinish = addStr(blockoutDateTextStringToEdit, 4, "/");
     blockoutDateTextFinish = addStr(blockoutDateTextFinish, 7, "/");
     blockoutDateText.innerHTML = blockoutDateTextFinish;
+    blockoutDateText.style.fontFamily = "Arial";
     document.getElementById("blockOutDateRemoveContainer").appendChild(blockoutDateText);
     }
 }
