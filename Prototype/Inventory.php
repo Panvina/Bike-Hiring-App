@@ -101,7 +101,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     $biketype = $row["bike_type_id"];
                     if ($biketype == "")
                     {
-                        $bookingStatus = "Broken";
+                        $bookingStatus = "BikeTypeNull";
                         $availabilityStatusColour = "#EF6E6E";
                         $safetyStatusColour = "#EF6E6E";
                         $primaryKey = $row["bike_id"];
@@ -139,7 +139,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                             }
                             else
                             {
-                                echo "[Deleted Item]"; 
+                                echo "[Deleted Item]";
                             }
                         ?></td>
                         <td><?php echo $row["price_ph"]; ?></td>
