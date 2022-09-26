@@ -86,7 +86,7 @@
             <div class='SubExploreImg'><img class="filled-img" style= 'height: 100%; width: 100%; 'src="./img/photos/railtrail.jpg" alt="About Us"/></div>
                 <div class='SubExploreTxt'><h1 id="SubExploreHeader">Feeling Adventurous?</h1>
                     <div class='SubExploreDesc'><p>Explore the rail trails next!</p>
-                        <a href = "explore-local.php"><button class="button">Discover More</button></a>
+                        <a href = "explore-rail.php"><button class="button">Discover More</button></a>
                     </div>  
                 </div>
             </div>
