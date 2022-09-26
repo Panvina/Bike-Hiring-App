@@ -264,14 +264,10 @@ ul {list-style-type: none;}
                 $bikeName = $row["name"];
                 $bikeTypeId = $row["bike_type_id"];  
                 $bikeDescription = $row["description"];
+                $bikeImage = $row["picture_id"];
             ?>
             <h1><strong><?php echo $bikeName; ?></strong></h1>
-                <?php
-                  $imgArray = array("1", "2", "4", "6", "7");
-                  $img_rand_keys = array_rand($imgArray, 2);
-
-                 ?>
-                <?php echo '<img src="img/photos/'; echo $imgArray[$img_rand_keys[0]]; echo'.jpg" style="width:50%;">'; ?>
+                <?php echo '<img src="img/bike-type/'; echo $bikeImage; echo'.jpg" style="width:50%;">'; ?>
                 <?php echo '<p style="font-size:24px;">Description: ' . $bikeDescription . '</p>'; ?>
                 <?php 
 
