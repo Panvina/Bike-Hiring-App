@@ -92,6 +92,18 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 
                         // Fetch bike type data from the bike_type_table
                         $accessorytype = $row["accessory_type_id"];
+
+                        if ($accessorytype == "")
+                        {
+                            $bookingStatus = "Accessory Type Null";
+                            $availabilityStatusColour = "#EF6E6E";
+                            $safetyStatusColour = "#EF6E6E";
+                            $primaryKey = $row["accessory_id"];
+                            $_SESSION["primaryKey"] = $primaryKey;
+                        }
+                        else
+                        {
+
                         $accessoryTypeInventory = $conn->query("SELECT name FROM accessory_type_table WHERE accessory_type_id=$accessorytype")->fetch_assoc();
 
                         // Booking availbility check for bikes
@@ -108,12 +120,21 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                         // Setting the primary key value based on table's primary key
                         $primaryKey = $row["accessory_id"];
                         $_SESSION["primaryKey"] = $primaryKey;
+                        }
 
                     ?>
                         <tr>
                             <td><?php echo $row["accessory_id"]; ?></td>
                             <td><?php echo $row["name"]; ?></td>
-                            <td><?php echo $accessoryTypeInventory["name"]; ?></td>
+                            <td><?php if (isset($accessoryTypeInventory))
+                            {
+                                echo $accessoryTypeInventory["name"];
+                            }
+                            else
+                            {
+                                echo "[Deleted Item]";
+                            }
+                            ?></td>
                             <td><?php echo $row["price_ph"]; ?></td>
                             <!--<td><//?php echo "<span style=\"color: $availabilityStatusColour\">$bookingStatus</span>" ?></td>
                             <td><//?php echo "<span style=\"color: $safetyStatusColour\">$safetyStatus</span>" ?></td> -->

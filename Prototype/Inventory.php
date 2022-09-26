@@ -176,7 +176,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 
     <?php
     /*Retreiving accessory data to display in the form*/
-    $accessoryId = $conn->query("SELECT * FROM accessory_inventory_table");
+    $accessoryId = $conn->query("SELECT * FROM accessory_inventory_table WHERE accessory_type_id=1");
     if ($accessoryId->num_rows > 0) {
         $bikeAccessoryOption = mysqli_fetch_all($accessoryId, MYSQLI_ASSOC);
     }

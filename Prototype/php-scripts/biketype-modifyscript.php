@@ -130,7 +130,18 @@
        $primaryKey = $_POST["submitDeleteItem"];
        $query = "DELETE FROM bike_type_table WHERE bike_type_id=$primaryKey";
        $results = mysqli_query($conn, $query);
-       header("Location: ../BikeTypes.php?delete=true");
+
+       if(mysqli_affected_rows($conn) == 1)
+        {
+            header("Location: ../BikeTypes.php?delete=true");
+            exit();
+
+        }
+        else
+        {
+            header("Location: ../BikeTypes.php?delete=false");
+            exit();
+        }
    }
 
    if (isset($_POST["cancelDeleteItem"]))

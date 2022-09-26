@@ -52,7 +52,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
     if (isset($_GET["delete"])) {
         if ($_GET["delete"] == "true") {
             echo "<p class = 'echo' id='tempEcho'>  Record successfully deleted! </p>";
-        } else if ($_GET["delete"] == "cancel") {
+        } else if ($_GET["delete"] == "false") {
             echo "<p class = 'echo' id='tempEcho'> Record was not deleted successfully! </p>";
         }
     }
@@ -393,11 +393,12 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
     <div id="DeleteBikeModal" class="modal-overlay" <?php
          // Ensures modal stays open when "delete" is set to print errors
                                                     if (isset($_GET["delete"])) {
-                                                        if ($_GET["delete"] != "true") {
-                                                            echo "style = 'display:inline-block;'";
-                                                        } else if ($_GET["delete"] == "true") {
+                                                        if ($_GET["delete"] == "false") {
                                                             echo "style = 'display:none;'";
                                                         }
+                                                        else if ($_GET["delete"] != "true") {
+                                                            echo "style = 'display:inline-block;'";
+                                                        } 
                                                     }
                                                     ?>>
         <div class="modal-content">
