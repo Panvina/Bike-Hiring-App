@@ -87,6 +87,17 @@ Contributor(s): Dabin Lee @ icelasersparr@gmail.com
 				// append all rows to return array
 				while($row = $res->fetch_assoc())
 				{
+					// check for null keys
+					$keys = array_keys($row);
+					for($i = 0; $i < count($keys); $i++)
+					{
+						$key = $keys[$i];
+						if ($row[$key] == "")
+						{
+							$row[$key] = "[DeletedItem]";
+						}
+					}
+
 					array_push($ret, $row);
 					// For testing
 					if (false)
@@ -453,7 +464,7 @@ Contributor(s): Dabin Lee @ icelasersparr@gmail.com
 			{
 				echo "<option value='SA'>TAS</option>;";
 			}
-			
+
 			if ($state == "WA")
 			{
 				echo "<option value='WA' Selected>WA</option>;";
@@ -471,7 +482,7 @@ Contributor(s): Dabin Lee @ icelasersparr@gmail.com
 			{
 				echo "<option value='TAS'>WA</option>;";
 			}
-					
+
 			if ($state == "VIC")
 			{
 				echo "<option value='VIC' selected>VIC</option>;";
@@ -480,7 +491,7 @@ Contributor(s): Dabin Lee @ icelasersparr@gmail.com
 			{
 				echo "<option value='VIC'>VIC</option>;";
 			}
-					
+
 			echo "</select>";
 		}
 	}

@@ -303,7 +303,7 @@
                 <!-- booking form -->
                 <form class="modal-form" action="php-scripts\booking-popups.php" method="POST">
                     <!-- Display customer (non-modifiable) -->
-                    <label>Customer</label><br>
+                    <label>Customer <?php echo "[$custId]"; ?></label><br>
                     <select name="add-booking-customer" id="add-booking-customer" disabled>
                         <?php
                             // Populate customer combo box with all customers

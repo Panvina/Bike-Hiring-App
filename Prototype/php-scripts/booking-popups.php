@@ -281,7 +281,7 @@ Contributor(s): Dabin Lee @ icelasersparr@gmail.com
         // set session variables
         $_SESSION["changeBooking"] = array(
             "bookingId"   => $bookingId,         // Need this, as it will be overwritten otherwise by this assignment
-            "custId"      => $row["cust_id"],
+            "custId"      => $row["user_name"],
             "custName"    => $row["name"],
             "startTime"   => $row["start_time"],
             "endTime"     => $row["expected_end_time"],
@@ -292,6 +292,9 @@ Contributor(s): Dabin Lee @ icelasersparr@gmail.com
             "dropoffId"   => $row["drop_off_location_id"],
             "dropoffName" => $row["drop_off_location"]
         );
+
+        // print_r($_SESSION['changeBooking']);
+        // exit();
 
         header("Location: ..\bookings.php?booking-mode=change1-none");
     }
