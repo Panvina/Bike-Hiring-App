@@ -290,7 +290,7 @@ ul {list-style-type: none;}
                     echo '<p style="font-size:24px;">Available Bikes: ' . $bikeInventoryNum . '</p>';
                     if ($bikeInventoryNum > 0){
                     echo '<div id="addBikeContainer'. $bikeTypeId .'">';
-                    echo '<a style="font-size:24px;font-family: Comfortaa;color:black;font-weight:bold;" href="javascript: addBike(' . '\'' . $bikeName . '\'' . ', ' . '\'' . $bikeTypeId . '\'' .  ', ' . '\'' . $bikeInventoryNum . '\'' .    ')">Add Bike</a>';
+                    echo '<a style="font-size:24px;font-family: Comfortaa;color:black;font-weight:bold;" href="javascript: addBike(' . '\'' . $bikeName . '\'' . ', ' . '\'' . $bikeTypeId . '\'' .  ', ' . '\'' . $bikeInventoryNum . '\'' .    ')">Add Bike Type</a>';
                     echo '</div>';
                     }else{
                     echo '<p style="font-size:24px;">Bike Unavailable</p>';
