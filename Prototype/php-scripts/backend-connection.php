@@ -105,7 +105,9 @@
 					// remove trailing and leading whitespace characters
 					$col = trim($cols[$x]);
 					$dat = trim($data[$x]);
-					if (!is_numeric($dat))
+
+					// signal that a string is a string
+					if (substr("$dat", 0, 1) == "0" || !is_numeric($dat))
 					{
 						$dat = "'$dat'";
 					}
@@ -119,7 +121,8 @@
 				}
 				$query .= " WHERE $idColName=$id";
 
-				//echo $query;
+				echo $query;
+				// exit();
 				if ($this->conn->query($query) == TRUE)
 				{
 					$ret = TRUE;
@@ -296,7 +299,7 @@
 
 			return $ret;
 		}
-		
+
 	}
 
 	// change this variable to true to perform test

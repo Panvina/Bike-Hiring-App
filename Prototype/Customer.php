@@ -29,6 +29,51 @@
             <?php printMenu("customer"); ?>
         </div>
         <div class="main">
+            <?php
+            //checks to see if inserting was successful and provides input
+            if (isset($_GET["insert"]))
+            {
+                if ($_GET["insert"] == "true")
+                {
+                    echo "<p class = 'echo' id='tempEcho'>  Record successfuly created </p>";
+                }
+                else if ($_GET["insert"] == "false")
+                {
+                    echo "<p class = 'echo'>  Record was not created successfuly </p>";
+                }
+                else if ($_GET["insert"] == "duplicatePrimaryKey")
+                {
+                    echo "<p class = 'echo'> Primary Key is already taken </p>";
+                }
+            }
+
+            //checks to see if updating was successful and provides input
+            if (isset($_GET["update"]))
+            {
+                if ($_GET["update"] == "true")
+                {
+                    echo "<p class = 'echo' id='tempEcho'>  Record successfuly updated </p>";
+                }
+                else if ($_GET["update"] == "false")
+                {
+                    echo "<p class = 'echo' id='tempEcho'> Record was not updated successfuly </p>";
+                }
+            }
+
+            //checks to see if deleting was successful and provides input
+            if (isset($_GET["delete"]))
+            {
+                if ($_GET["delete"] == "true")
+                {
+                    echo "<p class = 'echo' id='tempEcho'>  Record successfuly deleted </p>";
+                }
+                else if ($_GET["delete"] == "false")
+                {
+                    echo "<p class = 'echo' id='tempEcho'> Record was not deleted successfuly </p>";
+                }
+            }
+
+            ?>
             <h1 id="content-header"> All Customers</h1>
 
             <!-- Add Customer pop up -->
@@ -396,7 +441,7 @@
                     <!-- State input validation, checks based on error and displays accurate error message -->
                     <label> State </label>
                     <!-- Recieves the current value of field that was used instead of wiping it clear -->
-                    <?php        
+                    <?php
                         if (isset($_SESSION["customerInsertState"]))
                         {
                             $state = $_SESSION["customerInsertState"];
@@ -610,7 +655,7 @@
                 <div>
                     <!-- State input validation, checks based on error and displays accurate error message -->
                     <label> State: </label>
-                    <?php 
+                    <?php
                         if (isset($_SESSION["state"]))
                         {
                             $state = $_SESSION["state"];
@@ -682,49 +727,3 @@
 </html>
 <!-- Link the js file needed for pop up -->
 <script src="scripts/customer_popup.js"></script>
-
-<?php
-//checks to see if inserting was successful and provides input
-if (isset($_GET["insert"]))
-{
-    if ($_GET["insert"] == "true")
-    {
-        echo "<p class = 'echo' id='tempEcho'>  Record successfuly created </p>";
-    }
-    else if ($_GET["insert"] == "false")
-    {
-        echo "<p class = 'echo'>  Record was not created successfuly </p>";
-    }
-    else if ($_GET["insert"] == "duplicatePrimaryKey")
-    {
-        echo "<p class = 'echo'> Primary Key is already taken </p>";
-    }
-}
-
-//checks to see if updating was successful and provides input
-if (isset($_GET["update"]))
-{
-    if ($_GET["update"] == "true")
-    {
-        echo "<p class = 'echo' id='tempEcho'>  Record successfuly updated </p>";
-    }
-    else if ($_GET["update"] == "false")
-    {
-        echo "<p class = 'echo' id='tempEcho'> Record was not updated successfuly </p>";
-    }
-}
-
-//checks to see if deleting was successful and provides input
-if (isset($_GET["delete"]))
-{
-    if ($_GET["delete"] == "true")
-    {
-        echo "<p class = 'echo' id='tempEcho'>  Record successfuly deleted </p>";
-    }
-    else if ($_GET["delete"] == "false")
-    {
-        echo "<p class = 'echo' id='tempEcho'> Record was not deleted successfuly </p>";
-    }
-}
-
-?>

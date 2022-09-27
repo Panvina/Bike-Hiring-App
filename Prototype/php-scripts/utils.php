@@ -145,11 +145,14 @@ Contributor(s):
 	//ref: https://www.w3schools.com/php/php_form_validation.asp
 	function test_input($data)
     {
-        $data = trim($data);
-        $data = stripcslashes($data);
-        $data = htmlspecialchars($data);
+        $sanitised = trim($data);
+        $sanitised = stripcslashes($data);
+        $sanitised = htmlspecialchars($data);
 
-        return $data;
+		echo "$data<br>$sanitised";
+
+		// exit();
+        return $sanitised;
     }
 
 	//Jake.H
@@ -165,7 +168,24 @@ Contributor(s):
 	//ref: https://stackoverflow.com/questions/21264194/simple-regex-for-street-address
 	function validAddress($address)
 	{
-		return preg_match("/\d+(\s+\w+){1,}\s+(?:st(?:\.|reet)?|dr(?:\.|ive)?|pl(?:\.|ace)?|ave(?:\.|nue)?|rd|road|lane|drive|way|court|plaza|square|run|parkway|point|pike|square|driveway|trace|park|terrace|blvd)/",$address);
+		$pattern = '/^\d+(\s+\w+){1,}\s+(street|drive|place|avenue|rd|road|lane|drive|way|court|plaza|square|run|parkway|point|pike|square|driveway|trace|park|terrace|blvd)$/';
+		$address = strtolower($address);
+		$match = preg_match($pattern ,$address);
+
+		// echo $pattern;
+		// echo "\n";
+		echo $address;
+		echo "\n";
+		if ($match) {
+			echo "true";
+		}
+		else
+		{
+			echo "false";
+		}
+		// exit();
+
+		return $match;
 	}
 
 	//Jake.H
@@ -388,7 +408,7 @@ Contributor(s):
 		{
 			echo "<option value='TAS'>TAS</option>;";
 		}
-						
+
 		echo "</select>";
 	}
 ?>
