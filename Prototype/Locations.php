@@ -65,6 +65,7 @@ include_once("php-scripts/dashboard-menu.php");
 				}
 				?>
 			</div>
+
 			<!-- This handles if  the confirmation of Update, Add or Delete being a success. -->
 			<div style="color: green;">
 				<?php
