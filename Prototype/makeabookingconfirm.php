@@ -255,7 +255,9 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 			    	$endTimePrint = "3 PM";
 			  	}else if ($endTimeValue == "16:00:00"){
 			    	$endTimePrint = "4 PM";
-			  }
+			  	}else if ($endTimeValue == "17:00:00"){
+			    	$endTimePrint = "5 PM";
+			  	}
 			  echo $endTimePrint;
 		        ?></strong></p>
 		        <?php
