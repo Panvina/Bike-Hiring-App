@@ -400,6 +400,7 @@ ul {list-style-type: none;}
                     <option value="14:00:00">2:00 PM</option>
                     <option value="15:00:00">3:00 PM</option>
                     <option value="16:00:00">4:00 PM</option>
+                    <option value="17:00:00">5:00 PM</option>
                   </select>
                   <br><br>
                   <label style="font-family: Comfortaa;" for="pickupLocationValue">Pick-Up Location:</label>

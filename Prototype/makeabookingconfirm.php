@@ -46,6 +46,8 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 			    $dropOffTimeValue = 7;
 			  }else if ($endTimeValue == "16:00:00"){
 			    $dropOffTimeValue = 8;
+			  }else if ($endTimeValue == "17:00:00"){
+			    $dropOffTimeValue = 9;
 			  }
 			  $durationValueTimes = $dropOffTimeValue - $pickUpTimeValue;
 			  $startDateValueDays = substr($startDateValue, -2);
