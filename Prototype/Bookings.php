@@ -235,7 +235,7 @@
                             $conn = new AccessoryInventoryDBConnection();
 
                             // Populate list of accessories
-                            $accessories = $conn->get("accessory_id, name");
+                            $accessories = $conn->getUsableItems();
 
                             if ($accessories != null)
                             {
@@ -437,7 +437,7 @@
                             $conn = new AccessoryInventoryDBConnection();
 
                             // Populate list of dropoff locations
-                            $accessories = $conn->get("accessory_id, name");
+                            $accessories = $conn->getUsableItems();
 
                             if ($accessories != null)
                             {

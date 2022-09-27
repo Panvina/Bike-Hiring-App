@@ -38,10 +38,7 @@
 			{
 				$query = "INSERT INTO $tablename ($columns) VALUES ($data)";
 				//echo $query;
-				if ($this->conn->query($query) == TRUE)
-				{
-					$ret = TRUE;
-				}
+				$ret = $this->conn->query($query);
 			}
 			else
 			{
@@ -49,6 +46,28 @@
 			}
 
 			return $ret;
+		}
+
+		/**
+		 * Get all unbroken accessory items.
+		 *
+		 * Return all non-broken items in accessory table
+		 */
+		public function getUsableItems()
+		{
+			// get all broken items
+			$query = "SELECT accessory_id FROM damaged_items_table";
+			$res = $this->conn->query($query);
+
+			$condition = "";
+			while($row = $res->fetch_assoc())
+			{
+				$condition .= "accessory_id != {$row['accessory_id']}";
+			}
+
+			$usableItems = $this->get("accessory_id, name", $condition);
+
+			return $usableItems;
 		}
 	}
 ?>
