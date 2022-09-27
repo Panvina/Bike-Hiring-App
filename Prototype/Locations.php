@@ -54,7 +54,7 @@ include_once("php-scripts/dashboard-menu.php");
 				<button id='LID' class='addLocationModal' name='addLocationModal' type='submit' value='LID' style="float: right; left:0%; ">+ Add Location</button>
 			</form>
 
-			<!--This handles the confirmation of Update, Add or Delete and Database issues -->
+			<!--This handles if the Database having an issue -->
 			<div style="color: red;">
 				<?php
 				//Idea from Jake and Aadesh
@@ -63,8 +63,14 @@ include_once("php-scripts/dashboard-menu.php");
 					$db_msg = $_GET['db_msg'];
 					echo $db_msg;
 				}
+				?>
+			</div>
+			<!-- This handles if  the confirmation of Update, Add or Delete being a success. -->
+			<div style="color: green;">
+				<?php
+				//Idea from Jake and Aadesh
 				//this is basically where it starts checking if there is any success, if there is any, it will print it out onto the page that the item that the user has done is completed
-				else if (isset($_GET["add"])) {
+				if (isset($_GET["add"])) {
 					if ($_GET["add"] == "success") {
 						echo "<p>New location data has successfully been added to the database</p>";
 					}
