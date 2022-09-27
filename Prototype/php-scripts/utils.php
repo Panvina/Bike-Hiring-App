@@ -9,6 +9,24 @@ Contributor(s):
 -->
 
 <?php
+	/**
+	 * Takes in an array of items, and returns indices of items that are empty
+	 */
+	function returnEmptyVariables($arr)
+	{
+		$ret = array();
+
+		for($i = 0; $i < count($arr); $i++)
+		{
+			if (empty($arr[$i]))
+			{
+				array_push($ret, $i);
+			}
+		}
+
+		return $ret;
+	}
+
 	function printTimeComboBoxOptions($selectedTime=-1, $startHour=9, $endHour=17)
 	{
 		if ($selectedTime != -1)

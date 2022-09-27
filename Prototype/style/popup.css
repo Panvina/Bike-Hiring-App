@@ -84,3 +84,13 @@
     text-decoration: none;
     cursor: pointer;
 }
+
+/* Modal error message styling */
+.modal-error
+{
+    color: red;
+    text-align: left;
+    padding-left: 1vw;
+    margin-bottom: 0px;
+    margin-top: 0px;
+}
