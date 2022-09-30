@@ -26,7 +26,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
             <div id="homebannertext">
                 <h1 id="bannerH1"> Inverloch Bike Hire</h1>
                 <p id="bannerP"> Start your adventure with us</p> 
-                <button class="button"><a href="hire.php">Hire now!</a></button>
+                <button class="button"><a style ="text-decoration: none; color: white;" href="makeabooking.php">Hire now!</a></button>
             </div>
         </div>
         <div class='HomeMainCont'>  
