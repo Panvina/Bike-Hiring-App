@@ -182,6 +182,7 @@ Contributor(s):
             // print_r($customerNames);
         ?>
     </body>
+    <script src="scripts/dashboard.js"></script>
     <script src="scripts/timetable.js"></script>
 
     <script>
@@ -245,9 +246,7 @@ Contributor(s):
         renderer.draw('.timetable');
 
         // Dabin's custom edge to edge timetable code
-        var syncscroll = document.getElementsByClassName("syncscroll");
-        var syncScrollHeaders = syncscroll.getElementsByTagName("header");
-        var timeScope = syncScrollHeaders.getElementsByTagName("ul")[0];
+        var timeScope = document.getElementsByClassName("syncscroll").getElementsByTagName("header").getElementsByTagName("ul")[0];
         var timeScopeWidth = timeScope.offsetWidth;
         var timeScopeDiff = (17.0 - 9.0);
         var timeScopeSectionWidth = timeScopeWidth / timeScopeDiff;
