@@ -375,7 +375,10 @@ Contributor(s): Dabin Lee @ icelasersparr@gmail.com
 
 			// readd BookingAccessory and BookingBike rows
 			array_push($queries, $bookingBikeTableQuery);
-			array_push($queries, $bookingAccessoryTableQuery);
+			if ($bookingAccessoryTableQuery != "")
+			{
+				array_push($queries, $bookingAccessoryTableQuery);
+			}
 
 			// end transaction
 			array_push($queries, "COMMIT;");
@@ -384,7 +387,7 @@ Contributor(s): Dabin Lee @ icelasersparr@gmail.com
 			for($i = 0; $i < count($queries); $i++)
 			{
 				$query = $queries[$i];
-				echo "$query<br>";
+				echo "$i: $query<br>";
 				$success &= !($this->conn->query($query));
 			}
 

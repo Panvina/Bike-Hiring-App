@@ -18,11 +18,41 @@
     $bookingMode = "none";
     $errorCode = "none";
     $errorText = "";
+    $errors = array();
+
     if (isset($_GET["booking-mode"]))
     {
         $bookingErrorData = explode('-', $_GET["booking-mode"]);
         $bookingMode = $bookingErrorData[0];
         $errorCode = $bookingErrorData[1];
+
+        if ($bookingMode == "add1" or $bookingMode == "add2")
+        {
+            $dataMode = "addBooking";
+
+            if ($errorCode == "error")
+            {
+                $errors = explode(",", $_SESSION[$dataMode]["error"]);
+            }
+            else
+            {
+                $errors = array();
+            }
+        }
+        else if ($bookingMode == "change1" or $bookingMode == "change2")
+        {
+            $dataMode = "changeBooking";
+
+            if ($errorCode == "error")
+            {
+                print_r( $_SESSION[$dataMode]["error"]);
+                $errors = explode(",", $_SESSION[$dataMode]["error"]);
+            }
+            else
+            {
+                $errors = array();
+            }
+        }
     }
 ?>
 
@@ -72,7 +102,16 @@
                                 arrayToComboBoxOptions($customerList, "user_name", $selected);
                     		}
                         ?>
-                    </select><br><br>
+                    </select><br>
+                    <p class="modal-error">
+                        <?php
+                            if (in_array("customerEmpty", $errors))
+                            {
+                                echo "Please ensure at least one customer exists";
+                            }
+                            // echo "Please ensure at least one customer exists";
+                        ?>
+                    </p>
 
                     <!-- Select start of booking -->
                     <label>Start Date</label><br>
@@ -85,7 +124,21 @@
                                 echo "value='$bookingStartDateValue'";
                             }
                         ?>
-                    ><br><br>
+                    ><br>
+                    <p class="modal-error">
+                        <?php
+                            if (in_array("startDateEmpty", $errors))
+                            {
+                                echo "Please select a date";
+                            }
+                            else if (in_array("dateError", $errors))
+                            {
+                                echo "Please ensure start date is before the end date";
+                            }
+                            // echo "Please ensure start date is before the end date";
+                        ?>
+                    </p>
+
                     <label>Start Time</label><br>
                     <select name="add-booking-start-time" id="add-booking-start-time">
                     <?php
@@ -97,7 +150,17 @@
                         }
                         printTimeComboBoxOptions($selectTime);
                     ?>
-                    </select><br><br>
+                    </select><br>
+                    <p class="modal-error">
+                        <?php
+                            if (in_array("timeError", $errors))
+                            {
+                                echo "Please ensure starting time is before the ending time";
+                            }
+                            // echo "Please ensure starting time is before the ending time";
+                        ?>
+                    </p>
+
                     <!-- Select end of booking -->
                     <label>End Date</label><br>
                     <input name="add-booking-end-date" id="add-booking-end-date" type="date"
@@ -109,7 +172,21 @@
                             echo "value='$bookingEndDateValue'";
                         }
                     ?>
-                    ><br><br>
+                    ><br>
+                    <p class="modal-error">
+                        <?php
+                            if (in_array("endDateEmpty", $errors))
+                            {
+                                echo "Please select a date";
+                            }
+                            else if (in_array("dateError", $errors))
+                            {
+                                echo "Please ensure start date is before the end date";
+                            }
+                            // echo "Please ensure start date is before the end date";
+                        ?>
+                    </p>
+
                     <label>End Time</label><br>
                     <select name="add-booking-end-time" id="add-booking-end-time">
                     <?php
@@ -121,7 +198,17 @@
                         }
                         printTimeComboBoxOptions($selectTime);
                     ?>
-                    </select><br><br>
+                    </select><br>
+                    <p class="modal-error">
+                        <?php
+                            if (in_array("timeError", $errors))
+                            {
+                                echo "Please ensure starting time is before the ending time";
+                            }
+                            // echo "Please ensure starting time is before the ending time";
+                        ?>
+                    </p>
+
                     <!-- Select pickup and dropoff locations -->
                     <label>Pick-Up Location</label><br>
                     <select name="add-booking-pick-up-location" id="add-booking-pick-up-location"><br><br>
@@ -141,7 +228,17 @@
                                 arrayToComboBoxOptions($pickupLocations, "location_id", $selectedId);
                             }
                         ?>
-                    </select><br><br>
+                    </select><br>
+                    <p class="modal-error">
+                        <?php
+                            if (in_array("pickupError", $errors))
+                            {
+                                echo "Please add a pickup location";
+                            }
+                            // echo "Please add a pickup location";
+                        ?>
+                    </p>
+
                     <label>Drop-off Location</label><br>
                     <select name="add-booking-drop-off-location" id="add-booking-drop-off-location"><br><br>
                         <?php
@@ -159,29 +256,14 @@
                                 arrayToComboBoxOptions($dropoffLocations, "location_id", $selectedId);
                             }
                         ?>
-                    </select><br>
-                    <p class="modal-error-message">
+                    </select>
+                    <p class="modal-error">
                         <?php
-                            if ($errorCode != "none")
+                            if (in_array("dropoffError", $errors))
                             {
-                                $errorString = "";
-                                switch($errorCode)
-                                {
-                                    case "emptyError":
-                                        $errorString = "Please ensure that all fields are filled.";
-                                        break;
-                                    case "dateError":
-                                        $errorString = "Please ensure starting date is before or equal to end date";
-                                        break;
-                                    case "timeError":
-                                        $errorString = "Please ensure the starting time is before the ending time";
-                                        break;
-                                    default:
-                                        break;
-                                }
-
-                                echo "$errorString";
+                                echo "Please add a dropoff location";
                             }
+                            // echo "Please add a dropoff location";
                         ?>
                     </p>
                     <button type="submit" name="add-booking-main-submit" style=""> Next </button>
@@ -225,7 +307,17 @@
                                 arrayToComboBoxOptions($bikes, "bike_id");
                             }
                         ?>
-                    </select><br><br>
+                    </select><br>
+                    <p class="modal-error">
+                        <?php
+                            if (in_array("bikeError", $errors))
+                            {
+                                echo "Please select at least one bike";
+                            }
+                            // echo "Please select at least one bike";
+                        ?>
+                    </p>
+
                     <!-- Accessory list -->
                     <label>Accessories</label><br>
                     <!-- Get accessories as array (for PHP) -->
@@ -243,14 +335,6 @@
                             }
                         ?>
                     </select><br>
-                    <p class="modal-error-message">
-                        <?php
-                            if ($errorCode != "none")
-                            {
-                                echo "Please ensure that at least one bike has been selected.";
-                            }
-                        ?>
-                    </p>
                     <button type="submit" name="add-booking-bike-accessory-submit"> Add Booking </button>
                 </form>
             </div>
@@ -303,7 +387,7 @@
                 <!-- booking form -->
                 <form class="modal-form" action="php-scripts\booking-popups.php" method="POST">
                     <!-- Display customer (non-modifiable) -->
-                    <label>Customer <?php echo "[$custId]"; ?></label><br>
+                    <label>Customer</label><br>
                     <select name="add-booking-customer" id="add-booking-customer" disabled>
                         <?php
                             // Populate customer combo box with all customers
@@ -315,26 +399,81 @@
                                 arrayToComboBoxOptions($customerList, "user_name", $custId);
                     		}
                         ?>
-                    </select><br><br>
+                    </select><br>
+                    <p class="modal-error">
+                        <?php
+                            if (in_array("customerEmpty", $errors))
+                            {
+                                echo "Please ensure at least one customer exists";
+                            }
+                            // echo "Please ensure at least one customer exists";
+                        ?>
+                    </p>
 
                     <!-- Select start of booking -->
                     <label>Start Date</label><br>
-                    <input name="change-booking-start-date" id="change-booking-start-date" type="date" value=<?php echo "$startDate"; ?>><br><br>
+                    <input name="change-booking-start-date" id="change-booking-start-date" type="date" value=<?php echo "$startDate"; ?>><br>
+                    <p class="modal-error">
+                        <?php
+                            if (in_array("startDateEmpty", $errors))
+                            {
+                                echo "Please select a date";
+                            }
+                            else if (in_array("dateError", $errors))
+                            {
+                                echo "Please ensure start date is before the end date";
+                            }
+                            // echo "Please ensure start date is before the end date";
+                        ?>
+                    </p>
                     <label>Start Time</label><br>
                     <select name="change-booking-start-time" id="change-booking-start-time">
                     <?php
                         printTimeComboBoxOptions($startTime);
                     ?>
-                    </select><br><br>
+                    </select><br>
+                    <p class="modal-error">
+                        <?php
+                            if (in_array("timeError", $errors))
+                            {
+                                echo "Please ensure starting time is before the ending time";
+                            }
+                            // echo "Please ensure starting time is before the ending time";
+                        ?>
+                    </p>
+
                     <!-- Select end of booking -->
                     <label>End Date</label><br>
-                    <input name="change-booking-end-date" id="change-booking-end-date" type="date" value=<?php echo "$endDate"; ?>><br><br>
+                    <input name="change-booking-end-date" id="change-booking-end-date" type="date" value=<?php echo "$endDate"; ?>><br>
+                    <p class="modal-error">
+                        <?php
+                            if (in_array("endDateEmpty", $errors))
+                            {
+                                echo "Please select a date";
+                            }
+                            else if (in_array("dateError", $errors))
+                            {
+                                echo "Please ensure start date is before the end date";
+                            }
+                            // echo "Please ensure start date is before the end date";
+                        ?>
+                    </p>
+
                     <label>End Time</label><br>
                     <select name="change-booking-end-time" id="change-booking-end-time"<
                     <?php
                         printTimeComboBoxOptions($endTime);
                     ?>
-                    </select><br><br>
+                    </select><br>
+                    <p class="modal-error">
+                        <?php
+                            if (in_array("timeError", $errors))
+                            {
+                                echo "Please ensure starting time is before the ending time";
+                            }
+                            // echo "Please ensure starting time is before the ending time";
+                        ?>
+                    </p>
 
                     <!-- Select pickup and dropoff locations -->
                     <label>Pick-Up Location</label><br>
@@ -349,7 +488,17 @@
                                 arrayToComboBoxOptions($pickupLocations, "location_id", $pickupId);
                             }
                         ?>
-                    </select><br><br>
+                    </select><br>
+                    <p class="modal-error">
+                        <?php
+                            if (in_array("pickupError", $errors))
+                            {
+                                echo "Please add a pickup location";
+                            }
+                            // echo "Please add a pickup location";
+                        ?>
+                    </p>
+
                     <label>Drop-off Location</label><br>
                     <select name="change-booking-drop-off-location" id="change-booking-drop-off-location"><br><br>
                         <?php
@@ -362,28 +511,13 @@
                             }
                         ?>
                     </select><br>
-                    <p class="modal-error-message">
+                    <p class="modal-error">
                         <?php
-                            if ($errorCode != "none")
+                            if (in_array("dropoffError", $errors))
                             {
-                                $errorString = "";
-                                switch($errorCode)
-                                {
-                                    case "emptyError":
-                                        $errorString = "Please ensure that all fields are filled.";
-                                        break;
-                                    case "dateError":
-                                        $errorString = "Please ensure starting date is before or equal to end date";
-                                        break;
-                                    case "timeError":
-                                        $errorString = "Please ensure the starting time is before the ending time";
-                                        break;
-                                    default:
-                                        break;
-                                }
-
-                                echo "$errorString";
+                                echo "Please add a dropoff location";
                             }
+                            // echo "Please add a dropoff location";
                         ?>
                     </p>
                     <button type="submit" name="change-booking-main-submit"> Next </button>
@@ -427,7 +561,16 @@
                                 arrayToComboBoxOptions($bikes, "bike_id");
                             }
                         ?>
-                    </select><br><br>
+                    </select><br>
+                    <p class="modal-error">
+                        <?php
+                            if (in_array("bikeError", $errors))
+                            {
+                                echo "Please select at least one bike";
+                            }
+                            // echo "Please select at least one bike";
+                        ?>
+                    </p>
                     <!-- Accessory list -->
                     <label>Accessories</label><br>
                     <!-- Get accessories as array (for PHP) -->
@@ -445,14 +588,6 @@
                             }
                         ?>
                     </select><br>
-                    <p class="modal-error-message">
-                        <?php
-                            if ($errorCode != "none")
-                            {
-                                echo "Please ensure that at least one bike has been selected.";
-                            }
-                        ?>
-                    </p>
                     <button type="submit" name="change-booking-bike-accessory-submit"> Update Booking </button>
                 </form>
             </div>
