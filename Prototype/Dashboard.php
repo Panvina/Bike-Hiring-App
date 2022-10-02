@@ -50,20 +50,19 @@ Contributor(s):
         	<div class="main">
                 <div class="date-grid">
                     <img class="arrows" id="leftArrow" onclick="decrementDate()" src="img/icons/arrow-left-bold.png"/>
-                    <label class="date_string" for="dDate">
-                        <?php
-                            $date = $_GET["date"];
-                            $dateStr = getFormattedDate($date);
+                    <div>
+                        <input id="date-picker" class="date-picker" type="date"></input>
+                        <label class="date_string" for="dDate">
+                            <?php
+                                $date = $_GET["date"];
+                                $dateStr = getFormattedDate($date);
 
-                            echo "$dateStr";
-                        ?>
-                    </label>
+                                echo "$dateStr";
+                            ?>
+                        </label>
+                    </div>
                     <img class="arrows" id="rightArrow" onclick="incrementDate()" src="img/icons/arrow-right-bold.png"/>
-
-                    <br>
-                 </div>
-                <br>
-                <br>
+                </div>
                 <div class="DashboardInformationContainer">
                     <!-- Booking summary section -->
                     <div class="DashboardInformation dashboard-headers">
@@ -183,6 +182,7 @@ Contributor(s):
             // print_r($customerNames);
         ?>
     </body>
+    <script src="scripts/dashboard.js"></script>
     <script src="scripts/timetable.js"></script>
 
     <script>
@@ -210,7 +210,7 @@ Contributor(s):
                 }
                 else
                 {
-                    echo "{'id' : '1', 'name' : 'null'}";
+                    echo "{'id' : '1', 'name' : 'none'}";
                 }
             ?>
         ]);
@@ -233,7 +233,7 @@ Contributor(s):
                     $endMin = $time["endMin"];
                     $custId = $time["custId"];
 
-                    echo "timetable.addEvent('$startHour:$startMin-$endHour:$endMin', '$custId', new Date($year, $month, $day, $startHour, $startMin), new Date($year, $month, $day, $endHour, $endMin));";
+                    echo "timetable.addEvent('$startHour:$startMin - $endHour:$endMin', '$custId', new Date($year, $month, $day, $startHour, $startMin), new Date($year, $month, $day, $endHour, $endMin));";
                 }
             }
             else

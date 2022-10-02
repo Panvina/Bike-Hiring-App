@@ -1,13 +1,17 @@
 .date_string
 {
-    width: 9vw;
     text-align: center;
+    font-weight: bold;
+    font-size: 25px;
 }
 
 .date-grid
 {
     padding-top: 10px;
     display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
 }
 
 .DashboardInformationContainer{
@@ -31,4 +35,23 @@
 .dashboard-headers
 {
     padding-top: 17px;
+}
+
+.leftArrow
+{
+    left: 0px;
+}
+
+.rightArrow
+{
+    right: 0px;
+}
+
+.date-picker
+{
+    /* height: auto; */
+    width: 25px;
+    border-style: none;
+    font-size: 20px;
+    color: white;
 }
