@@ -217,25 +217,36 @@ Contributor(s): Dabin Lee @ icelasersparr@gmail.com
         if (empty($bikes))
         {
             addErrorToMode($mode, "bikeError");
+            echo "empty";
         }
     }
 
     function checkErrorSet($mode)
     {
         $errorSet = false;
-        $errorSet = (isset($_SESSION[$mode]) && isset($_SESSION[$mode]["error"]));
+        if (isset($_SESSION[$mode]))
+        {
+            if (isset($_SESSION[$mode]["error"]))
+            {
+                $errorSet = true;
+            }
+        }
+
+        // print_r($_SESSION[$mode]["error"]);
 
         return $errorSet;
     }
 
-    function checkInputErrorSet($mode, $errorCode)
+    function inputErrorSet($mode, $errorCode)
     {
-        $errorSet = false;
+        $errorSet = "";
         if (checkErrorSet($mode))
         {
             $errorCodes = explode(",", $_SESSION[$mode]["error"]);
-            $errorSet = (in_array($errorCode, $errorCodes));
+            $errorSet = in_array($errorCode, $errorCodes);
         }
+
+        echo ($errorSet);
 
         return $errorSet;
     }
@@ -289,7 +300,7 @@ Contributor(s): Dabin Lee @ icelasersparr@gmail.com
         checkErrorDateTime("addBooking", $startDate, $endDate, $startTime, $endTime);
         checkErrorLocations("addBooking", $pickUpLocation, $dropOffLocation);
 
-        if (!checkErrorSet($mode))
+        if (!checkErrorSet($bookingMode))
         {
             header("Location: ..\bookings.php?booking-mode=add2-none");
         }
@@ -301,19 +312,19 @@ Contributor(s): Dabin Lee @ icelasersparr@gmail.com
     // Process submit button press for bikes and accessory selection form
     else if ($addBookingBikesSubmit)
     {
-        print_r($_POST);
-
         // get bikes and accessories from <select multiple> html tag
         // Both contain arrays
         $bikes        = comboboxArrayToItemIdArray($_POST["add-booking-bike"]);
         $accessories  = comboboxArrayToItemIdArray($_POST["add-booking-accessory"]);
 
-        $bookingMode ="addBooking";
+        $bookingMode = "addBooking";
+
+        unset($_SESSION["addBooking"]["error"]);
 
         checkErrorBikes($bookingMode, $bikes);
 
         // verify at least one bike
-        if (checkInputErrorSet($bookingMode, "bikeError"))
+        if (inputErrorSet($bookingMode, "bikeError") != "")
         {
             header("Location: ..\bookings.php?booking-mode=add2-error");
         }
@@ -387,6 +398,8 @@ Contributor(s): Dabin Lee @ icelasersparr@gmail.com
     }
     else if ($changeBookingInfoSubmit)
     {
+        $bookingMode = "changeBooking";
+
         $startDate = $_POST["change-booking-start-date"];
         $startTime = $_POST["change-booking-start-time"];
         $endDate = $_POST["change-booking-end-date"];
@@ -395,66 +408,52 @@ Contributor(s): Dabin Lee @ icelasersparr@gmail.com
         $dropOffLocation = explode(": ", $_POST["change-booking-drop-off-location"])[0];
 
         // save data into session for next form
-        $_SESSION["changeBooking"]["startDate"] = $startDate;
-        $_SESSION["changeBooking"]["startTime"] = $startTime;
-        $_SESSION["changeBooking"]["endDate"] = $endDate;
-        $_SESSION["changeBooking"]["endTime"] = $endTime;
-        $_SESSION["changeBooking"]["pickupId"] = $pickupLocation;
-        $_SESSION["changeBooking"]["dropoffId"] = $dropOffLocation;
+        $_SESSION[$bookingMode]["startDate"] = $startDate;
+        $_SESSION[$bookingMode]["startTime"] = $startTime;
+        $_SESSION[$bookingMode]["endDate"] = $endDate;
+        $_SESSION[$bookingMode]["endTime"] = $endTime;
+        $_SESSION[$bookingMode]["pickupId"] = $pickupLocation;
+        $_SESSION[$bookingMode]["dropoffId"] = $dropOffLocation;
 
-        // validate not empty
-        $emptyInputError = !emptyArr([$startDate, $startTime, $endDate, $endTime, $pickUpLocation, $dropOffLocation]);
+        unset($_SESSION[$bookingMode]["error"]);
 
-        // convert datetime strings to datetime objects
-        $dtStartDate = strtotime($startDate);
-        $dtStartTime = strtotime($startTime);
-        $dtEndDate = strtotime($endDate);
-        $dtEndTime = strtotime($endTime);
+        checkErrorDateTime($bookingMode, $startDate, $endDate, $startTime, $endTime);
+        checkErrorLocations($bookingMode, $pickupLocation, $dropOffLocation);
 
-        // check if error exists in date and time
-        $dateError = ($dtStartDate > $dtEndDate);   // check that start date is before or equal to end date
-        $timeError = ($dtStartDate == $dtEndDate) ? ($dtStartTime >= $dtEndTime) : false;    // check thgat start
+        // exit();
 
-        if (!$emptyInputError && !$dateError && !$timeError)
+        if (!checkErrorSet($bookingMode))
         {
             // all fields are fine
             header("Location: ..\bookings.php?booking-mode=change2-none");
         }
         else
         {
-            // errors found. need to find which.
-            $error = "null";
-            if ($emptyInputError)
-            {
-                $error = "emptyError";
-            }
-            else if ($dateError)
-            {
-                $error = "dateError";
-            }
-            else if ($timeError)
-            {
-                $error = "timeError";
-            }
-            header("Location: ..\bookings.php?booking-mode=change1-$error");
+            header("Location: ..\bookings.php?booking-mode=change1-error");
         }
     }
     else if ($changeBookingBikesSubmit)
     {
+        $bookingMode = "changeBooking";
+
         // retrieve bikes and accessories selected from form
         $bikes        = comboboxArrayToItemIdArray($_POST["change-booking-bike"]);
         $accessories  = comboboxArrayToItemIdArray($_POST["change-booking-accessory"]);
 
+        unset($_SESSION[$bookingMode]["error"]);
+
+        checkErrorBikes($bookingMode, $bikes);
+
         // verify at least one bike
-        if (empty($bikes))
+        if (checkErrorSet($bookingMode))
         {
-            header("Location: ..\bookings.php?booking-mode=change2-bikeError");
+            header("Location: ..\bookings.php?booking-mode=change2-error");
         }
         else
         {
             // retrieve data from previous form
-            $custId      = $_SESSION["changeBooking"]["custId"];
-            $custName    = $_SESSION["changeBooking"]["custName"];
+            $custId      = $_SESSION[$bookingMode]["custId"];
+            $custName    = $_SESSION[$bookingMode]["custName"];
             $startTime   = $_SESSION["changeBooking"]["startTime"];
             $endTime     = $_SESSION["changeBooking"]["endTime"];
             $startDate   = $_SESSION["changeBooking"]["startDate"];
