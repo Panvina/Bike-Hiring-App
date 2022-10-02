@@ -50,20 +50,19 @@ Contributor(s):
         	<div class="main">
                 <div class="date-grid">
                     <img class="arrows" id="leftArrow" onclick="decrementDate()" src="img/icons/arrow-left-bold.png"/>
-                    <label class="date_string" for="dDate">
-                        <?php
-                            $date = $_GET["date"];
-                            $dateStr = getFormattedDate($date);
+                    <div>
+                        <input id="date-picker" class="date-picker" type="date"></input>
+                        <label class="date_string" for="dDate">
+                            <?php
+                                $date = $_GET["date"];
+                                $dateStr = getFormattedDate($date);
 
-                            echo "$dateStr";
-                        ?>
-                    </label>
+                                echo "$dateStr";
+                            ?>
+                        </label>
+                    </div>
                     <img class="arrows" id="rightArrow" onclick="incrementDate()" src="img/icons/arrow-right-bold.png"/>
-
-                    <br>
-                 </div>
-                <br>
-                <br>
+                </div>
                 <div class="DashboardInformationContainer">
                     <!-- Booking summary section -->
                     <div class="DashboardInformation dashboard-headers">
@@ -210,7 +209,7 @@ Contributor(s):
                 }
                 else
                 {
-                    echo "{'id' : '1', 'name' : 'null'}";
+                    echo "{'id' : '1', 'name' : 'none'}";
                 }
             ?>
         ]);
@@ -246,7 +245,9 @@ Contributor(s):
         renderer.draw('.timetable');
 
         // Dabin's custom edge to edge timetable code
-        var timeScope = document.getElementsByClassName("syncscroll").getElementsByTagName("header").getElementsByTagName("ul")[0];
+        var syncscroll = document.getElementsByClassName("syncscroll");
+        var syncScrollHeaders = syncscroll.getElementsByTagName("header");
+        var timeScope = syncScrollHeaders.getElementsByTagName("ul")[0];
         var timeScopeWidth = timeScope.offsetWidth;
         var timeScopeDiff = (17.0 - 9.0);
         var timeScopeSectionWidth = timeScopeWidth / timeScopeDiff;

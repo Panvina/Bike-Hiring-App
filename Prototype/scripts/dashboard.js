@@ -32,3 +32,9 @@ function incrementDate()
         // header("../dashboard.php?date=$nextDay");
     ?>
 }
+
+var date_picker = document.getElementById("date-picker");
+date_picker.change(function() {
+    window.location.assign(date_picker.value);
+    window.location.reload();
+});
