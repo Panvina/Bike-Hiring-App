@@ -96,7 +96,7 @@
                 if (!validPostCode($formPcode)|| empty ($formPcode)){
                     $msg = $msg . "<p class='error'>The post code is invalid.</p>";
                 }
-                if (!validState($formState) || empty($formState)){
+                if (empty($formState)){
                     $msg = $msg . "<p class='error'>The state is invalid.</p>";
                 }
                 if (!validEmail( $formEmail)||empty ($formEmail)){

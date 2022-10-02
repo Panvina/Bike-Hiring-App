@@ -33,7 +33,7 @@
         if (!validPostCode($pcode)|| empty ($_POST['post_code'])){
             $error = $error . "The post code is invalid.<br>";
         }
-        if (!validState($state) || empty($_POST['state'])){
+        if (empty($_POST['state'])){
             $error = $error . "The state is invalid.<br>";
         }
         if (!validLicenceNumber( $licence)||empty ($_POST['licence_number'])){
@@ -87,7 +87,7 @@
             <label for="state">State: </label>
             <select name="state">
             <option value="" selected disabled hidden>---</option>
-            <option value="ATC">ACT</option>
+            <option value="ACT">ACT</option>
             <option value="NSW">NSW</option>
             <option value="NT">NT</option>
             <option value="QLD">QLD</option>

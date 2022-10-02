@@ -132,7 +132,7 @@
                             <input class='addressBox' type='text' name ='post_code' placeholder='post code' value='$pcode'/>      
                             <select id='state' name='state'>
                             <option value='$state' selected hidden>$state</option>
-                            <option value='ATC'>ACT</option>
+                            <option value='ACT'>ACT</option>
                             <option value='NSW'>NSW</option>
                             <option value='NT'>NT</option>
                             <option value='QLD'>QLD</option>
