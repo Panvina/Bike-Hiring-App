@@ -232,7 +232,7 @@ Contributor(s):
                     $endMin = $time["endMin"];
                     $custId = $time["custId"];
 
-                    echo "timetable.addEvent('$startHour:$startMin-$endHour:$endMin', '$custId', new Date($year, $month, $day, $startHour, $startMin), new Date($year, $month, $day, $endHour, $endMin));";
+                    echo "timetable.addEvent('$startHour:$startMin - $endHour:$endMin', '$custId', new Date($year, $month, $day, $startHour, $startMin), new Date($year, $month, $day, $endHour, $endMin));";
                 }
             }
             else
