@@ -16,6 +16,19 @@
     //$name = $_POST["name"];
     //$description = $_POST["description"];
 
+    //Search concept adapted from Alex
+    if (isset($_POST['search-btn'])){
+        $search = $_POST["search"];
+
+        if (trim($search) != "")
+        {
+            header("Location: ..\BikeTypes.php?search=$search");
+        }
+        else
+        {
+            header("Location: ..\BikeTypes.php");
+        }
+    } 
     if(isset($_POST['AddItem'])){
         /* Form validation for adding records*/
         //Check if all fields are empty

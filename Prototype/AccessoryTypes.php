@@ -65,8 +65,8 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
             <h1 id="content-header"> All Accessory Types </h1>
 
             <div class="midbar">
-                    <form action='php-scripts/booking-popups.php' method='POST'>
-                        <input type="text" name="search-text" placeholder="Search (Customer Name)"></input>
+                    <form action='php-scripts/accessorytype-addscript.php' method='POST'>
+                        <input type="text" name="search" placeholder="Search (Accessory Type Name)"></input>
                         <button type="submit" name="search-btn"> Search </button>
                     </form>
                     <!-- Add Item pop up -->
@@ -76,9 +76,18 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
             <!-- List of available bookings -->
             <table class="TableContent" id="data-table">
                 <?php
-                // Fetching all column data from the Accessory type table
-                $accessoryType = $conn->query("SELECT * FROM accessory_type_table");
-
+                // create new DB connection and fetch rows
+                if (isset($_GET["search"]))
+                {
+                    $search = $_GET['search'];
+                    $accessoryType = $conn->query("SELECT * FROM accessory_type_table WHERE accessory_type_table.name LIKE '%$search%'");
+                }
+                else
+                {
+                    // Fetching all column data from the Accessory type table
+                    $accessoryType = $conn->query("SELECT * FROM accessory_type_table");
+                }  
+               
                 echo "
                         <tr>
                             <th> Accessory Type ID </th>

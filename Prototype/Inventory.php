@@ -70,8 +70,8 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
         <div class="main">
             <h1 id="content-header"> All Bikes </h1>
             <div class="midbar">
-                    <form action='php-scripts/booking-popups.php' method='POST'>
-                        <input type="text" name="search-text" placeholder="Search (Customer Name)"></input>
+                    <form action='php-scripts/inventory-addscript.php' method='POST'>
+                        <input type="text" name="search" placeholder="Search (Bike Name)"></input>
                         <button type="submit" name="search-btn"> Search </button>
                     </form>
                     <!-- Add Item pop up -->
@@ -81,8 +81,17 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
             <!-- List of available bookings -->
             <table class="TableContent" id="data-table">
                 <?php
-                // Fetching all column data from the bike inventory table
-                $bikeInventory = $conn->query("SELECT * FROM bike_inventory_table");
+                // create new DB connection and fetch rows
+                if (isset($_GET["search"]))
+                {
+                    $search = $_GET['search'];
+                    $bikeInventory = $conn->query("SELECT * FROM bike_inventory_table WHERE bike_inventory_table.name LIKE '%$search%'");
+                }
+                else
+                {
+                    // Fetching all column data from the bike inventory table
+                    $bikeInventory = $conn->query("SELECT * FROM bike_inventory_table");
+                }
 
                 // Printing heading of all table columns
                 echo "
@@ -96,7 +105,9 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                             <th> Description </th>
                             <th> Edit </th>
                         </tr>";
-
+                
+                
+                
                 // Printing data of all table columns by fetching from database
                 while ($row = $bikeInventory->fetch_assoc()) {
                     // Print Safety Inspection based on 0 or 1 values

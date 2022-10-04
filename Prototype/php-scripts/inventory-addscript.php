@@ -20,8 +20,19 @@
     $safetyInspect = $_POST["safetyInspect"];
     //$description = $_POST["description"];
 
-    
-    
+    //Search concept adapted from Alex
+    if (isset($_POST['search-btn'])){
+        $search = $_POST["search"];
+
+        if (trim($search) != "")
+        {
+            header("Location: ..\Inventory.php?search=$search");
+        }
+        else
+        {
+            header("Location: ..\Inventory.php");
+        }
+    } 
     if(isset($_POST['AddItem'])){
         /* Form validation for adding records*/
         //Check if all the fields are empty

@@ -65,8 +65,8 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
     	<div class="main">
             <h1 id="content-header"> All Bike Types </h1>
             <div class="midbar">
-                    <form action='php-scripts/booking-popups.php' method='POST'>
-                        <input type="text" name="search-text" placeholder="Search (Customer Name)"></input>
+                    <form action='php-scripts/biketype-addscript.php' method='POST'>
+                        <input type="text" name="search" placeholder="Search (Bike Type Name)"></input>
                         <button type="submit" name="search-btn"> Search </button>
                     </form>
                     <!-- Add Item pop up -->
@@ -76,9 +76,18 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
             <!-- List of available bookings -->
             <table class="TableContent" id="data-table">
                 <?php
-                // Fetching all column data from the bike type table
-                $accessoryType = $conn->query("SELECT * FROM bike_type_table");
-
+                // create new DB connection and fetch rows
+                if (isset($_GET["search"]))
+                {
+                    $search = $_GET['search'];
+                    $bikeType = $conn->query("SELECT * FROM bike_type_table WHERE bike_type_table.name LIKE '%$search%'");
+                }
+                else
+                {
+                    // Fetching all column data from the bike type table
+                    $bikeType = $conn->query("SELECT * FROM bike_type_table");
+                }    
+                
                 echo "
                         <tr>
                             <th> Bike Type ID </th>
@@ -88,7 +97,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                             <th> Edit </th>
                         </tr>";
 
-                while ($row = $accessoryType->fetch_assoc()) {
+                while ($row = $bikeType->fetch_assoc()) {
 
                     // Setting the primary key value based on table's primary key
                     $primaryKey = $row["bike_type_id"];
