@@ -68,7 +68,7 @@ Created by: Aadesh Jagannathan @102072344@student.swin.edu.au
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgb(252, 93, 93);
+    background-color: #EFAC6E;
     -webkit-transition: .4s;
     transition: .4s;
   }
@@ -112,8 +112,18 @@ Created by: Aadesh Jagannathan @102072344@student.swin.edu.au
     color: red;
   }
   
-  .echo{
+  .echo-fail{
     color: red;
+    font-size: 25px;
+    margin-left: 45%;
+    position: absolute;
+    z-index: 1; left: 0;
+    top: 0;
+    padding-top: 5%;
+  }
+
+  .echo-success{
+    color: green;
     font-size: 25px;
     margin-left: 45%;
     position: absolute;

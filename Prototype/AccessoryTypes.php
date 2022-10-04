@@ -32,27 +32,27 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
     //checks to see if inserting was successful and provides input
     if (isset($_GET["insert"])) {
         if ($_GET["insert"] == "true") {
-            echo "<p class = 'echo' id='tempEcho'>  Record successfully created! </p>";
+            echo "<p class = 'echo-success' id='tempEcho'>  Record successfully created! </p>";
         } else if ($_GET["insert"] == "false") {
-            echo "<p class = 'echo'>  Record was not created! </p>";
+            echo "<p class = 'echo-fail'>  Record was not created! </p>";
         }
     }
 
     //checks to see if updating was successful and provides input
     if (isset($_GET["update"])) {
         if ($_GET["update"] == "true") {
-            echo "<p class = 'echo' id='tempEcho'>  Record successfully updated! </p>";
+            echo "<p class = 'echo-success' id='tempEcho'>  Record successfully updated! </p>";
         } else if ($_GET["update"] == "false") {
-            echo "<p class = 'echo' id='tempEcho'> Record was not updated successfuly </p>";
+            echo "<p class = 'echo-fail' id='tempEcho'> Record was not updated successfuly </p>";
         }
     }
 
     //checks to see if deleting was successful and provides input
     if (isset($_GET["delete"])) {
         if ($_GET["delete"] == "true") {
-            echo "<p class = 'echo' id='tempEcho'>  Record successfully deleted! </p>";
+            echo "<p class = 'echo-success' id='tempEcho'>  Record successfully deleted! </p>";
         } else if ($_GET["delete"] == "false") {
-            echo "<p class = 'echo' id='tempEcho'> Record was not deleted successfully! </p>";
+            echo "<p class = 'echo-fail' id='tempEcho'> Record was not deleted successfully! </p>";
         }
     }
     ?>
@@ -64,8 +64,14 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
     	<div class="main">
             <h1 id="content-header"> All Accessory Types </h1>
 
-            <!-- Add Item pop up -->
-            <button type="button" id="AddItem">+ Add Accessory Type</button>
+            <div class="midbar">
+                    <form action='php-scripts/booking-popups.php' method='POST'>
+                        <input type="text" name="search-text" placeholder="Search (Customer Name)"></input>
+                        <button type="submit" name="search-btn"> Search </button>
+                    </form>
+                    <!-- Add Item pop up -->
+                    <button type="button" id="AddItem">+ Add Accessory Type</button>
+            </div>
 
             <!-- List of available bookings -->
             <table class="TableContent" id="data-table">
