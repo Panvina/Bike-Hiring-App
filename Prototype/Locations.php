@@ -132,8 +132,8 @@ include_once("php-scripts/dashboard-menu.php");
 							echo "<td>$name";
 							echo "</td>";
 							echo "<td>$fulladdress</td>";
-							echo "<td> <input type='checkbox' class='CheckBox' id='dropOffBox' name='dropOffBox' $dropOffResult style='width=auto;'> </td>";
-							echo "<td> <input type='checkbox' class='CheckBox' id='pickUpBox' name='pickUpBox' $pickUpResult style='width=auto;'> </td>";
+							echo "<td> <input type='checkbox' class='CheckBox' id='dropOffBox' name='dropOffBox' $dropOffResult style='width=auto;' onclick='return false;'> </td>";
+							echo "<td> <input type='checkbox' class='CheckBox' id='pickUpBox' name='pickUpBox' $pickUpResult style='width=auto;' onclick='return false;'> </td>";
 							echo "<td>
 							<!-- This is to open a dropdown table -->
 							<div class='dropdown'>
@@ -143,16 +143,16 @@ include_once("php-scripts/dashboard-menu.php");
 									<form method='POST' action='UpdateLocations.php' event.preventDefault()>
 										<button id='$LID' style='left: 0%'  class='updateLocationModal' name='updateLocationModal' type='submit' value='$LID'>Update</button>
 									</form>
-									
+
 									<!-- Trigger/Open The Delete PopUp -->
 									<form method='POST' action='UpdateLocations.php' event.preventDefault()>
 									<input type='hidden' id='$name' class='deleteName' name='deleteName' value='$name'>
 									<input type='hidden' id='$fulladdress' class='deleteAddress' name='deleteAddress' value='$fulladdress'>
-										
+
 										<button id=$LID style='left: 0%'  class='deleteLocationModal' name='deleteLocationModal'  type='submit' value='$LID'>Delete</button>
 									</form>
 								</div>
-							</div>						
+							</div>
 							</td>";
 							echo "</tr>";
 

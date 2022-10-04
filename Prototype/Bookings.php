@@ -622,8 +622,16 @@
             <div class="main">
                 <h1 id="content-header"> All Bookings </h1>
                 <!-- Add Booking pop up -->
-                <button type="button" id="add-booking-btn">+ Add Booking</button>
-
+                <div class="midbar" style="
+                    display: flex;
+                    justify-content: space-between;
+                ">
+                    <form action='php-scripts/booking-popups.php' method='POST' style="display: flex; justify-content: space-between;">
+                        <input type="text" name="search-text" placeholder="Search (Customer Name)"></input>
+                        <button type="submit" name="search-btn"> Search </button>
+                    </form>
+                    <button type="button" id="add-booking-btn">+ Add Booking</button>
+                </div>
                 <!-- List of available bookings -->
                 <table id="data-table" class="TableContent">
                     <tr>
@@ -653,7 +661,13 @@
                     <!-- Populate table data rows -->
                     <?php
                         // create new DB connection and fetch rows
-                        $rows = $conn->getBookingRows();
+                        $condition = 0;
+                        if (isset($_GET["search"]))
+                        {
+                            $searchText = $_GET['search'];
+                            $condition = "customer_table.name LIKE '%$searchText%'";
+                        }
+                        $rows = $conn->getBookingRows($condition);
 
                         // if no rows are returned, create a null row as a placeholder
                         if ($rows == null)
@@ -695,10 +709,10 @@
                                     <div class='dropdown'>
                                         <button class='dropbtn' disabled>...</button>
                                         <div class='dropdown-content'>
-                                            <form class='modal-form' action='php-scripts/booking-popups.php' method='POST'>
+                                            <form class='' action='php-scripts/booking-popups.php' method='POST'>
                                                 <button type='submit' name='change-booking-btn' value='change,$bookingId' class='dropdown-element'> Update </button>
                                             </form>
-                                            <form class='modal-form' action='php-scripts/booking-popups.php' method='POST'>
+                                            <form class='' action='php-scripts/booking-popups.php' method='POST'>
                                                 <button type='submit' name='delete-booking-btn' value='delete,$bookingId' class='dropdown-element'> Delete </button>
                                             </form>
                                         </div>
