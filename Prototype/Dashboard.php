@@ -125,7 +125,6 @@ Contributor(s):
                         </h3>
                     </div>
                 </div>
-                <br>
 
                 <!-- Current bookings section (Using open source GPL license timetable schedule, courtesy of Grible and friou) -->
                 <h1 style="line-height: 0px; margin-bottom: 1.5%; margin-top: 2em; "><strong> Current Bookings: </strong></h1>

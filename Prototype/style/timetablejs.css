@@ -45,7 +45,7 @@
     content: "";
     display: block;
     background-color: #fff;
-    height: 46px;
+    height: 40px;
     position: relative;
     margin-top: -46px;
     top: 0;
@@ -76,7 +76,7 @@
 }
 .timetable > section > header ul {
     display: inline-flex;
-    height: 46px;
+    height: 40px;
     align-items: center;
 }
 .timetable > section > header li {

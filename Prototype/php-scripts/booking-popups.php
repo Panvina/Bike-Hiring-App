@@ -266,6 +266,8 @@ Contributor(s): Dabin Lee @ icelasersparr@gmail.com
     $deleteBookingSubmit = isset($_POST["delete-booking-btn"]);
     $deleteBookingConfirm = isset($_POST["delete-booking-confirm-btn"]);
 
+    $searchButtonSubmit = isset($_POST["search-btn"]);
+
     // Verify button for add booking is pressed
     if ($addBookingInfoSubmit)
     {
@@ -505,6 +507,20 @@ Contributor(s): Dabin Lee @ icelasersparr@gmail.com
         $res = $conn->deleteBooking($bookingId);
 
         header("Location: ..\bookings.php");
+    }
+    else if ($searchButtonSubmit)
+    {
+        $searchText = $_POST["search-text"];
+
+
+        if (trim($searchText) != "")
+        {
+            header("Location: ..\bookings.php?search=$searchText");
+        }
+        else
+        {
+            header("Location: ..\bookings.php");
+        }
     }
     exit();
 ?>

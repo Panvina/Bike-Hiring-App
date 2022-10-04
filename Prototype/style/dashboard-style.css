@@ -82,12 +82,12 @@ br
 }
 
 /* styling for main menu content buttons */
-.main button
+button
 {
-    display: inline-block;
-    margin-top: 2%;
-    left: 67%;
-    position: relative;
+    /* display: inline-block; */
+    /* margin-top: 2%; */
+    /* left: 67%; */
+    /* position: relative; */
     background-color: darkcyan;
     border: none;
     color: white;
@@ -97,33 +97,62 @@ br
     cursor: pointer;
 }
 
+button:active
+{
+    background-color: #1BB1B1;
+    cursor: pointer;
+}
+
+.midbar form
+{
+    flex-grow: 1;
+}
+
+.midbar input
+{
+    font-size: calc(12px + 0.3vw);
+    flex-grow: 1;
+    margin-right: 10px;
+}
+
+.midbar
+{
+    margin-bottom: 5px;
+
+}
+
 .main h1
 {
     display: inline-block;
     margin-bottom: 0px;
 }
 
+/* Formatting for table content in div */
 .TableContent{
   border-collapse: collapse;
   width: 100%;
 }
 
+/* Formatting for table heading and data */
 .TableContent th, td{
   text-align: center;
   border: 2px solid black;
   padding: 8px;
 }
 
+/* width of edit column in table content */
 .editcolumn
 {
     width: 30px;
 }
 
+/* Set table font size dynamically based on viewport width */
 table
 {
     font-size: calc(12px + 0.3vw);
 }
 
+/* remove all margins and padding from forms. */
 form
 {
 	margin:0px;
