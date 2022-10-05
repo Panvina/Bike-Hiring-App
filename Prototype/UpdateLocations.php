@@ -30,36 +30,43 @@ if (isset($_POST["updateLocation"]) || isset($_POST["deleteLocation"])) {
 	$postcode = sanitise_input($postcode);
 
 	if (isset($_POST["updateLocation"])) {
-		$err_msg = "";
+		$name_msg = "";
+		$post_msg = "";
+		$suburb_msg = "";
+
 
 		//Name valdiation
 		if ($name == "") {
-			$err_msg .= "<p>Please enter info.</p>";
+			$name_msg .= "Please enter info.";
 		}
 
 		//postcodes validation
 		if ($postcode == "") {
-			$err_msg .= "<p>Please enter Postcode.</p>";
-		} else if (!preg_match('/^[0-9]{4}$/', $postcode)) {
-			$err_msg = "The postcode must be a 4-digit number.";
-		} else if (!(substr($postcode, -4, 1) == 3)) //To show this is from the state of Victoaria since Iverloch bike hire is located in Victoria
+			$post_msg .= "Please enter Postcode.";
+		} else if (!preg_match('/^\d{4}$/', $postcode)) {
+			$post_msg = "The postcode must be a 4-digit number.";
+		} else if ((substr($postcode, -4, 1) != 3)) //To show this is from the state of Victoaria since Iverloch bike hire is located in Victoria
 		{
-			$err_msg .= "<p>The postcode you enetered is not a Victorian postcode.</p>";
+			$post_msg .= "The postcode you enetered is not a Victorian postcode.";
 		}
 
 		//Suburb valdiation
 		$suburb = sanitise_input($suburb);
 		if ($suburb == "") {
-			$err_msg .= "<p>Please enter address.</p>";
-		} else if (!preg_match("/^[A-Za-z ]+$/", $suburb)) {
-			$err_msg .= "<p>Suburb of location can only contain alpha characters.</p>";
+			$suburb_msg .= "Please enter address.";
+		} else if (!preg_match("/^[a-zA-Z',.\s-]{1,25}$/", $suburb)) {
+			$suburb_msg .= "Suburb of location can only contain alpha characters.";
 		}
 
 
 		//if there is an validation error, it would be send back to Location.php with an error message
-		if ($err_msg != "") {
-			echo "<p>$err_msg</p>";
-			header("location:Locations.php?err_msg=$err_msg&update=false");
+		if (($name_msg != "") || ($post_msg != "") || ($suburb_msg != "")) {
+			$_SESSION["LID"] = $LID;
+			$_SESSION["name"] = $name;
+			$_SESSION["address"] = $address;
+			$_SESSION["suburb"] = $suburb;
+			$_SESSION["postcode"] = $postcode;
+			header("location:Locations.php?update=false&name_msg=$name_msg&post_msg=$post_msg&sub_msg=$suburb_msg");
 			exit();
 		}
 	}

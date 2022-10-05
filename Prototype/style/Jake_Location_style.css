@@ -235,7 +235,12 @@ nav a {
   /* display:inline-block; */
   text-align: center;
   height: 2em;
-  margin-bottom: 5%;
+  /* margin-bottom: 5%; */
+  width: 100%;
+}
+
+.modal-content h2 {
+  margin-top: 5%;
 }
 
 .modal-content h1 {
@@ -313,9 +318,20 @@ nav a {
   left: -2% !important;
 }
 
+/* This is if an error appear */
 .error {
   color: red;
+  margin: 0%;
+}
 
+/* This is if an success message appear */
+.success {
+  color: green;
+}
+
+/* This is mainly to align center certain items */
+.center {
+  text-align: center;
 }
 
 /* Repurposed clemeants CSS to current style */

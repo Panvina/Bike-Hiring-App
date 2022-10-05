@@ -21,7 +21,6 @@ include_once("php-scripts/dashboard-menu.php");
 	<h1 class="header"> <a href="index.php"><img src="img/photos/Inverloch_Logo3.png" alt="Inverloch Logo" id="Logo" /></a> Locations </h1>
 	<script src="scripts/FormOpenOrClose.js"></script>
 	<link rel="stylesheet" href="style/Jake_Location_style.css">
-	<!-- <link rel="stylesheet" href="style/LocationPop.css"> To be removed-->
 	<link rel="stylesheet" href="style/popup.css">
 	<link rel="stylesheet" href="style/dashboard-style.css">
 	<?php
@@ -55,33 +54,35 @@ include_once("php-scripts/dashboard-menu.php");
 			</form>
 
 			<!--This handles if the Database having an issue -->
-			<div style="color: red;">
-				<?php
-				//Idea from Jake and Aadesh
-				//this is basically if there is any issues with the database while in middle of the form
-				if (!empty($_GET['db_msg'])) {
-					$db_msg = $_GET['db_msg'];
-					echo $db_msg;
-				}
-				?>
+			<div>
+				<p class='error'>
+					<?php
+					//Idea from Jake and Aadesh
+					//this is basically if there is any issues with the database while in middle of the form
+					if (!empty($_GET['db_msg'])) {
+						$db_msg = $_GET['db_msg'];
+						echo $db_msg;
+					}
+					?>
+				</p>
 			</div>
 
 			<!-- This handles if  the confirmation of Update, Add or Delete being a success. -->
-			<div style="color: green;">
+			<div>
 				<?php
 				//Idea from Jake and Aadesh
 				//this is basically where it starts checking if there is any success, if there is any, it will print it out onto the page that the item that the user has done is completed
 				if (isset($_GET["add"])) {
 					if ($_GET["add"] == "success") {
-						echo "<p>New location data has successfully been added to the database</p>";
+						echo "<p class='success'>New location data has successfully been added to the database</p>";
 					}
 				} else if (isset($_GET["delete"])) {
 					if ($_GET["delete"] == "success") {
-						echo "<p>Location data has been deleted successfully from the database</p>";
+						echo "<p class='success'>Location data has been deleted successfully from the database</p>";
 					}
 				} else if (isset($_GET["update"])) {
 					if ($_GET["update"] == "success") {
-						echo "<p>Location data has been updated successfully from the database</p>";
+						echo "<p class='success'>Location data has been updated successfully from the database</p>";
 					}
 				}
 				?>
@@ -143,16 +144,16 @@ include_once("php-scripts/dashboard-menu.php");
 									<form method='POST' action='UpdateLocations.php' event.preventDefault()>
 										<button id='$LID' style='left: 0%'  class='updateLocationModal' name='updateLocationModal' type='submit' value='$LID'>Update</button>
 									</form>
-
+									
 									<!-- Trigger/Open The Delete PopUp -->
 									<form method='POST' action='UpdateLocations.php' event.preventDefault()>
 									<input type='hidden' id='$name' class='deleteName' name='deleteName' value='$name'>
 									<input type='hidden' id='$fulladdress' class='deleteAddress' name='deleteAddress' value='$fulladdress'>
-
+										
 										<button id=$LID style='left: 0%'  class='deleteLocationModal' name='deleteLocationModal'  type='submit' value='$LID'>Delete</button>
 									</form>
 								</div>
-							</div>
+							</div>						
 							</td>";
 							echo "</tr>";
 
@@ -165,8 +166,8 @@ include_once("php-scripts/dashboard-menu.php");
 					echo "<tr>";
 					echo "<td>Data</td>";
 					echo "<td> Does not Exist </td>";
-					echo "<td> <input type='checkbox' class='CheckBox'> </td>";
-					echo "<td> <input type='checkbox' class='CheckBox'> </td>";
+					echo "<td> <input type='checkbox' class='CheckBox' onclick='return false;'> </td>";
+					echo "<td> <input type='checkbox' class='CheckBox' onclick='return false;'> </td>";
 					echo "<td>...</td>";
 					echo "</tr>";
 				}
@@ -180,21 +181,19 @@ include_once("php-scripts/dashboard-menu.php");
 		<div id="addModal" class="modal" <?php
 											//this is to check if the button is selected, if thats the case, the modal popup will happen
 											//Idea and code from Aadesh and Jake
-											if (isset($_GET["add"])) {
-												if ($_GET["add"] == "true") {
-													echo "style = 'display:inline-block'";
-												} else if ($_GET["add"] == "false") {
-													echo "style = 'display:inline-block'";
-												}
+											if (
+												isset($_GET["add"]) &&
+												($_GET["add"] == "true" || $_GET["add"] == "false")
+											) {
+												echo "style = 'display:inline-block'";
 											}
 											?>>
 
 			<!-- PopUp content for adding location-->
-			<div class="modal-content" style="margin: 5% auto;text-align: inherit;width: 17%;">
-				<!--<span class="addclose" href="locations.php">&times;</span>-->
+			<div class="modal-content" style="margin: 5% auto;text-align: inherit;">
 				<a href="locations.php" style="text-decoration: none;text-decoration-color:beige;">&times;</a>
 
-				<h1 style="margin-left: 8%">Add Location</h1>
+				<h1>Add Location</h1>
 
 				<form action="AddLocations.php" class="form-container" method="post">
 					<?php
@@ -203,37 +202,55 @@ include_once("php-scripts/dashboard-menu.php");
 					$addaddress = "";
 					$addsuburb = "";
 					$addpostcode = "";
-					//this is to show if there is an error from validating codes
-					if ($_GET["add"] == "false") {
-						if (!empty($_GET["err_msg"])) {
-							$err_msg = $_GET["err_msg"];
-							echo "<div style='color: red'>$err_msg</div>";
-
-							//this is to retrieve data from the previous page as the user has failed to pass a validation check
-							$addname = $_GET["name"];
-							$addaddress = $_GET["address"];
-							$addsuburb = $_GET["suburb"];
-							$addpostcode = $_GET["postcode"];
-							$addname = sanitise_input($addname);
-							$addaddress = sanitise_input($addaddress);
-							$addsuburb = sanitise_input($addsuburb);
-							$addpostcode = sanitise_input($addpostcode);
-						}
+					//this is to show the data that the user has inputted
+					if (($_GET["add"] == "false") &&
+						((!empty($_GET["name_msg"])) || (!empty($_GET["sub_msg"])) || (!empty($_GET["sub_msg"])))
+					) {
+						//this is to retrieve data from the previous page as the user has failed to pass a validation check
+						$addname = $_SESSION["name"];
+						$addaddress = $_SESSION["address"];
+						$addsuburb = $_SESSION["suburb"];
+						$addpostcode = $_SESSION["postcode"];
+						$addname = sanitise_input($addname);
+						$addaddress = sanitise_input($addaddress);
+						$addsuburb = sanitise_input($addsuburb);
+						$addpostcode = sanitise_input($addpostcode);
 					}
 
 
-					echo "<label for='nameInput'><b>Name:</b></label>
+					echo "<label for='nameInput'><b>Name:</b></label><br/>
 					<input type='text' placeholder='Enter Name' name='nameInput' id ='nameInput' class='inputlocation' value='$addname' required>
 					<br/>";
-					echo "<label for='addressInput'><b>Address:</b></label>
+
+					//this is if name has validation error
+					if ($_GET["add"] == "false" && !empty($_GET["name_msg"])) {
+						$name_msg = $_GET["name_msg"];
+						echo "<p class='error center'>$name_msg</p>";
+					}
+
+					echo "<label for='addressInput'><b>Address:</b></label><br/>
 					<input type='text' placeholder='Enter Address' name='addressInput' id='addressInput' class='inputlocation' value='$addaddress' required>
 					<br/>";
-					echo "<label for='suburbInput'><b>Suburb:</b></label>
+					echo "<label for='suburbInput'><b>Suburb:</b></label><br/>
 					<input type='text' placeholder='Enter Suburb' name='suburbInput' id='suburbInput' class='inputlocation' value='$addsuburb'required>
 					<br/>";
-					echo "<label for='postcodeInput'><b>Postcode:</b></label>
+
+					//this is if suburb has validation error
+					if ($_GET["add"] == "false" && !empty($_GET["sub_msg"])) {
+						$sub_msg = $_GET["sub_msg"];
+						echo "<p class='error center'>$sub_msg</p>";
+					}
+
+
+					echo "<label for='postcodeInput'><b>Postcode:</b></label><br/>
 					<input type='text' placeholder='Enter Postcode' name='postcodeInput' id='postcodeInput' class='inputlocation' maxlength='4' value='$addpostcode' required>
-					<br/>"
+					<br/>";
+
+					//this is if postcode has validation error
+					if ($_GET["add"] == "false" && !empty($_GET["post_msg"])) {
+						$post_msg = $_GET["post_msg"];
+						echo "<p class='error center'>$post_msg</p>";
+					}
 					?>
 					<label for="dropOffInput"><b>Drop Off:</b></label>
 					<input type='checkbox' class='CheckBox' name="dropOffInput" id="dropOffInput" />
@@ -241,7 +258,7 @@ include_once("php-scripts/dashboard-menu.php");
 					<label for="pickUpInput"><b>Pick Up:</b></label>
 					<input type='checkbox' class='CheckBox' name="pickUpInput" id="pickUpInput" />
 					<br />
-					<button type="submit" name="submitLocation" id="submitLocation" class="btn, inputlocation" style='margin-left: 12%;margin-top: 5%;'>Add Location</button>
+					<button type="submit" name="submitLocation" id="submitLocation" class="btn, inputlocation" style='margin-top: 5%;'>Add Location</button>
 				</form>
 			</div>
 		</div>
@@ -250,18 +267,15 @@ include_once("php-scripts/dashboard-menu.php");
 		<div id='updateModal' class='modal' <?php
 											//this is to check if the button is selected, if thats the case, the modal popup will happen
 											//Idea and code from Aadesh and Jake
-											if (isset($_GET["update"])) {
-												if ($_GET["update"] == "true") {
-													echo "style = 'display:inline-block'";
-												} else if ($_GET["update"] == "false") {
-													echo "style = 'display:inline-block'";
-												}
+											if ((isset($_GET["update"])) &&
+												(($_GET["update"] == "true") || ($_GET["update"] == "false"))
+											) {
+												echo "style = 'display:inline-block'";
 											}
 											?>>
 
 			<!-- Update PopUp content -->
 			<div class='modal-content' style="margin: 5% auto;text-align: inherit;">
-				<!--<span class='updateclose'>&times;</span>-->
 				<a href="locations.php" class='updateclose' style="text-decoration: none;text-decoration-color:beige;">&times;</a>
 				<p>
 				<h1>Update Location</h1>
@@ -293,36 +307,56 @@ include_once("php-scripts/dashboard-menu.php");
 						$updatePickup = checkValue($pickUpUpdate);
 						$updateDropoff = checkValue($dropOffupdate);
 
-						if ($_GET["update"] == "false") {
-							if (!empty($_GET["err_msg"])) {
-								$err_msg = $_GET["err_msg"];
-								echo "<div style='color: red'>$err_msg</div>";
-							}
-						}
 						//This is showing each data from database on the website interface
 						echo "<form method='POST' action='UpdateLocations.php' style='text-align: center;'>";
 						echo "<input type='hidden' id='LID' name='LID' value='$LID'>";
+						if (
+							($_GET["update"] == "false") &&
+							((!empty($_GET["name_msg"])) || (!empty($_GET["sub_msg"])) || (!empty($_GET["sub_msg"])))
+						) {
+							$updatename = $_SESSION["name"];
+							$updateaddress = $_SESSION["address"];
+							$updatesuburb = $_SESSION["suburb"];
+							$updatepostcode = $_SESSION["postcode"];
+						}
 
-						echo "<label for='nameupdate'><b>Name:</b></label>
-					<input type='text' name='nameupdate' id ='nameupdate' value='$updatename' required><br/>";
+						echo "<label for='nameupdate'><b>Name:</b></label><br/>
+						<input type='text' name='nameupdate' id ='nameupdate' value='$updatename' required><br/>";
 
-						echo "<label for='addressupdate'><b>Address:</b></label>
+						//this is if name has validation error
+						if ($_GET["update"] == "false" && !empty($_GET["name_msg"])) {
+							$name_msg = $_GET["name_msg"];
+							echo "<p class='error center'>$name_msg</p>";
+						}
+						echo "<label for='addressupdate'><b>Address:</b></label><br/>
 					<input type='text' placeholder='Enter Address' name='addressupdate' id='addressupdate' class='inputlocation' value='$updateaddress' required>
 					<br/>";
 
-						echo "<label for='suburbupdate'><b>Suburb:</b></label>
+						echo "<label for='suburbupdate'><b>Suburb:</b></label><br/>
 					<input type='text' placeholder='Enter Suburb' name='suburbupdate' id='suburbupdate' class='inputlocation' value='$updatesuburb' required>
 					<br/>";
 
-						echo "<label for='postcodeUpdate'><b>Postcode:</b></label>
+						//this is if suburb has validation error
+						if ($_GET["update"] == "false" && !empty($_GET["sub_msg"])) {
+							$sub_msg = $_GET["sub_msg"];
+							echo "<p class='error center'>$sub_msg</p>";
+						}
+
+						echo "<label for='postcodeUpdate'><b>Postcode:</b></label><br/>
 					<input type='text' placeholder='EnterPostcode' name='postcodeUpdate' id='postcodeUpdate' class='inputlocation' maxlength='4' value='$updatepostcode' required>
 					<br/>";
+
+						//this is if postcode has validation error
+						if ($_GET["update"] == "false" && !empty($_GET["post_msg"])) {
+							$post_msg = $_GET["post_msg"];
+							echo "<p class='error center'>$post_msg</p>";
+						}
 
 						echo "<label for='dropOffBox'><b>Drop Off Location:</b></label>
 					<input type='checkbox' class='CheckBox' id='dropOffBox' name='dropOffBox' $updateDropoff><br/>";
 
 						echo "<label for='pickUpBox'><b>Pick Up Location:</b></label>
-					<input type='checkbox' class='CheckBox' id='pickUpBox' name='pickUpBox' $updatePickup> <br/>";
+					<input type='checkbox' class='CheckBox' id='pickUpBox' name='pickUpBox' $updatePickup> <br/><br/>";
 
 						echo "<button type='submit' name='updateLocation' id='updateLocation' class='btn'>Update</button>
 					</form>";
@@ -354,7 +388,6 @@ include_once("php-scripts/dashboard-menu.php");
 			<!--This section is to have a form to Delete the location data-->
 			<!-- PopUp Delete confirm content -->
 			<div class='modal-content' style="margin: 5% auto;text-align: inherit;">
-				<!--<span class='deleteclose'>&times;</span>-->
 				<a href="locations.php" style="text-decoration: none;text-decoration-color:beige;">&times;</a>
 				<p>
 				<h1>Delete Location</h1>

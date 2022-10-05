@@ -8,6 +8,8 @@ Contributor:
 -->
 <!-- This page is completely done by Clement -->
 <?php
+
+session_start();
 include("php-scripts/Reusable.php");
 
 if (isset($_POST["addLocationModal"])) {
@@ -31,39 +33,43 @@ if (isset($_POST["submitLocation"])) {
 
 
 	//This section is mainly dealing with validation items
-	$err_msg = "";
+	$name_msg = "";
+	$post_msg = "";
+	$suburb_msg = "";
 
 	//Name valdiation
-	$nameInput = sanitise_input($nameInput);
 	if ($nameInput == "") {
-		$err_msg .= "<p>Please enter name.</p>";
+		$name_msg .= "Please enter info.";
 	}
 	//else if ( !preg_match( "/^[a-zA-Z ]{2,25}$/", $nameInput ) ) {
-	//  $err_msg .= "<p>Name of location can only contain max 25 alpha characters.</p>";}
+	//  $name_msg .= "Name of location can only contain max 25 alpha characters.";}
+
+	//postcodes validation
+	if ($postcodeInput == "") {
+		$post_msg .= "Please enter Postcode.";
+	} else if (!preg_match('/^\d{4}$/', $postcodeInput)) {
+		$post_msg = "The postcode must be a 4-digit number.";
+	} else if ((substr($postcodeInput, -4, 1) != 3)) //To show this is from the state of Victoaria since Iverloch bike hire is located in Victoria
+	{
+		$post_msg .= "The postcode you enetered is not a Victorian postcode.";
+	}
 
 	//Suburb valdiation
 	$suburbInput = sanitise_input($suburbInput);
 	if ($suburbInput == "") {
-		$err_msg .= "<p>Please enter address.</p>";
+		$suburb_msg .= "Please enter address.";
+	} else if (!preg_match("/^[a-zA-Z',.\s-]{1,25}$/", $suburbInput)) {
+		$suburb_msg .= "Suburb of location can only contain alpha characters.";
 	}
-	else if ( !preg_match( "/^[A-Za-z ]+$/", $suburbInput ) ) {
-	 $err_msg .= "<p>Suburb of location can only contain alpha characters.</p>";}
 
-	//postcodes validation
-	$postcodeInput = sanitise_input($postcodeInput);
-	if ($postcodeInput == "") {
-		$err_msg .= "<p>Please enter Postcode.</p>";
-	} else if (!preg_match('/^[0-9]{4}$/', $postcodeInput)) {
-		$err_msg = "<p>The postcode must be a 4-digit number.</p>";
-	} else if (!(substr($postcodeInput, -4, 1) == 3)) //To show this is from the state of Victoaria since Iverloch bike hire is located in Victoria
-	{
-		$err_msg .= "<p>The postcode you enetered is not a Victorian postcode.</p>";
-	}
 
 	//if there is an validation error, it would be send back to Location.php with an error message
-	if ($err_msg != "") {
-		echo "<p>$err_msg</p>";
-		header("location:Locations.php?err_msg=$err_msg&add=false&name=$nameInput&address=$addressInput&suburb=$suburbInput&postcode=$postcodeInput");
+	if (($name_msg != "") || ($post_msg != "") || ($suburb_msg != "")) {
+		$_SESSION["name"] = $nameInput;
+		$_SESSION["address"] = $addressInput;
+		$_SESSION["suburb"] = $suburbInput;
+		$_SESSION["postcode"] = $postcodeInput;
+		header("location:Locations.php?add=false&name_msg=$name_msg&post_msg=$post_msg&sub_msg=$suburb_msg");
 		exit();
 	}
 
