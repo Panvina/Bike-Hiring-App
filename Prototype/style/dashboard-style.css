@@ -69,7 +69,8 @@ body
     display: block;
 }
 
-.menu a.active {
+.menu a.active
+{
     background-color: white;
     color: #00b7b1;
     display: block;
