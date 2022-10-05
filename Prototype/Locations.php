@@ -18,10 +18,7 @@ include_once("php-scripts/dashboard-menu.php");
 
 <head>
 	<title> Locations </title>
-	<div class ="flexDisplay">
-        <h1 class="header"> <a href="index.php"><img src="img/photos/Inverloch_Logo3.png" alt="Inverloch Logo" id="Logo" /></a> Locations </h1>
-        <a id="webpageDirect" name = "webpageDirect" href= 'index.php'> Back to website </a>
-    </div>
+	<h1 class="header"> <a href="index.php"><img src="img/photos/Inverloch_Logo3.png" alt="Inverloch Logo" id="Logo" /></a> Locations </h1>
 	<script src="scripts/FormOpenOrClose.js"></script>
 	<link rel="stylesheet" href="style/popup.css">
 	<link rel="stylesheet" href="style/dashboard-style.css">
@@ -67,10 +64,9 @@ include_once("php-scripts/dashboard-menu.php");
 					<input type="text" name="search" placeholder="Search (Location Name)"></input>
 					<button type="submit" name="search-btn"> Search </button>
 				</form>
-				<form method='POST' action='AddLocations.php' event.preventDefault()>
 					<!-- Trigger/Open The Adding New locations PopUp -->
-					<button id='LID' class='addLocationModal' name='addLocationModal' type='submit' value='LID'>+ Add Location</button>
-				</form>
+					<button id='LID' class='addLocationModal' name='addLocationModal' type='submit' value='LID' onclick='window.location.href="Locations.php?add=true"'>+ Add Location</button>
+
 			</div>
 			<!--This handles if the Database having an issue -->
 			<div>

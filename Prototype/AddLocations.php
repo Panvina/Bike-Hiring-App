@@ -12,10 +12,8 @@ Contributor:
 session_start();
 include("php-scripts/Reusable.php");
 
-if (isset($_POST["addLocationModal"])) {
-	header("location:Locations.php?add=true");
-}
 
+// This is if the adding of new location code
 if (isset($_POST["submitLocation"])) {
 	//this area is where the data is retrieved from the form and the initial sanitisation of code happens
 	$nameInput = $_POST["nameInput"];
