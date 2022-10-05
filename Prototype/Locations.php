@@ -20,9 +20,10 @@ include_once("php-scripts/dashboard-menu.php");
 	<title> Locations </title>
 	<h1 class="header"> <a href="index.php"><img src="img/photos/Inverloch_Logo3.png" alt="Inverloch Logo" id="Logo" /></a> Locations </h1>
 	<script src="scripts/FormOpenOrClose.js"></script>
-	<link rel="stylesheet" href="style/Jake_Location_style.css">
 	<link rel="stylesheet" href="style/popup.css">
 	<link rel="stylesheet" href="style/dashboard-style.css">
+	<!-- Styling unique to Locations pages-->
+	<link rel="stylesheet" href="style/Jake_Location_style.css">
 	<?php
 	include("php-scripts/Reusable.php");
 	//This is a setup to the database
@@ -37,6 +38,15 @@ include_once("php-scripts/dashboard-menu.php");
 		"$sql_db"
 	)
 		or die('Failed to connect to server');
+
+
+	if (isset($_GET["search"])) {
+		$search_query = $_GET["search"];
+		$query = "SELECT * FROM `location_table` WHERE `name` = '$search_query';";
+	} else {
+		//this to select all items from the table before showing it
+		$query = "SELECT * FROM `location_table`";
+	}
 	?>
 
 </head>
@@ -47,12 +57,18 @@ include_once("php-scripts/dashboard-menu.php");
 			<?php printMenu("location"); ?>
 		</div>
 		<div class="main">
-			<form method='POST' action='AddLocations.php' event.preventDefault()>
-				<h1> Pick-Up and Drop-Off Locations </h1>
-				<!-- Trigger/Open The Adding New locations PopUp -->
-				<button id='LID' class='addLocationModal' name='addLocationModal' type='submit' value='LID' style="float: right; left:0%; ">+ Add Location</button>
-			</form>
+			<h1> Pick-Up and Drop-Off Locations </h1>
 
+			<div class="midbar">
+				<form action='UpdateLocations.php' method='POST'>
+					<input type="text" name="search" placeholder="Search (Location Name)"></input>
+					<button type="submit" name="search-btn"> Search </button>
+				</form>
+				<form method='POST' action='AddLocations.php' event.preventDefault()>
+					<!-- Trigger/Open The Adding New locations PopUp -->
+					<button id='LID' class='addLocationModal' name='addLocationModal' type='submit' value='LID'>+ Add Location</button>
+				</form>
+			</div>
 			<!--This handles if the Database having an issue -->
 			<div>
 				<p class='error'>
@@ -100,8 +116,6 @@ include_once("php-scripts/dashboard-menu.php");
 					<th> Edit </th>
 				</tr>
 				<?php
-				//this to select all items from the table before showing it
-				$query = "SELECT * FROM `location_table`";
 				$result = mysqli_query($conn, $query);
 				if ($result) //if the given query is a success
 				{
@@ -142,7 +156,7 @@ include_once("php-scripts/dashboard-menu.php");
 								<div class='dropdown-content'>
 									<!-- Trigger/Open The Update PopUp -->
 									<form method='POST' action='UpdateLocations.php' event.preventDefault()>
-										<button id='$LID' style='left: 0%'  class='updateLocationModal' name='updateLocationModal' type='submit' value='$LID'>Update</button>
+										<button id='$LID' style='left: 0%'  class='updateLocationModal dropdown-element' name='updateLocationModal' type='submit' value='$LID'>Update</button>
 									</form>
 									
 									<!-- Trigger/Open The Delete PopUp -->
@@ -150,7 +164,7 @@ include_once("php-scripts/dashboard-menu.php");
 									<input type='hidden' id='$name' class='deleteName' name='deleteName' value='$name'>
 									<input type='hidden' id='$fulladdress' class='deleteAddress' name='deleteAddress' value='$fulladdress'>
 										
-										<button id=$LID style='left: 0%'  class='deleteLocationModal' name='deleteLocationModal'  type='submit' value='$LID'>Delete</button>
+										<button id=$LID style='left: 0%'  class='deleteLocationModal dropdown-element' name='deleteLocationModal'  type='submit' value='$LID'>Delete</button>
 									</form>
 								</div>
 							</div>						
@@ -181,19 +195,17 @@ include_once("php-scripts/dashboard-menu.php");
 		<div id="addModal" class="modal" <?php
 											//this is to check if the button is selected, if thats the case, the modal popup will happen
 											//Idea and code from Aadesh and Jake
-											if (
-												isset($_GET["add"]) &&
-												($_GET["add"] == "true" || $_GET["add"] == "false")
-											) {
+											if (isset($_GET["add"]) && ($_GET["add"] == "true" || $_GET["add"] == "false")) {
 												echo "style = 'display:inline-block'";
 											}
 											?>>
 
 			<!-- PopUp content for adding location-->
-			<div class="modal-content" style="margin: 5% auto;text-align: inherit;">
-				<a href="locations.php" style="text-decoration: none;text-decoration-color:beige;">&times;</a>
+			<div class="modal-content">
+				<a href="locations.php" class="close-btn">
+                <span class="close-btn">&times;</span></a>
 
-				<h1>Add Location</h1>
+				<h2>Add Location</h2>
 
 				<form action="AddLocations.php" class="form-container" method="post">
 					<?php
@@ -203,9 +215,8 @@ include_once("php-scripts/dashboard-menu.php");
 					$addsuburb = "";
 					$addpostcode = "";
 					//this is to show the data that the user has inputted
-					if (($_GET["add"] == "false") &&
-						((!empty($_GET["name_msg"])) || (!empty($_GET["sub_msg"])) || (!empty($_GET["sub_msg"])))
-					) {
+					if (($_GET["add"] == "false")
+					&& ((!empty($_GET["name_msg"])) || (!empty($_GET["sub_msg"])) || (!empty($_GET["post_msg"])))) {
 						//this is to retrieve data from the previous page as the user has failed to pass a validation check
 						$addname = $_SESSION["name"];
 						$addaddress = $_SESSION["address"];
@@ -218,20 +229,22 @@ include_once("php-scripts/dashboard-menu.php");
 					}
 
 
-					echo "<label for='nameInput'><b>Name:</b></label><br/>
+					echo "<label for='nameInput'>Name </label>
 					<input type='text' placeholder='Enter Name' name='nameInput' id ='nameInput' class='inputlocation' value='$addname' required>
 					<br/>";
-
 					//this is if name has validation error
 					if ($_GET["add"] == "false" && !empty($_GET["name_msg"])) {
 						$name_msg = $_GET["name_msg"];
 						echo "<p class='error center'>$name_msg</p>";
 					}
+					echo "<br/>";
 
-					echo "<label for='addressInput'><b>Address:</b></label><br/>
+					echo "<label for='addressInput'>Address </label>
 					<input type='text' placeholder='Enter Address' name='addressInput' id='addressInput' class='inputlocation' value='$addaddress' required>
 					<br/>";
-					echo "<label for='suburbInput'><b>Suburb:</b></label><br/>
+					echo "<br/>";
+
+					echo "<label for='suburbInput'>Suburb </label>
 					<input type='text' placeholder='Enter Suburb' name='suburbInput' id='suburbInput' class='inputlocation' value='$addsuburb'required>
 					<br/>";
 
@@ -240,9 +253,10 @@ include_once("php-scripts/dashboard-menu.php");
 						$sub_msg = $_GET["sub_msg"];
 						echo "<p class='error center'>$sub_msg</p>";
 					}
+					echo "<br/>";
 
 
-					echo "<label for='postcodeInput'><b>Postcode:</b></label><br/>
+					echo "<label for='postcodeInput'>Postcode </label>
 					<input type='text' placeholder='Enter Postcode' name='postcodeInput' id='postcodeInput' class='inputlocation' maxlength='4' value='$addpostcode' required>
 					<br/>";
 
@@ -251,14 +265,15 @@ include_once("php-scripts/dashboard-menu.php");
 						$post_msg = $_GET["post_msg"];
 						echo "<p class='error center'>$post_msg</p>";
 					}
+					echo "<br/>";
 					?>
-					<label for="dropOffInput"><b>Drop Off:</b></label>
+					<label for="dropOffInput">Drop Off </label>
 					<input type='checkbox' class='CheckBox' name="dropOffInput" id="dropOffInput" />
 
-					<label for="pickUpInput"><b>Pick Up:</b></label>
+					<label for="pickUpInput">Pick Up </label>
 					<input type='checkbox' class='CheckBox' name="pickUpInput" id="pickUpInput" />
 					<br />
-					<button type="submit" name="submitLocation" id="submitLocation" class="btn, inputlocation" style='margin-top: 5%;'>Add Location</button>
+					<button type="submit" name="submitLocation" id="submitLocation" class="btn inputlocation" style='margin-top: 5%;'>Add</button>
 				</form>
 			</div>
 		</div>
@@ -275,10 +290,11 @@ include_once("php-scripts/dashboard-menu.php");
 											?>>
 
 			<!-- Update PopUp content -->
-			<div class='modal-content' style="margin: 5% auto;text-align: inherit;">
-				<a href="locations.php" class='updateclose' style="text-decoration: none;text-decoration-color:beige;">&times;</a>
+			<div class='modal-content'>
+				<a href="locations.php" class="close-btn">
+                <span class="close-btn">&times;</span></a>
 				<p>
-				<h1>Update Location</h1>
+				<h2 style="	margin-top: -5%;">Update Location</h2>
 				</p>
 				<?php
 				$LID = $_SESSION['LID'];
@@ -312,7 +328,7 @@ include_once("php-scripts/dashboard-menu.php");
 						echo "<input type='hidden' id='LID' name='LID' value='$LID'>";
 						if (
 							($_GET["update"] == "false") &&
-							((!empty($_GET["name_msg"])) || (!empty($_GET["sub_msg"])) || (!empty($_GET["sub_msg"])))
+							((!empty($_GET["name_msg"])) || (!empty($_GET["sub_msg"])) || (!empty($_GET["post_msg"])))
 						) {
 							$updatename = $_SESSION["name"];
 							$updateaddress = $_SESSION["address"];
@@ -320,7 +336,7 @@ include_once("php-scripts/dashboard-menu.php");
 							$updatepostcode = $_SESSION["postcode"];
 						}
 
-						echo "<label for='nameupdate'><b>Name:</b></label><br/>
+						echo "<label for='nameupdate'>Name </label>
 						<input type='text' name='nameupdate' id ='nameupdate' value='$updatename' required><br/>";
 
 						//this is if name has validation error
@@ -328,11 +344,14 @@ include_once("php-scripts/dashboard-menu.php");
 							$name_msg = $_GET["name_msg"];
 							echo "<p class='error center'>$name_msg</p>";
 						}
-						echo "<label for='addressupdate'><b>Address:</b></label><br/>
+						echo "<br/>";
+
+						echo "<label for='addressupdate'>Address </label>
 					<input type='text' placeholder='Enter Address' name='addressupdate' id='addressupdate' class='inputlocation' value='$updateaddress' required>
 					<br/>";
+						echo "<br/>";
 
-						echo "<label for='suburbupdate'><b>Suburb:</b></label><br/>
+						echo "<label for='suburbupdate'>Suburb </label>
 					<input type='text' placeholder='Enter Suburb' name='suburbupdate' id='suburbupdate' class='inputlocation' value='$updatesuburb' required>
 					<br/>";
 
@@ -341,8 +360,9 @@ include_once("php-scripts/dashboard-menu.php");
 							$sub_msg = $_GET["sub_msg"];
 							echo "<p class='error center'>$sub_msg</p>";
 						}
+						echo "<br/>";
 
-						echo "<label for='postcodeUpdate'><b>Postcode:</b></label><br/>
+						echo "<label for='postcodeUpdate'>Postcode </label>
 					<input type='text' placeholder='EnterPostcode' name='postcodeUpdate' id='postcodeUpdate' class='inputlocation' maxlength='4' value='$updatepostcode' required>
 					<br/>";
 
@@ -351,14 +371,15 @@ include_once("php-scripts/dashboard-menu.php");
 							$post_msg = $_GET["post_msg"];
 							echo "<p class='error center'>$post_msg</p>";
 						}
+						echo "<br/>";
 
-						echo "<label for='dropOffBox'><b>Drop Off Location:</b></label>
+						echo "<label for='dropOffBox'>Drop Off Location </label>
 					<input type='checkbox' class='CheckBox' id='dropOffBox' name='dropOffBox' $updateDropoff><br/>";
 
-						echo "<label for='pickUpBox'><b>Pick Up Location:</b></label>
+						echo "<label for='pickUpBox'>Pick Up Location </label>
 					<input type='checkbox' class='CheckBox' id='pickUpBox' name='pickUpBox' $updatePickup> <br/><br/>";
 
-						echo "<button type='submit' name='updateLocation' id='updateLocation' class='btn'>Update</button>
+						echo "<button type='submit' name='updateLocation' id='updateLocation' class='search-btn'>Update</button>
 					</form>";
 
 						//this is to move onto the next data
@@ -387,10 +408,12 @@ include_once("php-scripts/dashboard-menu.php");
 
 			<!--This section is to have a form to Delete the location data-->
 			<!-- PopUp Delete confirm content -->
-			<div class='modal-content' style="margin: 5% auto;text-align: inherit;">
-				<a href="locations.php" style="text-decoration: none;text-decoration-color:beige;">&times;</a>
+			<div class='modal-content'>
+				<a href="locations.php" class="close-btn">
+                <span class="close-btn">&times;</span></a>
+				
 				<p>
-				<h1>Delete Location</h1>
+				<h2 style="	margin-top: -4%;">Delete Location</h2>
 				</p>
 				<form method='POST' action='UpdateLocations.php' event.preventDefault()>
 					<?php
@@ -400,10 +423,10 @@ include_once("php-scripts/dashboard-menu.php");
 						$dname = $_SESSION["name"];
 						$daddress = $_SESSION["address"];
 						echo "<input type='hidden' id='LID' name='LID' value='$LID'>";
-						echo "<h2 style='text-align: center;height: 3%;'>You are going to delete:</h2>";
-						echo "<h3 style='text-align: center;height: 3%;'>$dname</h3>";
-						echo "<h2 style='text-align: center;height: 3%;'>Address:</h2>";
-						echo "<h3  style='text-align: center;'>$daddress</h3>";
+						echo "<h2 style='height: 3%;'>You are going to delete:</h2>";
+						echo "<h3 style='height: 3%;'>$dname</h3>";
+						echo "<h2 style='height: 3%;'>Address:</h2>";
+						echo "<h3>$daddress</h3>";
 					} else {
 						echo "<h2>You are deleting nothing</h2>";
 					}
@@ -411,8 +434,8 @@ include_once("php-scripts/dashboard-menu.php");
 
 					<!--This two button is mainly to show confirmation if its ok to delete the location row or not  -->
 					<!--this code is borrowed and modified from Aadesh-->
-					<button style='width: 40%; margin-left: 28%; position: relative;' type='submit' name='deleteLocation' id='deleteLocation'>Yes</button>
-					<button style='width: 40%; margin-left: 28%; position: relative; background-color: red;' type='submit' name='cancelDeleteLocation' id='cancelDeleteLocation'>No</button>
+					<button style='width: 40%; position: relative;' type='submit' name='deleteLocation' id='deleteLocation'>Yes</button>
+					<button style='width: 40%; position: relative; background-color: red;' type='submit' name='cancelDeleteLocation' id='cancelDeleteLocation'>No</button>
 				</form>
 			</div>
 		</div>
