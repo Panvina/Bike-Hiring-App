@@ -62,7 +62,10 @@
     <head>
         <!-- Header -->
         <title> Bookings </title>
+        <div class ="flexDisplay">
         <h1 class="header"> <a href="index.php"><img src="img/photos/Inverloch_Logo3.png" alt="Inverloch Logo" id="Logo" /></a> Bookings </h1>
+        <a id="webpageDirect" name = "webpageDirect" href= 'index.php'> Back to website </a>
+    </div>
     </head>
     <body>
         <!-- Booking Popup (main) -->

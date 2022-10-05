@@ -40,7 +40,10 @@ Contributor(s):
     <head>
         <!-- header -->
         <title> Admin dashboard </title>
-        <h1 class="header"> <a href="index.php"><img src="img/photos/Inverloch_Logo3.png" alt="Inverloch Logo" id="Logo" /></a> Admin Dashboard </h1>
+        <div class ="flexDisplay">
+            <h1 class="header"> <a href="index.php"><img src="img/photos/Inverloch_Logo3.png" alt="Inverloch Logo" id="Logo" /></a> Admin Dashboard </h1>
+            <a id="webpageDirect" name = "webpageDirect" href= 'index.php'> Back to website </a>
+        </div>
     </head>
     <body>
         <div class="grid-container">
