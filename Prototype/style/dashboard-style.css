@@ -60,20 +60,20 @@ body
     text-decoration: none;
     color: black;
     font-size: calc(20px + 0.9vw);
+    padding-bottom: 20px;
+    display: block;
 }
 
 .menu a:hover
 {
     background-color: white;
     color: #00b7b1;
-    display: block;
 }
 
 .menu a.active
 {
     background-color: white;
     color: #00b7b1;
-    display: block;
 }
 
 br
