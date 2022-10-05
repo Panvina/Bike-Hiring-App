@@ -30,7 +30,10 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 <head>
     <!-- header -->
     <title> Inventory </title>
-    <h1 class="header"> <a href="index.php"><img src="img/photos/Inverloch_Logo3.png" alt="Inverloch Logo" id="Logo" /></a> Inventory </h1>
+    <div class ="flexDisplay">
+        <h1 class="header"> <a href="index.php"><img src="img/photos/Inverloch_Logo3.png" alt="Inverloch Logo" id="Logo" /></a> Bike Inventory </h1>
+        <a id="webpageDirect" name = "webpageDirect" href= 'index.php'> Back to website </a>
+    </div>
 </head>
 
 <body>

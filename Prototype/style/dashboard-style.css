@@ -14,11 +14,14 @@ body
     text-align: center;
     height: 100px;
     line-height: 3;
+    margin-right: 30%;
+    align-items: center;
 }
 
 /* header logo sizing */
 #Logo{
-    height: 135px;
+    /* height: 135px; */
+    height: 15%;
     float: left;
     position: absolute;
     top: 0px;
@@ -60,7 +63,7 @@ body
     text-decoration: none;
     color: black;
     font-size: calc(20px + 0.9vw);
-    padding-bottom: 12px;
+    padding-bottom: 8px;
     display: block;
 }
 
@@ -74,6 +77,30 @@ body
 {
     background-color: white;
     color: #00b7b1;
+}
+
+#webpageDirect
+{
+    text-decoration: none;
+    background-color: darkcyan;
+    border: none;
+    color: white;
+    font-size: 25px;
+    border: solid white;
+    border-width: thin;
+    cursor: pointer;
+    padding: 5px;
+    margin-top: 4%;
+}
+
+.flexDisplay
+{
+    display: flex;
+    justify-content: flex-end;
+    width: 98%; 
+    align-content: center;
+    align-items: center;
+    height: 15%;
 }
 
 br

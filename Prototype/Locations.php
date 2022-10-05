@@ -18,7 +18,10 @@ include_once("php-scripts/dashboard-menu.php");
 
 <head>
 	<title> Locations </title>
-	<h1 class="header"> <a href="index.php"><img src="img/photos/Inverloch_Logo3.png" alt="Inverloch Logo" id="Logo" /></a> Locations </h1>
+	<div class ="flexDisplay">
+        <h1 class="header"> <a href="index.php"><img src="img/photos/Inverloch_Logo3.png" alt="Inverloch Logo" id="Logo" /></a> Locations </h1>
+        <a id="webpageDirect" name = "webpageDirect" href= 'index.php'> Back to website </a>
+    </div>
 	<script src="scripts/FormOpenOrClose.js"></script>
 	<link rel="stylesheet" href="style/Jake_Location_style.css">
 	<link rel="stylesheet" href="style/popup.css">
