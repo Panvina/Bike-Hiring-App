@@ -417,7 +417,7 @@ include_once("php-scripts/dashboard-menu.php");
 					<span class="close-btn">&times;</span></a>
 
 				<p>
-				<h2 id="deleteHead">Delete Location</h2>
+				<h2 id="deleteHead">Location Delete<br/>Confirmation</h2>
 				</p>
 				<form method='POST' action='UpdateLocations.php' event.preventDefault()>
 					<?php
@@ -427,7 +427,7 @@ include_once("php-scripts/dashboard-menu.php");
 						$dname = $_SESSION["name"];
 						$daddress = $_SESSION["address"];
 						echo "<input type='hidden' id='LID' name='LID' value='$LID'>";
-						echo "<h3>You are going to delete:</h3>";
+						echo "<h3>Do you want to delete:</h3>";
 						echo "<p>$dname</p>";
 						echo "<h3>Address:</h3>";
 						echo "<p>$daddress</p>";
