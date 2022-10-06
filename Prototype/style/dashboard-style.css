@@ -63,7 +63,7 @@ body
     text-decoration: none;
     color: black;
     font-size: calc(20px + 0.9vw);
-    padding-bottom: 8px;
+    padding-bottom: 12px;
     display: block;
 }
 
@@ -246,6 +246,7 @@ form
 {
     position: relative;
     display: inline-block;
+    cursor: pointer;
 }
 
 .dropbtn {
