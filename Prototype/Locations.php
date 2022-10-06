@@ -422,10 +422,10 @@ include_once("php-scripts/dashboard-menu.php");
 						$dname = $_SESSION["name"];
 						$daddress = $_SESSION["address"];
 						echo "<input type='hidden' id='LID' name='LID' value='$LID'>";
-						echo "<h2 style='height: 3%;'>You are going to delete:</h2>";
-						echo "<h3 style='height: 3%;'>$dname</h3>";
-						echo "<h2 style='height: 3%;'>Address:</h2>";
-						echo "<h3>$daddress</h3>";
+						echo "<h3>You are going to delete:</h3>";
+						echo "<p>$dname</p>";
+						echo "<h3>Address:</h3>";
+						echo "<p>$daddress</p>";
 					} else {
 						echo "<h2>You are deleting nothing</h2>";
 					}
