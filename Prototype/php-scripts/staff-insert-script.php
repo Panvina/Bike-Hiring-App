@@ -25,6 +25,11 @@
     //checks to see form has opened
     if (isset($_POST['SubmitStaff']))
     {
+        if (empty($_POST["userName"]) && empty($_POST["name"]) && empty($_POST["phoneNumber"]) && empty($_POST["email"]) && empty($_POST["streetAddress"]) && empty($_POST["suburb"]) && empty($_POST["postCode"]) && empty($_POST["licenceNumber"]))
+        {
+            header("Location: ../staff.php?insert=empty");
+            exit();
+        }
         //User name input validation
         //checks to see if input is empty
         if (empty($_POST["userName"])) 

@@ -186,7 +186,8 @@ Contributor(s):
 	//ref: https://stackoverflow.com/questions/21264194/simple-regex-for-street-address
 	function validAddress($address)
 	{
-		$pattern = '/^\d+(\s+\w+){1,}\s+(street|drive|place|avenue|rd|road|lane|drive|way|court|plaza|square|run|parkway|point|pike|square|driveway|trace|park|terrace|blvd)$/';
+		$pattern = '/^\d+(\s+\w+){1,}\s+((street|st)|(drive|dr)|(place|pl)|(avenue|av)|(rd|road)|(lane|ln)|(drive|way)|(court|ct)|(plaza|plz)|(square|sq)|run|parkway|point|pike|square|
+		driveway|trace|park|(terrace|tce)|blvd|(ally|alley)|(circuit|cct)|(crescent|cr)|(esplanade|esp)|(grove|gr)|(heights|hts)|(highway|hwy)|(parade|pde))$/';
 		$address = strtolower($address);
 		$match = preg_match($pattern ,$address);
 
