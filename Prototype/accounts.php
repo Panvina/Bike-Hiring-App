@@ -22,8 +22,8 @@
     <title> Accounts </title>
     <div class ="flexDisplay">
         <h1 class="header"> <a href="index.php"><img src="img/photos/Inverloch_Logo3.png" alt="Inverloch Logo" id="Logo" /></a> Accounts </h1>
-            <a id="webpageDirect" name = "webpageDirect" href= 'index.php'> Back to website </a>
-        </div>
+        <a id="webpageDirect" name = "webpageDirect" href= 'index.php'> Back to website </a>
+    </div>
 </head>
 
 <body>
