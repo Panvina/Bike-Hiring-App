@@ -46,7 +46,7 @@
         $state = $_SESSION["state"];
 
         //checks to see if any of the variables is empty then redirects back based on the result
-        if (!checkEmptyVariables([$name, $phoneNumber, $email, $streetAddress, $suburb , $postCode, $licenceNumber, $state]))
+        if (!checkEmptyVariables([$name, $phoneNumber, $email, $streetAddress, $suburb , $postCode, $licenceNumber]))
         {
             header("Location: ../Customer.php?update=notEmpty");
             exit();
@@ -211,7 +211,7 @@
         }
 
         //double checks to ensure all variables are not empty then parses the data to be updated. Returns back to the customer page based on the result
-        if(!empty($name) && !empty($phoneNumber) && !empty($email) && !empty($streetAddress) && !empty($suburb) && !empty($postCode) && !empty($licenceNumber) && !empty($state))
+        if(!empty($name) && !empty($phoneNumber) && !empty($email) && !empty($streetAddress) && !empty($suburb) && !empty($postCode) && !empty($licenceNumber))
         {
             $phoneNumber = "$phoneNumber";
             if ($conn->update("user_name", "'$pk'", "name, phone_number, email, street_address, suburb, post_code, licence_number, state",

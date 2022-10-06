@@ -22,8 +22,8 @@
     <title> Customers </title>
     <div class ="flexDisplay">
         <h1 class="header"> <a href="index.php"><img src="img/photos/Inverloch_Logo3.png" alt="Inverloch Logo" id="Logo" /></a> Customers </h1>
-            <a id="webpageDirect" name = "webpageDirect" href= 'index.php'> Back to website </a>
-        </div>
+        <a id="webpageDirect" name = "webpageDirect" href= 'index.php'> Back to website </a>
+    </div>
 </head>
 
 <body>
@@ -181,6 +181,19 @@
         <div class="modal-content">
             <span class="close-btn">&times;</span>
             <form action="php-scripts/customer-script.php" method="POST" event.preventDefault()>
+                <div>
+                    <span class="modal-error-v2">
+                        <?php
+                            if (isset($_GET["insert"]))
+                            {
+                                if ($_GET["insert"] == "empty")
+                                {
+                                    echo '<p class = "error">* Please enter data in the fields!</p>';
+                                }
+                            }
+                        ?>
+                    </span>
+                </div>
                 <h2> Create a customer </h2>
                 <div>
                     <!-- User name input validation, checks based on error and displays accurate error message -->
@@ -197,18 +210,18 @@
                             echo '<input type="text" name="userName">';
                         }
                     ?>
-                    <span class="error">
+                    <span class="modal-error-v2">
                         <?php
                             if (isset($_GET["insert"]))
                             {
                                 $userName = $_GET["insert"];
                                 if ($userName == "userNameEmptyErr")
                                 {
-                                    echo '<p class = "error">* User name cannot be empty</p>';
+                                    echo '<p class = "modal-error-v2">* User name cannot be empty</p>';
                                 }
                                 else if ($userName == "userNameValidErr")
                                 {
-                                    echo '<p class = "error">* 1. User Name must be 8-20 characters </br>
+                                    echo '<p class = "modal-error-v2">* 1. User Name must be 8-20 characters </br>
                                                2. Not have any special characters besides / and . </br>
                                                3. / and . must not be used at the start, end, used together or used multiple times </br> </p>';
                                 }
@@ -231,18 +244,18 @@
                             echo '<input type="text" name="name">';
                         }
                     ?>
-                    <span class="error">
+                    <span class="modal-error-v2">
                         <?php
                             if (isset($_GET["insert"]))
                             {
                                 $name = $_GET["insert"];
                                 if ($name == "nameEmptyErr")
                                 {
-                                    echo '<p class = "error">* Name cannot be empty</p>';
+                                    echo '<p class = "modal-error-v2">* Name cannot be empty</p>';
                                 }
                                 else if ($name == "nameValidErr")
                                 {
-                                    echo '<p class = "error">* Name is not in a valid format</p>';
+                                    echo '<p class = "modal-error-v2">* Name is not in a valid format</p>';
                                 }
                             }
                         ?>
@@ -263,18 +276,18 @@
                             echo '<input type="text" name="phoneNumber">';
                         }
                     ?>
-                    <span class="error">
+                    <span class="modal-error-v2">
                         <?php
                             if (isset($_GET["insert"]))
                             {
                                 $phoneNumber = $_GET["insert"];
                                 if ($phoneNumber == "phoneNumberEmptyErr")
                                 {
-                                    echo '<p class = "error">* Phone number cannot be empty</p>';
+                                    echo '<p class = "modal-error-v2">* Phone number cannot be empty</p>';
                                 }
                                 else if ($phoneNumber == "phoneValidErr")
                                 {
-                                    echo '<p class = "error">* Phone number is not in the correct format</p>';
+                                    echo '<p class = "modal-error-v2">* Phone number is not in the correct format</p>';
                                 }
                             }
                         ?>
@@ -295,7 +308,7 @@
                             echo '<input type="text" name="email">';
                         }
                     ?>
-                    <span class="error">
+                    <span class="modal-error-v2">
                         <?php
                             if (isset($_GET["insert"]))
                             {
@@ -327,7 +340,7 @@
                             echo '<input style="width: 43%;" type="text" name="streetAddress">';
                         }
                     ?>
-                    <span class="error">
+                    <span class="modal-error-v2">
                         <?php
                             if (isset($_GET["insert"]))
                             {
@@ -359,7 +372,7 @@
                             echo '<input type="text" name="suburb">';
                         }
                     ?>
-                    <span class="error">
+                    <span class="modal-error-v2">
                         <?php
                             if (isset($_GET["insert"]))
                             {
@@ -391,7 +404,7 @@
                             echo '<input type="text" name="postCode">';
                         }
                     ?>
-                    <span class="error">
+                    <span class="modal-error-v2">
                         <?php
                             if (isset($_GET["insert"]))
                             {
@@ -423,7 +436,7 @@
                             echo '<input style="width: 29%;" type="text" name="licenceNumber">';
                         }
                     ?>
-                    <span class="error">
+                    <span class="modal-error-v2">
                         <?php
                             if (isset($_GET["insert"]))
                             {
@@ -455,7 +468,7 @@
                             printStates("");
                         }
                     ?>
-                    <span class="error">
+                    <span class="modal-error-v2">
                         <?php
                             if (isset($_GET["insert"]))
                             {
@@ -501,7 +514,17 @@
 
             <span class="close-btn">&times;</span>
             <form action="php-scripts/customer-update-script.php" method="POST" event.preventDefault()>
-
+                <span class="modal-error-v2">
+                    <?php
+                        if (isset($_GET["update"]))
+                        {
+                            if ($_GET["update"] == "empty")
+                            {
+                                echo '<p class = "error">* Please enter data in the fields!</p>';
+                            }
+                        }
+                    ?>
+                </span>
                 <h2> Update a customer </h2>
                 <div>
                     <!-- //Made User name not editable to ensure database intergrity  -->
@@ -512,7 +535,7 @@
                     <!-- Name input validation, checks based on error and displays accurate error message -->
                     <label> Name: </label>
                     <input type="text" name="name" value = "<?php echo $_SESSION['name'];?>">
-                    <span class="error">
+                    <span class="modal-error-v2">
                         <?php
                             if (isset($_GET["update"]))
                             {
@@ -533,7 +556,7 @@
                     <!-- Phone number validation, checks based on error and displays accurate error message -->
                     <label> Phone Number: </label>
                     <input type="text" name="phoneNumber" value = "<?php echo $_SESSION['phone_number'];?>">
-                    <span class="error">
+                    <span class="modal-error-v2">
                         <?php
                             if (isset($_GET["update"]))
                             {
@@ -554,7 +577,7 @@
                     <!-- Email input validation, checks based on error and displays accurate error message -->
                     <label> Email: </label>
                     <input type="text" name="email" value = "<?php echo $_SESSION['email'];?>">
-                    <span class="error">
+                    <span class="modal-error-v2">
                         <?php
                             if (isset($_GET["update"]))
                             {
@@ -575,7 +598,7 @@
                     <!-- Street address input validation, checks based on error and displays accurate error message -->
                     <label> Residential Address: </label>
                     <input style="width: 43%;" type="text" name="streetAddress" value = "<?php echo $_SESSION['street_address'];?>">
-                    <span class="error">
+                    <span class="modal-error-v2">
                         <?php
                             if (isset($_GET["update"]))
                             {
@@ -596,7 +619,7 @@
                     <!-- Suburb input validation, checks based on error and displays accurate error message -->
                     <label> Suburb: </label>
                     <input type="text" name="suburb" value = "<?php echo $_SESSION['suburb'];?>">
-                    <span class="error">
+                    <span class="modal-error-v2">
                         <?php
                             if (isset($_GET["update"]))
                             {
@@ -617,7 +640,7 @@
                     <!-- Post code input validation, checks based on error and displays accurate error message -->
                     <label> Post Code: </label>
                     <input type="text" name="postCode" value = "<?php echo $_SESSION['post_code'];?>">
-                    <span class="error">
+                    <span class="modal-error-v2">
                         <?php
                             if (isset($_GET["update"]))
                             {
@@ -638,7 +661,7 @@
                     <!-- Licence Number input validation, checks based on error and displays accurate error message -->
                     <label>Drivers Licence Number: </label>
                     <input style='width: 29%;' type="text" name="licenceNumber" value = "<?php echo $_SESSION['licence_number'];?>">
-                    <span class="error">
+                    <span class="modal-error-v2">
                         <?php
                             if (isset($_GET["update"]))
                             {
@@ -669,7 +692,7 @@
                             printStates("");
                         }
                     ?>
-                    <span class="error">
+                    <span class="modal-error-v2">
                         <?php
                             if (isset($_GET["update"]))
                             {
