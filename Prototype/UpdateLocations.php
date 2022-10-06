@@ -166,4 +166,20 @@ if (isset($_POST["cancelDeleteLocation"])) {
 	//This is so code know that the delete need to popup
 	header("location:Locations.php");
 }
+
+//This is if a search has been selected
+//Search concept adapted from Alex and Addesh
+if (isset($_POST['search-btn'])){
+	$search = $_POST["search"];
+	$search = sanitise_input($search);
+	
+	if ($search != "")
+	{
+		header("Location: Locations.php?search=$search");
+	}
+	else
+	{
+		header("Location: Locations.php");
+	}
+} 
 ?>

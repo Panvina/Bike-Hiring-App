@@ -23,7 +23,7 @@ include_once("php-scripts/dashboard-menu.php");
 	<link rel="stylesheet" href="style/popup.css">
 	<link rel="stylesheet" href="style/dashboard-style.css">
 	<!-- Styling unique to Locations pages-->
-	<link rel="stylesheet" href="style/Jake_Location_style.css">
+	<link rel="stylesheet" href="style/Location_style.css">
 	<?php
 	include("php-scripts/Reusable.php");
 	//This is a setup to the database
