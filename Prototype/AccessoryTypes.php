@@ -169,7 +169,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     <input placeholder="ID of accessory type..." type="hidden" name="accessoryId">
                 </div>
                 <div>
-                    <label>Name</label>
+                    <label>Name</label><br>
                     <?php
                         if (isset($_SESSION["tempName"]))
                         {
@@ -208,13 +208,13 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     if(isset($_SESSION["tempDescription"]))
                     {
                     ?>
-                        <textarea style='width: 220px; height: 50px' placeholder="Description about the type of accessory..." name="description"><?php echo $_SESSION['tempDescription'] ?></textarea>
+                        <textarea placeholder="Description about the type of accessory..." name="description"><?php echo $_SESSION['tempDescription'] ?></textarea>
                     <?php
                     }
                     else
                     {
                     ?>
-                        <textarea style='width: 220px; height: 50px' placeholder="Description about the type of accessory..." name="description"></textarea>
+                        <textarea placeholder="Description about the type of accessory..." name="description"></textarea>
                     <?php
                     }
                     ?>
@@ -268,12 +268,12 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                 </div>
                 <h2>Update Accessory Type</h2>
                 <div>
-                    <label>Accessory Type ID</label>
+                    <label>Accessory Type ID</label><br>
                     <input placeholder="ID of the accessory..." type="text" name="accessoryId" readonly value="<?php echo $_SESSION['accessory_type_id'] ?>">
                 </div>
                 <br>            
                 <div>
-                    <label>Name</label>
+                    <label>Name</label><br>
                     <input placeholder="Name of accessory type..." type="text" name="name" value="<?php echo $_SESSION['name'] ?>">
                     <span class="error">
                         <?php
@@ -295,7 +295,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                 <br>
                 <div>
                     <label>Description</label><br>
-                    <textarea style='width: 220px; height: 50px' placeholder="Description about the accessory type..." name="description"><?php echo $_SESSION['description'] ?></textarea>
+                    <textarea placeholder="Description about the accessory type..." name="description"><?php echo $_SESSION['description'] ?></textarea>
                     <span class="error">
                         <?php
                             if (isset($_GET["update"]))

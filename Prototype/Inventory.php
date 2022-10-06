@@ -244,7 +244,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                 </div>
                 <br>
                 <div>
-                    <label>Name</label>
+                    <label>Name</label><br>
                     <?php
                         if (isset($_SESSION["tempName"]))
                         {
@@ -279,7 +279,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                 <br>
                 <div>
                     <!-- Bike type options displayed as a dropdown by fetching from bike type table in db-->
-                    <label>Bike Type ID</label>
+                    <label>Bike Type ID</label><br>
                     <?php
                         if (isset($_SESSION["tempBikeTypeId"]))
                         {
@@ -339,7 +339,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                 <br>
                 <div>
                     <!-- Helmet options displayed as a dropdown by fetching from accessory type table in db-->
-                    <label>Helmet ID</label>
+                    <label>Helmet ID</label><br>
                     <?php
                      if (isset($_SESSION["tempHelmetId"]))
                      {
@@ -397,7 +397,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                 </div>
                 <br>
                 <div>
-                    <label>Price p/h</label>
+                    <label>Price p/h</label><br>
                     <?php
                     if(isset($_SESSION["tempPrice"]))
                     {
@@ -470,13 +470,13 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     if(isset($_SESSION["tempDescription"]))
                     {
                     ?>
-                        <textarea style='width: 220px; height: 50px' iplaceholder="Description about the bike..." name="description"><?php echo $_SESSION['tempDescription'] ?></textarea>
+                        <textarea placeholder="Description about the bike..." name="description"><?php echo $_SESSION['tempDescription'] ?></textarea>
                     <?php
                     }
                     else
                     {
                     ?>
-                        <textarea style='width: 220px; height: 50px' placeholder="Description about the bike..." name="description"></textarea>
+                        <textarea placeholder="Description about the bike..." name="description"></textarea>
                     <?php
                     }
                     ?>
@@ -531,12 +531,12 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                 </div>
                 <h2>Update Bike</h2>
                 <div>
-                    <label>BikeID</label>
+                    <label>Bike ID</label><br>
                     <input placeholder="ID of the Bike..." type="text" name="bikeId" readonly value="<?php echo $_SESSION['bike_id'] ?>">
                 </div>
                 <br>
                 <div>
-                    <label>Name</label>
+                    <label>Name</label><br>
                     <input placeholder="Bike's name..." type="text" name="name" value="<?php echo $_SESSION['name'] ?>">
                     <span class="error">
                         <?php
@@ -558,7 +558,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                 <br>
                 <div>
                     <!-- Bike type options displayed as a dropdown by fetching from bike type table in db-->
-                    <label>Bike Type ID</label>
+                    <label>Bike Type ID</label><br>
                     <select placeholder="Bike's Type..." name="bikeTypeId" type="submit" value="<?php echo $_SESSION['bike_type_id'] ?>">
                         <!-- <option style = 'background-color:#8DEF6E' selected=selected><//?php echo $_SESSION['bike_type_id'];
                         echo "-";
@@ -592,7 +592,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                 <br>
                 <div>
                     <!-- Helmet options displayed as a dropdown by fetching from accessory type table in db-->
-                    <label>Helmet ID</label>
+                    <label>Helmet ID</label><br>
                     <select placeholder="Helmet's ID..." name="helmetId" type="submit" value="<?php echo $_SESSION['helmet_id'] ?>">
                         <?php
                         foreach ($bikeAccessoryOption as $option) {
@@ -620,7 +620,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                 </div>
                 <br>
                 <div>
-                    <label>Price p/h</label>
+                    <label>Price p/h</label><br>
                     <input placeholder="Price per hour..." type="text" name="price" value="<?php echo $_SESSION['price_ph'] ?>">
                     <span class="error">
                     <?php
@@ -661,7 +661,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                 <br>
                 <div>
                     <label>Description</label><br>
-                    <textarea style='width: 220px; height: 50px' iplaceholder="Description about the bike..." name="description"><?php echo $_SESSION['description'] ?></textarea>
+                    <textarea placeholder="Description about the bike..." name="description"><?php echo $_SESSION['description'] ?></textarea>
                 <span class="error">
                         <?php
                             if (isset($_GET["update"]))

@@ -19,16 +19,17 @@ Created by: Aadesh Jagannathan @102072344@student.swin.edu.au
 
 /*Styling for the dropdown in add and update modals*/
 .modal-content select{
-    height:22px;
-    font-size: 14px;
-    width:40%;
+    height:24px;
+    font-size: 18px;
+    width:100%;
     text-align: left;
-    
 }
 
 .modal-content input{
+    height:24px;
     margin-top: 10px;
-  
+    width:100%;
+    font-size: 18px;
 }
 
 /*Styling for the input text boxes in add and update modals*/
@@ -40,7 +41,9 @@ Created by: Aadesh Jagannathan @102072344@student.swin.edu.au
 
 /*Styling for the text areas in add and update modals*/
 .modal-content textarea{
-    font-size: 14.5px;
+    font-size: 18px;
+    width:100%;
+    height: 80px;
 }
 
 #modal-description-cont{
@@ -110,6 +113,8 @@ Created by: Aadesh Jagannathan @102072344@student.swin.edu.au
 
   .error{
     color: red;
+    text-align: left;
+    margin-top: 0px;
   }
   
   .echo-fail{

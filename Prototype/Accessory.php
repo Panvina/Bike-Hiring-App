@@ -230,7 +230,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                         <input placeholder="ID of the Accessory..." type="hidden" name="accessoryId">
                     </div>
                     <div>
-                        <label>Name</label>
+                        <label>Name</label><br>
                         <?php
                         if (isset($_SESSION["tempName"]))
                         {
@@ -264,7 +264,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     </div>
                     <br>
                     <div>
-                        <label>Accessory Type ID</label>
+                        <label>Accessory Type ID</label><br>
                         <?php
                         if (isset($_SESSION["tempAccessoryTypeId"]))
                         {               
@@ -321,7 +321,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     </div>
                     <br>            
                     <div>
-                        <label>Price p/h</label>
+                        <label>Price p/h</label><br>
                         <?php    
                         if(isset($_SESSION["tempPrice"]))
                         {
@@ -425,12 +425,12 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     </div>
                     <h2>Update Accessory</h2>
                     <div>
-                        <label>Accessory ID</label>
+                        <label>Accessory ID</label><br>
                         <input placeholder="ID of the Accessory..." type="text" name="accessoryId" readonly value="<?php echo $_SESSION['accessory_id'] ?>">
                     </div>
                     <br>            
                     <div>
-                        <label>Name</label>
+                        <label>Name</label><br>
                         <input placeholder="Accessory's name..." type="text" name="name" value="<?php echo $_SESSION['name'] ?>">
                         <span class="error">
                             <?php
@@ -451,7 +451,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     </div>
                     <br>
                     <div>
-                        <label>Accessory Type ID</label>
+                        <label>Accessory Type ID</label><br>
                         <select placeholder="Accessory's Type..." name="accessoryTypeId" type="submit" value="<?php echo $_SESSION['accessory_type_id'] ?>">
                             <?php
                             foreach ($accessoryTypeOption as $option) {
@@ -479,7 +479,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     </div>
                     <br>
                     <div>
-                        <label>Price p/h</label>
+                        <label>Price p/h</label><br>
                         <input placeholder="Price per hour..." type="text" name="price" value="<?php echo $_SESSION['price_ph'] ?>">
                         <?php
                                 if (isset($_GET["update"]))
