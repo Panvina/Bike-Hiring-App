@@ -169,17 +169,14 @@ if (isset($_POST["cancelDeleteLocation"])) {
 
 //This is if a search has been selected
 //Search concept adapted from Alex and Addesh
-if (isset($_POST['search-btn'])){
+if (isset($_POST['search-btn'])) {
 	$search = $_POST["search"];
 	$search = sanitise_input($search);
-	
-	if ($search != "")
-	{
+
+	if ($search != "") {
 		header("Location: Locations.php?search=$search");
-	}
-	else
-	{
+	} else {
 		header("Location: Locations.php");
 	}
-} 
+}
 ?>

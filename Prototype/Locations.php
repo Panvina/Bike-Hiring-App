@@ -18,7 +18,10 @@ include_once("php-scripts/dashboard-menu.php");
 
 <head>
 	<title> Locations </title>
-	<h1 class="header"> <a href="index.php"><img src="img/photos/Inverloch_Logo3.png" alt="Inverloch Logo" id="Logo" /></a> Locations </h1>
+	<div class="flexDisplay">
+		<h1 class="header"> <a href="index.php"><img src="img/photos/Inverloch_Logo3.png" alt="Inverloch Logo" id="Logo" /></a> Locations </h1>
+		<a id="webpageDirect" name="webpageDirect" href='index.php'> Back to website </a>
+	</div>
 	<script src="scripts/FormOpenOrClose.js"></script>
 	<link rel="stylesheet" href="style/popup.css">
 	<link rel="stylesheet" href="style/dashboard-style.css">
@@ -64,8 +67,8 @@ include_once("php-scripts/dashboard-menu.php");
 					<input type="text" name="search" placeholder="Search (Location Name)"></input>
 					<button type="submit" name="search-btn"> Search </button>
 				</form>
-					<!-- Trigger/Open The Adding New locations PopUp -->
-					<button id='LID' class='addLocationModal' name='addLocationModal' type='submit' value='LID' onclick='window.location.href="Locations.php?add=true"'>+ Add Location</button>
+				<!-- Trigger/Open The Adding New locations PopUp -->
+				<button id='LID' class='addLocationModal' name='addLocationModal' type='submit' value='LID' onclick='window.location.href="Locations.php?add=true"'>+ Add Location</button>
 
 			</div>
 			<!--This handles if the Database having an issue -->
@@ -191,22 +194,23 @@ include_once("php-scripts/dashboard-menu.php");
 		<!-- All modal popups should go here -->
 
 		<!-- Add Locations modal popup -->
-		<div id="addModal" class="modal" <?php
-											//this is to check if the button is selected, if thats the case, the modal popup will happen
-											//Idea and code from Aadesh and Jake
-											if (isset($_GET["add"]) && ($_GET["add"] == "true" || $_GET["add"] == "false")) {
-												echo "style = 'display:inline-block'";
-											}
-											?>>
+		<div id="addModal" class="modal-overlay" <?php
+													//this is to check if the button is selected, if thats the case, the modal popup will happen
+													//Idea and code from Aadesh and Jake
+													if (isset($_GET["add"]) && ($_GET["add"] == "true" || $_GET["add"] == "false")) {
+														echo "style = 'display:inline-block'";
+													}
+													?>>
 
 			<!-- PopUp content for adding location-->
-			<div class="modal-content">
+			<div class="top5 modal-content">
 				<a href="locations.php" class="close-btn">
-                <span class="close-btn">&times;</span></a>
-
+					<span class="close-btn">&times;</span>
+				</a>
+				<p>
 				<h2>Add Location</h2>
-
-				<form action="AddLocations.php" class="form-container" method="post">
+				</p>
+				<form action="AddLocations.php" method="post">
 					<?php
 					//this is to initiate the data so if an error does come up, data would replace it
 					$addname = "";
@@ -215,7 +219,8 @@ include_once("php-scripts/dashboard-menu.php");
 					$addpostcode = "";
 					//this is to show the data that the user has inputted
 					if (($_GET["add"] == "false")
-					&& ((!empty($_GET["name_msg"])) || (!empty($_GET["sub_msg"])) || (!empty($_GET["post_msg"])))) {
+						&& ((!empty($_GET["name_msg"])) || (!empty($_GET["sub_msg"])) || (!empty($_GET["post_msg"])))
+					) {
 						//this is to retrieve data from the previous page as the user has failed to pass a validation check
 						$addname = $_SESSION["name"];
 						$addaddress = $_SESSION["address"];
@@ -272,28 +277,28 @@ include_once("php-scripts/dashboard-menu.php");
 					<label for="pickUpInput">Pick Up </label>
 					<input type='checkbox' class='CheckBox' name="pickUpInput" id="pickUpInput" />
 					<br />
-					<button type="submit" name="submitLocation" id="submitLocation" class="btn inputlocation" style='margin-top: 5%;'>Add</button>
+					<button type="submit" name="submitLocation" id="submitLocation" class="btn inputlocation top5">Add</button>
 				</form>
 			</div>
 		</div>
 
 		<!-- Update Locations modal popup -->
-		<div id='updateModal' class='modal' <?php
-											//this is to check if the button is selected, if thats the case, the modal popup will happen
-											//Idea and code from Aadesh and Jake
-											if ((isset($_GET["update"])) &&
-												(($_GET["update"] == "true") || ($_GET["update"] == "false"))
-											) {
-												echo "style = 'display:inline-block'";
-											}
-											?>>
+		<div id='updateModal' class='modal-overlay' <?php
+													//this is to check if the button is selected, if thats the case, the modal popup will happen
+													//Idea and code from Aadesh and Jake
+													if ((isset($_GET["update"])) &&
+														(($_GET["update"] == "true") || ($_GET["update"] == "false"))
+													) {
+														echo "style = 'display:inline-block'";
+													}
+													?>>
 
 			<!-- Update PopUp content -->
-			<div class='modal-content'>
+			<div class='top5 modal-content'>
 				<a href="locations.php" class="close-btn">
-                <span class="close-btn">&times;</span></a>
+					<span class="close-btn">&times;</span></a>
 				<p>
-				<h2 style="	margin-top: -5%;">Update Location</h2>
+				<h2 class="upheader5">Update Location</h2>
 				</p>
 				<?php
 				$LID = $_SESSION['LID'];
@@ -323,7 +328,7 @@ include_once("php-scripts/dashboard-menu.php");
 						$updateDropoff = checkValue($dropOffupdate);
 
 						//This is showing each data from database on the website interface
-						echo "<form method='POST' action='UpdateLocations.php' style='text-align: center;'>";
+						echo "<form method='POST' action='UpdateLocations.php' >";
 						echo "<input type='hidden' id='LID' name='LID' value='$LID'>";
 						if (
 							($_GET["update"] == "false") &&
@@ -393,24 +398,24 @@ include_once("php-scripts/dashboard-menu.php");
 		<!--This is to confirm deleting location data from the database-->
 
 		<!-- Confirming Delete Locations modal popup -->
-		<div id='deleteModal' class='modal' <?php
-											//this is to check if the button is selected, if thats the case, the modal popup will happen
-											//Idea and code from Aadesh and Jake
-											if (isset($_GET["delete"])) {
-												if ($_GET["delete"] == "true") {
-													echo "style = 'display:inline-block'";
-												} else {
-													echo "style = 'display:none'";
-												}
-											}
-											?>>
+		<div id='deleteModal' class='modal-overlay' <?php
+													//this is to check if the button is selected, if thats the case, the modal popup will happen
+													//Idea and code from Aadesh and Jake
+													if (isset($_GET["delete"])) {
+														if ($_GET["delete"] == "true") {
+															echo "style = 'display:inline-block'";
+														} else {
+															echo "style = 'display:none'";
+														}
+													}
+													?>>
 
 			<!--This section is to have a form to Delete the location data-->
 			<!-- PopUp Delete confirm content -->
-			<div class='modal-content'>
+			<div class='top5 modal-content'>
 				<a href="locations.php" class="close-btn">
-                <span class="close-btn">&times;</span></a>
-				
+					<span class="close-btn">&times;</span></a>
+
 				<p>
 				<h2 style="	margin-top: -4%;">Delete Location</h2>
 				</p>
@@ -433,8 +438,8 @@ include_once("php-scripts/dashboard-menu.php");
 
 					<!--This two button is mainly to show confirmation if its ok to delete the location row or not  -->
 					<!--this code is borrowed and modified from Aadesh-->
-					<button style='width: 40%; position: relative;' type='submit' name='deleteLocation' id='deleteLocation'>Yes</button>
-					<button style='width: 40%; position: relative; background-color: red;' type='submit' name='cancelDeleteLocation' id='cancelDeleteLocation'>No</button>
+					<button class="confirmationbutton" type='submit' name='deleteLocation' id='deleteLocation'>Yes</button>
+					<button class="no confirmationbutton" style='background-color:red;' type='submit' name='cancelDeleteLocation' id='cancelDeleteLocation'>No</button>
 				</form>
 			</div>
 		</div>
