@@ -7,6 +7,7 @@ Contributor:
 	- Jake Hipworth @ 102090870@student.swin.edu.au*/
 
 /* Worked on by Jake and modified by Clement*/
+/* This is mainly to stylise the checkbox */
 .CheckBox {
   height: 2em;
   width: 25px;
@@ -70,7 +71,7 @@ Contributor:
 }
 
 /* This is to move the header by a tiny bit */
-.upheader5 {
+.upheader5, #deleteHead, #addHead, #updateHead{
   margin-top: -5%;
 }
 
@@ -78,4 +79,9 @@ Contributor:
 .confirmationbutton {
   width: 40%;
   position: relative;
+}
+
+/* This is so the background of it is red */
+#cancelDeleteLocation {
+  background-color: red;
 }

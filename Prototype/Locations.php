@@ -149,8 +149,8 @@ include_once("php-scripts/dashboard-menu.php");
 							echo "<td>$name";
 							echo "</td>";
 							echo "<td>$fulladdress</td>";
-							echo "<td> <input type='checkbox' class='CheckBox' id='dropOffBox' name='dropOffBox' $dropOffResult style='width=auto;' onclick='return false;'> </td>";
-							echo "<td> <input type='checkbox' class='CheckBox' id='pickUpBox' name='pickUpBox' $pickUpResult style='width=auto;' onclick='return false;'> </td>";
+							echo "<td> <input type='checkbox' class='CheckBox' id='dropOffBox' name='dropOffBox' $dropOffResult onclick='return false;'> </td>";
+							echo "<td> <input type='checkbox' class='CheckBox' id='pickUpBox' name='pickUpBox' $pickUpResult onclick='return false;'> </td>";
 							echo "<td>
 							<!-- This is to open a dropdown table -->
 							<div class='dropdown'>
@@ -158,7 +158,7 @@ include_once("php-scripts/dashboard-menu.php");
 								<div class='dropdown-content'>
 									<!-- Trigger/Open The Update PopUp -->
 									<form method='POST' action='UpdateLocations.php' event.preventDefault()>
-										<button id='$LID' style='left: 0%'  class='updateLocationModal dropdown-element' name='updateLocationModal' type='submit' value='$LID'>Update</button>
+										<button id='$LID' class='updateLocationModal dropdown-element' name='updateLocationModal' type='submit' value='$LID'>Update</button>
 									</form>
 									
 									<!-- Trigger/Open The Delete PopUp -->
@@ -166,7 +166,7 @@ include_once("php-scripts/dashboard-menu.php");
 									<input type='hidden' id='$name' class='deleteName' name='deleteName' value='$name'>
 									<input type='hidden' id='$fulladdress' class='deleteAddress' name='deleteAddress' value='$fulladdress'>
 										
-										<button id=$LID style='left: 0%'  class='deleteLocationModal dropdown-element' name='deleteLocationModal'  type='submit' value='$LID'>Delete</button>
+										<button id='$LID' class='deleteLocationModal dropdown-element' name='deleteLocationModal'  type='submit' value='$LID'>Delete</button>
 									</form>
 								</div>
 							</div>						
@@ -208,7 +208,7 @@ include_once("php-scripts/dashboard-menu.php");
 					<span class="close-btn">&times;</span>
 				</a>
 				<p>
-				<h2>Add Location</h2>
+				<h2 id="addHead">Add Location</h2>
 				</p>
 				<form action="AddLocations.php" method="post">
 					<?php
@@ -298,7 +298,7 @@ include_once("php-scripts/dashboard-menu.php");
 				<a href="locations.php" class="close-btn">
 					<span class="close-btn">&times;</span></a>
 				<p>
-				<h2 class="upheader5">Update Location</h2>
+				<h2 id="updateHead">Update Location</h2>
 				</p>
 				<?php
 				$LID = $_SESSION['LID'];
@@ -417,7 +417,7 @@ include_once("php-scripts/dashboard-menu.php");
 					<span class="close-btn">&times;</span></a>
 
 				<p>
-				<h2 style="	margin-top: -4%;">Delete Location</h2>
+				<h2 id="deleteHead">Delete Location</h2>
 				</p>
 				<form method='POST' action='UpdateLocations.php' event.preventDefault()>
 					<?php
@@ -439,7 +439,7 @@ include_once("php-scripts/dashboard-menu.php");
 					<!--This two button is mainly to show confirmation if its ok to delete the location row or not  -->
 					<!--this code is borrowed and modified from Aadesh-->
 					<button class="confirmationbutton" type='submit' name='deleteLocation' id='deleteLocation'>Yes</button>
-					<button class="no confirmationbutton" style='background-color:red;' type='submit' name='cancelDeleteLocation' id='cancelDeleteLocation'>No</button>
+					<button class="confirmationbutton" type='submit' name='cancelDeleteLocation' id='cancelDeleteLocation'>No</button>
 				</form>
 			</div>
 		</div>

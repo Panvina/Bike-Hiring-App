@@ -29,6 +29,7 @@ if (isset($_POST["updateLocation"]) || isset($_POST["deleteLocation"])) {
 	$postcode = $_POST["postcodeUpdate"];
 	$postcode = sanitise_input($postcode);
 
+	//This is to make sure if the location button is selected and this section of code is mainly validations
 	if (isset($_POST["updateLocation"])) {
 		$name_msg = "";
 		$post_msg = "";
@@ -167,7 +168,7 @@ if (isset($_POST["cancelDeleteLocation"])) {
 	header("location:Locations.php");
 }
 
-//This is if a search has been selected
+//This is the search functionality
 //Search concept adapted from Alex and Addesh
 if (isset($_POST['search-btn'])) {
 	$search = $_POST["search"];
