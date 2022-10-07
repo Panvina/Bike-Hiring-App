@@ -233,7 +233,7 @@ include_once("php-scripts/dashboard-menu.php");
 					}
 
 
-					echo "<label for='nameInput'>Name </label>
+					echo "<label for='nameInput'>Name </label><br/>
 					<input type='text' placeholder='Enter Name' name='nameInput' id ='nameInput' class='inputlocation' value='$addname' required>
 					<br/>";
 					//this is if name has validation error
@@ -243,12 +243,12 @@ include_once("php-scripts/dashboard-menu.php");
 					}
 					echo "<br/>";
 
-					echo "<label for='addressInput'>Address </label>
+					echo "<label for='addressInput'>Address </label><br/>
 					<input type='text' placeholder='Enter Address' name='addressInput' id='addressInput' class='inputlocation' value='$addaddress' required>
 					<br/>";
 					echo "<br/>";
 
-					echo "<label for='suburbInput'>Suburb </label>
+					echo "<label for='suburbInput'>Suburb </label><br/>
 					<input type='text' placeholder='Enter Suburb' name='suburbInput' id='suburbInput' class='inputlocation' value='$addsuburb'required>
 					<br/>";
 
@@ -260,7 +260,7 @@ include_once("php-scripts/dashboard-menu.php");
 					echo "<br/>";
 
 
-					echo "<label for='postcodeInput'>Postcode </label>
+					echo "<label for='postcodeInput'>Postcode </label><br/>
 					<input type='text' placeholder='Enter Postcode' name='postcodeInput' id='postcodeInput' class='inputlocation' maxlength='4' value='$addpostcode' required>
 					<br/>";
 
@@ -277,7 +277,8 @@ include_once("php-scripts/dashboard-menu.php");
 					<label for="pickUpInput">Pick Up </label>
 					<input type='checkbox' class='CheckBox' name="pickUpInput" id="pickUpInput" />
 					<br />
-					<button type="submit" name="submitLocation" id="submitLocation" class="btn inputlocation top5">Add</button>
+					<br />
+					<button type="submit" name="submitLocation" id="submitLocation" class="btn top5">Add</button>
 				</form>
 			</div>
 		</div>
@@ -340,8 +341,8 @@ include_once("php-scripts/dashboard-menu.php");
 							$updatepostcode = $_SESSION["postcode"];
 						}
 
-						echo "<label for='nameupdate'>Name </label>
-						<input type='text' name='nameupdate' id ='nameupdate' value='$updatename' required><br/>";
+						echo "<label for='nameupdate'>Name </label><br/>
+						<input type='text' name='nameupdate' id ='nameupdate' class='inputlocation' value='$updatename' required><br/>";
 
 						//this is if name has validation error
 						if ($_GET["update"] == "false" && !empty($_GET["name_msg"])) {
@@ -350,12 +351,12 @@ include_once("php-scripts/dashboard-menu.php");
 						}
 						echo "<br/>";
 
-						echo "<label for='addressupdate'>Address </label>
+						echo "<label for='addressupdate'>Address </label><br/>
 					<input type='text' placeholder='Enter Address' name='addressupdate' id='addressupdate' class='inputlocation' value='$updateaddress' required>
 					<br/>";
 						echo "<br/>";
 
-						echo "<label for='suburbupdate'>Suburb </label>
+						echo "<label for='suburbupdate'>Suburb </label><br/>
 					<input type='text' placeholder='Enter Suburb' name='suburbupdate' id='suburbupdate' class='inputlocation' value='$updatesuburb' required>
 					<br/>";
 
@@ -366,7 +367,7 @@ include_once("php-scripts/dashboard-menu.php");
 						}
 						echo "<br/>";
 
-						echo "<label for='postcodeUpdate'>Postcode </label>
+						echo "<label for='postcodeUpdate'>Postcode </label><br/>
 					<input type='text' placeholder='EnterPostcode' name='postcodeUpdate' id='postcodeUpdate' class='inputlocation' maxlength='4' value='$updatepostcode' required>
 					<br/>";
 

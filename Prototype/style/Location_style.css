@@ -71,7 +71,7 @@ Contributor:
 }
 
 /* This is to move the header by a tiny bit */
-.upheader5, #deleteHead, #addHead, #updateHead{
+.upheader5, #deleteHead, #addHead, #updateHead {
   margin-top: -5%;
 }
 
@@ -84,4 +84,12 @@ Contributor:
 /* This is so the background of it is red */
 #cancelDeleteLocation {
   background-color: red;
+}
+
+/* This styling is for the input boxes in location page */
+/* Code adapted from Aadesh CSS */
+.inputlocation{
+  height: 24px;
+  width: 100%;
+  font-size: 18px;
 }
