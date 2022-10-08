@@ -248,11 +248,9 @@ form
     left: 0px;
 }
 
-.dropdown
+.dropdown-disabled
 {
-    position: relative;
-    display: inline-block;
-    cursor: pointer;
+    display: none;
 }
 
 .dropbtn {

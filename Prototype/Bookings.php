@@ -669,7 +669,8 @@
                         $rows = $conn->getBookingRows($condition);
 
                         // if no rows are returned, create a null row as a placeholder
-                        if ($rows == null)
+                        $nullRows = ($rows == null);
+                        if ($nullRows)
                         {
                             $rows = array();
                             $tmp = array();
@@ -703,21 +704,26 @@
                                 }
                                 echo "<td> $data </td>";
                             }
-                            echo "
-                                <td class='editcolumn'>
-                                    <div class='dropdown'>
-                                        <button class='dropbtn' disabled>...</button>
-                                        <div class='dropdown-content'>
-                                            <form class='' action='php-scripts/booking-popups.php' method='POST'>
-                                                <button type='submit' name='change-booking-btn' value='change,$bookingId' class='dropdown-element'> Update </button>
-                                            </form>
-                                            <form class='' action='php-scripts/booking-popups.php' method='POST'>
-                                                <button type='submit' name='delete-booking-btn' value='delete,$bookingId' class='dropdown-element'> Delete </button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </td>
-                            ";
+                            echo "<td class='editcolumn'>";
+                            if ($nullRows)
+                            {
+                                echo "    <div class='dropdown-disabled'>";
+                            }
+                            else
+                            {
+                                echo "    <div class='dropdown'>";
+                            }
+                            echo "        <button class='dropbtn' disabled>...</button>";
+                            echo "        <div class='dropdown-content'>";
+                            echo "            <form class='' action='php-scripts/booking-popups.php' method='POST'>";
+                            echo "                <button type='submit' name='change-booking-btn' value='change,$bookingId' class='dropdown-element'> Update </button>";
+                            echo "            </form>";
+                            echo "            <form class='' action='php-scripts/booking-popups.php' method='POST'>";
+                            echo "                <button type='submit' name='delete-booking-btn' value='delete,$bookingId' class='dropdown-element'> Delete </button>";
+                            echo "            </form>";
+                            echo "        </div>";
+                            echo "    </div>";
+                            echo "</td>";
                             echo "</tr>";
                         }
                     ?>
