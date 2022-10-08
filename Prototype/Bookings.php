@@ -624,7 +624,6 @@
             </div>
             <div class="main">
                 <h1 id="content-header"> All Bookings </h1>
-                <!-- Add Booking pop up -->
                 <div class="midbar">
                     <form action='php-scripts/booking-popups.php' method='POST'>
                         <input type="text" name="search-text" placeholder="Search (Customer Name)"></input>

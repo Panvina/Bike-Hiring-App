@@ -510,9 +510,10 @@ Contributor(s): Dabin Lee @ icelasersparr@gmail.com
     }
     else if ($searchButtonSubmit)
     {
+        // text user is searching for
         $searchText = $_POST["search-text"];
 
-
+        // ensure search is not just whitespace characters
         if (trim($searchText) != "")
         {
             header("Location: ..\bookings.php?search=$searchText");

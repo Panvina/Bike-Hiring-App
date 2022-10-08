@@ -79,8 +79,14 @@
             ?>
             <h1 id="content-header"> All Customers</h1>
 
-            <!-- Add Customer pop up -->
-            <button id="CustomerPopUp" class="CustomerPopUp">+ New Customer</button>
+            <div class="midbar">
+                <form action='php-scripts/search.php' method='POST'>
+                    <input type="text" class="invisible" value="customer.php" name="source"></input>
+                    <input type="text" name="search-text" placeholder="Search (Customer Name)"></input>
+                    <button type="submit" name="search-btn"> Search </button>
+                </form>
+                <button id="CustomerPopUp" class="CustomerPopUp">+ New Customer</button>
+            </div>
 
             <!-- List of current customers -->
             <table class="TableContent" id="data-table">
@@ -89,11 +95,18 @@
                         //Fetch data done by Alex, altered by Jake for customer table
                         //establishes the collumns in the table to be used in the query
                         $cols = "user_name, name, phone_number, email, street_address, suburb, post_code, licence_number, state";
-                        //get the data from the table
-                        $rows = $conn->get($cols);
+                        $condition = 0;
+                        if (isset($_GET["search"]))
+                        {
+                            $searchText = $_GET['search'];
+                            $condition = "customer_table.name LIKE '%$searchText%'";
+                        }
 
-                    //establish the headings that will be used to display the data in the table
-                    $tableHeadings = "User Name, Name, Phone Number, Email, Residential Address, Suburb, Post Code, Drivers Licence Number, State";
+                        //get the data from the table
+                        $rows = $conn->get($cols, $condition);
+
+                        //establish the headings that will be used to display the data in the table
+                        $tableHeadings = "User Name, Name, Phone Number, Email, Residential Address, Suburb, Post Code, Drivers Licence Number, State";
 
                         //data validation to remove ',' for querying and displaying data in the table
                         $cols = explode(',', $cols);
