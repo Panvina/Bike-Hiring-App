@@ -78,7 +78,7 @@
                 <h1 id="content-header"> All Staff</h1>
 
                 <div class="midbar">
-                    <form action='php-scripts/search.php' method='POST'>
+                    <form id="midbar-form" action='php-scripts/search.php' method='POST'>
                         <input type="text" class="invisible" value="staff.php" name="source"></input>
                         <input type="text" name="search-text" placeholder="Search (Staff Name)"></input>
                         <button type="submit" name="search-btn"> Search </button>

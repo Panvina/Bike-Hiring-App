@@ -118,10 +118,6 @@ br
 /* styling for main menu content buttons */
 button
 {
-    /* display: inline-block; */
-    /* margin-top: 2%; */
-    /* left: 67%; */
-    /* position: relative; */
     background-color: darkcyan;
     border: none;
     color: white;
@@ -137,6 +133,9 @@ button:active
     cursor: pointer;
 }
 
+/*
+ * Flex box definition and formatting for midbar between header and table - Alex
+ */
 .midbar form
 {
     flex-grow: 1;
@@ -147,7 +146,7 @@ button:active
 {
     font-size: calc(12px + 0.3vw);
     flex-grow: 1;
-    margin-right: 10px;
+    margin-right: 5px;
 }
 
 .midbar
@@ -157,42 +156,56 @@ button:active
     justify-content: space-between;
 }
 
+#midbar-form
+{
+    margin-right: 5px;
+}
+
 .main h1
 {
     display: inline-block;
     margin-bottom: 0px;
 }
 
-/* Formatting for table content in div */
+/* Formatting for table content in div - Alex*/
 .TableContent{
-  border-collapse: collapse;
-  width: 100%;
+    border-collapse: collapse;
+    width: 100%;
 }
 
-/* Formatting for table heading and data */
+/* Formatting for table heading and data - Alex*/
 .TableContent th, td{
-  text-align: center;
-  border: 2px solid black;
-  padding: 8px;
+    text-align: center;
+    border: 2px solid black;
+    padding: 8px;
 }
 
-/* width of edit column in table content */
+/* width of edit column in table content - Alex*/
 .editcolumn
 {
     width: 30px;
 }
 
-/* Set table font size dynamically based on viewport width */
+/* Set table font size dynamically based on viewport width - Alex*/
 table
 {
     font-size: calc(12px + 0.3vw);
 }
 
-/* remove all margins and padding from forms. */
+/* remove all margins and padding from forms. - Alex*/
 form
 {
 	margin:0px;
 	padding:0px;
+}
+
+/* Formatting for CRUD operation status text - Alex */
+.echo
+{
+    color: green;
+    font-weight: bold;
+    margin-bottom: 0px;
+    font-size: 20px;
 }
 
 /*                                                      */
