@@ -1,9 +1,9 @@
 ﻿<!DOCTYPE html>
-
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="./style/style.css">
+    <link rel="stylesheet" href="./style/carousel-style.css">
     <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <title>About Inverloch</title>
@@ -44,12 +44,44 @@
         <div class ="main-carousel" id = "carousel">
             <div class="cell"><img id="img1" src = "img/photos/1.jpg"></div>
             <div class="cell"><img id="img2" src = "img/photos/2.jpg"></div>
-            <div class="cell"><img src = "img/photos/3.jpg"></div>
-            <div class="cell"><img src = "img/photos/4.jpg"></div>
-            <div class="cell"><img src = "img/photos/5.jpg"></div>
-            <div class="cell"><img src = "img/photos/6.jpg"></div>
-            <div class="cell"><img src = "img/photos/7.jpg"></div>
+            <div class="cell"><img id="img3" src = "img/photos/3.jpg"></div>
+            <div class="cell"><img id="img4" src = "img/photos/4.jpg"></div>
+            <div class="cell"><img id="img5" src = "img/photos/5.jpg"></div>
+            <div class="cell"><img id="img6" src = "img/photos/6.jpg"></div>
+            <div class="cell"><img id="img7" src = "img/photos/7.jpg"></div>
         </div>
+
+        <div id="img-one" class="modal">
+            <!-- Button to close modal -->
+            <span class="close-btn">&times;</span>
+            <!-- Image popup -->
+            <img class="carousel-img" id="img1" src="img/photos/1.jpg">           
+        </div>
+        <div id="img-two" class="modal">
+            <span class="close-btn">&times;</span>
+            <img class="carousel-img" id="img1" src="img/photos/2.jpg">           
+        </div>
+        <div id="img-three" class="modal">
+            <span class="close-btn">&times;</span>
+            <img class="carousel-img" id="img1" src="img/photos/3.jpg">           
+        </div>
+        <div id="img-four" class="modal">
+            <span class="close-btn">&times;</span>
+            <img class="carousel-img" id="img1" src="img/photos/4.jpg">           
+        </div>
+        <div id="img-five" class="modal">
+            <span class="close-btn">&times;</span>
+            <img class="carousel-img" id="img1" src="img/photos/5.jpg">           
+        </div>
+        <div id="img-six" class="modal">
+            <span class="close-btn">&times;</span>
+            <img class="carousel-img" id="img1" src="img/photos/6.jpg">           
+        </div>
+        <div id="img-seven" class="modal">
+            <span class="close-btn">&times;</span>
+            <img class="carousel-img" id="img1" src="img/photos/7.jpg">           
+        </div>
+
         <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
         <script type = "text/javascript">
         $('.main-carousel').flickity({
@@ -59,19 +91,7 @@
         });</script>
     </div><br><br><br>
     <?php include 'footer.php'?>
-    <script>
-        var cell1 = document.getElementById("img1");
-        var cell2 = document.getElementById("img2");
-
-        cell1.onclick = function()
-        {
-            alert('1');
-        }
-
-        cell2.onclick = function()
-        {
-            alert('2');
-        }
-    </script>
+    <!-- Adding carousel popup control script-->
+    <script src="scripts/carousel-popup.js"></script>
 </body>
 </html>
