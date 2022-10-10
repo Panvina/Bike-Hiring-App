@@ -39,7 +39,7 @@
         <div class='ExploreMainCont'>
             <div class='ExploreTxt'><h1 id="ExploreHeader">RAIL TRAILS</h1>
                 <div class='ExploreDesc'><p>Cycle your way across Gippsland on the rail trails – a network of disused railways transformed into gently graded paths through bushland and rainforest, past valleys and vineyards, and along the stunning beauty of the coastline. Pedal from town to town, sampling the flavours of the region as you go.</p>
-                <a href = "explore-rail.php"><button style="padding: bottom 20px;"class="button">Explore</button></a>
+                <a href = "explore-rail.php"><button style="padding: bottom 20px;"class="button">Learn More</button></a>
                 </div>
             </div>  
             <div class='ExploreImg'><img style= 'height: 100%; width: 100%; 'src="./img/photos/railtrail.jpg" alt="About Us"/></div>

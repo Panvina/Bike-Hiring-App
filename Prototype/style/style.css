@@ -1,4 +1,4 @@
-/*Buttons generic styling*/
+/*Buttons generic styling - Aadesh*/
 .button {
     background-color: #172026;
     color: white;
@@ -18,7 +18,7 @@
     background-color: #00b7b1;
 }
 
-/*Home banner image styling*/
+/*Home banner image styling - Aadesh*/
 .Homebanner {
     margin: 0 auto;
     width: 95%;
@@ -30,7 +30,7 @@
     margin-bottom: 35px;
 }
 
-/*Homepage banner text styling*/
+/*Homepage banner text styling - Aadesh*/
 #homebannertext {
     text-align: center;
     padding-top: 10px;
@@ -46,7 +46,7 @@
 font-size: 25px;
 }
 
-/*Generic banner image styling*/
+/*Generic banner image styling - Aadesh*/
 .banner {
     padding-left: 10px;
     margin-left: -10px;
@@ -61,7 +61,7 @@ font-size: 25px;
     margin-bottom: 20px;
 }
 
-/*Generic banner text styling for all pages*/
+/*Generic banner text styling for all pages - Aadesh*/
 #bannertext{
     text-align: center;
     padding-left: 50px;
@@ -71,7 +71,7 @@ font-size: 25px;
     color: #172026;
 }
 
-/*Breadcrumb nav styling*/
+/*Breadcrumb nav styling - Aadesh*/
 .NavContainer{
     padding-left: 50px;
 }
@@ -103,7 +103,7 @@ font-size: 25px;
     text-decoration: underline;
 }
 
-/*Home page Container alignment styling*/
+/*Home page Container alignment styling - Aadesh*/
 
 .HomeMainCont{
     /* background-color: blue; */
@@ -168,7 +168,7 @@ font-size: 25px;
     border-width: 0px;
 }
 
-/*About page Container alignment styling*/
+/*About page Container alignment styling - Aadesh*/
 
 .AboutMainCont{
     /* background-color: blue; */
@@ -209,7 +209,7 @@ font-size: 25px;
 }
 
 
-/*About Page Carousel Styling*/
+/*About Page Carousel Styling - Aadesh*/
 
 #AboutH1{
     /* font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif,sans-serif; */
@@ -238,7 +238,7 @@ font-size: 25px;
     object-fit: cover;
 }
 
-/*Main Explore page Container alignment styling*/
+/*Main Explore page Container alignment styling - Aadesh*/
 .ExploreMainCont{
     /* background-color: blue; */
     height: 360px;
@@ -277,7 +277,7 @@ font-size: 25px;
     color: #172026;
 }
 
-/*Sub Explore page Container alignment styling*/
+/*Sub Explore page Container alignment styling - Aadesh*/
 .SubExploreMainCont{
     /* background-color: blue; */
     height: 300px;
@@ -550,3 +550,4 @@ input::placeholder
 {
     padding-top: 35em;
 }
+

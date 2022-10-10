@@ -23,7 +23,7 @@
             <div class="row">
                 <div  id="nav">
                     <div class="column" id="logo">
-                        <img class="logo" src="img/photos/IBH_top_logo.png" alt="business logo - a bike wheel is covered with waves. 'Inverloch bike hire' is written underneath" height= "100px">
+                        <a href="index.php"><img class="logo" src="img/photos/IBH_top_logo.png" alt="business logo - a bike wheel is covered with waves. 'Inverloch bike hire' is written underneath" height= "100px"></a>
                     </div>
                     <div class="column nav-wrapper">
                         <nav class="mainNav">
@@ -33,7 +33,7 @@
                                 <li><a class="nav-text" href="about.php">About Inverloch</a></li>
                                 <li><a class="nav-text explore-link" href="explore.php">About Cycling</a>
                                     <ul id="subNav">
-                                        <li><a href="explore-local.php">Cycling in Out Region</a></li>
+                                        <li><a href="explore-local.php">Cycling in Our Region</a></li>
                                         <li><a href="explore-rail.php">Rail Trails</a></li>
                                     </ul>
                                 </li>
@@ -72,7 +72,8 @@
         // Add the sticky class to the navbar when you reach its scroll position. Remove "sticky" when you leave the scroll position
         function stickyMenu() {
         if (window.pageYOffset > sticky) {
-            navbar.classList.add("sticky")
+            navbar.classList.add("sticky");
+            document.getElementById('subNav').style.background.color= "red";
         } else {
             navbar.classList.remove("sticky");
         }
