@@ -128,6 +128,7 @@
 
             if (count($array)< 1){
                 echo "<p>No current booking/s.</p>";
+                echo"<p><a href='makeabooking.php'><button class='cta-hire-button' type='button'>Start my first booking</button></a></p>";
             }else{
                 for ($i =0; $i<count($array); $i++){
                     $bookingid =$this->bookingid[$i];

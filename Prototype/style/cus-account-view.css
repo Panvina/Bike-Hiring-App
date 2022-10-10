@@ -54,6 +54,19 @@ input {
 }
 
 /********************************************/
+/*Styling the call-to-action to hirepage in the booking summary page button*/
+
+#cta-hire-button:hover{
+  color:#00b7b1;
+}
+ 
+#cta-hire-button{
+  text-decoration: none;
+  font-family: Lato, 'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  color: #172026;
+  text-transform: uppercase;
+}
+/********************************************/
 /*Styling the customer booking summary page*/
 #greet-heading{
     padding-top: 20px;
@@ -80,8 +93,8 @@ input {
   flex-basis: 75%;
   background-color:  rgba(234,247,246, 0.4); 
   border-radius: 5px;
-  overflow-y: hidden;
-  overflow: scroll;     /*all the user to scroll the container if more than 1 bookings are listed*/
+  overflow-x: hidden;
+  overflow-y: scroll;     /*all the user to scroll the container if more than 1 bookings are listed*/
 }
 /*style the booking details container which is the second col*/
 #col2{
@@ -106,14 +119,25 @@ input {
 .text{
   display: flex;
 }
-.cancel-booking-button{
+.cancel-booking-button, #cta-hire-button{
   margin-right: 25px;
 
 }
 
 .booking-details-buttons{
-  margin-top: 40px;
+  margin-bottom: 20px;
 }
 #toUserDetails .text-col{
   margin-left: 120px;
+}
+
+.no-details-error{
+  font-size: 12px;
+  margin-left: 22.5vw;
+  text-align: left;
+  color: red;
+}
+
+a {
+  cursor:pointer;
 }

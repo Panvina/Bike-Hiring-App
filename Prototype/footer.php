@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <title>Inverloch Bike Hire</title>
-        <link rel="stylesheet" href="style/foote-header.css" type="text/css"/>
+        <link rel="stylesheet" href="style/footer-header.css" type="text/css"/>
     </head>
     <body>
         <footer id="f"> 

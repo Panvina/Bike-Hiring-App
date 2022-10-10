@@ -113,7 +113,7 @@
                         <h4>Residential Address:</h4>
                         <p>$wholeAddress</p></div>
                         <div class='text-col'><h4>Phone Number:</h4>
-                        <p>0$pnum</p><br>
+                        <p>$pnum</p><br>
                         <h4>Email:</h4>
                         <p>$email</p></div>
                     </div><br>";
@@ -125,9 +125,9 @@
                 <div class='text'>
                         
                         <div class='text-col2'><h4>Name:</h4>
-                            <input type='text' name='name' value='$name'/>
+                            <input type='text' name='name' value='$name'/><br><br>
                             <h4>Residential Address:</h4>
-                            <input type='text' name ='street_address' placeholder='street' value='$address'/><br>
+                            <input type='text' name ='street_address' placeholder='street' value='$address'/><br>  
                             <input class='addressBox' type='text' name ='suburb' placeholder='suburb' value='$suburb'/>
                             <input class='addressBox' type='text' name ='post_code' placeholder='post code' value='$pcode'/>      
                             <select id='state' name='state'>
@@ -143,9 +143,9 @@
                             </select>
                             </div>
                             <div class='text-col' id='text-field-col-2'><h4>Phone Number:</h4>
-                            <input type='text' name='pnum' value='0$pnum'/><br>
+                            <input type='text' name='pnum' value='$pnum'/><br><br>
                             <h4>Email:</h4>
-                            <input type='text' name='email' value='$email'/></div>        
+                            <input type='text' name='email' value='$email'/></div>      
 
                 </div><br>
                 <button class='acc-button booking-details-buttons' type='submit' name='updateDatabaseButton'>Update</button>

@@ -20,9 +20,9 @@ h1{
 /*main nav styling*/
 .nav-wrapper li{
     display:inline-block;
-    font-size:22px;
     text-decoration: none;
-    margin-top: 15px;
+    margin-top: 20px;
+    padding-right: 0.8vw;
 }
 
 /*the header that contains the logo and the main nav*/
@@ -33,9 +33,9 @@ header{
 #subNav{
     display: none;
     position: absolute;
-    top: 70px;
-    width: 150px;
-    right: 480px;
+    top: 65px;
+    width: 7.8vw;
+    right: 23.3vw;
     padding: 0;
     background: white;
 }
@@ -62,6 +62,7 @@ header{
     color: #00b7b1;
 }
 
+/******************************************/
 /*style the hover effect on the navigation texts only - not the button*/
 .nav-text:hover:after{
     content: "";
@@ -74,7 +75,7 @@ header{
 
 }
 
-
+/******************************************/
   /* The sticky class is added to the navbar with JS when it reaches its scroll position */
 .sticky {
     position: fixed;
@@ -85,29 +86,34 @@ header{
   }
 
 .logo{
-    padding-left: 20em;
+    padding-left: 15vw;
 }
-
-/*style all the buttons*/
-.button, .acc-button {
+/******************************************/
+/*style all the buttons that ref this css*/
+.button, .acc-button, .cta-hire-button {
     background-color: #172026;
     color: white;
-    font-size: 18px;
+    font-size: 16px;
     border-radius: 5px;
     border-width: 0px;
+    cursor:pointer;
 }
 .button{
     padding: 10px 20px 10px 20px;
 }
-.acc-button {
+
+/*style the buttons on the booking summary page that ref this css*/
+.acc-button, .cta-hire-button {
     padding: 5px 15px 5px 15px;}
 
-.button:hover, .acc-button:hover{
+/*style the hover state of all the buttons that ref this css*/
+.button:hover, .acc-button:hover, .cta-hire-button:hover{
     background-color: #00b7b1;
     color: white;
     border-width: 0px;
 }
 
+/******************************************/
 /*Footer Styling*/
 /* Change the alignment of footer mid text. */
 #footer-content{
@@ -134,22 +140,12 @@ header{
 nav.footerNav li{
     list-style-type: none;
 }
-
-/*Responsiveness*/
-@media (max-width: 2240px){
-    nav.mainNav li{
-        padding:5px;
-        font-size:19x;
+@media (min-width: 1274px){
+    .nav-wrapper li{
+        font-size:1.14vw;
     }
-    
-    #menu{
-        margin-left: -20px;
+}@media (max-width: 1273px){
+    .nav-wrapper li{
+        font-size:18px;
     }
-}  
-
-@media (max-width: 1200px){
-    nav.mainNav li{
-        padding:7px;
-        font-size:16px;
-    }
-}  
+}
