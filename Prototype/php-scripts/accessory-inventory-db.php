@@ -14,60 +14,118 @@
 			$this->getConn();
 		}
 
-		/**
-		 *	INSERT method
-		 *	Parameters:
-		 *		- tablename : name of table (e.g. 'bike_types')
-		 *		- colnames : columns to fill from table (e.g. 'id, name, address')
-		 *		- data : conditional on which rows to retrieve (e.g. '"val1", "val2", "val3"')
-		 *
-		 *	Return:
-		 * 		- Return if insert was successful
-		 *
-		 *	To insert a new row, need to first create a booking_table row:
-		 *		Requirements:
-		 *		- CustomerID, Start Date, End Date, Start Time, End Time, Duration, Pick-up, Drop-off, and final price
-		 *			- Final Price =
-		 */
-		public function insert($columns="accessory_id, name, accessory_type_id, price_ph, safety_inspect", $data)
-		{
-			$ret = FALSE;
+		// get conflicting bikes, then remove them. Return non-conflicting bikes.
+	   public function getAvailableAccessories($startDate, $startTime, $endDate, $endTime, $bookingId)
+	   {
+		   $filterQuery = getConflictingBookingsQuery($startDate, $startTime, $endDate, $endTime);
 
-			$data = explode(',', $data);
-			if (count($data) == count(explode(',', $columns)))
-			{
-				$query = "INSERT INTO $tablename ($columns) VALUES ($data)";
-				//echo $query;
-				$ret = $this->conn->query($query);
-			}
-			else
-			{
-				echo "Data value count is incorrect.";
-			}
+		   $bookingsTableName = "booking_table";
+		   $bookingAccessoryTable = "booking_accessory_table";	// Table linking accessories to bookings
+		   $AccessoryInvTableName = $this->tablename;		// Table with all individual concrete bikes
+		   $damagedTableName = "damaged_items_table";
 
-			return $ret;
-		}
+		   $query =   "SELECT $bookingAccessoryTable.accessory_id
+					   FROM $bookingsTableName
+						   LEFT JOIN $bookingAccessoryTable
+							   ON $bookingAccessoryTable.booking_id = $bookingsTableName.booking_id
+						   LEFT JOIN $AccessoryInvTableName
+							   ON $AccessoryInvTableName.accessory_id = $bookingAccessoryTable.accessory_id
+					   WHERE $filterQuery";
 
-		/**
-		 * Get all unbroken accessory items.
-		 *
-		 * Return all non-broken items in accessory table
-		 */
-		public function getUsableItems()
-		{
-			// get all broken items
-			$query = "SELECT accessory_id FROM damaged_items_table";
-			$res = $this->conn->query($query);
+		   // echo "$query";
+		   // echo "<br>";
 
-			$condition = "";
-			while($row = $res->fetch_assoc())
-			{
-				$condition .= "accessory_id != {$row['accessory_id']}";
-			}
+		   // get bike_ids for unavailable bikes
+		   $overlappingAccessories = array();
+		   $res = $this->conn->query($query);
+		   if ($res->num_rows > 0)
+		   {
+			   // append all rows to return array
+			   while($row = $res->fetch_assoc())
+			   {
+				   array_push($overlappingAccessories, $row);
+			   }
+		   }
 
-			$usableItems = $this->get("accessory_id, name", $condition);
+		   // remove duplicates
+		   $unavailableAccessories = array();
+		   for($i = 0; $i < count($overlappingAccessories); $i++)
+		   {
+			   $accessoryId = $overlappingAccessories[$i]["accessory_id"];
+			   if (!in_array($accessoryId, $unavailableAccessories))
+			   {
+				   array_push($unavailableAccessories, $accessoryId);
+			   }
+		   }
 
-			return $usableItems;
-		}
+		   // get damaged items
+		   $damagedAccessories = array();
+		   $query = "SELECT accessory_id FROM $damagedTableName WHERE accessory_id IS NOT NULL";
+
+		   $res = $this->conn->query($query);
+		   if ($res->num_rows > 0)
+		   {
+			   // append all rows to return array
+			   while($row = $res->fetch_assoc())
+			   {
+				   array_push($damagedAccessories, $row);
+			   }
+		   }
+
+		   // add damaged bikes to cleaned bikes
+		   for($i = 0; $i < count($damagedAccessories); $i++)
+		   {
+			   $accessoryId = $damagedAccessories[$i]["accessory_id"];
+			   if (!in_array($bikeId, $unavailableAccessories))
+			   {
+				   array_push($unavailableAccessories, $accessoryId);
+			   }
+		   }
+
+		   // construct query (could put this above, but leaving separate for clarity)
+		   $accessoryQuery = "LOCATE(accessory_id, '";
+		   for($i = 0; $i < count($unavailableAccessories); $i++)
+		   {
+			   $accessoryId = $unavailableAccessories[$i];
+			   $accessoryQuery .= "$accessoryId,";
+		   }
+		   $accessoryQuery .= "') = 0";
+
+		   // add bike ids of current booking to allow for reselection
+		   if ($bookingId != null)
+		   {
+			   $accessoryQuery .= " OR LOCATE(accessory_id, '";
+			   $query = "SELECT $AccessoryInvTableName.accessory_id FROM $bookingAccessoryTable
+						 LEFT JOIN $AccessoryInvTableName
+							 ON $bookingAccessoryTable.accessory_id = $AccessoryInvTableName.accessory_id
+						 WHERE $bookingAccessoryTable.booking_id = $bookingId";
+			   $res = $this->conn->query($query);
+			   if ($res->num_rows > 0)
+			   {
+				   while($row = $res->fetch_assoc())
+				   {
+					   $accessoryQuery .= "{$row['accessory_id']},";
+				   }
+			   }
+			   $accessoryQuery .= "') > 0";
+		   }
+
+		   // get accessories that are available by searching for all accessories not already booked for period, or damaged
+		   $query = "SELECT accessory_id, name FROM $AccessoryInvTableName WHERE $accessoryQuery";
+		   // echo $query;
+
+		   $availableAccessories = array();
+		   $res = $this->conn->query($query);
+		   if ($res->num_rows > 0)
+		   {
+			   // append all rows to return array
+			   while($row = $res->fetch_assoc())
+			   {
+				   array_push($availableAccessories, $row);
+			   }
+		   }
+
+		   return $availableAccessories;
+	   }
 	}
 ?>

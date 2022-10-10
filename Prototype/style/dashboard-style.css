@@ -59,6 +59,7 @@ body
 /* Menu content grid layout formatting */
 .menu
 {
+    margin-left: 10px;
     font-size: 0px;
     min-width: 200px;
 }
@@ -139,7 +140,8 @@ button:active
 .midbar form
 {
     flex-grow: 1;
-    display: flex; justify-content: space-between;
+    display: flex;
+    justify-content: space-between;
 }
 
 .midbar input
@@ -149,11 +151,16 @@ button:active
     margin-right: 5px;
 }
 
+.midbar form>button
+{
+    /* margin-right: max(5px, 40vw); */
+}
+
 .midbar
 {
     margin-bottom: 5px;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
 }
 
 #midbar-form

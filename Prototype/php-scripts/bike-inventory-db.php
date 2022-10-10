@@ -1,5 +1,13 @@
+<!--
+Project Name: Inverloch Bike Hire
+Project Description: A website for hiring bikes. Front-end accompanied
+	   by an admin dashboard.
+File Description: interface for interacting with bike table and related operations..
+Contributor(s): Dabin Lee @ icelasersparr@gmail.com
+-->
 <?php
 	include_once "backend-connection.php";
+	include_once "utils.php";
 
 	class BikeInventoryDBConnection extends DBConnection
 	{
@@ -14,68 +22,119 @@
 			$this->getConn();
 		}
 
-		/**
-		 * Get all currently unavailable bikes from inventory
-		 */
-		public function getUnavailableBikes()
-		{
-			$ret = $this->get("*", "safety_inspect=0");
+		 // get conflicting bikes, then remove them. Return non-conflicting bikes.
+ 		public function getAvailableBikes($startDate, $startTime, $endDate, $endTime, $bookingId)
+ 		{
+ 			$overlappedBikes = array();
 
-			return $ret;
-		}
+ 			$filterQuery = getConflictingBookingsQuery($startDate, $startTime, $endDate, $endTime);
+			// echo "$filterQuery<br>";
 
-		/**
-		 * Get all currently available bikes from inventory
-		 */
-		public function getAvailableBikes()
-		{
-			$ret = $this->get("*", "safety_inspect=1");
+ 			$bookingsTableName = "booking_table";
+ 			$bookingBikeTableName = "booking_bike_table";	// Table linking bikes to bookings
+ 			$bikeInvTableName = $this->tablename;		// Table with all individual concrete bikes
+ 			$damagedTableName = "damaged_items_table";
 
-			return $ret;
-		}
+ 			$query =   "SELECT $bookingBikeTableName.bike_id
+ 						FROM $bookingsTableName
+ 							LEFT JOIN $bookingBikeTableName
+ 								ON $bookingBikeTableName.booking_id = $bookingsTableName.booking_id
+ 							LEFT JOIN $bikeInvTableName
+ 						    	ON $bikeInvTableName.bike_id = $bookingBikeTableName.bike_id
+ 						WHERE $filterQuery";
 
-		/**
-		 * Get bike availability between start and end
-		 *
-		 *
-		 * All parameters are strings.
-		 * Dates are to be formatted as: YYYY-mm-dd
-		 */
-		public function getBikesAvailabilityAtDate($startDate, $startTime, $endDate, $endTime)
-		{
-			$bikeTable = $this->tablename;
-			$bookingTable = "booking_table";
-			$bookingBikeTable = "booking_bike_table";
+ 			// echo "$query<br><br>";
 
-			// construct query. Join with booking table and booking_bike_table
-			$query =   "SELECT $bikeTable.bike_id
-						FROM $bikeTable
-							LEFT JOIN $bookingTable
-								ON $bikeTable.bike_id = $bookingTable.bike_id
-						WHERE ";
+ 			// get bike_ids for unavailable bikes
+ 			$res = $this->conn->query($query);
+ 			if ($res->num_rows > 0)
+ 			{
+ 				// append all rows to return array
+ 				while($row = $res->fetch_assoc())
+ 				{
+ 					array_push($overlappedBikes, $row);
+ 				}
+ 			}
 
-			// // prospective booking within existing bookings
-			// // that is prospective booking start and end date within existing booking start and end dates
-			// $query .= "('$startDate' >= $bookingTable.start_date AND
-			// 			'$endDate' <= $bookingTable.endDate) AND ";
-			//
-			// // prospective booking starts before, but ends during existing booking
-			// $query .= "('$startDate' <= $bookingTable.start_date AND
-			// 			'$endDate' <= $bookingTable.endDate) AND ";
-			//
-			// // prospective booking starts after, but ends before existing booking
-			// $query .= "('$startDate' >= $bookingTable.start_date AND
-			// 			'$endDate' >= $bookingTable.endDate) AND ";
+ 			// remove duplicates
+ 			$unavailableBikes = array();
+ 			for($i = 0; $i < count($overlappedBikes); $i++)
+ 			{
+ 				$bikeId = $overlappedBikes[$i]["bike_id"];
+ 				if (!in_array($bikeId, $unavailableBikes))
+ 				{
+ 					array_push($unavailableBikes, $bikeId);
+ 				}
+ 			}
 
-			$query =   "SELECT $cols
-						FROM $bookingsTableName
-						    LEFT JOIN $custTableName
-						    	ON $bookingsTableName.user_name = $custTableName.user_name
-							LEFT JOIN $locationTableName lt1
-								ON $bookingsTableName.pick_up_location=lt1.location_id
-							LEFT JOIN $locationTableName lt2
-    							ON $bookingsTableName.drop_off_location=lt2.location_id
-						WHERE $bookingsTableName.booking_id = $bookingId";
-		}
+ 			// get damaged items
+ 			$damagedBikes = array();
+ 			$query = "SELECT bike_id FROM $damagedTableName WHERE bike_id IS NOT NULL";
+
+ 			$res = $this->conn->query($query);
+ 			if ($res->num_rows > 0)
+ 			{
+ 				// append all rows to return array
+ 				while($row = $res->fetch_assoc())
+ 				{
+ 					array_push($damagedBikes, $row);
+ 				}
+ 			}
+
+ 			// add damaged bikes to cleaned bikes
+ 			for($i = 0; $i < count($damagedBikes); $i++)
+ 			{
+ 				$bikeId = $damagedBikes[$i]["bike_id"];
+ 				if (!in_array($bikeId, $unavailableBikes))
+ 				{
+ 					array_push($unavailableBikes, $bikeId);
+ 				}
+ 			}
+
+ 			// construct query (could put this above, but leaving separate for clarity)
+ 			$bikeQuery = "LOCATE(bike_id, '";
+ 			for($i = 0; $i < count($unavailableBikes); $i++)
+ 			{
+ 				$bikeId = $unavailableBikes[$i];
+ 				$bikeQuery .= "$bikeId,";
+ 			}
+ 			$bikeQuery .= "') = 0";
+
+			// add bike ids of current booking to allow for reselection
+			if ($bookingId != null)
+			{
+				$bikeQuery .= " OR LOCATE(bike_id, '";
+				$query = "SELECT $bikeInvTableName.bike_id FROM $bookingBikeTableName
+						  LEFT JOIN $bikeInvTableName
+						      ON $bookingBikeTableName.bike_id = $bikeInvTableName.bike_id
+						  WHERE $bookingBikeTableName.booking_id = $bookingId";
+				$res = $this->conn->query($query);
+				if ($res->num_rows > 0)
+				{
+					while($row = $res->fetch_assoc())
+					{
+						$bikeQuery .= "{$row['bike_id']},";
+					}
+				}
+				$bikeQuery .= "') > 0";
+			}
+
+ 			// get bikes that are available by searching for all bikes not already booked for period, or damaged
+ 			$query = "SELECT bike_id, name FROM $bikeInvTableName WHERE $bikeQuery";
+ 			// echo $query;
+
+			$availableBikes = array();
+ 			$res = $this->conn->query($query);
+ 			if ($res->num_rows > 0)
+ 			{
+ 				// append all rows to return array
+ 				while($row = $res->fetch_assoc())
+ 				{
+ 					array_push($availableBikes, $row);
+ 				}
+ 			}
+
+ 			return $availableBikes;
+ 		}
 	}
 ?>

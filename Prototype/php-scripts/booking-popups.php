@@ -217,7 +217,8 @@ Contributor(s): Dabin Lee @ icelasersparr@gmail.com
         if (empty($bikes))
         {
             addErrorToMode($mode, "bikeError");
-            echo "empty";
+            echo "empty - $bikes";
+            // exit();
         }
     }
 
@@ -250,6 +251,58 @@ Contributor(s): Dabin Lee @ icelasersparr@gmail.com
 
         return $errorSet;
     }
+
+    // Get available bikes from a caller.
+    // Caller can be: [addBooking, changeBooking]
+    // bookingId is ID of booking in question. Used by changeBooking, where bikes on current booking are added
+    function printAvailableBikes($caller, $bookingId=null)
+    {
+        if (isset($_SESSION[$caller]["startDate"]))
+        {
+            $startDate = $_SESSION[$caller]["startDate"];
+            $endDate = $_SESSION[$caller]["endDate"];
+            $startTime = $_SESSION[$caller]["startTime"];
+            $endTime = $_SESSION[$caller]["endTime"];
+
+            $conn = new BikeInventoryDBConnection();
+            $bikes = $conn->getAvailableBikes($startDate, $startTime, $endDate, $endTime, $bookingId);
+
+            for($i = 0; $i < count($bikes); $i++)
+            {
+                $bikeId = $bikes[$i]["bike_id"];
+                $bikeName = $bikes[$i]["name"];
+
+                echo "<input type='checkbox' name='$caller-bike[]' id='addbooking-bike-$bikeId' value='$bikeId'>";
+                echo "<label class='bike-label' for='addbooking-bike-$bikeId'>$bikeId: $bikeName</label><br>";
+            }
+        }
+    }
+
+    // Get available accessories from a caller.
+    // Caller can be: [addBooking, changeBooking]
+    // bookingId is ID of booking in question. Used by changeBooking, where accessories on current booking are added
+    function printAvailableAccessories($caller, $bookingId=null)
+    {
+        if (isset($_SESSION[$caller]["startDate"]))
+        {
+            $startDate = $_SESSION[$caller]["startDate"];
+            $endDate = $_SESSION[$caller]["endDate"];
+            $startTime = $_SESSION[$caller]["startTime"];
+            $endTime = $_SESSION[$caller]["endTime"];
+
+            $conn = new AccessoryInventoryDBConnection();
+            $accessories = $conn->getAvailableAccessories($startDate, $startTime, $endDate, $endTime, $bookingId);
+
+            for($i = 0; $i < count($accessories); $i++)
+            {
+                $accessoryId = $accessories[$i]["accessory_id"];
+                $accessoryName = $accessories[$i]["name"];
+
+                echo "<input type='checkbox' name='$caller-accessory[]' id='addbooking-accessory-$accessoryId' value='$accessoryId'>";
+                echo "<label class='bike-label' for='addbooking-accessory-$accessoryId'>$accessoryId: $accessoryName</label><br>";
+            }
+        }
+    }
 ?>
 
 <?php
@@ -267,6 +320,11 @@ Contributor(s): Dabin Lee @ icelasersparr@gmail.com
     $deleteBookingConfirm = isset($_POST["delete-booking-confirm-btn"]);
 
     $searchButtonSubmit = isset($_POST["search-btn"]);
+
+    $doExit = ($addBookingInfoSubmit || $addBookingBikesSubmit ||
+               $changeBookingInitSubmit || $changeBookingInfoSubmit ||
+               $changeBookingBikesSubmit || $deleteBookingSubmit ||
+               $deleteBookingConfirm || $searchButtonSubmit);
 
     // Verify button for add booking is pressed
     if ($addBookingInfoSubmit)
@@ -314,15 +372,26 @@ Contributor(s): Dabin Lee @ icelasersparr@gmail.com
     // Process submit button press for bikes and accessory selection form
     else if ($addBookingBikesSubmit)
     {
-        // get bikes and accessories from <select multiple> html tag
-        // Both contain arrays
-        $bikes        = comboboxArrayToItemIdArray($_POST["add-booking-bike"]);
-        $accessories  = comboboxArrayToItemIdArray($_POST["add-booking-accessory"]);
+        $bikes = $_POST["addBooking-bike"];
+        $accessories = $_POST["addBooking-accessory"];
 
+        // ensure variables are sensible
+        if (!isset($bikes))
+        {
+            $bikes = null;          // null gives empty($bikes) == true
+        }
+        if (!isset($accessories))
+        {
+            $accessories = array();  // accessories must always be an array to be compatible with bookings-db implementation
+        }
+
+        // set booking mode (for errors)
         $bookingMode = "addBooking";
 
-        unset($_SESSION["addBooking"]["error"]);
+        // reset errors
+        unset($_SESSION[$bookingMode]["error"]);
 
+        // check if an error exists in bikes
         checkErrorBikes($bookingMode, $bikes);
 
         // verify at least one bike
@@ -436,13 +505,25 @@ Contributor(s): Dabin Lee @ icelasersparr@gmail.com
     }
     else if ($changeBookingBikesSubmit)
     {
+        $bikes = $_POST["addBooking-bike"];
+        $accessories = $_POST["addBooking-accessory"];
+
+        // ensure variables are sensible
+        if (!isset($bikes))
+        {
+            $bikes = null;          // null gives empty($bikes) == true
+        }
+        if (!isset($accessories))
+        {
+            $accessories = array();  // accessories must always be an array to be compatible with bookings-db implementation
+        }
+
+        // set booking mode (for errors)
         $bookingMode = "changeBooking";
 
-        // retrieve bikes and accessories selected from form
-        $bikes        = comboboxArrayToItemIdArray($_POST["change-booking-bike"]);
-        $accessories  = comboboxArrayToItemIdArray($_POST["change-booking-accessory"]);
-
+        // reset errors
         unset($_SESSION[$bookingMode]["error"]);
+
 
         checkErrorBikes($bookingMode, $bikes);
 
@@ -523,5 +604,9 @@ Contributor(s): Dabin Lee @ icelasersparr@gmail.com
             header("Location: ..\bookings.php");
         }
     }
-    exit();
+
+    if ($doExit)
+    {
+        exit();
+    }
 ?>

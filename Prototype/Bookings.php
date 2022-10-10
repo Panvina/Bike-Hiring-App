@@ -5,6 +5,7 @@
     include_once "php-scripts\accessory-inventory-db.php";
     include_once "php-scripts\bike-inventory-db.php";
     include_once "php-scripts\utils.php";
+    include_once "php-scripts\booking-popups.php";
 
     // dashboard side menu import (Dabin)
     include_once("php-scripts/dashboard-menu.php");
@@ -103,11 +104,6 @@
                     if (in_array("success", $rescodes))
                     {
                         echo "<p class='echo'>Record successfully $opStr</p>";
-                    }
-                    else
-                    {
-                        print_r($rescodes);
-                        echo "<p> - $opStr</p>";
                     }
                 ?>
                 <h1 id="content-header"> All Bookings </h1>
@@ -443,23 +439,11 @@
                 <!-- Form for submitting selections to PHP -->
                 <form class="modal-form" action="php-scripts\booking-popups.php" method="POST">
                     <!-- Bike list -->
-                    <p>To select multiple values for either bikes or accessories, hold CTRL while clicking.</p>
                     <label>Bikes</label><br>
-                    <!-- Get bikes as array (for PHP) -->
-                    <select name="add-booking-bike[]" id="add-booking-bike" multiple size="10"><br><br>
-                        <?php
-                            // Get DB connection object
-                            $conn = new BikeInventoryDBConnection();
-
-                            // Populate list of bikes
-                            $bikes = $conn->get("bike_id, name");
-
-                            if ($bikes != null)
-                            {
-                                arrayToComboBoxOptions($bikes, "bike_id");
-                            }
-                        ?>
-                    </select><br>
+                    <!-- Get bikes as array -->
+                    <div class="select-div">
+                        <?php printAvailableBikes("addBooking"); ?>
+                    </div>
                     <p class="modal-error">
                         <?php
                             if (in_array("bikeError", $rescodes))
@@ -473,20 +457,9 @@
                     <!-- Accessory list -->
                     <label>Accessories</label><br>
                     <!-- Get accessories as array (for PHP) -->
-                    <select name="add-booking-accessory[]" id="add-booking-accessory" multiple size="10" size="10"><br><br>
-                        <?php
-                            // Get DB connection object
-                            $conn = new AccessoryInventoryDBConnection();
-
-                            // Populate list of accessories
-                            $accessories = $conn->getUsableItems();
-
-                            if ($accessories != null)
-                            {
-                                arrayToComboBoxOptions($accessories, "accessory_id");
-                            }
-                        ?>
-                    </select><br>
+                    <div class="select-div">
+                        <?php printAvailableAccessories("addBooking"); ?>
+                    </div><br>
                     <button type="submit" name="add-booking-bike-accessory-submit"> Add Booking </button>
                 </form>
             </div>
@@ -564,7 +537,7 @@
 
                     <!-- Select start of booking -->
                     <label>Start Date</label><br>
-                    <input name="change-booking-start-date" id="change-booking-start-date" type="date" value=<?php echo "$startDate"; ?>><br>
+                    <input name="change-booking-start-date" id="change-booking-start-date" type="date" value=<?php if (isset($startDate)) {echo "$startDate";} ?>><br>
                     <p class="modal-error">
                         <?php
                             if (in_array("startDateEmpty", $rescodes))
@@ -596,7 +569,7 @@
 
                     <!-- Select end of booking -->
                     <label>End Date</label><br>
-                    <input name="change-booking-end-date" id="change-booking-end-date" type="date" value=<?php echo "$endDate"; ?>><br>
+                    <input name="change-booking-end-date" id="change-booking-end-date" type="date" value=<?php if (isset($endDate)) {echo "$endDate";} ?>><br>
                     <p class="modal-error">
                         <?php
                             if (in_array("endDateEmpty", $rescodes))
@@ -697,49 +670,26 @@
                 <!-- Form for submitting selections to PHP -->
                 <form class="modal-form" action="php-scripts\booking-popups.php" method="POST">
                     <!-- Bike list -->
-                    <p>To select multiple values for either bikes or accessories, hold CTRL while clicking.</p>
                     <label>Bikes</label><br>
-                    <!-- Get bikes as array (for PHP) -->
-                    <select name="change-booking-bike[]" id="change-booking-bike" multiple size="10"><br><br>
-                        <?php
-                            // Get DB connection object
-                            $conn = new BikeInventoryDBConnection();
-
-                            // Populate list of dropoff locations
-                            $bikes = $conn->get("bike_id, name");
-
-                            if ($bikes != null)
-                            {
-                                arrayToComboBoxOptions($bikes, "bike_id");
-                            }
-                        ?>
-                    </select><br>
+                    <!-- Get bikes as array -->
+                    <div class="select-div">
+                        <?php printAvailableBikes("changeBooking", $_SESSION["changeBooking"]["bookingId"]); ?>
+                    </div>
                     <p class="modal-error">
                         <?php
                             if (in_array("bikeError", $rescodes))
                             {
                                 echo "Please select at least one bike";
                             }
-                            // echo "Please select at least one bike";
                         ?>
                     </p>
+
                     <!-- Accessory list -->
                     <label>Accessories</label><br>
                     <!-- Get accessories as array (for PHP) -->
-                    <select name="change-booking-accessory[]" id="change-booking-accessory" multiple size="10"><br><br>
-                        <?php
-                            // Get DB connection object
-                            $conn = new AccessoryInventoryDBConnection();
-
-                            // Populate list of dropoff locations
-                            $accessories = $conn->getUsableItems();
-
-                            if ($accessories != null)
-                            {
-                                arrayToComboBoxOptions($accessories, "accessory_id");
-                            }
-                        ?>
-                    </select><br>
+                    <div class="select-div">
+                        <?php printAvailableAccessories("changeBooking", $_SESSION["changeBooking"]["bookingId"]); ?>
+                    </div><br>
                     <button type="submit" name="change-booking-bike-accessory-submit"> Update Booking </button>
                 </form>
             </div>
@@ -762,7 +712,15 @@
             <div class="modal-content">
                 <span class="close-btn">&times;</span>
                 <h2 >Booking Delete Confirmation </h2>
-                <p> Delete Booking No.<?php $id = $_SESSION["deleteBooking"]["bookingId"]; echo "$id"; ?>? </p>
+                <p> Delete Booking No.
+                    <?php
+                        if (isset($_SESSION["deleteBooking"]) && isset($_SESSION["deleteBooking"]["bookingId"]))
+                        {
+                            $id = $_SESSION["deleteBooking"]["bookingId"];
+                            echo "$id";
+                        }
+                    ?>?
+                </p>
                 <form class="modal-form" action='php-scripts/booking-popups.php' method='POST'>
                     <button type='submit' name='delete-booking-confirm-btn'> Confirm Delete </button>
                 </form>
