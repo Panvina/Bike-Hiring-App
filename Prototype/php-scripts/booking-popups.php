@@ -487,7 +487,7 @@ Contributor(s): Dabin Lee @ icelasersparr@gmail.com
             // clear booking variables
             clearSessionVariables();
             // redirect back to main bookings page
-            header("Location: ..\bookings.php");
+            header("Location: ..\bookings.php?booking-mode=$bookingMode-success");
         }
     }
     else if ($deleteBookingSubmit)
@@ -506,13 +506,14 @@ Contributor(s): Dabin Lee @ icelasersparr@gmail.com
         $conn = new BookingsDBConnection();
         $res = $conn->deleteBooking($bookingId);
 
-        header("Location: ..\bookings.php");
+        header("Location: ..\bookings.php?booking-mode=delete-success");
     }
     else if ($searchButtonSubmit)
     {
+        // text user is searching for
         $searchText = $_POST["search-text"];
 
-
+        // ensure search is not just whitespace characters
         if (trim($searchText) != "")
         {
             header("Location: ..\bookings.php?search=$searchText");

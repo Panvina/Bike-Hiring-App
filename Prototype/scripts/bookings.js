@@ -64,21 +64,3 @@ function hideModal(modalElement)
 {
 	modalElement.style.display = "none";
 }
-//
-// alignAddBtn();
-// function alignAddBtn()
-// {
-//     var headerWidth = document.getElementById('content-header').getBoundingClientRect().width;
-//
-//     var addBtn = document.getElementById('add-booking-btn');
-//     var addBtnInfo = addBtn.getBoundingClientRect();
-//     var btnWidth = addBtnInfo.width;
-//
-//     var tableWidth = document.getElementById('data-table').getBoundingClientRect().width;
-//
-//     var width = (tableWidth - headerWidth - btnWidth - 3) +  "px";
-//
-//     addBtn.style.left = width;
-// }
-//
-// window.addEventListener('resize', alignAddBtn);

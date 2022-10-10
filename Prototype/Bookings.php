@@ -15,42 +15,53 @@
 
     $_SESSION['id'] = '123';
 
-    $bookingMode = "none";
-    $errorCode = "none";
-    $errorText = "";
-    $errors = array();
+    $bookingMode = "none";  // direct booking-mode variable from GET
+    $opMode = "none";       // operation being performed (bookingMode is usually subset of this)
+    $rescode = "none";      // result code (send with booking-mode from server)
+    $rescodes = array();    // result code array (list of all codes from server)
+
+    $addBookingModes = array("add1", "add2", "addBooking");
+    $changeBookingModes = array("change1", "change2", "changeBooking");
+    $deleteBookingModes = array("delete", "deleteBooking");
 
     if (isset($_GET["booking-mode"]))
     {
         $bookingErrorData = explode('-', $_GET["booking-mode"]);
         $bookingMode = $bookingErrorData[0];
-        $errorCode = $bookingErrorData[1];
+        $rescode = $bookingErrorData[1];
 
-        if ($bookingMode == "add1" or $bookingMode == "add2")
+        if ($rescode == "success")
         {
-            $dataMode = "addBooking";
+            $rescodes = array("success");
+        }
 
-            if ($errorCode == "error")
+        if (in_array($bookingMode, $addBookingModes))
+        {
+            $opMode = "addBooking";
+
+            if ($rescode == "error")
             {
-                $errors = explode(",", $_SESSION[$dataMode]["error"]);
-            }
-            else
-            {
-                $errors = array();
+                $rescodes = explode(",", $_SESSION[$opMode]["error"]);
             }
         }
-        else if ($bookingMode == "change1" or $bookingMode == "change2")
+        else if (in_array($bookingMode, $changeBookingModes))
         {
-            $dataMode = "changeBooking";
+            $opMode = "changeBooking";
 
-            if ($errorCode == "error")
+            if ($rescode == "error")
             {
-                print_r( $_SESSION[$dataMode]["error"]);
-                $errors = explode(",", $_SESSION[$dataMode]["error"]);
+                // print_r( $_SESSION[$opMode]["error"]);
+                $rescodes = explode(",", $_SESSION[$opMode]["error"]);
             }
-            else
+        }
+        else if (in_array($bookingMode, $deleteBookingModes))
+        {
+            $opMode = "deleteBooking";
+
+            if ($rescode == "error")
             {
-                $errors = array();
+                // print_r( $_SESSION[$opMode]["error"]);
+                $rescodes = explode(",", $_SESSION[$opMode]["error"]);
             }
         }
     }
@@ -68,6 +79,144 @@
     </div>
     </head>
     <body>
+        <div class="grid-container">
+            <div class="menu">
+                <?php printMenu("bookings"); ?>
+            </div>
+            <div class="main">
+                <?php
+                    // get operation string
+                    $opStr = "none";
+                    switch($opMode)
+                    {
+                        case "addBooking":
+                            $opStr = "created";
+                            break;
+                        case "changeBooking":
+                            $opStr = "updated";
+                            break;
+                        case "deleteBooking":
+                            $opStr = "deleted";
+                            break;
+                    }
+
+                    if (in_array("success", $rescodes))
+                    {
+                        echo "<p class='echo'>Record successfully $opStr</p>";
+                    }
+                    else
+                    {
+                        print_r($rescodes);
+                        echo "<p> - $opStr</p>";
+                    }
+                ?>
+                <h1 id="content-header"> All Bookings </h1>
+                <div class="midbar">
+                    <form id="midbar-form" action='php-scripts/booking-popups.php' method='POST'>
+                        <input type="text" name="search-text" placeholder="Search (Customer Name)"></input>
+                        <button type="submit" name="search-btn"> Search </button>
+                    </form>
+                    <button type="button" id="add-booking-btn">+ Add Booking</button>
+                </div>
+                <!-- List of available bookings -->
+                <table id="data-table" class="TableContent">
+                    <tr>
+                        <!-- Populate table header -->
+                        <?php
+                            // Declare columns and create array
+                            $conn = new BookingsDBConnection();
+                            $cols = $conn->getBookingDisplayColumns();
+                            $cols = explode(',', $cols);
+
+                            // Get number of columns
+                            $count = count($cols);
+
+                            // print_r($cols);
+                            // echo "<br>";
+
+                            // Print data as a HTML table header
+                            for($x = 0; $x < $count; $x++)
+                            {
+                                $col = trim($cols[$x]);
+                                echo "<th> $col </th>";
+                            }
+                            echo "<th> Edit </th>";
+                        ?>
+                    </tr>
+
+                    <!-- Populate table data rows -->
+                    <?php
+                        // create new DB connection and fetch rows
+                        $condition = 0;
+                        if (isset($_GET["search"]))
+                        {
+                            $searchText = $_GET['search'];
+                            $condition = "customer_table.name LIKE '%$searchText%'";
+                        }
+                        $rows = $conn->getBookingRows($condition);
+
+                        // if no rows are returned, create a null row as a placeholder
+                        $nullRows = ($rows == null);
+                        if ($nullRows)
+                        {
+                            $rows = array();
+                            $tmp = array();
+                            for($x = 0; $x < count($cols); $x++)
+                            {
+                                array_push($tmp, "null");
+                            }
+                            array_push($rows, $tmp);
+                        }
+
+                        // get keys for each row
+                        // at least one row exists due to if-statement above
+                        $keys = array_keys($rows[0]);
+                        for($x = 0; $x < count($rows); $x++)
+                        {
+                            // create data row
+                            echo "<tr>";
+                            $bookingId = 0;
+                            for($y = 0; $y < count($keys); $y++)
+                            {
+                                // get row and key
+                                $row = $rows[$x];
+                                $key = $keys[$y];
+
+                                // retrieve data from above row for given key
+                                $data = $row[$key];
+
+                                if ($key == "booking_id")
+                                {
+                                    $bookingId = $data;
+                                }
+                                echo "<td> $data </td>";
+                            }
+                            echo "<td class='editcolumn'>";
+                            if ($nullRows)
+                            {
+                                echo "    <div class='dropdown-disabled'>";
+                            }
+                            else
+                            {
+                                echo "    <div class='dropdown'>";
+                            }
+                            echo "        <button class='dropbtn' disabled>...</button>";
+                            echo "        <div class='dropdown-content'>";
+                            echo "            <form class='' action='php-scripts/booking-popups.php' method='POST'>";
+                            echo "                <button type='submit' name='change-booking-btn' value='change,$bookingId' class='dropdown-element'> Update </button>";
+                            echo "            </form>";
+                            echo "            <form class='' action='php-scripts/booking-popups.php' method='POST'>";
+                            echo "                <button type='submit' name='delete-booking-btn' value='delete,$bookingId' class='dropdown-element'> Delete </button>";
+                            echo "            </form>";
+                            echo "        </div>";
+                            echo "    </div>";
+                            echo "</td>";
+                            echo "</tr>";
+                        }
+                    ?>
+                </table>
+            </div>
+        </div>
         <!-- Booking Popup (main) -->
         <div id="add-booking-main-modal" class="modal-overlay"
             <?php
@@ -108,7 +257,7 @@
                     </select><br>
                     <p class="modal-error">
                         <?php
-                            if (in_array("customerEmpty", $errors))
+                            if (in_array("customerEmpty", $rescodes))
                             {
                                 echo "Please ensure at least one customer exists";
                             }
@@ -130,11 +279,11 @@
                     ><br>
                     <p class="modal-error">
                         <?php
-                            if (in_array("startDateEmpty", $errors))
+                            if (in_array("startDateEmpty", $rescodes))
                             {
                                 echo "Please select a date";
                             }
-                            else if (in_array("dateError", $errors))
+                            else if (in_array("dateError", $rescodes))
                             {
                                 echo "Please ensure start date is before the end date";
                             }
@@ -156,7 +305,7 @@
                     </select><br>
                     <p class="modal-error">
                         <?php
-                            if (in_array("timeError", $errors))
+                            if (in_array("timeError", $rescodes))
                             {
                                 echo "Please ensure starting time is before the ending time";
                             }
@@ -178,11 +327,11 @@
                     ><br>
                     <p class="modal-error">
                         <?php
-                            if (in_array("endDateEmpty", $errors))
+                            if (in_array("endDateEmpty", $rescodes))
                             {
                                 echo "Please select a date";
                             }
-                            else if (in_array("dateError", $errors))
+                            else if (in_array("dateError", $rescodes))
                             {
                                 echo "Please ensure start date is before the end date";
                             }
@@ -204,7 +353,7 @@
                     </select><br>
                     <p class="modal-error">
                         <?php
-                            if (in_array("timeError", $errors))
+                            if (in_array("timeError", $rescodes))
                             {
                                 echo "Please ensure starting time is before the ending time";
                             }
@@ -234,7 +383,7 @@
                     </select><br>
                     <p class="modal-error">
                         <?php
-                            if (in_array("pickupError", $errors))
+                            if (in_array("pickupError", $rescodes))
                             {
                                 echo "Please add a pickup location";
                             }
@@ -262,7 +411,7 @@
                     </select>
                     <p class="modal-error">
                         <?php
-                            if (in_array("dropoffError", $errors))
+                            if (in_array("dropoffError", $rescodes))
                             {
                                 echo "Please add a dropoff location";
                             }
@@ -277,7 +426,7 @@
         <!-- Form for adding bikes and accessories to bookings -->
         <div id="add-booking-bikes-modal" class="modal-overlay"
         <?php
-            if ($bookingMode == "add2" && $errorCode != "success")
+            if ($bookingMode == "add2" && $rescode != "success")
             {
                 echo "style='display: block';";
             }
@@ -313,7 +462,7 @@
                     </select><br>
                     <p class="modal-error">
                         <?php
-                            if (in_array("bikeError", $errors))
+                            if (in_array("bikeError", $rescodes))
                             {
                                 echo "Please select at least one bike";
                             }
@@ -405,7 +554,7 @@
                     </select><br>
                     <p class="modal-error">
                         <?php
-                            if (in_array("customerEmpty", $errors))
+                            if (in_array("customerEmpty", $rescodes))
                             {
                                 echo "Please ensure at least one customer exists";
                             }
@@ -418,11 +567,11 @@
                     <input name="change-booking-start-date" id="change-booking-start-date" type="date" value=<?php echo "$startDate"; ?>><br>
                     <p class="modal-error">
                         <?php
-                            if (in_array("startDateEmpty", $errors))
+                            if (in_array("startDateEmpty", $rescodes))
                             {
                                 echo "Please select a date";
                             }
-                            else if (in_array("dateError", $errors))
+                            else if (in_array("dateError", $rescodes))
                             {
                                 echo "Please ensure start date is before the end date";
                             }
@@ -437,7 +586,7 @@
                     </select><br>
                     <p class="modal-error">
                         <?php
-                            if (in_array("timeError", $errors))
+                            if (in_array("timeError", $rescodes))
                             {
                                 echo "Please ensure starting time is before the ending time";
                             }
@@ -450,11 +599,11 @@
                     <input name="change-booking-end-date" id="change-booking-end-date" type="date" value=<?php echo "$endDate"; ?>><br>
                     <p class="modal-error">
                         <?php
-                            if (in_array("endDateEmpty", $errors))
+                            if (in_array("endDateEmpty", $rescodes))
                             {
                                 echo "Please select a date";
                             }
-                            else if (in_array("dateError", $errors))
+                            else if (in_array("dateError", $rescodes))
                             {
                                 echo "Please ensure start date is before the end date";
                             }
@@ -470,7 +619,7 @@
                     </select><br>
                     <p class="modal-error">
                         <?php
-                            if (in_array("timeError", $errors))
+                            if (in_array("timeError", $rescodes))
                             {
                                 echo "Please ensure starting time is before the ending time";
                             }
@@ -494,7 +643,7 @@
                     </select><br>
                     <p class="modal-error">
                         <?php
-                            if (in_array("pickupError", $errors))
+                            if (in_array("pickupError", $rescodes))
                             {
                                 echo "Please add a pickup location";
                             }
@@ -516,7 +665,7 @@
                     </select><br>
                     <p class="modal-error">
                         <?php
-                            if (in_array("dropoffError", $errors))
+                            if (in_array("dropoffError", $rescodes))
                             {
                                 echo "Please add a dropoff location";
                             }
@@ -531,7 +680,7 @@
         <!-- Form for adding bikes and accessories to bookings -->
         <div id="change-booking-bikes-modal" class="modal-overlay"
         <?php
-            if ($bookingMode == "change2" && $errorCode != "success")
+            if ($bookingMode == "change2" && $rescode != "success")
             {
                 echo "style='display: block';";
             }
@@ -567,7 +716,7 @@
                     </select><br>
                     <p class="modal-error">
                         <?php
-                            if (in_array("bikeError", $errors))
+                            if (in_array("bikeError", $rescodes))
                             {
                                 echo "Please select at least one bike";
                             }
@@ -598,7 +747,8 @@
         <!-- Form for adding bikes and accessories to bookings -->
         <div id="delete-booking-bikes-modal" class="modal-overlay"
         <?php
-            if ($bookingMode == "delete")
+            // show delete confirm modal only if booking mode is delete and no result codes are found
+            if ($bookingMode == "delete" && count($rescodes) == 0)
             {
                 echo "style='display: block';";
             }
@@ -616,113 +766,6 @@
                 <form class="modal-form" action='php-scripts/booking-popups.php' method='POST'>
                     <button type='submit' name='delete-booking-confirm-btn'> Confirm Delete </button>
                 </form>
-            </div>
-        </div>
-        <div class="grid-container">
-            <div class="menu">
-                <?php printMenu("bookings"); ?>
-            </div>
-            <div class="main">
-                <h1 id="content-header"> All Bookings </h1>
-                <!-- Add Booking pop up -->
-                <div class="midbar">
-                    <form action='php-scripts/booking-popups.php' method='POST'>
-                        <input type="text" name="search-text" placeholder="Search (Customer Name)"></input>
-                        <button type="submit" name="search-btn"> Search </button>
-                    </form>
-                    <button type="button" id="add-booking-btn">+ Add Booking</button>
-                </div>
-                <!-- List of available bookings -->
-                <table id="data-table" class="TableContent">
-                    <tr>
-                        <!-- Populate table header -->
-                        <?php
-                            // Declare columns and create array
-                            $conn = new BookingsDBConnection();
-                            $cols = $conn->getBookingDisplayColumns();
-                            $cols = explode(',', $cols);
-
-                            // Get number of columns
-                            $count = count($cols);
-
-                            // print_r($cols);
-                            // echo "<br>";
-
-                            // Print data as a HTML table header
-                            for($x = 0; $x < $count; $x++)
-                            {
-                                $col = trim($cols[$x]);
-                                echo "<th> $col </th>";
-                            }
-                            echo "<th> Edit </th>";
-                        ?>
-                    </tr>
-
-                    <!-- Populate table data rows -->
-                    <?php
-                        // create new DB connection and fetch rows
-                        $condition = 0;
-                        if (isset($_GET["search"]))
-                        {
-                            $searchText = $_GET['search'];
-                            $condition = "customer_table.name LIKE '%$searchText%'";
-                        }
-                        $rows = $conn->getBookingRows($condition);
-
-                        // if no rows are returned, create a null row as a placeholder
-                        if ($rows == null)
-                        {
-                            $rows = array();
-                            $tmp = array();
-                            for($x = 0; $x < count($cols); $x++)
-                            {
-                                array_push($tmp, "null");
-                            }
-                            array_push($rows, $tmp);
-                        }
-
-                        // get keys for each row
-                        // at least one row exists due to if-statement above
-                        $keys = array_keys($rows[0]);
-                        for($x = 0; $x < count($rows); $x++)
-                        {
-                            // create data row
-                            echo "<tr>";
-                            $bookingId = 0;
-                            for($y = 0; $y < count($keys); $y++)
-                            {
-                                // get row and key
-                                $row = $rows[$x];
-                                $key = $keys[$y];
-
-                                // retrieve data from above row for given key
-                                $data = $row[$key];
-
-                                if ($key == "booking_id")
-                                {
-                                    $bookingId = $data;
-                                }
-                                echo "<td> $data </td>";
-                            }
-                            echo "
-                                <td class='editcolumn'>
-                                    <div class='dropdown'>
-                                        <button class='dropbtn' disabled>...</button>
-                                        <div class='dropdown-content'>
-                                            <form class='' action='php-scripts/booking-popups.php' method='POST'>
-                                                <button type='submit' name='change-booking-btn' value='change,$bookingId' class='dropdown-element'> Update </button>
-                                            </form>
-                                            <form class='' action='php-scripts/booking-popups.php' method='POST'>
-                                                <button type='submit' name='delete-booking-btn' value='delete,$bookingId' class='dropdown-element'> Delete </button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </td>
-                            ";
-                            echo "</tr>";
-                        }
-                    ?>
-                </table>
             </div>
         </div>
         <script src="scripts/bookings.js">

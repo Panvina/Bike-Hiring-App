@@ -77,9 +77,14 @@
                 ?>
                 <h1 id="content-header"> All Staff</h1>
 
-                <!-- Add Customer pop up -->
-
-                <button type="button" id="staffInsertPopUp">+ New staff member</button>
+                <div class="midbar">
+                    <form id="midbar-form" action='php-scripts/search.php' method='POST'>
+                        <input type="text" class="invisible" value="staff.php" name="source"></input>
+                        <input type="text" name="search-text" placeholder="Search (Staff Name)"></input>
+                        <button type="submit" name="search-btn"> Search </button>
+                    </form>
+                    <button type="button" id="staffInsertPopUp">+ New staff member</button>
+                </div>
 
                 <!-- List of current customers -->
                 <table class="TableContent" id="data-table">
@@ -88,8 +93,15 @@
                             //Fetch data done by Alex, altered by Jake for customer table
                             //establishes the collumns in the table to be used in the query
                             $cols = "user_name, name, phone_number, email, address, suburb, post_code, state";
+                            $condition = 0;
+                            if (isset($_GET["search"]))
+                            {
+                                $searchText = $_GET['search'];
+                                $condition = "employee_table.name LIKE '%$searchText%'";
+                            }
+
                             //get the data from the table
-                            $rows = $conn->get($cols);
+                            $rows = $conn->get($cols, $condition);
 
                             //establish the headings that will be used to display the data in the table
                             $tableHeadings = "User Name, Name, Phone Number, Email, Residential Address, Suburb, Post Code, State";
