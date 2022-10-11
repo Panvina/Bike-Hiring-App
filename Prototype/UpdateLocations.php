@@ -34,28 +34,36 @@ if (isset($_POST["updateLocation"]) || isset($_POST["deleteLocation"])) {
 		$name_msg = "";
 		$post_msg = "";
 		$suburb_msg = "";
+		$add_msg = "";
 
 
 		//Name valdiation
-		if ($name == "") {
+		if (isempty($name)) {
 			$name_msg .= "Please enter info.";
 		}
 
+		//address validation
+		if (isempty($address)) {
+			$add_msg .= "Please enter Postcode.";
+		} else if (!validHomeAddress($address)) {
+			$add_msg = "Address needs to be in correct format";
+		}
+
 		//postcodes validation
-		if ($postcode == "") {
+		if (isempty($postcode)) {
 			$post_msg .= "Please enter Postcode.";
-		} else if (!preg_match('/^\d{4}$/', $postcode)) {
+		} else if (!postCodeSize($postcode)) {
 			$post_msg = "The postcode must be a 4-digit number.";
-		} else if ((substr($postcode, -4, 1) != 3)) //To show this is from the state of Victoaria since Iverloch bike hire is located in Victoria
+		} else if (!validVicPostCode($postcode)) //To show this is from the state of Victoaria since Iverloch bike hire is located in Victoria
 		{
 			$post_msg .= "The postcode you enetered is not a Victorian postcode.";
 		}
 
+
 		//Suburb valdiation
-		$suburb = sanitise_input($suburb);
-		if ($suburb == "") {
+		if (isempty($suburb)) {
 			$suburb_msg .= "Please enter address.";
-		} else if (!preg_match("/^[a-zA-Z',.\s-]{1,25}$/", $suburb)) {
+		} else if (!suburbValidate($suburb)) {
 			$suburb_msg .= "Suburb of location can only contain alpha characters.";
 		}
 
@@ -67,7 +75,7 @@ if (isset($_POST["updateLocation"]) || isset($_POST["deleteLocation"])) {
 			$_SESSION["address"] = $address;
 			$_SESSION["suburb"] = $suburb;
 			$_SESSION["postcode"] = $postcode;
-			header("location:Locations.php?update=false&name_msg=$name_msg&post_msg=$post_msg&sub_msg=$suburb_msg");
+			header("location:Locations.php?update=false&name_msg=$name_msg&post_msg=$post_msg&sub_msg=$suburb_msg&add_msg=$add_msg");
 			exit();
 		}
 	}

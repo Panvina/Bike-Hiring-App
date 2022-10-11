@@ -34,29 +34,36 @@ if (isset($_POST["submitLocation"])) {
 	$name_msg = "";
 	$post_msg = "";
 	$suburb_msg = "";
+	$add_msg = "";
 
 	//Name valdiation
-	if ($nameInput == "") {
+	if (isempty($nameInput)) {
 		$name_msg .= "Please enter info.";
 	}
-	//else if ( !preg_match( "/^[a-zA-Z ]{2,25}$/", $nameInput ) ) {
-	//  $name_msg .= "Name of location can only contain max 25 alpha characters.";}
 
-	//postcodes validation
-	if ($postcodeInput == "") {
-		$post_msg .= "Please enter Postcode.";
-	} else if (!preg_match('/^\d{4}$/', $postcodeInput)) {
-		$post_msg = "The postcode must be a 4-digit number.";
-	} else if ((substr($postcodeInput, -4, 1) != 3)) //To show this is from the state of Victoaria since Iverloch bike hire is located in Victoria
-	{
-		$post_msg .= "The postcode you enetered is not a Victorian postcode.";
+	//address validation
+	if (isempty($addressInput)) {
+		$add_msg .= "Please enter Postcode.";
+	} else if (!validHomeAddress($addressInput)) {
+		$add_msg = "Address needs to be in correct format";
 	}
 
+	//postcodes validation
+	if (isempty($postcodeInput)) {
+		$post_msg .= "Please enter Postcode.";
+	} else if (!postCodeSize($postcodeInput)) {
+		$post_msg = "The postcode must be a 4-digit number.";
+	} else if (!validVicPostCode($postcodeInput)) //To show this is from the state of Victoaria since Iverloch bike hire is located in Victoria
+	{
+		$post_msg .= "Postcode enetered is not a Victorian postcode.";
+	}
+
+
 	//Suburb valdiation
-	$suburbInput = sanitise_input($suburbInput);
-	if ($suburbInput == "") {
+	if (isempty($suburbInput)) {
 		$suburb_msg .= "Please enter address.";
-	} else if (!preg_match("/^[a-zA-Z',.\s-]{1,25}$/", $suburbInput)) {
+	} //This is if the validation fails. 
+	else if (!suburbValidate($suburbInput)) {
 		$suburb_msg .= "Suburb of location can only contain alpha characters.";
 	}
 
@@ -67,7 +74,7 @@ if (isset($_POST["submitLocation"])) {
 		$_SESSION["address"] = $addressInput;
 		$_SESSION["suburb"] = $suburbInput;
 		$_SESSION["postcode"] = $postcodeInput;
-		header("location:Locations.php?add=false&name_msg=$name_msg&post_msg=$post_msg&sub_msg=$suburb_msg");
+		header("location:Locations.php?add=false&name_msg=$name_msg&post_msg=$post_msg&sub_msg=$suburb_msg&add_msg=$add_msg");
 		exit();
 	}
 

@@ -246,6 +246,11 @@ include_once("php-scripts/dashboard-menu.php");
 					echo "<label for='addressInput'>Address </label><br/>
 					<input type='text' placeholder='Enter Address' name='addressInput' id='addressInput' class='inputlocation' value='$addaddress' required>
 					<br/>";
+					//this is if address has validation error
+					if ($_GET["add"] == "false" && !empty($_GET["add_msg"])) {
+						$add_msg = $_GET["add_msg"];
+						echo "<p class='error center'>$add_msg</p>";
+					}
 					echo "<br/>";
 
 					echo "<label for='suburbInput'>Suburb </label><br/>
@@ -354,6 +359,11 @@ include_once("php-scripts/dashboard-menu.php");
 						echo "<label for='addressupdate'>Address </label><br/>
 					<input type='text' placeholder='Enter Address' name='addressupdate' id='addressupdate' class='inputlocation' value='$updateaddress' required>
 					<br/>";
+						//this is if address has validation error
+						if ($_GET["update"] == "false" && !empty($_GET["add_msg"])) {
+							$add_msg = $_GET["add_msg"];
+							echo "<p class='error center'>$add_msg</p>";
+						}
 						echo "<br/>";
 
 						echo "<label for='suburbupdate'>Suburb </label><br/>
@@ -418,7 +428,7 @@ include_once("php-scripts/dashboard-menu.php");
 					<span class="close-btn">&times;</span></a>
 
 				<p>
-				<h2 id="deleteHead">Location Delete<br/>Confirmation</h2>
+				<h2 id="deleteHead">Location Delete<br />Confirmation</h2>
 				</p>
 				<form method='POST' action='UpdateLocations.php' event.preventDefault()>
 					<?php
