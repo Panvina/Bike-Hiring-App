@@ -113,17 +113,17 @@ Contributor(s):
                             <?php
                                 // print number of available bikes
                                 $conn = new BikeInventoryDBConnection();
-                                $res = $conn->getAvailableBikes();
+                                $res = $conn->getNumCheckedBikes();
 
-                                echo count($res);
+                                echo $res;
                             ?>
                         </h3>
                         <h3>Pending Inspections:
                             <?php
                                 // print number of unavailable bikes
-                                $res = $conn->getUnavailableBikes();
+                                $res = $conn->getNumUncheckedBikes();
 
-                                echo count($res);
+                                echo $res;
                             ?>
                         </h3>
                     </div>

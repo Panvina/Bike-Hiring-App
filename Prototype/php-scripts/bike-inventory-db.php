@@ -22,6 +22,36 @@ Contributor(s): Dabin Lee @ icelasersparr@gmail.com
 			$this->getConn();
 		}
 
+		public function getNumCheckedBikes()
+		{
+			$bikeCount = 0;
+
+			$query = "SELECT bike_id FROM $this->tablename WHERE safety_inspect=1";
+			// echo $query;
+			$res = $this->conn->query($query);
+			if ($res->num_rows > 0)
+			{
+				$bikeCount = $res->num_rows;
+			}
+
+			return $bikeCount;
+		}
+
+		public function getNumUncheckedBikes()
+		{
+			$bikeCount = 0;
+
+			$query = "SELECT bike_id FROM $this->tablename WHERE safety_inspect=0";
+			$res = $this->conn->query($query);
+			if ($res->num_rows > 0)
+			{
+				$bikeCount = $res->num_rows;
+			}
+
+			return $bikeCount;
+		}
+
+
 		 // get conflicting bikes, then remove them. Return non-conflicting bikes.
  		public function getAvailableBikes($startDate, $startTime, $endDate, $endTime, $bookingId)
  		{
