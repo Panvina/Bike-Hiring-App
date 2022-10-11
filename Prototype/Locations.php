@@ -219,7 +219,7 @@ include_once("php-scripts/dashboard-menu.php");
 					$addpostcode = "";
 					//this is to show the data that the user has inputted
 					if (($_GET["add"] == "false")
-						&& ((!empty($_GET["name_msg"])) || (!empty($_GET["sub_msg"])) || (!empty($_GET["post_msg"])))
+						&& ((!empty($_GET["name_msg"])) || (!empty($_GET["sub_msg"])) || (!empty($_GET["post_msg"])) || (!empty($add_msg))) 
 					) {
 						//this is to retrieve data from the previous page as the user has failed to pass a validation check
 						$addname = $_SESSION["name"];
@@ -237,7 +237,7 @@ include_once("php-scripts/dashboard-menu.php");
 					<input type='text' placeholder='Enter Name' name='nameInput' id ='nameInput' class='inputlocation' value='$addname' required>
 					<br/>";
 					//this is if name has validation error
-					if ($_GET["add"] == "false" && !empty($_GET["name_msg"])) {
+					if ($_GET["add"] == "false" && !isempty($_GET["name_msg"])) {
 						$name_msg = $_GET["name_msg"];
 						echo "<p class='error center'>$name_msg</p>";
 					}
@@ -337,8 +337,8 @@ include_once("php-scripts/dashboard-menu.php");
 						echo "<form method='POST' action='UpdateLocations.php' >";
 						echo "<input type='hidden' id='LID' name='LID' value='$LID'>";
 						if (
-							($_GET["update"] == "false") &&
-							((!empty($_GET["name_msg"])) || (!empty($_GET["sub_msg"])) || (!empty($_GET["post_msg"])))
+							($_GET["update"] == "false") 
+							&& ((!empty($_GET["name_msg"])) || (!empty($_GET["sub_msg"])) || (!empty($_GET["post_msg"])) || (!empty($add_msg))) 
 						) {
 							$updatename = $_SESSION["name"];
 							$updateaddress = $_SESSION["address"];

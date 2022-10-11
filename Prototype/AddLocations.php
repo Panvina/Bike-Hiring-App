@@ -69,7 +69,7 @@ if (isset($_POST["submitLocation"])) {
 
 
 	//if there is an validation error, it would be send back to Location.php with an error message
-	if (($name_msg != "") || ($post_msg != "") || ($suburb_msg != "")) {
+	if ((!isempty($name_msg)) || (!isempty($post_msg)) || (!isempty($suburb_msg)) || (!isempty($add_msg))) {
 		$_SESSION["name"] = $nameInput;
 		$_SESSION["address"] = $addressInput;
 		$_SESSION["suburb"] = $suburbInput;
