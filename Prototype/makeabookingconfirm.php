@@ -194,6 +194,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
         <div class="maincontainer">
         <div id="dualContainer">
             <div id="dualColumn1">
+            	<center>
                 <h1><strong>Booking Confirmation:</strong></h1>
 		        <p style="font-size: 24px;"><strong>Price: <?php echo("$" . $totalPriceInput . " AUD");?></strong></p>
 		        <p style="font-size: 24px;"><strong>Pick Up Location: <?php 
@@ -444,7 +445,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 			    ?>
 		       	<h2><strong>Enjoy the ride!</strong></h2>
 		       	<br>
-
+		    </center>
             </div>
             <div id="dualColumn2">
 

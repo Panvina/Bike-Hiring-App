@@ -36,7 +36,7 @@ body{
 
 .bottomnavbar {
   overflow: hidden;
-  background-color: red;
+  background-color: rgba(255,0,0,0.5);
   position: fixed;
   bottom: 0;
   width: 100%;
@@ -45,7 +45,7 @@ body{
 
 /* Style the navbar */
 #topnavbar {
-  background-color: red;
+  background-color: rgba(255,0,0,0.5);
   margin: 0, padding:0;
   position: fixed;
   width: 100%;
@@ -62,10 +62,17 @@ body{
 }
 
 
+fieldset {
+    border: 1px dashed red;
+    color:red;
+    font-size:24px;
+}
+
+
 </style>
 <body>
     <div id="topnavbar">
-        <a href="editpages.php" style="color:black;font-size: 20px;padding: 10px;float:left;position: fixed;margin-top: 5px;">&larr; Back To Dashboard</a>
+        <a href="editpages.php" style="color:black;font-size: 20px;padding: 10px;float:left;position: fixed;margin-top: 10px;font-weight: bold;">&larr; Back To Dashboard</a>
         <center>
             <h2>Editing Home Page</h2>
         </center>
@@ -90,16 +97,20 @@ body{
                     ?>
             <!--<div class='HomeImg'><img style= "height: 100%; width: 100%;" src="./img/photos/5.jpg" alt="About Us"/></div>-->
             <div class='HomeTxt'><h1 id="HomeHeader"> ABOUT US</h1>
-
                 <?php
                 $locationQuery = $conn->query("SELECT * FROM content_editing_table WHERE edit_name = 'home_about_us_text'");
                     while ($row = $locationQuery->fetch_assoc()) {
                         $edit_name = $row["edit_name"];
                         $edit_content = $row["edit_content"];
-                        echo '<div style="outline:none;border:5px dashed red;" class="HomeDesc"><span id="text_span" style="outline:none;" contenteditable="true">' . $edit_content . '</span></div>';
+                        echo '<fieldset>';
+                        echo '<legend>EDIT HERE</legend>';
+                        echo '<div style="outline:none;" class="HomeDesc"><span id="text_span" style="outline:none;" contenteditable="true">' . $edit_content . '</span></div>';
+                        echo '</fieldset>';
+
                     }
                     ?>
-                <button style="font-size: 32px;" onclick="updateForm()">Update Change</button>
+                    <br>
+                <button style="font-size: 32px;" onclick="updateForm()">Save Changes</button>
 
                 <!--<div class='HomeDesc'><p>Explore the area and Rail Trails in comfort and style on an electric bike. We also have a range of standard bikes to suit your needs with a range of accessories available. We are a local family owned and operated business and pride ourselves on providing you with a unique experience while you enjoy what Inverloch and the sounding region has to offer. Whether your family have been holidaying here for years, you’re are having a weekend away or just simply visiting for the day we have an experience to suit everyone’s tastes and abilities.</p></div>-->
             </div>
@@ -125,18 +136,18 @@ body{
     </div>
     <br><br><br><br>
 
-    <div class="bottomnavbar">
-        <form action="editindexinsert.php" method="post">
+    <div class="bottomnavbar" style="visibility: hidden;">
+        <form id="formTest" action="editindexinsert.php" method="post">
             <?php
                 $locationQuery = $conn->query("SELECT * FROM content_editing_table WHERE edit_name = 'home_about_us_text'");
                     while ($row = $locationQuery->fetch_assoc()) {
                         $edit_name = $row["edit_name"];
                         $edit_content = $row["edit_content"];
                         echo '<input style="display:none" id="edit_content_text" type="text" name="edit_content_text" value="' . $edit_content . '">';
-                        //echo '<textarea id="edit_content_text2" style="resize:none;width:87%;" rows="5" readonly>' . $edit_content. '</textarea>';
+                        echo '<textarea id="edit_content_text2" style="resize:none;width:87%;" rows="5" readonly>' . $edit_content. '</textarea>';
                     }
                     ?>
-            <input style="float: right;font-size: 32px;height: 75px;" type="submit" value="Save Change">
+            <input id="submitButton" style="float: right;font-size: 32px;height: 75px;" type="submit" value="Save Change">
             <p style="float: right; font-size: 24px;padding-right: 10px;">(Make sure to select <strong>Update Change</strong> before selecting <strong>Save Change</strong>)</p>
         </form>
     </div>
@@ -147,10 +158,12 @@ function updateForm(){
     var currentText =  document.getElementById("text_span").innerHTML;
     document.getElementById("edit_content_text").value = currentText;
     document.getElementById("edit_content_text2").value = currentText;
+    document.getElementById("formTest").submit();
 
     //var currentImage =  document.getElementById("home_image_id").src;
     //document.getElementById("edit_content_image").value = currentImage;
 }
+
 
 
 window.onload = function() {

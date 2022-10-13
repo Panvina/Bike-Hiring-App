@@ -18,36 +18,24 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 <!DOCTYPE html>
 <html>
     <link rel="stylesheet" href="style/dashboard-style.css">
+    <link rel="stylesheet" href="style/editpages.css">
     <head>
          <!-- Header -->
         <title>Edit Pages </title>
-        <div class ="flexDisplay">
-            <h1 class="header"> <a href="index.php"><img src="img/photos/Inverloch_Logo3.png" alt="Inverloch Logo" id="Logo" /></a> Edit Pages </h1>
-            <a id="webpageDirect" name = "webpageDirect" href= 'index.php'> Back to website </a>
-        </div>
-
-
+        <h1 class="header"> <a href="index.php"><img src="img/photos/Inverloch_Logo3.png" alt="Inverloch Logo" id="Logo" /></a> Edit Pages </h1>
     </head>
-
-    <style type="text/css">
-
-
-
-
-    </style>
     <body>
         <div class="grid-container">
         	<div class="menu">
         		<?php printMenu("editpage"); ?>
         	</div>
         	<div class="main">
-                <ul>
-                    <li style="font-size: 32px;"><a href="editIndex.php">Home</a></li>
-                    <li style="font-size: 32px;">Hire</li>
-                    <li style="font-size: 32px;">About Inverloch</li>
-                    <li style="font-size: 32px;">About Cycling</li>
-                    <li style="font-size: 32px;">Contact Us</li>
-                </ul>
+                <div class="grid">
+                  <div class="item">
+                    <a href="editIndex.php"><h1 style="text-decoration: underline;">Edit Home Page</h1></a>
+                    <a href="editIndex.php"><img src="img/editpages/index.png"></a>
+                  </div>
+                </div>
         	</div>
         </div>
     </body>
