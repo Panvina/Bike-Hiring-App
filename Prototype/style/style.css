@@ -352,7 +352,7 @@ font-size: 25px;
 }
 
 
-.modal-overlay,.confirm-modal-overlay
+.modal-overlay, .confirm-modal-overlay
 {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
@@ -367,7 +367,7 @@ font-size: 25px;
     background-color: rgba(0,0,0,0.6); /* Black w/ opacity */
 }
 
-.modal-content
+.modal-content, .modal-confirm-content
 {
     /* background-color: #fefefe; */
     background-image:
@@ -477,19 +477,29 @@ input::placeholder
     padding-bottom: 10px;
 }
 
+
+/*Style the header text of the login/create-an-account modals -- Vina Touch 101928802*/
 .modal-btn
 {
-    width: 60%;
-    height: 35px;
+    border-radius: 5px;
     border: none;
-    display: inline-block;
 }
 
 .login-btn
 {
+    margin-right: 50%;
     background-color: #172026;
     color: white;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    width: 75%;
     box-shadow: rgba(0, 0, 0, 0.15) .95px .95px 1px;
+}
+
+.create-account-option-btn{
+    margin: auto!important;
 }
 
 .create-account-option-btn, .confirm-to-login-btn   
@@ -497,28 +507,33 @@ input::placeholder
     background-color: #eaf7f6;
     color: #172026;
     box-shadow: rgba(0, 0, 0, 0.15) .95px .95px 1px;
+    border-radius: 5px;
+    padding: 5px 15px 5px 15px;
 }
 
+/*Style the hover states of the 'login' button -- Vina Touch 101928802*/
 .login-btn:hover{
     background-color: #00b7b1;
     color:white;
 }
 
+/*Style the hover states of the 'create an account' button and confirmation modal's button -- Vina Touch 101928802*/
 .confirm-to-login-btn:hover, .create-account-option-btn:hover{
     background-color: #09c5bf8c;
     color:white;
-    border: 1px solid #17202621;
 }
 
-button {
+button { /*Ensuring that when the user hover over the buttons, the cursor changes-- Vina Touch 101928802*/
     cursor: pointer;
-  }
-  
-.modal-overlay .error{
-    text-align: center;
-    margin-bottom: 40px;
 }
-.error
+
+.modal-overlay .error   /*Style the error messages abbove the login/create-an-account form-- Vina Touch 101928802*/
+{ 
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.error /*Style the error messages abbove the login/create-an-account form-- Vina Touch 101928802*/
 {
     color: red;
 }

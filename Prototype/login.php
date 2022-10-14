@@ -57,10 +57,10 @@
                     />
 
                     <!--<p style="margin-top: 0px; transform: translate(0, -15px);" class="centre-text"><a href="https://blank.org" class="no-text-decoration">Forgot Password</a></p>-->
-                    <button type="submit" name="login-submit" class="centre-element modal-btn login-btn">LOGIN</button>
+                    <button type="submit" name="login-submit" class="centre-element modal-btn login-btn">LOGIN</button><br>
                 </form>
                 <p class="decorated-lines no-vertical-margins" style="transform: translate(0, -10px);">OR</p>
-                <button id="login-create-account-btn" style="margin-top: 15px;" class="centre-element modal-btn create-account-option-btn">CREATE AN ACCOUNT</button>
+                <button id="login-create-account-btn" style="margin-top: 15px;" class="centre-element modal-btn create-account-option-btn ">CREATE AN ACCOUNT</button>
             </div>
         </div>
 
@@ -69,7 +69,7 @@
             <!-- Create Account Popup Content -->
             <div class="modal-content">
                 <span class="close-btn">&times;</span>
-                <p class="centre-text modal-content-header">CREATE AN ACCOUNT</p>
+                <p class="centre-text modal-content-header ">CREATE AN ACCOUNT</p>
                 <?php
                     if (isset($_GET["ca"]))
                     {
@@ -155,7 +155,7 @@
                         <input name="ca-privacy-policy" type="checkbox"/> I agree to the <a href="https://www.blank.org">privacy policy</a>
                     </label> -->
                     <br>
-                    <button type="submit" name="ca-submit" class="centre-element modal-btn login-btn" style="position: relative;">Create</button>
+                    <button type="submit" name="ca-submit" class="centre-element modal-btn login-btn" style="position: relative;">Create an Account</button>
                 </form>
             </div>
         </div>

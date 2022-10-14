@@ -19,7 +19,7 @@
         <!-- Creating a confirmation popup-->
         <div id="confirm-delete-modal" class="confirm-delete-overlay">
             <!-- Creating a confirmation popup content -->
-            <div class="modal-confirm-content">
+            <div class="modal-confirm-delete-content">
                 <span class="close-confirm-deletion-btn">&times;</span>
                 <img src="img/icons/warning.png" alt="WARNING: ARE YOU SURE YOU WANT TO DELETE?" height="40px" width="40px">
                 <p class="confirm-deletion-text">Are you sure you want to delete this booking ID: <?php if (isset($_SESSION['bookingID'])){echo $_SESSION['bookingID'];}?>?</p>

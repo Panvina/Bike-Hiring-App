@@ -147,7 +147,7 @@ a {
   cursor:pointer;
 }
 
-.modal-confirm-content {
+.modal-confirm-delete-content {
   background-image:
   linear-gradient(to bottom, rgba(234, 247, 246,0.6), rgba(234, 247, 246,0.7)),
   url('../img/backgrounds/popup-background.jpg');
