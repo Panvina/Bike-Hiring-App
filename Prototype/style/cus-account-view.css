@@ -55,17 +55,22 @@ input {
 
 /********************************************/
 /*Styling the call-to-action to hirepage in the booking summary page button*/
+.cta-hire-button {
+  background-color: #172026d2;
+  color: white;
+  border: 1px solid #09c5bf1a!important;
+  font-size: 16px;
+  border-radius: 5px;
+  border-width: 0px;
+  cursor:pointer;
+}
+.cta-hire-button:hover{
+  background-color: #09c5bf8c;
+  color:white;
+  border: 1px solid #17202621;
+}
 
-#cta-hire-button:hover{
-  color:#00b7b1;
-}
- 
-#cta-hire-button{
-  text-decoration: none;
-  font-family: Lato, 'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
-  color: #172026;
-  text-transform: uppercase;
-}
+
 /********************************************/
 /*Styling the customer booking summary page*/
 #greet-heading{
@@ -140,4 +145,72 @@ input {
 
 a {
   cursor:pointer;
+}
+
+.modal-confirm-content {
+  background-image:
+  linear-gradient(to bottom, rgba(234, 247, 246,0.6), rgba(234, 247, 246,0.7)),
+  url('../img/backgrounds/popup-background.jpg');
+  background-position-y: 200px;
+  background-size: cover;
+  margin: auto;
+  border: 1px solid #888;
+  height: 100px;
+  width: 300px;
+  padding: 30px 40px 70px;
+  font-weight: 700;
+}
+
+.confirm-delete-overlay{
+  display: none;
+  position: fixed;
+  z-index: 1;
+  padding-top: 400px;
+  text-align: center;
+  margin: auto;
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.6); /* Black w/ opacity */
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+.close-confirm-deletion-btn {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    margin-top: -30px;
+    margin-right: -30px;
+}
+
+.close-confirm-deletion-btn:hover, .close-confirm-deletion-btn:focus{
+    color: #172026;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.confirm-deletion-btn{
+  color: white;
+  font-size: 16px;
+  border-radius: 5px;
+  padding: 2px 20px;
+  border: none;
+  box-shadow: rgba(0, 0, 0, 0.15) .95px .95px 1px;
+}
+
+.confirm-deletion-btn.yes{
+  background-color:red;
+  margin-right: 5px;
+}
+.confirm-deletion-btn.no{
+background-color: #eaf7f6;
+color:#172026;
+margin-left: 5px;
+}
+
+.confirm-deletion-btn:hover{
+  opacity: 0.7;
 }

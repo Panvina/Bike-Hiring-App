@@ -322,7 +322,7 @@ font-size: 25px;
 }
 
 
-.modal-overlay
+.modal-overlay,.confirm-modal-overlay
 {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
@@ -341,7 +341,7 @@ font-size: 25px;
 {
     /* background-color: #fefefe; */
     background-image:
-    linear-gradient(to bottom, rgba(255,255,255,0.44), rgba(255,255,255,0.44)),
+    linear-gradient(to bottom, rgba(234, 247, 246,0.6), rgba(234, 247, 246,0.7)),
     url('../img/backgrounds/login-background.jpg');
     background-size: cover;
     margin: auto;
@@ -350,7 +350,7 @@ font-size: 25px;
     width: 500px;
 }
 
-.close-btn
+.close-btn, .close-confirm
 {
     color: #aaaaaa;
     float: right;
@@ -358,7 +358,7 @@ font-size: 25px;
     font-weight: bold;
 }
 
-.close-btn:hover, .close-btn:focus
+.close-btn:hover, .close-btn:focus, .close-confirm:hover, .close-confirm:focus
 {
     color: #000;
     text-decoration: none;
@@ -440,6 +440,13 @@ input::placeholder
     font-size: 30px;
 }
 
+.modal-content-text{
+    font-size: 24px;
+    font-weight: 400;
+    color: green;
+    padding-bottom: 10px;
+}
+
 .modal-btn
 {
     width: 60%;
@@ -452,13 +459,31 @@ input::placeholder
 {
     background-color: #172026;
     color: white;
+    box-shadow: rgba(0, 0, 0, 0.15) .95px .95px 1px;
 }
 
-.create-account-option-btn
+.create-account-option-btn, .confirm-to-login-btn   
 {
     background-color: #eaf7f6;
     color: #172026;
+    box-shadow: rgba(0, 0, 0, 0.15) .95px .95px 1px;
 }
+
+.login-btn:hover{
+    background-color: #00b7b1;
+    color:white;
+}
+
+.confirm-to-login-btn:hover, .create-account-option-btn:hover{
+    background-color: #09c5bf8c;
+    color:white;
+    border: 1px solid #17202621;
+}
+
+button {
+    cursor: pointer;
+  }
+  
 .modal-overlay .error{
     text-align: center;
     margin-bottom: 40px;

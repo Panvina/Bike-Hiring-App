@@ -90,7 +90,7 @@ header{
 }
 /******************************************/
 /*style all the buttons that ref this css*/
-.button, .acc-button, .cta-hire-button {
+.button, .acc-button{
     background-color: #172026;
     color: white;
     font-size: 16px;
@@ -107,7 +107,7 @@ header{
     padding: 5px 15px 5px 15px;}
 
 /*style the hover state of all the buttons that ref this css*/
-.button:hover, .acc-button:hover, .cta-hire-button:hover{
+.button:hover, .acc-button:hover{
     background-color: #00b7b1;
     color: white;
     border-width: 0px;

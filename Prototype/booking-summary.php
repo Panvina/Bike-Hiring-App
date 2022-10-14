@@ -12,8 +12,35 @@
         header("location: no-user-details.php");
         exit;
         }
-    } 
+    }
+    ?>
 
+    <html>
+        <!-- Creating a confirmation popup-->
+        <div id="confirm-delete-modal" class="confirm-delete-overlay">
+            <!-- Creating a confirmation popup content -->
+            <div class="modal-confirm-content">
+                <span class="close-confirm-deletion-btn">&times;</span>
+                <img src="img/icons/warning.png" alt="WARNING: ARE YOU SURE YOU WANT TO DELETE?" height="40px" width="40px">
+                <p class="confirm-deletion-text">Are you sure you want to delete this booking ID: <?php echo $_SESSION['bookingID'];?>?</p>
+                <form action="booking-summary.php" method="POST"><button name="yes-btn" class="confirm-deletion-btn yes">YES</button>
+                <button name="no-btn" class="confirm-deletion-btn no">NO</button></form>
+            </div>
+        </div>
+        <script>
+            // Get the confirm modal
+            var confirm_delete = document.getElementById("confirm-delete-modal");
+            // Get the <span> element that closes the modal
+            var span = document.getElementsByClassName("close-confirm-deletion-btn")[0];
+
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function() {
+                confirm_delete.style.display = "none";
+            }
+        </script>
+    </html>
+    
+    <?php
     include 'person-dto.php';
     include 'booking-dto.php';
     $email = $_SESSION["login-email"];
@@ -26,6 +53,7 @@
             $msg="<p style='color:green;'>Your details have been updated!</p>";
         }
     }
+    //if the user clicks on the update details button on the page
     if (isset($_POST['updateDatabaseButton'])){
         if(isset($_POST['name']) || isset($_POST['pnum']) || isset($_POST['street_address']) || isset($_POST['suburb']) || isset($_POST['post_code']) 
         || isset($_POST['state']) || isset($_POST['email'])){
@@ -44,6 +72,21 @@
                 $msg="<p style='color:red;'>Your details cannot be updated!</p>".$msg;
             }
         }
+    }
+    //if the user clicks on a cancel booking button, opens the confirmation modal
+    if (isset($_GET['cancelBookingID'])){
+        echo "<script>confirm_delete.style.display = 'block';</script>";
+        $_SESSION['bookingID'] = $_GET['cancelBookingID'];
+    }
+    //if the user clicks on a NO on the modal confirmation box, closes the confirmation modal
+    if (isset($_POST['no-btn'])){
+        echo "<script>confirm_delete.style.display = 'hide';</script>";
+    }
+
+    //if the user clicks on YES on the modal confirmation box, calls a function from BookingsDBConnection class
+    if (isset($_POST['yes-btn']) && isset($_SESSION['bookingID'])){
+        $bookingDBConn = new BookingsDBConnection();
+        $bookingDBConn->deleteBooking($_SESSION['bookingID']);
     }
 ?>
 <!DOCTYPE HTML>
@@ -73,15 +116,8 @@
             </div>
         </div>
     </div>
-
     <?php 
 
-    //if the user clicks the cancel buttton, a function from BookingsDBConnection class will delete the booking
-    if (isset($_POST['cancelBookingID'])){
-        $cancelBookingID = $_POST['cancelBookingID'];
-        $bookingDBConn = new BookingsDBConnection();
-        $bookingDBConn->deleteBooking($cancelBookingID);
-    }
     $userDetail->getDetails();
     $name = $userDetail->getName();
     $pnum = $userDetail->getPhoneN();

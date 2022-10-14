@@ -164,7 +164,7 @@
                             <hr>
                             <p><b>Booking Fee:</b> $$fee</p></div>
                     </div>
-                    <form method='post' action='booking-summary.php' class='confirm'>
+                    <form method='get' action='booking-summary.php' class='confirm'>
                         <input type='hidden' name='cancelBookingID' value='$bookingid'>
                         <input type='submit' name='cancelBooking'
                         class='acc-button cancel-booking-button' value='Cancel this Booking' />

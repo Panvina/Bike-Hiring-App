@@ -1,5 +1,3 @@
-<?php
-?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -57,6 +55,7 @@
                         type="password"
                         placeholder="PASSWORD"
                     />
+
                     <!--<p style="margin-top: 0px; transform: translate(0, -15px);" class="centre-text"><a href="https://blank.org" class="no-text-decoration">Forgot Password</a></p>-->
                     <button type="submit" name="login-submit" class="centre-element modal-btn login-btn">LOGIN</button>
                 </form>
@@ -160,6 +159,19 @@
                 </form>
             </div>
         </div>
+
+        <!------------------------------------------------------------>
+        <!-- Creating a confirmation popup - By Vina Touch 10192880 -->
+        <div id="confirmModal" class="confirm-modal-overlay">
+            <!-- Creating a confirmation popup content -->
+            <div class="modal-confirm-content">
+                <span class="close-confirm">&times;</span>
+                <p class="centre-text modal-content-text">Your account has been created!</p>
+                <button id="to-login-btn" class="centre-element modal-btn confirm-to-login-btn">LOGIN NOW</button>
+            </div>
+        </div>
+        <!------------------------------------------------------------>
+
         <script src="scripts/login-js.php"></script>
             <?php
                 if (isset($_GET["login"]))
@@ -170,6 +182,9 @@
                     {
                         echo '<script> var login_modal = document.getElementById("login-overlay");
                                 login_modal.style.display = "block"; </script>';
+                    }elseif($loginVar == "success"){
+                        echo '<script> var confirm_modal = document.getElementById("confirmModal");
+                                        confirm_modal.style.display = "block"; </script>';
                     }
                 }
                 elseif (isset($_GET["ca"]))
