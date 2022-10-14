@@ -773,6 +773,9 @@ function calculateDuration(){
       bikeRemoveButtonText5 = "')";
       bikeRemoveButtonText6 = bikeRemoveButtonText4.concat(bikeRemoveButtonText5);
       bikeRemoveButton.href = bikeRemoveButtonText6;
+
+      bikeDivBreak = document.createElement("br");
+      bikeDiv.appendChild(bikeDivBreak);
       bikeDiv.appendChild(bikeRemoveButton);
 
 

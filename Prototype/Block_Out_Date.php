@@ -21,10 +21,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
     <head>
          <!-- Header -->
         <title> Block Out Dates </title>
-        <div class ="flexDisplay">
-        <h1 class="header"> <a href="index.php"><img src="img/photos/Inverloch_Logo3.png" alt="Inverloch Logo" id="Logo" /></a> Block out Dates </h1>
-        <a id="webpageDirect" name = "webpageDirect" href= 'index.php'> Back to website </a>
-    </div>
+        <h1 style="font-family: Arial;" class="header"> <a href="index.php"><img src="img/photos/Inverloch_Logo3.png" alt="Inverloch Logo" id="Logo" /></a> Block Out Dates </h1>
     </head>
 
     <body>
@@ -83,33 +80,126 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                 </ul>
 
                 </div>
-        <form id="blockOutDateAddForm" style="display: none;" action="block_out_date_add.php" method="post">
-        <div id="blockOutDateAddContainer">
-        </div>
-        <input style="display:none;font-size: 24px;" id="blockDateSubmit" type="submit" value="Block Date">
-        </form>
 
-        <form id="blockOutDateRemoveForm" style="display: none;" action="block_out_date_remove.php" method="post">
-        <div id="blockOutDateRemoveContainer">
+
+
+
+        <div class="rowmain">
+          <div class="columnmain">
+            <form id="blockOutDateAddForm" style="display: none;" action="block_out_date_add.php" method="post">
+              <div id="blockOutDateAddContainer">
+              </div>
+              <input style="display:none;font-size: 24px;" id="blockDateSubmit" type="submit" value="Block Date">
+              </form>
+
+              <form id="blockOutDateRemoveForm" style="display: none;" action="block_out_date_remove.php" method="post">
+              <div id="blockOutDateRemoveContainer">
+              </div>
+              <input style="display:none;font-size: 24px;" id="unblockDateSubmit" type="submit" value="Unblock Date">
+              </form>
+              <p style="font-size:32px;font-weight: bold;font-family: Arial;">Current Blockout Dates:</p>
+              <?php
+                $blockOutDatesSQL = $conn->query("SELECT * FROM block_out_dates WHERE date_blockout = 1");
+                while ($row = $blockOutDatesSQL->fetch_assoc()) {
+                    $date_value = $row["date_value"];
+                    $date_day = $row["date_day"];
+                    $date_blockout = $row["date_blockout"];
+                    $date_id = $row["date_id"];
+                    $date_month = $row["date_month"];
+                    $date_year = $row["date_year"];
+                    $date_reason = $row["date_reason"];
+                    $date_day_name = $row["date_day_name"];
+                    echo '<tr>
+                        <td><strong style="font-size:28px;font-family: Arial;">'.$date_day_name.': '.$date_value.'</strong></td>
+                    </tr><br>';
+                  }
+                ?>
+          </div>
+          <div class="columnmain">
+            <p style="font-size:32px;font-weight: bold;font-family: Arial;">Block Out Functions:</p>
+            <p style="font-size:24px;font-weight: bold;font-family: Arial;">Block Out Per Day:</p>
+
+            <table>
+              <tr>
+                <th>Block</th>
+                <th>Unblock</th>
+              </tr>
+              <tr>
+                <td><a href="php-scripts/block_out_date_block_monday.php">Block All Mondays</a></td>
+                <td><a href="php-scripts/block_out_date_unblock_monday.php">Unblock All Mondays</a></td>
+              </tr>
+              <tr>
+                <td><a href="php-scripts/block_out_date_block_tuesday.php">Block All Tuesdays</a></td>
+                <td><a href="php-scripts/block_out_date_unblock_tuesday.php">Unblock All Tuesdays</a></td>
+              </tr>
+              <tr>
+                <td><a href="php-scripts/block_out_date_block_wednesday.php">Block All Wednesdays</a></td>
+                <td><a href="php-scripts/block_out_date_unblock_wednesday.php">Unblock All Wednesdays</a></td>
+              </tr>
+              <tr>
+                <td><a href="php-scripts/block_out_date_block_thursday.php">Block All Thursdays</a></td>
+                <td><a href="php-scripts/block_out_date_unblock_thursday.php">Unblock All Thursdays</a></td>
+              </tr>
+              <tr>
+                <td><a href="php-scripts/block_out_date_block_friday.php">Block All Fridays</a></td>
+                <td><a href="php-scripts/block_out_date_unblock_friday.php">Unblock All Fridays</a></td>
+              </tr>
+              <tr>
+                <td><a href="php-scripts/block_out_date_block_saturday.php">Block All Saturdays</a></td>
+                <td><a href="php-scripts/block_out_date_unblock_saturday.php">Unblock All Saturdays</a></td>
+              </tr>
+              <tr>
+                <td><a href="php-scripts/block_out_date_block_sunday.php">Block All Sundays</a></td>
+                <td><a href="php-scripts/block_out_date_unblock_sunday.php">Unblock All Sundays</a></td>
+              </tr>
+            </table>
+            <p style="font-size:24px;font-weight: bold;font-family: Arial;">Block Out Weekends:</p>
+            <table>
+              <tr>
+                <th>Block</th>
+                <th>Unblock</th>
+              </tr>
+              <tr>
+                <td><a href="php-scripts/block_out_date_block_weekends.php">Block All Weekends</a></td>
+                <td><a href="php-scripts/block_out_date_unblock_weekends.php">Unblock All Weekends</a></td>
+              </tr>                
+            </table>
+            <p style="font-size:24px;font-weight: bold;font-family: Arial;">Block Out Month:</p>
+            <table>
+              <tr>
+                <th>Block</th>
+                <th>Unblock</th>
+              </tr>
+              <tr>
+                <td><a href="../Prototype/php-scripts/block_out_date_block_all.php">Block All Month</a></td>
+                <td><a href="../Prototype/php-scripts/block_out_date_unblock_all.php">Unblock All Month</a></td>
+              </tr>                
+            </table>
+            <p style="font-size:24px;font-weight: bold;font-family: Arial;">Block All Dates:</p>
+            <table>
+              <tr>
+                <th>Block</th>
+                <th>Unblock</th>
+              </tr>
+              <tr>
+                <td><a href="../Prototype/php-scripts/block_out_date_block_all.php">Block All Dates</a></td>
+                <td><a href="../Prototype/php-scripts/block_out_date_unblock_all.php">Unblock All Dates</a></td>
+              </tr>                
+            </table>
+          </div>
         </div>
-        <input style="display:none;font-size: 24px;" id="unblockDateSubmit" type="submit" value="Unblock Date">
-        </form>
-        <p style="font-size:32px;font-weight: bold;font-family: Arial;">Current Blockout Dates:</p>
-        <?php
-          $blockOutDatesSQL = $conn->query("SELECT * FROM block_out_dates WHERE date_blockout = 1");
-          while ($row = $blockOutDatesSQL->fetch_assoc()) {
-              $date_value = $row["date_value"];
-              $date_day = $row["date_day"];
-              $date_blockout = $row["date_blockout"];
-              $date_id = $row["date_id"];
-              $date_month = $row["date_month"];
-              $date_year = $row["date_year"];
-              $date_reason = $row["date_reason"];
-              echo '<tr>
-                  <td><strong style="font-size:28px;font-family: Arial;">'.$date_value.'</strong></td>
-              </tr><br>';
-            }
-          ?>
+
+
+        
+
+
+
+
+
+
+
+
+
         	</div>
         </div>
 
@@ -169,6 +259,7 @@ function manageDate(dateid, blockedout){
 
 
 </script>
+
 
 
     </body>
