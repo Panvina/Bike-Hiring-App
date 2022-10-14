@@ -188,7 +188,7 @@ function test_input($data)
 
 function validName($name)
 {
-    return preg_match("/^[a-zA-Z-' ]*$/", $name);
+    return preg_match("/^[a-zA-Z0-9-_' ]*$/", $name);
 }
 function validPrice($price)
 {
