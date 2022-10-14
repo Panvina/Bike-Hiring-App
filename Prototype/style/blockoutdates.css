@@ -89,4 +89,15 @@ ul {list-style-type: none;}
 }
  
 
+.columnmain {
+  float: left;
+  width: 50%;
+}
+
+.rowmain:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
 
