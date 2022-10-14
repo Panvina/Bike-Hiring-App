@@ -109,6 +109,19 @@
                             $cols = explode(',', $cols);
                             $tableHeadings = explode(',', $tableHeadings);
 
+                            // if no rows are returned, create a null row as a placeholder - Created by Alex
+                            $nullRows = ($rows == null);
+                            if ($nullRows)
+                            {
+                                $rows = array();
+                                $tmp = array();
+                                for($x = 0; $x < count($cols); $x++)
+                                {
+                                    array_push($tmp, "null");
+                                }
+                                array_push($rows, $tmp);
+                            }
+
                             $count = count($cols);
                             for($x = 0; $x < $count; $x++)
                             {
@@ -133,6 +146,16 @@
                         $keys = array_keys($rows[0]);
 
                         $primaryColumn = "user_name";
+                        
+                        $primaryKey = "";
+                        if (empty($_SESSION["primaryKey"]))
+                        {
+                            $primaryKey = "";
+                        }
+                        else
+                        {
+                            $_SESSION["primaryKey"] = $primaryKey;
+                        }
 
                         for($x = 0; $x < count($rows); $x++)
                         {
@@ -149,7 +172,7 @@
                                     $primaryKey = $data;
                                 }
                             }
-                            $_SESSION["primaryKey"] = $primaryKey;
+                            
                             //Creates the dropdown box with the buttons used for updating and deleting
                             //Clemeant created the drop down box. Jake repurposed it and changed the style and functionality to suit current methods
                             echo

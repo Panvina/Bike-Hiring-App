@@ -136,18 +136,16 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 
 #dualColumn1 {
     float: left;
-    width: 70%;
-    height: 1000px;
-    overflow-y: scroll;
+    width: 45%;
 }
 
 #dualColumn2 {
-    padding-left: 50px;
-    padding-right: 50px;
     float: left;
-    width: 23%;
-    height: 1000px;
-    overflow-y: scroll;
+    width: 30%;
+}
+#dualColumn3 {
+    float: left;
+    width: 20%;
 }
 
 ul {list-style-type: none;}
@@ -257,8 +255,9 @@ ul {list-style-type: none;}
         
         <div class="maincontainer">
         <div id="dualContainer">
-          <h1>Available Bikes:</h1>
             <div style="" id="dualColumn1">
+            	<h1>Available Bikes:</h1>
+            	<div style="overflow-y: scroll;height: 1000px;">
               <?php
             $bikeType = $conn->query("SELECT * FROM bike_type_table");
             while ($row = $bikeType->fetch_assoc()) {
@@ -268,17 +267,15 @@ ul {list-style-type: none;}
                 $bikeImage = $row["picture_id"];
             ?>
             <h1><strong><?php echo $bikeName; ?></strong></h1>
-                <?php echo '<img src="img/bike-type/'; echo $bikeImage; echo'.jpg" style="width:50%;">'; ?>
+                <?php echo '<img src="img/bike-type/'; echo $bikeImage; echo'.jpg" style="width:300px;">'; ?>
                 <?php echo '<p style="font-size:24px;">Description: ' . $bikeDescription . '</p>'; ?>
                 <?php 
-
-                  
-
-                  $bikeInventoryAvailable = $conn->query("SELECT bike_type_id, bike_id FROM bike_inventory_table where bike_type_id = $bikeTypeId");
+                  $bikeInventoryAvailable = $conn->query("SELECT bike_type_id, bike_id, price_ph FROM bike_inventory_table where bike_type_id = $bikeTypeId");
                   $bikeInventoryNum = mysqli_num_rows($bikeInventoryAvailable);
                   if ($bikeInventoryNum > 0){
                     while ($row = $bikeInventoryAvailable->fetch_assoc()) {
                     $bikeInventoryBikeBikeId = $row["bike_id"];
+                    $bikePrice = $row["price_ph"];
                     $bookingBikeTableAvailability = $conn->query("SELECT * FROM booking_bike_table");
                       while ($row = $bookingBikeTableAvailability->fetch_assoc()) {
                         $bookingBikeTableBikeId = $row["bike_id"];
@@ -287,26 +284,17 @@ ul {list-style-type: none;}
                         }
                       }
                     }
+                    echo '<p style="font-size:24px;">Price Per Hour: $' . $bikePrice . '</p>';
                     echo '<p style="font-size:24px;">Available Bikes: ' . $bikeInventoryNum . '</p>';
                     if ($bikeInventoryNum > 0){
                     echo '<div id="addBikeContainer'. $bikeTypeId .'">';
-                    echo '<a style="font-size:24px;font-family: Comfortaa;color:black;font-weight:bold;" href="javascript: addBike(' . '\'' . $bikeName . '\'' . ', ' . '\'' . $bikeTypeId . '\'' .  ', ' . '\'' . $bikeInventoryNum . '\'' .    ')">Add Bike Type</a>';
+                    echo '<a style="font-size:24px;font-family: Comfortaa;color:black;font-weight:bold;" href="javascript: addBike(' . '\'' . $bikeName . '\'' . ', ' . '\'' . $bikeTypeId . '\'' .  ', ' . '\'' . $bikeInventoryNum . '\'' .    ')">Select Bike</a>';
                     echo '</div>';
+                    echo '<br>';
+                    echo '<hr>';
                     }else{
                     echo '<p style="font-size:24px;">Bike Unavailable</p>';
                     }
-
-                  /*
-                  $bikeAvailable = $conn->query("SELECT bike_type_id FROM bike_inventory_table where bike_type_id = $bikeTypeId");
-                  $bike_available_check = mysqli_num_rows($bikeAvailable);
-                  echo '<p style="font-size:24px;">Available Bikes: ' . $bike_available_check . '</p>';
-                  if ($bike_available_check > 0){
-                  echo '<div id="addBikeContainer'. $bikeTypeId .'">';
-                  echo '<a style="font-size:24px;font-family: Comfortaa;color:black;font-weight:bold;" href="javascript: addBike(' . '\'' . $bikeName . '\'' . ', ' . '\'' . $bikeTypeId . '\'' .     ')">Add Bike</a>';
-                  echo '</div>';
-                  */
-
-
                   }else {
                     echo '<p style="font-size:24px;">Available Bikes: 0</p>';
                     echo '<p style="font-size:24px;">Bike Unavailable</p>';
@@ -319,9 +307,11 @@ ul {list-style-type: none;}
             <br>
             <br>
             <br>
-
+        	</div>
             </div>
             <div id="dualColumn2">
+            	 <h1>Booking Details:</h1>
+            	 <div style="overflow-y: scroll;height: 1000px;padding-right: 50px;padding-left: 50px;">
                 <p><strong>Select Date/s:</strong></p>
                 <div class="month">      
                   <ul>
@@ -367,17 +357,21 @@ ul {list-style-type: none;}
                 </div>
                 <br>
                 <form action="makeabookingconfirm.php" method="post">
+                	<div style="display:none;" id="startDateContainer">
                   <label style="font-family: Comfortaa;" for="timeValue">Start Date:</label>
+                  <br>
                   <input class="startDateInput" type="text" id="startDateValue" name="startDateValue" value="" readonly>
                   <br><br>
-                  <div style="display:block;" id="endDateContainer">
+              		</div>
+                  <div style="display:none;" id="endDateContainer">
                     <label style="font-family: Comfortaa;" for="timeValue">End Date:</label>
                     <br>
                     <input class="endDateInput" type="text" id="endDateValue" name="endDateValue" value="" readonly>
                     <br><br>
                   </div>
                   <label style="font-family: Comfortaa;" for="pickupTimeValue">Pickup Time:</label>
-                  <select id="pickupTimeValue" name="pickupTimeValue">
+                  <br>
+                  <select id="pickupTimeValue" name="pickupTimeValue" style="font-size: 18px;">
                     <option value="none"></option>
                     <option value="9:00:00">9:00 AM</option>
                     <option value="10:00:00">10:00 AM</option>
@@ -390,7 +384,8 @@ ul {list-style-type: none;}
                   </select>
                   <br><br>
                   <label style="font-family: Comfortaa;" for="dropoffTimeValue">Dropoff Time:</label>
-                  <select id="dropoffTimeValue" name="dropoffTimeValue">
+                  <br>
+                  <select id="dropoffTimeValue" name="dropoffTimeValue" style="font-size: 18px;">
                     <option value="none"></option>
                     <option value="9:00:00">9:00 AM</option>
                     <option value="10:00:00">10:00 AM</option>
@@ -404,7 +399,8 @@ ul {list-style-type: none;}
                   </select>
                   <br><br>
                   <label style="font-family: Comfortaa;" for="pickupLocationValue">Pick-Up Location:</label>
-                  <select id="pickupLocationValue" name="pickupLocationValue">
+                  <br>
+                  <select id="pickupLocationValue" name="pickupLocationValue" style="font-size:18px;">
                     <option value="none"></option>
                   <?php
                     $locationQuery = $conn->query("SELECT * FROM location_table WHERE pick_up_location=1");
@@ -421,7 +417,8 @@ ul {list-style-type: none;}
                   </select>
                   <br><br>
                   <label style="font-family: Comfortaa;" for="dropoffLocationValue">Drop-Off Location:</label>
-                  <select id="dropoffLocationValue" name="dropoffLocationValue">
+                  <br>
+                  <select id="dropoffLocationValue" name="dropoffLocationValue" style="font-size:18px;">
                     <option value="none"></option>
                   <?php
                     $locationQuery = $conn->query("SELECT * FROM location_table WHERE drop_off_location=1");
@@ -453,33 +450,49 @@ ul {list-style-type: none;}
                 <?php
                 }
                 ?>
+                <br>
                     <p style="font-size: 24px;">Item List:</p>
                     <div id="itemListContainer" style="">
-                      <p style="font-size: 20px;">Bikes:</p>
+                      <p style="font-size: 20px;font-weight: bold;">Bikes:</p>
                       <div id="bikeListContainer" style="">
-                      
                       </div>
-                      <p style="font-size: 20px;">Accessories:</p>
+                     <p style="font-size: 20px;font-weight: bold;">Accessories:</p>
                       <div id="accessoryListContainer" style="">
                       
                       </div>
-                    </div>                  
+                    </div>
+					<a style="font-size: 18px;color:black;" href="javascript:clearItems()"><p>Clear Items</p></a>                  
                   <!--<label style="" id="" for="custId">Customer Info:</label>
                   <input style="font-size: 14px;" class="" type="text" id="userName" name="userName" value="11" readonly> -->
-                  <a style="font-size: 18px;color:black;" href="javascript:clearItems()"><p>Clear Items</p></a>
                   <!--<label for="timeValue">Total Price:</label>
                   <input style="font-size: 14px;" class="" type="text" id="totalPriceInput" name="totalPriceInput" value="0" readonly>-->
                   <input required type="checkbox" id="termsValue" name="termsValue" value="">
                   <label for="termsValue"> I have read and agreed to the <a href="javascript:openTerms()">terms and conditions.</a></label>
-                  <br>
-                  <br>
                   <!--<a href="javascript:calculateDuration()">Calculate Duration Test</a>
                   <a href="javascript:calculatePrice()">Calculate Price</a>-->
+                  <br>
                   <center><input id="bookNowButton" type="submit" value="BOOK NOW" style="background-color:black;color:white;padding: 10px;text-align: center;font-size:24px;width: 100%;display:none"></center>
+					<br><br><br>
+
                 </form>
 
-
             </div>
+        </div>
+	        <div id="dualColumn3">
+	        	<h1>Current Cart:</h1>
+	        	<div style="overflow-y: scroll;height: 1000px;padding-left: 10px;padding-right: 50px;">
+                    <div id="cartContainer" style="">
+                      <p style="font-size: 20px;font-weight: bold;">Bikes:</p>
+                      <div id="bikeCart" style="">
+                      
+                      </div>
+                      <p style="font-size: 20px;font-weight: bold;">Accessories:</p>
+                      <div id="accessoryCart" style="">
+                      
+                      </div>
+                    </div> 
+	          </div>
+	        </div>
         </div>
     </div>
     <br>    <br>
@@ -559,6 +572,9 @@ ul {list-style-type: none;}
   function clearItems(){
     var bikeListContainer = document.getElementById("bikeListContainer");
     var accessoryListContainer = document.getElementById("accessoryListContainer");
+    var bikeCart = document.getElementById("bikeCart");
+    var accessoryCart = document.getElementById("accessoryCart");
+    bikeCart.innerHTML = '';
     bikeListContainer.innerHTML = '';
     accessoryListContainer.innerHTML = '';
   }
@@ -626,6 +642,38 @@ function calculateDuration(){
 
 
 <script type="text/javascript">
+  
+  function removeBike(bikeTypeId){
+    var removeText = "remove";
+    var removeCartText = "removecart";
+    var removeId = removeText.concat(bikeTypeId);
+    var removeCartId = removeCartText.concat(bikeTypeId);
+    var bikeRemove = document.getElementById(removeId);
+    var bikeCartRemove = document.getElementById(removeCartId);
+    bikeRemove.innerHTML = '';
+    bikeCartRemove.innerHTML = '';
+    bikeRemove.remove();
+    bikeCartRemove.remove();
+  }
+
+  function removeAccessory(accessoryTypeId){
+    var removeText = "remove";
+    var removeCartText = "removecart";
+    var removeId = removeText.concat(accessoryTypeId);
+    var removeCartId = removeCartText.concat(accessoryTypeId);
+    var accesoryRemove = document.getElementById(removeId);
+    var accessoryCartRemove = document.getElementById(removeCartId);
+    accesoryRemove.innerHTML = '';
+    accessoryCartRemove.innerHTML = '';
+    accesoryRemove.remove();
+    accessoryCartRemove.remove();
+  }
+
+
+
+</script>
+
+<script type="text/javascript">
 
 
  function addBike(bikeName, bikeTypeId, bikeInventoryCount){
@@ -646,21 +694,60 @@ function calculateDuration(){
       newTextInput.value = bikeTypeId;
       newTextInput.readOnly = true;
       newTextInput.style.display = "none";
+
+
+
+
+      var bikeCartDiv = document.createElement("div");
+      bikeCartDivText = bikeNameText.concat(bikeTypeId);
+      bikeCartDivText2 = "removecart";
+      bikeCartDiv.id = bikeCartDivText2.concat(bikeCartDivText);
+      var cartText = document.createElement("p");
+      cartText.innerHTML = bikeName;
+      cartText.style.fontSize = "18px";
+      bikeCart.appendChild(bikeCartDiv);
+      bikeCartDiv.appendChild(cartText);
+
+
+      var bikeCartRemoveButton = document.createElement("a");
+      bikeCartRemoveButton.innerHTML = "Remove";
+      bikeCartRemoveButtonText = "bike";
+      bikeCartRemoveButtonText2 = bikeCartRemoveButtonText.concat(bikeTypeId);
+      bikeCartRemoveButtonText3 = "javascript:removeBike('";
+      bikeCartRemoveButtonText4 = bikeCartRemoveButtonText3.concat(bikeCartRemoveButtonText2);
+      bikeCartRemoveButtonText5 = "')";
+      bikeCartRemoveButtonText6 = bikeCartRemoveButtonText4.concat(bikeCartRemoveButtonText5);
+      bikeCartRemoveButton.href = bikeCartRemoveButtonText6;
+      bikeCartDiv.appendChild(bikeCartRemoveButton);
+
+
+
+
+      var bikeDiv = document.createElement("div");
+      bikeDivText = bikeNameText.concat(bikeTypeId);
+      bikeDivText2 = "remove";
+      bikeDiv.id = bikeDivText2.concat(bikeDivText);
+ 
+
       var newBikeText = document.createElement("p");
       newBikeText.innerHTML = bikeName;
-      var newBikeTextText = "bike"
+      var newBikeTextText = "bike";
       newBikeText.id = newBikeTextText.concat(bikeTypeId);
-      bikeListContainer.appendChild(newTextInput);
-      bikeListContainer.appendChild(newBikeText);
+      bikeListContainer.appendChild(bikeDiv);
+      bikeDiv.appendChild(newTextInput);
+      bikeDiv.appendChild(newBikeText);
+
+
+
+
       newSelectText = document.createElement("p");
       //newSelectText.innerHTML =  bikeName + " Quantity:&nbsp;";
       newSelectText.innerHTML = "Quantity:&nbsp;";
       newSelectText.style.display = "inline-block";
-      document.getElementById("bikeListContainer").appendChild(newSelectText);
+      bikeDiv.appendChild(newSelectText);
       var newArray = [];
       for (var i = 1; i <= bikeInventoryCount; i++) {
           newArray.push([i]);
-          //Do something
       }
       var newSelectList = document.createElement("select");
       newSelectText1 = "bike";
@@ -675,51 +762,24 @@ function calculateDuration(){
           option.text = newArray[i];
           newSelectList.appendChild(option);
       }
-      document.getElementById("bikeListContainer").appendChild(newSelectList);
-    }
+      bikeDiv.appendChild(newSelectList);
 
-/*
-  if (hasChild == 1){
-    if (countInDiv >= bikeInventoryCount){
-    }else{
-      var newTextInput = document.createElement("input");
-      var bikeNameText = "bike";
-      newTextInput.name = bikeNameText.concat(bikeTypeId);
-      newTextInput.id = bikeNameText.concat(bikeTypeId);
-      newTextInput.type = "text";
-      newTextInput.value = bikeTypeId;
-      newTextInput.readOnly = true;
-      newTextInput.style.display = "none";
-      var newBikeText = document.createElement("p");
-      newBikeText.innerHTML = bikeName;
-      var newBikeTextText = "bike"
-      newBikeText.id = newBikeTextText.concat(bikeTypeId);
-      bikeListContainer.appendChild(newTextInput);
-      bikeListContainer.appendChild(newBikeText);
+      var bikeRemoveButton = document.createElement("a");
+      bikeRemoveButton.innerHTML = "Remove";
+      bikeRemoveButtonText = "bike";
+      bikeRemoveButtonText2 = bikeRemoveButtonText.concat(bikeTypeId);
+      bikeRemoveButtonText3 = "javascript:removeBike('";
+      bikeRemoveButtonText4 = bikeRemoveButtonText3.concat(bikeRemoveButtonText2);
+      bikeRemoveButtonText5 = "')";
+      bikeRemoveButtonText6 = bikeRemoveButtonText4.concat(bikeRemoveButtonText5);
+      bikeRemoveButton.href = bikeRemoveButtonText6;
+
+      bikeDivBreak = document.createElement("br");
+      bikeDiv.appendChild(bikeDivBreak);
+      bikeDiv.appendChild(bikeRemoveButton);
+
+
     }
-  }else{
-  var newTextInput = document.createElement("input");
-  var bikeNameText = "bike";
-  newTextInput.name = bikeNameText.concat(bikeTypeId);
-  newTextInput.id = bikeNameText.concat(bikeTypeId);
-  newTextInput.type = "text";
-  newTextInput.value = bikeTypeId;
-  newTextInput.readOnly = true;
-  newTextInput.style.display = "none";
-  var newBikeText = document.createElement("p");
-  newBikeText.innerHTML = bikeName;
-  var newBikeTextText = "bike"
-  newBikeText.id = newBikeTextText.concat(bikeTypeId);
-  bikeListContainer.appendChild(newTextInput);
-  bikeListContainer.appendChild(newBikeText);
-  }
-  */
-  
-    /*
-  addBikeContainerText = 'addBikeContainer';
-  addBikeContainerValue = addBikeContainerText.concat(bikeTypeId);
-  document.getElementById(addBikeContainerValue).style.display = "none";
-  */
   
 
  }
@@ -742,41 +802,80 @@ function calculateDuration(){
   newTextInput.value = accessoryTypeId;
   newTextInput.readOnly = true;
   newTextInput.style.display = "none";
-  var newAccessoryText = document.createElement("p");  
-  newAccessoryText.innerHTML = accessoryName;
-  var newAccessoryTextText = "accessory"
-  newAccessoryText.id = newAccessoryTextText.concat(accessoryTypeId);
-  document.getElementById("accessoryListContainer").appendChild(newTextInput);
-  document.getElementById("accessoryListContainer").appendChild(newAccessoryText);
-  }
 
 
   
-  /*
-  addAccessoryContainerText = 'addAccessoryContainer';
-  addAccessoryContainerValue = addAccessoryContainerText.concat(accessoryTypeId);
-  document.getElementById(addAccessoryContainerValue).style.display = "none";
-  */
-  /*
-  newSelectText = document.createElement("p");
-  newSelectText.innerHTML =  accessoryName + " Quantity:";
-  document.getElementById("itemListContainer").appendChild(newSelectText);
-  var newArray = ["1","2","3","4"];
-  var newSelectList = document.createElement("select");
-  newSelectText1 = "bike";
-  newSelectText2 = "quantity";
-  newSelectIDName1 = newSelectText1.concat(bikeTypeId);
-  newSelectIDName2 = newSelectIDName1.concat(newSelectText2);
-  newSelectList.id = newSelectIDName2;
-  newSelectList.name = newSelectIDName2;
-  for (var i = 0; i < newArray.length; i++) {
-      var option = document.createElement("option");
-      option.value = newArray[i];
-      option.text = newArray[i];
-      newSelectList.appendChild(option);
+
+
+  var accessoryCartDiv = document.createElement("div");
+  accessoryCartDivText = newAccessoryText.concat(accessoryTypeId);
+  accessoryCartDivText2 = "removecart";
+  accessoryCartDiv.id = accessoryCartDivText2.concat(accessoryCartDivText);
+
+
+  var cartText = document.createElement("p");
+  cartText.innerHTML = accessoryName;
+  cartText.style.fontSize = "18px";
+
+
+
+
+  accessoryCart.appendChild(accessoryCartDiv);
+  accessoryCartDiv.appendChild(cartText);
+
+  var accessoryCartRemoveButton = document.createElement("a");
+  accessoryCartRemoveButton.innerHTML = "Remove";
+  accessoryCartRemoveButtonText = "accessory";
+  accessoryCartRemoveButtonText2 = accessoryCartRemoveButtonText.concat(accessoryTypeId);
+  accessoryCartRemoveButtonText3 = "javascript:removeAccessory('";
+  accessoryCartRemoveButtonText4 = accessoryCartRemoveButtonText3.concat(accessoryCartRemoveButtonText2);
+  accessoryCartRemoveButtonText5 = "')";
+  accessoryCartRemoveButtonText6 = accessoryCartRemoveButtonText4.concat(accessoryCartRemoveButtonText5);
+  accessoryCartRemoveButton.href = accessoryCartRemoveButtonText6;
+  accessoryCartDiv.appendChild(accessoryCartRemoveButton);
+
+
+
+
+
+  var accessoryDiv = document.createElement("div");
+  accessoryDivText = newAccessoryText.concat(accessoryTypeId);
+  accessoryDivText2 = "remove";
+  accessoryDiv.id = accessoryDivText2.concat(accessoryDivText);
+
+
+  var newAccessoryText = document.createElement("p");  
+  newAccessoryText.innerHTML = accessoryName;
+  newAccessoryText.style.fontSize = "20px";
+  var newAccessoryTextText = "accessory"
+  newAccessoryText.id = newAccessoryTextText.concat(accessoryTypeId);
+
+
+
+
+
+
+
+  document.getElementById("accessoryListContainer").appendChild(accessoryDiv);
+  accessoryDiv.appendChild(newTextInput);
+  accessoryDiv.appendChild(newAccessoryText);
+
+  var accessoryRemoveButton = document.createElement("a");
+  accessoryRemoveButton.innerHTML = "Remove";
+  accessoryRemoveButtonText = "accessory";
+  accessoryRemoveButtonText2 = accessoryRemoveButtonText.concat(accessoryTypeId);
+  accessoryRemoveButtonText3 = "javascript:removeAccessory('";
+  accessoryRemoveButtonText4 = accessoryRemoveButtonText3.concat(accessoryRemoveButtonText2);
+  accessoryRemoveButtonText5 = "')";
+  accessoryRemoveButtonText6 = accessoryRemoveButtonText4.concat(accessoryRemoveButtonText5);
+  accessoryRemoveButton.href = accessoryRemoveButtonText6;
+  accessoryDiv.appendChild(accessoryRemoveButton);
+
+
+
+
   }
-    document.getElementById("itemListContainer").appendChild(newSelectList);
-    */
+
 
  }
 
@@ -848,6 +947,8 @@ for (var i = 0; i < allDates.length; i++) {
 
 function changeStartDate(){
 // Set variables
+document.getElementById("startDateContainer").style.display = "block";
+document.getElementById("endDateContainer").style.display = "block";
 var dateContainer = document.getElementById("dateContainer");
 var allDates = dateContainer.getElementsByClassName("date");
 // Loop through the buttons and add the active class to the clicked date
@@ -876,7 +977,8 @@ for (var i = 0; i < allDates.length; i++) {
     this.className += " active";
     // Set form value for date to clicked date
   });
-  //document.getElementById("endDateContainer").style.display = "block";
+  document.getElementById("startDateContainer").style.display = "block";
+  document.getElementById("endDateContainer").style.display = "block";
   document.getElementById("endDateValue").value = document.getElementsByClassName("active")[0].id;
 }
 setDuration();
@@ -926,6 +1028,19 @@ window.onclick = function(event) {
 
 
 </script>
+
+<script type="text/javascript">
+	
+
+
+
+
+
+
+
+</script>
+
+
 
 </body>
 </html>
