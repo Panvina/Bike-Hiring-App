@@ -147,6 +147,16 @@ font-size: 25px;
     color: #172026;
 }
 
+/*Screen resize auto adjusts div heights to prevent overflow - Aadesh*/
+@media only screen and (max-width: 1440px) {
+    .HomeMainCont{
+        height: auto;
+    }
+    .HomeTxt{
+        height: auto;
+    }
+} 
+
 /*ensuring the images are not stretched*/
 .filled-img {
     object-fit: cover;
@@ -206,6 +216,16 @@ font-size: 25px;
     /* font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif,sans-serif; */
     font-size: 18px;
     color: #172026;
+}
+
+/*Screen resize auto adjusts div heights to prevent overflow - Aadesh*/
+@media only screen and (max-width: 1440px) {
+    .AboutMainCont{
+        height: auto;
+    }
+    .AboutTxt{
+        height: auto;
+    }
 }
 
 
@@ -275,6 +295,16 @@ font-size: 25px;
     /* font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif,sans-serif; */
     font-size: 18px;
     color: #172026;
+}
+
+/*Screen resize auto adjusts div heights to prevent overflow - Aadesh*/
+@media only screen and (max-width: 1440px) {
+    .ExploreMainCont{
+        height: auto;
+    }
+    .ExploreTxt{
+        height: auto;
+    }
 }
 
 /*Sub Explore page Container alignment styling - Aadesh*/
