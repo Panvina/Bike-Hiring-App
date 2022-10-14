@@ -437,31 +437,21 @@ Contributor(s):
 	function getConflictingBookingsQuery($startDate, $startTime, $endDate, $endTime)
 	{
 		// DATE FILTER
-		// non-overlapping dates will have:
-		//      this.start_date > other.end_date OR
-		//      this.end_date > other.start_date
-		//  i.e. !overlappingDates = (this.start_date > other.end_date OR this.end_date > other.start_date)
-		// Therefore: overlappingDates = !(this.start_date > other.end_date OR this.end_date > other.start_date)
-		// Apply DeMorgan's theorem
-		//      overlappingDates = not(this.start_date > other.end_date) AND not (this.end_date > other.start_date)
-		// using the above will find all bookings with overlapping dates.
-		// Of course, this does not handle when dates are equal
-		$dateCondition1 = "NOT '$startDate' > end_date";    // NOT (this.start_date > other.end_date)
-		$dateCondition2 = "NOT '$endDate' > start_date";      // NOT (this.end_date > other.start_date)
-		$dateFilterQuery = "($dateCondition1 AND $dateCondition2)";
+		// Non-overlapping dates are those with both the start date and end date either before or after. Reverse for overlapping dates
+		$dateFilterQuery = "NOT ((start_date < '$startDate' AND end_date < '$startDate') OR (start_date > '$endDate' AND end_date > '$endDate'))";
 
 		// TIME FILTER
 		// Quite complex. Time filter matters if this.start_date == other.end_date or this.end_date == other.start_date
 		// if this.start_date == other.end_date, this.start_time must be greater than other.end_time.
 		// Additionally, if this.end_date == other.start_date, this.end_time must be greater than other.start_time
 		// i.e. overlapping = ((this.end_date == other.start_date) AND (this.end_time < other.start_time)) OR ((this.start_date == other.end_date) AND (this.start_time > other.end_date ))
-		$timeCondition1 = "('$endDate' = start_date AND CAST('$endTime' AS TIME) >= start_time)";
+		$timeCondition1 = "('$endDate' = start_date AND CAST( '$endTime' AS TIME) >= start_time)";
 		$timeCondition2 = "('$startDate' = end_date AND CAST('$startTime' AS TIME) <= expected_end_time)";
 		// $timeCondition3 = "('$startDate' = start_date AND '$endDate' = end_date AND '$startTime' = start_time AND '$endTime' = expected_end_time)";
 		$timeFilterQuery = "($timeCondition1 AND $timeCondition2)";
 		// $timeFilterQuery = "($timeCondition1 OR $timeCondition2 OR $timeCondition3)";
 
-		$filterQuery = "$timeFilterQuery";
+		$filterQuery = "$timeFilterQuery OR $dateFilterQuery";
 
 		return $filterQuery;
 	}

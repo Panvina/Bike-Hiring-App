@@ -59,13 +59,14 @@ Contributor(s): Dabin Lee @ icelasersparr@gmail.com
 
  			$filterQuery = getConflictingBookingsQuery($startDate, $startTime, $endDate, $endTime);
 			// echo "$filterQuery<br>";
+			// exit();
 
  			$bookingsTableName = "booking_table";
  			$bookingBikeTableName = "booking_bike_table";	// Table linking bikes to bookings
  			$bikeInvTableName = $this->tablename;		// Table with all individual concrete bikes
  			$damagedTableName = "damaged_items_table";
 
- 			$query =   "SELECT $bookingBikeTableName.bike_id
+ 			$query =   "SELECT $bikeInvTableName.bike_id
  						FROM $bookingsTableName
  							LEFT JOIN $bookingBikeTableName
  								ON $bookingBikeTableName.booking_id = $bookingsTableName.booking_id
@@ -85,6 +86,7 @@ Contributor(s): Dabin Lee @ icelasersparr@gmail.com
  					array_push($overlappedBikes, $row);
  				}
  			}
+			// print_r($overlappedBikes);
 
  			// remove duplicates
  			$unavailableBikes = array();
