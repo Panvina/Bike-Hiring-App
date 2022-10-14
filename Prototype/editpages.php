@@ -32,8 +32,9 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
         	<div class="main">
                 <div class="grid">
                   <div class="item">
-                    <a href="editIndex.php"><h1 style="text-decoration: underline;">Edit Home Page</h1></a>
-                    <a href="editIndex.php"><img src="img/editpages/index.png"></a>
+                    <h1 style="">Select a Page:</h1><br>
+                    <a href="editIndex.php"><h1 style="text-decoration: underline;">Home Page</h1></a>
+                    <a href="editIndex.php"><img src="img/editpages/index.png" style="width:500px;"></a>
                   </div>
                 </div>
         	</div>
