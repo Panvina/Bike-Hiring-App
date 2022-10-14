@@ -73,7 +73,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
         <div class="main">
             <h1 id="content-header"> All Bikes </h1>
             <div class="midbar">
-                    <form action='php-scripts/inventory-addscript.php' method='POST'>
+                    <form id="midbar-form" action='php-scripts/inventory-addscript.php' method='POST'>
                         <input type="text" name="search" placeholder="Search (Bike Name)"></input>
                         <button type="submit" name="search-btn"> Search </button>
                     </form>

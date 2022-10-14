@@ -68,7 +68,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
             <h1 id="content-header"> All Accessory Types </h1>
 
             <div class="midbar">
-                    <form action='php-scripts/accessorytype-addscript.php' method='POST'>
+                    <form id="midbar-form" action='php-scripts/accessorytype-addscript.php' method='POST'>
                         <input type="text" name="search" placeholder="Search (Accessory Type Name)"></input>
                         <button type="submit" name="search-btn"> Search </button>
                     </form>
