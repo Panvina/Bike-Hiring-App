@@ -34,7 +34,7 @@
         setOwnerDashboardPrivilege($classes['staff'], $classes['account']);
         echo " <div class='dropDownNav'>
                     <a disabled> <img src= 'img/icons/bicycle.png' alt='Inventory Logo'/> Bikes</a>
-                    <div class='dropdown-Navcontent'>
+                    <div class='bikeDropdown-Navcontent'>
                         <a class='{$classes['inventory']}' href= 'Inventory.php'> <img src= 'img/icons/bicycle.png' alt='Inventory Logo' />  Bike Inventory </a>
                         <a class='{$classes['biketype']}' href='BikeTypes.php'> <img src='img/icons/biketypes.png' alt='Bike Types Logo' /> Bike Types </a>
                     </div>

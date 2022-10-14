@@ -193,15 +193,15 @@ Contributor(s):
 
 		// echo $pattern;
 		// echo "\n";
-		echo $address;
-		echo "\n";
-		if ($match) {
-			echo "true";
-		}
-		else
-		{
-			echo "false";
-		}
+		//echo $address;
+		//echo "\n";
+		// if ($match) {
+		// 	echo "true";
+		// }
+		// else
+		// {
+		// 	echo "false";
+		// }
 		// exit();
 
 		return $match;
