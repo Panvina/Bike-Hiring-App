@@ -22,7 +22,7 @@
             <div class="modal-confirm-content">
                 <span class="close-confirm-deletion-btn">&times;</span>
                 <img src="img/icons/warning.png" alt="WARNING: ARE YOU SURE YOU WANT TO DELETE?" height="40px" width="40px">
-                <p class="confirm-deletion-text">Are you sure you want to delete this booking ID: <?php echo $_SESSION['bookingID'];?>?</p>
+                <p class="confirm-deletion-text">Are you sure you want to delete this booking ID: <?php if (isset($_SESSION['bookingID'])){echo $_SESSION['bookingID'];}?>?</p>
                 <form action="booking-summary.php" method="POST"><button name="yes-btn" class="confirm-deletion-btn yes">YES</button>
                 <button name="no-btn" class="confirm-deletion-btn no">NO</button></form>
             </div>
