@@ -51,7 +51,7 @@
         {
             $validName = "empty";
         }
-        //Check if the name field has the alphabets, integers, _ or -
+        //Check if the name field has alphabets, integers, _ or -
         else if (!validName($_POST["name"])) 
         {
             $validName = "invalid";

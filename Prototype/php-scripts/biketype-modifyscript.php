@@ -2,7 +2,6 @@
 /* Code completed by Aadesh Jagannathan - 102072344*/
     session_start();
     include_once("backend-connection.php");
-    //include ("utils.php");
     include("inventory-util.php");
     $conn = new mysqli("localhost", "root", "", "bike_hiring_system") or die(mysqli_error($mysqli));
 
@@ -143,6 +142,7 @@
        $query = "DELETE FROM bike_type_table WHERE bike_type_id=$primaryKey";
        $results = mysqli_query($conn, $query);
 
+       //Check if the record has been deleted successfully
        if(mysqli_affected_rows($conn) == 1)
         {
             header("Location: ../BikeTypes.php?delete=true");
@@ -156,7 +156,7 @@
         }
    }
 
-   // Check to delete item if the yes button has been clicked
+   // Check to not delete item if the no button has been clicked
    if (isset($_POST["cancelDeleteItem"]))
    {
         header("Location: ../BikeTypes.php");

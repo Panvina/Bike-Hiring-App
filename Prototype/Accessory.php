@@ -266,14 +266,14 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                             <?php
                                 if (isset($_GET["insert"]))
                                 {
-                                    $name = $_GET["insert"];
-                                    if ($name == "emptyName")
+                                    $name = $_GET["name"];
+                                    if ($name == "empty")
                                     {
                                         echo '<p class = "error">* Please fill the name field!</p>';
                                     }
-                                    else if ($name == "invalidName")
+                                    else if ($name == "invalid")
                                     {
-                                        echo '<p class = "error">* Name has to only contain alphabets! </p>';
+                                        echo '<p class = "error">* Name can only contain alphabets, integers, - and _ </p>';
                                     }
                                 }
                             ?>
@@ -325,10 +325,10 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     ?>                                   
                         <span class="error">
                             <?php
-                                if (isset($_GET["insert"]))
+                                if (isset($_GET["type"]))
                                 {
-                                    $accessoryTypeId = $_GET["insert"];
-                                    if ($accessoryTypeId == "emptyType")
+                                    $accessoryTypeId = $_GET["type"];
+                                    if ($accessoryTypeId == "empty")
                                     {
                                         echo '<p class = "error">* Please select an accessory type!</p>';
                                     }
@@ -355,14 +355,14 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                         ?>
                         <span class="error">
                         <?php
-                                if (isset($_GET["insert"]))
+                                if (isset($_GET["price"]))
                                 {
-                                    $price = $_GET["insert"];
-                                    if ($price == "emptyPrice")
+                                    $price = $_GET["price"];
+                                    if ($price == "empty")
                                     {
                                         echo '<p class = "error">* Please fill the price field!</p>';
                                     }
-                                    else if ($price == "invalidPrice")
+                                    else if ($price == "invalid")
                                     {
                                         echo '<p class = "error">* Price can only contain integers or decimals! </p>';
                                     }
@@ -371,14 +371,6 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                         <span>
                     </div>
                     <br>            
-                    <!-- <div>
-                        <label>Safety Inspect</label>
-                        <select placeholder="Safety status..." name="safetyInspect" type="submit">
-                            <option>Inspection status</option>
-                            <option value="1">Yes</option>
-                            <option value="0">No</option>
-                        </select>
-                    </div> -->
 
                     <div>
                         <label>Safety Status</label>
@@ -451,16 +443,16 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                         <input placeholder="Accessory's name..." type="text" name="name" value="<?php echo $_SESSION['name'] ?>">
                         <span class="error">
                             <?php
-                                if (isset($_GET["update"]))
+                                if (isset($_GET["name"]))
                                 {
-                                    $name = $_GET["update"];
-                                    if ($name == "emptyName")
+                                    $name = $_GET["name"];
+                                    if ($name == "empty")
                                     {
                                         echo '<p class = "error">* Please fill the name field!</p>';
                                     }
-                                    else if ($name == "invalidName")
+                                    else if ($name == "invalid")
                                     {
-                                        echo '<p class = "error">* Name has to only contain alphabets! </p>';
+                                        echo '<p class = "error">* Name can only contain alphabets, integers, - and _ </p>';
                                     }
                                 }
                             ?>
@@ -483,10 +475,10 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                         </select>
                         <span class="error">
                             <?php
-                                if (isset($_GET["update"]))
+                                if (isset($_GET["type"]))
                                 {
                                     $accessoryTypeId = $_GET["update"];
-                                    if ($accessoryTypeId == "emptyType")
+                                    if ($accessoryTypeId == "empty")
                                     {
                                         echo '<p class = "error">* Please select an accessory type!</p>';
                                     }
@@ -499,14 +491,14 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                         <label>Price p/h</label><br>
                         <input placeholder="Price per hour..." type="text" name="price" value="<?php echo $_SESSION['price_ph'] ?>">
                         <?php
-                                if (isset($_GET["update"]))
+                                if (isset($_GET["price"]))
                                 {
-                                    $price = $_GET["update"];
-                                    if ($price == "emptyPrice")
+                                    $price = $_GET["price"];
+                                    if ($price == "empty")
                                     {
                                         echo '<p class = "error">* Please fill the price field!</p>';
                                     }
-                                    else if ($price == "invalidPrice")
+                                    else if ($price == "invalid")
                                     {
                                         echo '<p class = "error">* Price can only contain integers or decimals! </p>';
                                     }
@@ -515,13 +507,6 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     </div>
                     <br>
                     <div>
-                        <!-- <label>Safety Inspect</label>
-                        <select placeholder="Safety status..." name="safetyInspect" type="text" value="<//?php echo $_SESSION['safety_inspect'] ?>">
-                            <option selected=selected><//?php echo safety_check($_SESSION['safety_inspect']); ?></option>
-                            <option value="1">Yes</option>
-                            <option value="0">No</option>
-                        </select> -->
-
                         <label>Safety Status</label>
                         <label class="switch"  style='left: 10px; bottom: 14px;' >
                         <input type="hidden" name="safetyInspect" value="0">
