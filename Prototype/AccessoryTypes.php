@@ -200,16 +200,16 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     ?>
                     <span class="error">
                         <?php
-                            if (isset($_GET["insert"]))
+                            if (isset($_GET["name"]))
                             {
-                                $name = $_GET["insert"];
-                                if ($name == "emptyName")
+                                $name = $_GET["name"];
+                                if ($name == "empty")
                                 {
                                     echo '<p class = "error">* Please fill the name field!</p>';
                                 }
-                                else if ($name == "invalidName")
+                                else if ($name == "invalid")
                                 {
-                                    echo '<p class = "error">* Name has to only contain alphabets! </p>';
+                                    echo '<p class = "error">* Name can only contain alphabets, integers, - and _ !</p>';
                                 }
                             }
                         ?>
@@ -234,10 +234,10 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     ?>
                     <span class="error">
                         <?php
-                            if (isset($_GET["insert"]))
+                            if (isset($_GET["desc"]))
                             {
-                                $description = $_GET["insert"];
-                                if ($description == "emptyDescription")
+                                $description = $_GET["desc"];
+                                if ($description == "empty")
                                 {
                                     echo '<p class = "error">* Please fill the description field!</p>';
                                 }
@@ -291,16 +291,16 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     <input placeholder="Name of accessory type..." type="text" name="name" value="<?php echo $_SESSION['name'] ?>">
                     <span class="error">
                         <?php
-                            if (isset($_GET["update"]))
+                            if (isset($_GET["name"]))
                             {
-                                $name = $_GET["update"];
-                                if ($name == "emptyName")
+                                $name = $_GET["name"];
+                                if ($name == "empty")
                                 {
                                     echo '<p class = "error">* Please fill the name field!</p>';
                                 }
-                                else if ($name == "invalidName")
+                                else if ($name == "invalid")
                                 {
-                                    echo '<p class = "error">* Name has to only contain alphabets! </p>';
+                                    echo '<p class = "error">* Name can only contain alphabets, integers, - and _ </p>';
                                 }
                             }
                         ?>
@@ -312,10 +312,10 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     <textarea placeholder="Description about the accessory type..." name="description"><?php echo $_SESSION['description'] ?></textarea>
                     <span class="error">
                         <?php
-                            if (isset($_GET["update"]))
+                            if (isset($_GET["desc"]))
                             {
-                                $description = $_GET["update"];
-                                if ($description == "emptyDescription")
+                                $description = $_GET["desc"];
+                                if ($_GET["desc"] == "empty")
                                 {
                                     echo '<p class = "error">* Please fill the description field!</p>';
                                 }
@@ -367,6 +367,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 
 
 </body>
+<!--Script responsible for the popup functionality is linked-->
 <script src="scripts/accessorytypes-popup.js"></script>
 
 </html>

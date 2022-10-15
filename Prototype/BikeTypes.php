@@ -100,7 +100,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                             <th> Description </th>
                             <th> Edit </th>
                         </tr>";
-                // Populating table when data is present in the database table
+                // Populating table when data is found to be present in the database table
                 if($bikeType->num_rows != 0) 
                 {
                     while ($row = $bikeType->fetch_assoc()) {
@@ -205,18 +205,18 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     ?>
                     <span class="error">
                         <?php
-                            if (isset($_GET["insert"]))
+                            if (isset($_GET["name"]))
                             {
                                 //Checks and prints an error if the name field empty
-                                $name = $_GET["insert"];
-                                if ($name == "emptyName")
+                                $name = $_GET["name"];
+                                if ($name == "empty")
                                 {
                                     echo '<p class = "error">* Please fill the name field!</p>';
                                 }
                                 //Checks and prints an error if the name entered is invalid
-                                else if ($name == "invalidName")
+                                else if ($name == "invalid")
                                 {
-                                    echo '<p class = "error">* Name has to only contain alphabets! </p>';
+                                    echo '<p class = "error">* Name can only contain alphabets, integers, - and _ </p>';
                                 }
                             }
                         ?>
@@ -265,9 +265,9 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                         <?php
                             if (isset($_GET["insert"]))
                             {
-                                //Checks and prints an error if the description field empty
-                                $description = $_GET["insert"];
-                                if ($description == "emptyPictureId")
+                                //Checks and prints an error if the picture id has not been selected
+                                $pictureId = $_GET["picId"];
+                                if ($pictureId == "empty")
                                 {
                                     echo '<p class = "error">* Please select a picture ID!</p>';
                                 }
@@ -294,11 +294,11 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     ?>
                     <span class="error">
                         <?php
-                            if (isset($_GET["insert"]))
+                            if (isset($_GET["desc"]))
                             {
                                 //Checks and prints an error if the description field empty
-                                $pictureId = $_GET["insert"];
-                                if ($pictureId == "emptyDescription")
+                                $pictureId = $_GET["desc"];
+                                if ($pictureId == "empty")
                                 {
                                     echo '<p class = "error">* Please fill the description field!</p>';
                                 }
@@ -353,18 +353,18 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     <input placeholder="Name of Bike Type..." type="text" name="name" value="<?php echo $_SESSION['name'] ?>">
                     <span class="error">
                         <?php
-                            if (isset($_GET["update"]))
+                            if (isset($_GET["name"]))
                             {
-                                $name = $_GET["update"];
+                                $name = $_GET["name"];
                                 //Checks and prints an error if the name field empty
-                                if ($name == "emptyName")
+                                if ($name == "empty")
                                 {
                                     echo '<p class = "error">* Please fill the name field!</p>';
                                 }
                                 //Checks and prints an error if the name entered is invalid
-                                else if ($name == "invalidName")
+                                else if ($name == "invalid")
                                 {
-                                    echo '<p class = "error">* Name has to only contain alphabets! </p>';
+                                    echo '<p class = "error">* Name can only contain alphabets, integers, - and _</p>';
                                 }
                             }
                         ?>
@@ -382,11 +382,11 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     </select> 
                     <span class="error">
                         <?php
-                            if (isset($_GET["insert"]))
+                            if (isset($_GET["picId"]))
                             {
                                 //Checks and prints an error if the picture id is not selected
-                                $pictureId = $_GET["insert"];
-                                if ($pictureId == "emptyPictureId")
+                                $pictureId = $_GET["picId"];
+                                if ($pictureId == "empty")
                                 {
                                     echo '<p class = "error">* Please select a picture ID!</p>';
                                 }
@@ -401,11 +401,11 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     <textarea placeholder="Description about the bike type..." name="description"><?php echo $_SESSION['description'] ?></textarea>
                     <span class="error">
                         <?php
-                            if (isset($_GET["update"]))
+                            if (isset($_GET["desc"]))
                             {
-                                $description = $_GET["update"];
+                                $description = $_GET["desc"];
                                 //Checks and prints an error if the description field empty
-                                if ($description == "emptyDescription")
+                                if ($description == "empty")
                                 {
                                     echo '<p class = "error">* Please fill the description field!</p>';
                                 }
@@ -457,6 +457,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 
 
 </body>
+<!--Script responsible for the popup functionality is linked-->
 <script src="scripts/biketypes-popup.js"></script>
 
 </html>

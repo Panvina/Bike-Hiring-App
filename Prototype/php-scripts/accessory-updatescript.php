@@ -1,10 +1,10 @@
 <?php
+    /* Code completed by Aadesh Jagannathan - 102072344*/
     session_start();
     include_once("backend-connection.php");
-    //include ("utils.php");
     include("inventory-util.php");
     $conn = new mysqli("localhost", "root", "", "bike_hiring_system") or die(mysqli_error($mysqli));
-    $ret = array();
+
   
     if (isset($_POST['updateItem']))
   {
