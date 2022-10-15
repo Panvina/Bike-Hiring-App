@@ -580,6 +580,8 @@ button { /*Ensuring that when the user hover over the buttons, the cursor change
     display: block;
 }
 
+/*Styling the description location lists*/
+/*Modified by Vina Touch 101928802*/
 .location-description
 {
     background-color: white;
@@ -589,7 +591,7 @@ button { /*Ensuring that when the user hover over the buttons, the cursor change
     margin-top: 0px;
     padding-top: 1px;
     padding-left: 10px;
-    border-color: #BAEECB;
+    border-color: #00b7b136;
     width: 563px;
 }
 
