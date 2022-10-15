@@ -505,8 +505,8 @@ Contributor(s): Dabin Lee @ icelasersparr@gmail.com
     }
     else if ($changeBookingBikesSubmit)
     {
-        $bikes = $_POST["addBooking-bike"];
-        $accessories = $_POST["addBooking-accessory"];
+        $bikes = $_POST["changeBooking-bike"];
+        $accessories = $_POST["changeBooking-accessory"];
 
         // ensure variables are sensible
         if (!isset($bikes))
@@ -526,6 +526,8 @@ Contributor(s): Dabin Lee @ icelasersparr@gmail.com
 
 
         checkErrorBikes($bookingMode, $bikes);
+        // print_r($bikes);
+        // exit();
 
         // verify at least one bike
         if (checkErrorSet($bookingMode))
