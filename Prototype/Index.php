@@ -10,6 +10,8 @@ include("php-scripts/utils.php");
 
 //Establishing database connection using mysqli()
 $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
+
+$_SESSION['active']="index";
 ?>
 <!DOCTYPE html>
 
@@ -20,7 +22,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
     <title>Home</title>
 </head>
 <body>
-    <header><?php include 'header.php' ?></header>
+    <header><?php include 'header.php'; $_SESSION['active'] ="index";?></header>
     <div id = "main">
         <div class="Homebanner">
             <div id="homebannertext">

@@ -9,6 +9,10 @@
         header("location: index.php");
         exit;
     }
+    $activeLink="";
+    if(isset($_SESSION['active'])){
+        $activeLink=$_SESSION['active'];
+    }
 ?>
 <!DOCTYPE html>
 <html>
@@ -28,23 +32,27 @@
                     <div class="column nav-wrapper">
                         <nav class="mainNav">
                             <ul id="menu">
-                                <li><a class="nav-text" href="index.php">Home</a></li>
-                                <li><a class="nav-text" href="makeabooking.php">Hire</a></li>
-                                <li><a class="nav-text" href="about.php">About Inverloch</a></li>
-                                <li><a class="nav-text explore-link" href="explore.php">About Cycling</a>
+                                <li><a class="nav-text <?php if($activeLink=="index"){echo'nav-active';} ?>" href="index.php">Home</a></li>
+                                <li><a class="nav-text <?php if($activeLink=="hire"){echo'nav-active';} ?>" href="makeabooking.php">Hire</a></li>
+                                <li><a class="nav-text <?php if($activeLink=="about"){echo'nav-active';} ?>" href="about.php">About Inverloch</a></li>
+                                <li><a class="nav-text explore-link <?php if($activeLink=="explore"){echo'nav-active';} ?>" href="explore.php">About Cycling</a>
                                     <ul id="subNav">
                                         <li><a href="explore-local.php">Cycling in Our Region</a></li>
                                         <li><a href="explore-rail.php">Rail Trails</a></li>
                                     </ul>
                                 </li>
-                                <li><a class="nav-text" href="contactus.php">Contact Us</a></li>
+                                <li><a class="nav-text <?php if($activeLink=="contact"){echo'nav-active';} ?>" href="contactus.php">Contact Us</a></li>
                                 <?php 
                                     if(!isset($_SESSION["login-type"])){
                                         include 'login.php';
                                     }else if($_SESSION["login-type"] != "customer"){
                                         echo "<li><a href='dashboard.php'><button class='acc-button' type='text'>Dashboard</button></a></li>";
                                     }else{
-                                        echo "<li> <a class='nav-text' href='booking-summary.php'>My Bookings</a></li>";
+                                        $x ="";
+                                        if($activeLink=="booking-sum"){
+                                            $x ="nav-active";
+                                        }
+                                        echo "<li> <a class='nav-text $x' href='booking-summary.php'>My Bookings</a></li>";
                                         echo "<li>
                                         <form action='user-privilege.php' method='post'>
                                         <form action='header.php' method='post'>

@@ -58,13 +58,13 @@ header{
 }
 
 
-#menu a:hover{
-    color: #00b7b1;
+#menu a:hover, .nav-active, nav-active:focus{
+    color: #00b7b1!important;
 }
 
 /******************************************/
 /*style the hover effect on the navigation texts only - not the button*/
-.nav-text:hover:after{
+.nav-text:hover:after, .nav-active:after{
     content: "";
     background: none repeat scroll 0 0 #00b7b1;
     bottom: -10px;

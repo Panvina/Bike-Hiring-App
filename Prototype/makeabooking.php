@@ -3,6 +3,7 @@ if (!isset($_SESSION)){
         session_start();
 }
 $_SESSION['id'] = '123';
+$_SESSION['active']="hire";
 include_once("php-scripts/backend-connection.php");
 //Linking utility functions associated with inventory
 include("php-scripts/utils.php");

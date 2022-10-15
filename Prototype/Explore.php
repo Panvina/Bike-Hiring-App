@@ -1,4 +1,10 @@
-﻿<!DOCTYPE html>
+﻿<?php 
+    if (!isset($_SESSION)){
+        session_start();
+    }
+    $_SESSION['active']="explore"; 
+?>
+<!DOCTYPE html>
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 

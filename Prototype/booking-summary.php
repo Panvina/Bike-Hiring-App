@@ -3,6 +3,8 @@
     if(!isset($_SESSION)){ 
         session_start();     
     }
+
+    $_SESSION['active']="booking-sum";
     //if anyone other than the customer tries to this page in the url, they will be redirected.
     if(!isset($_SESSION["login-type"]) || $_SESSION["login-type"] != "customer"){
         header("location: index.php?Error403:AccessDenied");

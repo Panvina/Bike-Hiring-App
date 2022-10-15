@@ -8,6 +8,12 @@ Contributor:
 	- Vina Touch @ 101928802@student.swin.edu.au
 	- Aadesh Jagannathan @ 102072344@student.swin.edu.au
 -->
+<?php 
+    if (!isset($_SESSION)){
+      session_start();
+    }
+      $_SESSION['active']="contact";
+?>
 <!doctype html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 
@@ -26,7 +32,7 @@ Contributor:
 <body>
   <header>
     <!-- This is done by Vina where the header includes the logo of the company and links to other pages-->
-    <?php include 'header.php' ?>
+    <?php include 'header.php';?>
   </header>
   <main>
     <!-- The banner is created by aadesh and implemented the BreadCrumbs program in -->
