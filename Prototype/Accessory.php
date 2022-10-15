@@ -60,7 +60,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                 if (isset($_GET["delete"])) {
                     if ($_GET["delete"] == "true") {
                         echo "<p class = 'echo-success' id='tempEcho'>  Record successfully deleted! </p>";
-                    } else if ($_GET["delete"] == "cancel") {
+                    } else if ($_GET["delete"] == "false") {
                         echo "<p class = 'echo-fail' id='tempEcho'> Record was not deleted successfully! </p>";
                     }
                 }
@@ -213,16 +213,13 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
         ?>
         <div id="AddAccessoryModal" class="modal-overlay"<?php
                 // Ensures modal stays open when "insert" is set to print errors
-                if(isset($_GET["insert"]))
-                {
-                    if ($_GET["insert"] != "true")
-                    {
-                        echo "style = 'display:inline-block'";
+                if (isset($_GET["insert"])) {
+                    if ($_GET["insert"] == "false") {
+                        echo "style = 'display:none;'";
                     }
-                    else if($_GET["insert"] == "true")
-                    {
-                        echo "style = 'display:none'";
-                    }
+                    else if ($_GET["insert"] != "true") {
+                        echo "style = 'display:inline-block;'";
+                    } 
                 }
             ?>>
             <div class="modal-content">
@@ -406,16 +403,17 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
         </div>
 
         <!-- Modal to update inventory records (In progress) -->
-        <div id="UpdateAccessoryModal" class="modal-overlay" <?php
-
-                                                        if (isset($_GET["update"])) {
-                                                            if ($_GET["update"] != "true") {
-                                                                echo "style = 'display:inline-block;'";
-                                                            } else if ($_GET["update"] == "true") {
-                                                                echo "style = 'display:none;'";
-                                                            }
-                                                        }
-                                                        ?>>
+        <div id="UpdateAccessoryModal" class="modal-overlay" 
+        <?php
+        if (isset($_GET["update"])) {
+            if ($_GET["update"] == "false") {
+                echo "style = 'display:none;'";
+            }
+            else if ($_GET["update"] != "true") {
+                echo "style = 'display:inline-block;'";
+            } 
+        }                                                                                                                                                        
+        ?>>
             <div class="modal-content">
                 <span class="close-btn">&times;</span>
                 <form action="php-scripts/accessory-updatescript.php" method="post" event.preventDefault()>
@@ -526,11 +524,12 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
         <div id="DeleteAccessoryModal" class="modal-overlay"
         <?php
             if (isset($_GET["delete"])) {
-                if ($_GET["delete"] != "true") {
-                    echo "style = 'display:inline-block;'";
-                } else if ($_GET["delete"] == "true") {
+                if ($_GET["delete"] == "false") {
                     echo "style = 'display:none;'";
                 }
+                else if ($_GET["delete"] != "true") {
+                    echo "style = 'display:inline-block;'";
+                } 
             }
         ?>>
             <div class="modal-content">

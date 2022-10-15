@@ -1,5 +1,6 @@
 <?php
 /* Code completed by Aadesh Jagannathan - 102072344*/
+/* Script responsible for updating/deleting records in bike types table*/
     session_start();
     include_once("backend-connection.php");
     include("inventory-util.php");
@@ -159,7 +160,7 @@
    // Check to not delete item if the no button has been clicked
    if (isset($_POST["cancelDeleteItem"]))
    {
-        header("Location: ../BikeTypes.php");
+        header("Location: ../BikeTypes.php?delete=false");
         exit();
    }
         

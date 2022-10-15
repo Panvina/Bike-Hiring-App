@@ -1,6 +1,6 @@
 <?php
     /* Code completed by Aadesh Jagannathan - 102072344*/
-    /* Script resonpsible for updating records in accessory table*/
+    /* Script responsible for updating records in accessory table*/
     session_start();
     include_once("backend-connection.php");
     include("inventory-util.php");

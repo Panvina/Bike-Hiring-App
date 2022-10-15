@@ -1,6 +1,6 @@
 <?php
     /* Code completed by Aadesh Jagannathan - 102072344*/
-    /* Script resonpsible for adding records in accessory table*/
+    /* Script responsible for adding records in accessory types table*/
     session_start();
     include 'backend-connection.php';
     include("inventory-util.php");
@@ -36,6 +36,8 @@
             header("Location: ..\Accessory.php");
         }
     } 
+
+    //Check to identify if the add record button has been set
     if(isset($_POST['AddItem'])){
         /* Form validation for adding records*/
         //Check if all the fields are empty
@@ -49,7 +51,7 @@
         {
             $validName = "empty";
         }
-        //Check if the name field has only alphabets
+        ////Check if the name field has the alphabets, integers, _ or -
         else if (!validName($_POST["name"])) 
         {
             $validName = "invalid";

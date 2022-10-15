@@ -1,6 +1,6 @@
 <?php
     /* Code completed by Aadesh Jagannathan - 102072344*/
-    /* Script resonpsible for deleting records in accessory table*/
+    /* Script responsible for deleting records in accessory table*/
     session_start();
     include_once("backend-connection.php");
     include_once "utils.php";
@@ -50,7 +50,7 @@
     // Check to not delete item if the no button has been clicked
     if (isset($_POST["cancelDeleteItem"]))
     {
-     header("Location: ../Accessory.php");
+     header("Location: ../Accessory.php?delete=false");
      exit();
     }
 ?> 

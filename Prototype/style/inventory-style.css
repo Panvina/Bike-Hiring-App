@@ -23,13 +23,16 @@ Created by: Aadesh Jagannathan @102072344@student.swin.edu.au
     font-size: 18px;
     width:100%;
     text-align: left;
+    margin-top: 8px;
+    margin-bottom: 10px;
 }
 
 .modal-content input{
     height:24px;
-    margin-top: 10px;
+    margin-top: 8px;
     width:100%;
     font-size: 18px;
+    margin-bottom: 10px;
 }
 
 /*Styling for the input text boxes in add and update modals*/
@@ -100,6 +103,11 @@ Created by: Aadesh Jagannathan @102072344@student.swin.edu.au
     -webkit-transform: translateX(26px);
     -ms-transform: translateX(26px);
     transform: translateX(26px);
+  }
+
+  #inventory-safety-switch{
+    left: 10px;
+    bottom: 10px;
   }
   
   /* Rounded sliders */

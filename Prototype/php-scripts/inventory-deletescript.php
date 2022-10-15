@@ -1,10 +1,12 @@
 <?php
+    /* Code completed by Aadesh Jagannathan - 102072344*/
+    /* Script responsible for deleting records in inventory table*/
     session_start();
     include_once("backend-connection.php");
     include_once "utils.php";
     $conn = new mysqli("localhost", "root", "", "bike_hiring_system") or die(mysqli_error($mysqli));
 
-    
+    // Check to retreive record ID when delete record button has been clicked
     if (isset($_POST['deleteItem']))
     {
         $primaryKey = $_POST['deleteItem'];
@@ -22,6 +24,7 @@
         exit();
     }
 
+    // Check to delete item if the yes button has been clicked
     if (isset($_POST["submitDeleteItem"]))
     {
 
@@ -30,12 +33,24 @@
         $results = mysqli_query($conn, $query);
 
 
-        header("Location:../Inventory.php?delete=true");
+        //Check if the record has been deleted successfully
+        if(mysqli_affected_rows($conn) == 1)
+        {
+            header("Location: ../Inventory.php?delete=true");
+            exit();
+
+        }
+        else
+        {
+            header("Location: ../Inventory.php?delete=false");
+            exit();
+        }
     }
 
+    // Check to not delete item if the no button has been clicked
     if (isset($_POST["cancelDeleteItem"]))
     {
-     header("Location:../Inventory.php?");
+     header("Location:../Inventory.php?delete=false");
      exit();
     }
 ?> 

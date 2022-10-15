@@ -146,7 +146,7 @@
    // Check to delete item if the no button has been clicked
    if (isset($_POST["cancelDeleteItem"]))
    {
-    header("Location: ../AccessoryTypes.php");
+    header("Location: ../AccessoryTypes.php?delete=false");
     exit();
    }
         
