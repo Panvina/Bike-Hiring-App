@@ -39,7 +39,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
         	</div>
         	<div class="main">
             <?php
-                //checks to see if inserting was successful and provides input
+                //Prints message based on success of record insertion
                 if (isset($_GET["insert"])) {
                     if ($_GET["insert"] == "true") {
                         echo "<p class = 'echo-success' id='tempEcho'>  Record successfully created! </p>";
@@ -47,7 +47,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                         echo "<p class = 'echo-fail'>  Record was not created successfully! </p>";
                     }
                 }
-                //checks to see if updating was successful and provides input
+                //Prints message based on success of record updation
                 if (isset($_GET["update"])) {
                     if ($_GET["update"] == "true") {
                         echo "<p class = 'echo-success' id='tempEcho'>  Record successfully updated! </p>";
@@ -56,7 +56,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     }
                 }
 
-                //checks to see if deleting was successful and provides input
+                //Prints message based on success of record deletion
                 if (isset($_GET["delete"])) {
                     if ($_GET["delete"] == "true") {
                         echo "<p class = 'echo-success' id='tempEcho'>  Record successfully deleted! </p>";
@@ -91,7 +91,8 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                         // Fetching all column data from the bike inventory table
                         $accessoryInventory = $conn->query("SELECT * FROM accessory_inventory_table");
                     }  
-                    
+
+                    /* Creating the table to print information from the database*/
                     echo "
                             <tr>
                                 <th> Accessory ID </th>
@@ -102,78 +103,95 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                                 <th> Safety Status </th>
                                 <th> Edit </th>
                             </tr>";
+                    // Populating table when data is is found to be present in the database table
+                    if($accessoryInventory->num_rows != 0) 
+                    {
+                        while ($row = $accessoryInventory->fetch_assoc()) {
+                            // Print Safety Inspection based on 0 or 1 values
+                            $safetyStatus = safety_check($row["safety_inspect"]);
 
-                    while ($row = $accessoryInventory->fetch_assoc()) {
-                        // Print Safety Inspection based on 0 or 1 values
-                        $safetyStatus = safety_check($row["safety_inspect"]);
+                            // Fetch bike type data from the bike_type_table
+                            $accessorytype = $row["accessory_type_id"];
 
-                        // Fetch bike type data from the bike_type_table
-                        $accessorytype = $row["accessory_type_id"];
-
-                        if ($accessorytype == "")
-                        {
-                            $bookingStatus = "Accessory Type Null";
-                            $availabilityStatusColour = "#EF6E6E";
-                            $safetyStatusColour = "#EF6E6E";
-                            $primaryKey = $row["accessory_id"];
-                            $_SESSION["primaryKey"] = $primaryKey;
-                        }
-                        else
-                        {
-
-                        $accessoryTypeInventory = $conn->query("SELECT name FROM accessory_type_table WHERE accessory_type_id=$accessorytype")->fetch_assoc();
-
-                        // Booking availbility check for bikes
-                        $bookingStatus = accessory_availability_check($row["accessory_id"]);
-
-                        //Set the availability status colour based on the availability status
-                        $availabilityStatusColour = "#000000";
-                        $availabilityStatusColour = availabilityStatusColour($bookingStatus);
-
-                        //Set the availability status colour based on the availability status
-                        $safetyStatusColour = "#000000";
-                        $safetyStatusColour = safetyStatusColour($safetyStatus);
-
-                        // Setting the primary key value based on table's primary key
-                        $primaryKey = $row["accessory_id"];
-                        $_SESSION["primaryKey"] = $primaryKey;
-                        }
-
-                    ?>
-                        <tr>
-                            <td><?php echo $row["accessory_id"]; ?></td>
-                            <td><?php echo $row["name"]; ?></td>
-                            <td><?php if (isset($accessoryTypeInventory))
+                            //In the case of no Accessory type being present for an accessory
+                            if ($accessorytype == "")
                             {
-                                echo $accessoryTypeInventory["name"];
+                                $bookingStatus = "Accessory Type Null";
+                                $availabilityStatusColour = "#EF6E6E";
+                                $safetyStatusColour = "#EF6E6E";
+                                $primaryKey = $row["accessory_id"];
+                                $_SESSION["primaryKey"] = $primaryKey;
                             }
                             else
                             {
-                                echo "[Deleted Item]";
-                            }
-                            ?></td>
-                            <td><?php echo $row["price_ph"]; ?></td>
-                            <!--<td><//?php echo "<span style=\"color: $availabilityStatusColour\">$bookingStatus</span>" ?></td>
-                            <td><//?php echo "<span style=\"color: $safetyStatusColour\">$safetyStatus</span>" ?></td> -->
-                            <?php echo "<td style=\"background-color:$availabilityStatusColour\"> <span style=\"font-weight:bold\">$bookingStatus</span></td>";?>
-                            <?php echo "<td style=\"background-color:$safetyStatusColour\"> <span style=\"font-weight:bold\">$safetyStatus</span></td>";?>
-                            <td class="editcolumn">
-                                <?php
-                                echo "
-                                <div class='dropdown'>
-                                <button class='dropbtn' disabled>...</button>
-                                    <div class='dropdown-content'>
-                                    <form action='php-scripts/accessory-updatescript.php' method='POST' event.preventDefault() > <button type='submit' id= '$primaryKey' class='dropdown-element' name='updateItem'
-                                        value='$primaryKey'> Update </button> </form>
-                                    <form action='php-scripts/accessory-deletescript.php' method='POST' event.preventDefault()> <button type='submit' id='$primaryKey' name='deleteItem' class='dropdown-element'
-                                        value = '$primaryKey'> Delete </button> </form>
-                                    </div>
-                                </div>";
 
-                                ?>
-                            </td>
-                        </tr>
-                    <?php
+                                $accessoryTypeInventory = $conn->query("SELECT name FROM accessory_type_table WHERE accessory_type_id=$accessorytype")->fetch_assoc();
+
+                                // Booking availbility check for bikes
+                                $bookingStatus = accessory_availability_check($row["accessory_id"]);
+
+                                //Set the availability status colour based on the availability status
+                                $availabilityStatusColour = "#000000";
+                                $availabilityStatusColour = availabilityStatusColour($bookingStatus);
+
+                                //Set the availability status colour based on the availability status
+                                $safetyStatusColour = "#000000";
+                                $safetyStatusColour = safetyStatusColour($safetyStatus);
+
+                                // Setting the primary key value based on table's primary key
+                                $primaryKey = $row["accessory_id"];
+                                $_SESSION["primaryKey"] = $primaryKey;
+                            }
+
+                        ?>
+                            <tr>
+                                <td><?php echo $row["accessory_id"]; ?></td>
+                                <td><?php echo $row["name"]; ?></td>
+                                <td><?php if (isset($accessoryTypeInventory))
+                                {
+                                    echo $accessoryTypeInventory["name"];
+                                }
+                                else
+                                {
+                                    echo "[Deleted Item]";
+                                }
+                                ?></td>
+                                <td><?php echo $row["price_ph"]; ?></td>
+                                <!--<td><//?php echo "<span style=\"color: $availabilityStatusColour\">$bookingStatus</span>" ?></td>
+                                <td><//?php echo "<span style=\"color: $safetyStatusColour\">$safetyStatus</span>" ?></td> -->
+                                <?php echo "<td style=\"background-color:$availabilityStatusColour\"> <span style=\"font-weight:bold\">$bookingStatus</span></td>";?>
+                                <?php echo "<td style=\"background-color:$safetyStatusColour\"> <span style=\"font-weight:bold\">$safetyStatus</span></td>";?>
+                                <td class="editcolumn">
+                                    <?php
+                                    echo "
+                                    <div class='dropdown'>
+                                    <button class='dropbtn' disabled>...</button>
+                                        <div class='dropdown-content'>
+                                        <form action='php-scripts/accessory-updatescript.php' method='POST' event.preventDefault() > <button type='submit' id= '$primaryKey' class='dropdown-element' name='updateItem'
+                                            value='$primaryKey'> Update </button> </form>
+                                        <form action='php-scripts/accessory-deletescript.php' method='POST' event.preventDefault()> <button type='submit' id='$primaryKey' name='deleteItem' class='dropdown-element'
+                                            value = '$primaryKey'> Delete </button> </form>
+                                        </div>
+                                    </div>";
+
+                                    ?>
+                                </td>
+                            </tr>
+                        <?php
+                        }
+                    }
+                    // Populating table with NULL when no data is present in database table
+                    else
+                    {
+                    ?>
+                        <td><?php echo "NULL"; ?></td>
+                        <td><?php echo "NULL"; ?></td>
+                        <td><?php echo "NULL"; ?></td>
+                        <td><?php echo "NULL"; ?></td>
+                        <td><?php echo "NULL"; ?></td>
+                        <td><?php echo "NULL"; ?></td>
+                        <td><?php echo "NULL"; ?></td>
+                    <?php    
                     }
                     ?>
                 </table>

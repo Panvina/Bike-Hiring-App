@@ -1,6 +1,7 @@
 <?php
 /* Code completed by Aadesh Jagannathan - 102072344*/
 date_default_timezone_set('Australia/Melbourne');
+
 // Print Safety Inspection based on 0 or 1 values  
 function safety_check($val)
 {
@@ -24,7 +25,7 @@ function bike_availability_check($id)
     $query = "SELECT * FROM damaged_items_table WHERE bike_id= $id";
     $result = mysqli_query($conn, $query);
     $row = mysqli_fetch_assoc($result);
-    //Print broken status if item is broken after booking
+    //Print broken status if item is damaged after booking
     if (isset($row['bike_id'])) 
     {
         // set item safety status to not inspected
@@ -88,7 +89,7 @@ function accessory_availability_check($id)
     $query = "SELECT * FROM damaged_items_table WHERE accessory_id= $id";
     $result = mysqli_query($conn, $query);
     $row = mysqli_fetch_assoc($result);
-    //Print broken status if item is broken after booking
+    //Print broken status if item is damaged after booking
     if (isset($row['accessory_id'])) 
     {
         // set item safety status to not inspected
@@ -176,7 +177,7 @@ function safetyStatusColour($bookingStatus)
     }
 }
 
-// Regex functions for form validation - Pages: Inventory, Accessories, Accessory Types, Inventory Types
+/* Regex functions for form validation - Pages: Inventory, Accessories, Accessory Types, Inventory Types */
 function test_input($data)
 {
     $data = trim($data);
@@ -186,20 +187,22 @@ function test_input($data)
     return $data;
 }
 
+// Valid Name -> Alphabets, Integers, Spaces, - and _
 function validName($name)
 {
     return preg_match("/^[a-zA-Z0-9-_' ]*$/", $name);
 }
+// Valid Price -> Only Integers or Decimals
 function validPrice($price)
 {
     return preg_match("/^\d{0,8}(\.\d{1,2})?$/", $price);
 }
-
+// Valid Price -> Only Integers
 function validId($id)
 {
     return preg_match("/^[0-9]{0,2}$/", $id);
 }
-
+// Check if array variable is empty
 function checkEmptyVariables($arr)
 {
     $ret = true;

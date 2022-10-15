@@ -38,7 +38,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
     	</div>
     	<div class="main">
         <?php
-            //checks to see if inserting was successful and provides input
+            //Prints message based on success of record insertion
             if (isset($_GET["insert"])) {
                 if ($_GET["insert"] == "true") {
                     echo "<p class = 'echo-success' id='tempEcho'>  Record successfully created! </p>";
@@ -47,7 +47,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                 }
             }
 
-            //checks to see if updating was successful and provides input
+            //Prints message based on success of record updation
             if (isset($_GET["update"])) {
                 if ($_GET["update"] == "true") {
                     echo "<p class = 'echo-success' id='tempEcho'>  Record successfully updated! </p>";
@@ -56,7 +56,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                 }
             }
 
-            //checks to see if deleting was successful and provides input
+            //Prints message based on success of record deletion
             if (isset($_GET["delete"])) {
                 if ($_GET["delete"] == "true") {
                     echo "<p class = 'echo-success' id='tempEcho'>  Record successfully deleted! </p>";
@@ -100,36 +100,50 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                             <th> Description </th>
                             <th> Edit </th>
                         </tr>";
+                // Populating table when data is present in the database table
+                if($bikeType->num_rows != 0) 
+                {
+                    while ($row = $bikeType->fetch_assoc()) {
 
-                while ($row = $bikeType->fetch_assoc()) {
+                        // Setting the primary key value based on table's primary key
+                        $primaryKey = $row["bike_type_id"];
+                        $_SESSION["primaryKey"] = $primaryKey;
 
-                    // Setting the primary key value based on table's primary key
-                    $primaryKey = $row["bike_type_id"];
-                    $_SESSION["primaryKey"] = $primaryKey;
+                    ?>
+                        <tr>
+                            <td><?php echo $row["bike_type_id"]; ?></td>
+                            <td><?php echo $row["name"]; ?></td>
+                            <td><?php echo $row["picture_id"]; ?></td>
+                            <td><?php echo $row["description"]; ?></td>
+                            <td class="editcolumn">
+                                <?php
+                                echo "
+                                <div class='dropdown'>
+                                <button class='dropbtn' disabled>...</button>
+                                    <div class='dropdown-content'>
+                                    <form action='php-scripts/biketype-modifyscript.php' method='POST' event.preventDefault() > <button type='submit' id= '$primaryKey' class='dropdown-element' name='updateItem'
+                                        value='$primaryKey'> Update </button> </form>
+                                    <form action='php-scripts/biketype-modifyscript.php' method='POST' event.preventDefault()> <button type='submit' id='$primaryKey' name='deleteItem' class='dropdown-element'
+                                        value = '$primaryKey'> Delete </button> </form>
+                                    </div>
+                                </div>";
 
-                ?>
-                    <tr>
-                        <td><?php echo $row["bike_type_id"]; ?></td>
-                        <td><?php echo $row["name"]; ?></td>
-                        <td><?php echo $row["picture_id"]; ?></td>
-                        <td><?php echo $row["description"]; ?></td>
-                        <td class="editcolumn">
-                            <?php
-                            echo "
-                            <div class='dropdown'>
-                            <button class='dropbtn' disabled>...</button>
-                                <div class='dropdown-content'>
-                                <form action='php-scripts/biketype-modifyscript.php' method='POST' event.preventDefault() > <button type='submit' id= '$primaryKey' class='dropdown-element' name='updateItem'
-                                    value='$primaryKey'> Update </button> </form>
-                                <form action='php-scripts/biketype-modifyscript.php' method='POST' event.preventDefault()> <button type='submit' id='$primaryKey' name='deleteItem' class='dropdown-element'
-                                    value = '$primaryKey'> Delete </button> </form>
-                                </div>
-                            </div>";
-
-                            ?>
-                        </td>
-                    </tr>
-                <?php
+                                ?>
+                            </td>
+                        </tr>
+                    <?php
+                    }
+                }
+                // Populating table with NULL when no data is present in database table
+                else
+                {
+                    ?>
+                    <td><?php echo "NULL"; ?></td>
+                    <td><?php echo "NULL"; ?></td>
+                    <td><?php echo "NULL"; ?></td>
+                    <td><?php echo "NULL"; ?></td>
+                    <td><?php echo "NULL"; ?></td>
+                <?php  
                 }
                 ?>
             </table>
