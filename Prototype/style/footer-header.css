@@ -33,18 +33,23 @@ header{
 #subNav{
     display: none;
     position: absolute;
-    top: 65px;
-    width: 7.8vw;
-    right: 23.3vw;
+    top: 67px;
+    min-width: 145px;
+    height: 135px;
+    right: 23.6vw;
     padding: 0;
-    background: white;
+    background-color: white;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
 }
 
 /*sub-menu styling*/
 #menu li li{
-    font-size: 16px;
-    float: none;
+    color: black;
+    padding-left: 20px;
+    text-decoration: none;
+    font-size:.9vw;
+    display: block;
 
 }
 /* shows sub-sublist on hover */
@@ -56,7 +61,7 @@ header{
 /******************************************/
 /*style the hover effect and animations on the navigation texts only - not the button*/
 /*Ref: https://css-tricks.com/css-link-hover-effects/ */
-#menu a {
+#menu .nav-text {
     background-image: linear-gradient(
         to right,
         #00b7b1,
@@ -74,7 +79,7 @@ header{
     text-decoration:none;
 }
 
-#menu a::before {
+#menu .nav-text::before {
     content: '';
     background: #00b7b1;
     display: block;
@@ -85,11 +90,11 @@ header{
     height: 3px;
     transition: all 0.3s ease-in-out;
 }
-#menu a:hover {
+#menu .nav-text:hover {
     background-position: 0;
    }
 
-#menu a:hover::before {
+#menu .nav-text:hover::before {
     width:100%;
   }
 
@@ -106,6 +111,7 @@ header{
     top: 0;
     width: 100%;
     background-color: #eaf7f6;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.068);
     transition: background-color 0.5s ease;
   }
 

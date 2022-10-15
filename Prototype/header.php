@@ -38,8 +38,8 @@
                                 <li><a class="nav-text <?php if($activeLink=="about"){echo'nav-active';} ?>" href="about.php">About Inverloch</a></li>
                                 <li><a class="nav-text explore-link <?php if($activeLink=="explore"){echo'nav-active';} ?>" href="explore.php">About Cycling</a>
                                     <ul id="subNav">
-                                        <li><a href="explore-local.php">Cycling in Our Region</a></li>
-                                        <li><a href="explore-rail.php">Rail Trails</a></li>
+                                        <li><a class="nav-text" href="explore-local.php">Our Region</a></li>
+                                        <li><a class="nav-text" href="explore-rail.php">Rail Trails</a></li>
                                     </ul>
                                 </li>
                                 <li><a class="nav-text <?php if($activeLink=="contact"){echo'nav-active';} ?>" href="contactus.php">Contact Us</a></li>
@@ -72,6 +72,7 @@
         //Resource: https://www.w3schools.com/
         // Get the navbar
         var navbar = document.getElementById('nav');
+        var subNav = document.getElementById('nav')
 
         // When the user scrolls the page, execute function
         window.onscroll = function() {stickyMenu()};
@@ -82,7 +83,7 @@
         function stickyMenu() {
         if (window.pageYOffset > sticky) {
             navbar.classList.add("sticky");
-            document.getElementById('subNav').style.background.color= "red";
+            subNav.getElementById('subNav').style.background.color= "red";
         } else {
             navbar.classList.remove("sticky");
         }
