@@ -20,21 +20,26 @@ This page is completely done by Clement */
   width: 70%;
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 40px;
 }
 
 #headercomment {
   text-align: right;
-  text-decoration-color: black;
+  margin-bottom: -5px;
 }
 
-#headercomment a {
-  text-decoration: none;
-  color: #000000;
-  font-weight: bolder;
+#headercomment a, #mail { /*Modified by Vina Touch 10192882*/
+  text-decoration:none;
+  text-decoration-color: #00b7b100;
+  color: #00b7b1;
+  font-weight: 500;
+  transition: text-decoration-color 0.5s ease-in-out;
 }
 
-#headercomment h2 {
-  font-weight: lighter;
+#headercomment a:hover, #mail:hover{  /*Modified by Vina Touch 10192882*/
+  text-decoration: underline;
+  text-decoration-color: #00b7b1;
+
 }
 
 #contactInfo p, #contactInfo table {
@@ -44,20 +49,29 @@ This page is completely done by Clement */
 }
 
 /*Decoratintg the buttons*/
+/*Reworked by Vina Touch 101928802*/
 .submitbutton {
   background-color: #172026;
-  color: white;
-  border: 0px;
-  float: left;
-  font-size: 15px;
-  width: 30%;
+  color: #fff;
+  font-size: 18px;
+  padding: 5px 46.5% 5px;
+  border: none;
+  border-radius: 5px;
+  text-align: left;
+  transition: box-shadow .5s ease-in-out, background-color .6s ease-in-out;
+}
+
+/*Reworked by Vina Touch 101928802*/
+.submitbutton:hover{
+  background-color: #00b7b1;
+  box-shadow: inset 25vw 0 0 0 #00b7b1;
 }
 
 /*Idea from https://www.w3schools.com/howto/howto_css_equal_height.asp*/
 
 /*This is mainly a box containing contact info*/
 #Conactbox1 {
-  background-color: #aaecd0;
+  background-color: #00b7b136; /*Modified by Vina Touch 101928802*/
   float: left;
 }
 
@@ -99,6 +113,7 @@ This page is completely done by Clement */
   border-left-style: hidden;
   border-bottom-style: hidden;
   width: 100%;
+  margin-top: 5px;
 }
 
 label {
@@ -109,25 +124,33 @@ label {
 		code from: https://www.w3schools.com/howto/howto_js_collapsible.asp
 		*/
 /* Style the button that is used to open and close the collapsible content */
-.collapsible {
-  background-color: rgba(234,247,246, 0.4);
-  color: #444;
+.collapsible {  /*This whole style is modified by Vina Touch 101928802*/
+  background-color: rgba(234, 247, 246, 0.137);
+  color: #172026af;
   cursor: pointer;
-  padding: 18px;
+  padding: 5px 18px 5px;
   border: none;
   text-align: left;
   outline: none;
 }
-
-.collapsible, .content {
-  border-top: 3px dashed #eaf7f6;
-  width: 100%;
+.content{
   font-size: 18px;
+}
+.collapsible{ /*This whole style is modified by Vina Touch 101928802*/
+  margin-top: 10px;
+  border: 1px dashed #aaecd079;
+  border-radius: 5px;
+  transition:  border 0.3s ease-in-out;
+}
+
+.content, .collapsible{
+  width: 100%;
 }
 
 /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
-.active, .collapsible:hover {
-  background-color: #ccc;
+.active, .collapsible:hover {   /*This whole style is modified by Vina Touch 101928802*/
+  border-bottom: 1px dashed #00b7b1;
+  width: 100%;
 }
 
 /*This is mainly to make it more responsive*/

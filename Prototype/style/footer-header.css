@@ -97,6 +97,7 @@ header{
     border-radius: 5px;
     border-width: 0px;
     cursor:pointer;
+    transition: box-shadow .5s ease-in-out, background-color .6s ease-in-out;
 }
 .button{
     padding: 10px 20px 10px 20px;
@@ -111,6 +112,7 @@ header{
     background-color: #00b7b1;
     color: white;
     border-width: 0px;
+    box-shadow: inset 10vw 0 0 0 #00b7b1;
 }
 
 /******************************************/

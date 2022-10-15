@@ -11,7 +11,7 @@ include("php-scripts/utils.php");
 //Establishing database connection using mysqli()
 $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 
-$_SESSION['active']="index";
+$_SESSION['active']="index";    //added a session to store an active state of which page has been clicked by the user - Vina Touch 
 ?>
 <!DOCTYPE html>
 
@@ -22,7 +22,7 @@ $_SESSION['active']="index";
     <title>Home</title>
 </head>
 <body>
-    <header><?php include 'header.php'; $_SESSION['active'] ="index";?></header>
+    <header><?php include 'header.php';?></header>
     <div id = "main">
         <div class="Homebanner">
             <div id="homebannertext">

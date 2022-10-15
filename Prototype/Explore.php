@@ -1,8 +1,10 @@
 ﻿<?php 
+    //added a session to store an active state of which page has been clicked by the user - Vina Touch
     if (!isset($_SESSION)){
         session_start();
     }
-    $_SESSION['active']="explore"; 
+    $_SESSION['active']="explore";
+    /********************************/ 
 ?>
 <!DOCTYPE html>
 

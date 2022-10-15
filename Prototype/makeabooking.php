@@ -1,9 +1,12 @@
 ﻿<?php
+//added a session to store an active state of which page has been clicked by the user - Vina Touch
 if (!isset($_SESSION)){
         session_start();
 }
+$_SESSION['active']="hire"; 
+/**************************/
+
 $_SESSION['id'] = '123';
-$_SESSION['active']="hire";
 include_once("php-scripts/backend-connection.php");
 //Linking utility functions associated with inventory
 include("php-scripts/utils.php");

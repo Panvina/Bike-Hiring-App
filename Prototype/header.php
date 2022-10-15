@@ -9,6 +9,7 @@
         header("location: index.php");
         exit;
     }
+    //added a session to retrieve an active state of which page has been clicked by the user
     $activeLink="";
     if(isset($_SESSION['active'])){
         $activeLink=$_SESSION['active'];
