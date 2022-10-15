@@ -21,10 +21,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
     <head>
          <!-- Header -->
         <title> Block Out Dates </title>
-        <div class ="flexDisplay">
-            <h1 class="header"> <a href="index.php"><img src="img/photos/Inverloch_Logo3.png" alt="Inverloch Logo" id="Logo" /></a> Block Out Dates </h1>
-            <a id="webpageDirect" name = "webpageDirect" href= 'index.php'> Back to website </a>
-        </div>
+        <h1 style="font-family: Arial;" class="header"> <a href="index.php"><img src="img/photos/Inverloch_Logo3.png" alt="Inverloch Logo" id="Logo" /></a> Block Out Dates </h1>
     </head>
 
     <body>

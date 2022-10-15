@@ -22,10 +22,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
     <head>
          <!-- Header -->
         <title>Edit Pages </title>
-        <div class ="flexDisplay">
-            <h1 class="header"> <a href="index.php"><img src="img/photos/Inverloch_Logo3.png" alt="Inverloch Logo" id="Logo" /></a> Edit Pages </h1>
-            <a id="webpageDirect" name = "webpageDirect" href= 'index.php'> Back to website </a>
-        </div>
+        <h1 class="header"> <a href="index.php"><img src="img/photos/Inverloch_Logo3.png" alt="Inverloch Logo" id="Logo" /></a> Edit Pages </h1>
     </head>
     <body>
         <div class="grid-container">
@@ -36,7 +33,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                 <div class="grid">
                   <div class="item">
                     <h1 style="">Select a Page:</h1><br>
-                    <a href="editIndex.php"><h1 style="text-decoration: underline;">Home Page</h1></a><br>
+                    <a href="editIndex.php"><h1 style="text-decoration: underline;">Home Page</h1></a>
                     <a href="editIndex.php"><img src="img/editpages/index.png" style="width:500px;"></a>
                   </div>
                 </div>
