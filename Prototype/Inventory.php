@@ -37,41 +37,42 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 </head>
 
 <body>
-    <?php
-    //Prints message based on success of record insertion
-    if (isset($_GET["insert"])) {
-        if ($_GET["insert"] == "true") {
-            echo "<p class = 'echo-success' id='tempEcho'>  Record successfully created! </p>";
-        } else if ($_GET["insert"] == "false") {
-            echo "<p class = 'echo-fail'>  Record was not created successfully! </p>";
-        }
-    }
-
-    //Prints message based on success of record updation
-    if (isset($_GET["update"])) {
-        if ($_GET["update"] == "true") {
-            echo "<p class = 'echo-success' id='tempEcho'>  Record successfully updated! </p>";
-        } else if ($_GET["update"] == "false") {
-            echo "<p class = 'echo-fail' id='tempEcho'> Record was not updated successfuly </p>";
-        }
-    }
-
-    //Prints message based on success of record deletion
-    if (isset($_GET["delete"])) {
-        if ($_GET["delete"] == "true") {
-            echo "<p class = 'echo-success' id='tempEcho'>  Record successfully deleted! </p>";
-        } else if ($_GET["delete"] == "false") {
-            echo "<p class = 'echo-fail' id='tempEcho'> Record was not deleted successfully! </p>";
-        }
-    }
-    ?>
-
     <div class="grid-container">
         <div class="menu">
             <?php printMenu("inventory"); ?>
         </div>
         <div class="main">
+        <?php
+            //Prints message based on success of record insertion
+            if (isset($_GET["insert"])) {
+                if ($_GET["insert"] == "true") {
+                    echo "<p class = 'echo-success' id='tempEcho'>  Record successfully created! </p>";
+                } else if ($_GET["insert"] == "false") {
+                    echo "<p class = 'echo-fail'>  Record was not created successfully! </p>";
+                }
+            }
+
+            //Prints message based on success of record updation
+            if (isset($_GET["update"])) {
+                if ($_GET["update"] == "true") {
+                    echo "<p class = 'echo-success' id='tempEcho'>  Record successfully updated! </p>";
+                } else if ($_GET["update"] == "false") {
+                    echo "<p class = 'echo-fail' id='tempEcho'> Record was not updated successfuly </p>";
+                }
+            }
+
+            //Prints message based on success of record deletion
+            if (isset($_GET["delete"])) {
+                if ($_GET["delete"] == "true") {
+                    echo "<p class = 'echo-success' id='tempEcho'>  Record successfully deleted! </p>";
+                } else if ($_GET["delete"] == "false") {
+                    echo "<p class = 'echo-fail' id='tempEcho'> Record was not deleted successfully! </p>";
+                }
+            }
+        ?>
+            <!-- Page Title -->
             <h1 id="content-header"> All Bikes </h1>
+            <!-- Page Search Bar  - Concept adopted from Alex--> 
             <div class="midbar">
                     <form id="midbar-form" action='php-scripts/inventory-addscript.php' method='POST'>
                         <input type="text" name="search" placeholder="Search (Bike Name)"></input>

@@ -119,22 +119,16 @@ Created by: Aadesh Jagannathan @102072344@student.swin.edu.au
   
   .echo-fail{
     color: red;
-    font-size: 25px;
-    margin-left: 45%;
-    position: absolute;
-    z-index: 1; left: 0;
-    top: 0;
-    padding-top: 5%;
+    font-weight: bold;
+    margin-bottom: 0px;
+    font-size: 20px;
   }
 
   .echo-success{
     color: green;
-    font-size: 25px;
-    margin-left: 45%;
-    position: absolute;
-    z-index: 1; left: 0;
-    top: 0;
-    padding-top: 5%;
+    font-weight: bold;
+    margin-bottom: 0px;
+    font-size: 20px;
   }
   
 

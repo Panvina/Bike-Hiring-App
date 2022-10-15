@@ -33,42 +33,41 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
     </head>
 
     <body>
-        <?php
-            //checks to see if inserting was successful and provides input
-            if (isset($_GET["insert"])) {
-                if ($_GET["insert"] == "true") {
-                    echo "<p class = 'echo-success' id='tempEcho'>  Record successfully created! </p>";
-                } else if ($_GET["insert"] == "false") {
-                    echo "<p class = 'echo-fail'>  Record was not created successfully! </p>";
-                }
-            }
-
-            //checks to see if updating was successful and provides input
-            if (isset($_GET["update"])) {
-                if ($_GET["update"] == "true") {
-                    echo "<p class = 'echo-success' id='tempEcho'>  Record successfully updated! </p>";
-                } else if ($_GET["update"] == "false") {
-                    echo "<p class = 'echo-fail' id='tempEcho'> Record was not updated successfuly </p>";
-                }
-            }
-
-            //checks to see if deleting was successful and provides input
-            if (isset($_GET["delete"])) {
-                if ($_GET["delete"] == "true") {
-                    echo "<p class = 'echo-success' id='tempEcho'>  Record successfully deleted! </p>";
-                } else if ($_GET["delete"] == "cancel") {
-                    echo "<p class = 'echo-fail' id='tempEcho'> Record was not deleted successfully! </p>";
-                }
-            }
-        ?>
-
         <div class="grid-container">
         	<div class="menu">
         		<?php printMenu("accessory"); ?>
         	</div>
         	<div class="main">
-                <h1 id="content-header"> All Accessories </h1>
+            <?php
+                //checks to see if inserting was successful and provides input
+                if (isset($_GET["insert"])) {
+                    if ($_GET["insert"] == "true") {
+                        echo "<p class = 'echo-success' id='tempEcho'>  Record successfully created! </p>";
+                    } else if ($_GET["insert"] == "false") {
+                        echo "<p class = 'echo-fail'>  Record was not created successfully! </p>";
+                    }
+                }
+                //checks to see if updating was successful and provides input
+                if (isset($_GET["update"])) {
+                    if ($_GET["update"] == "true") {
+                        echo "<p class = 'echo-success' id='tempEcho'>  Record successfully updated! </p>";
+                    } else if ($_GET["update"] == "false") {
+                        echo "<p class = 'echo-fail' id='tempEcho'> Record was not updated successfuly </p>";
+                    }
+                }
 
+                //checks to see if deleting was successful and provides input
+                if (isset($_GET["delete"])) {
+                    if ($_GET["delete"] == "true") {
+                        echo "<p class = 'echo-success' id='tempEcho'>  Record successfully deleted! </p>";
+                    } else if ($_GET["delete"] == "cancel") {
+                        echo "<p class = 'echo-fail' id='tempEcho'> Record was not deleted successfully! </p>";
+                    }
+                }
+            ?>
+                <!-- Page Title -->
+                <h1 id="content-header"> All Accessories </h1>
+                <!-- Page Search Bar  - Concept adopted from Alex--> 
                 <div class="midbar">
                     <form id="midbar-form" action='php-scripts/accessory-addscript.php' method='POST'>
                         <input type="text" name="search" placeholder="Search (Accessory Name)"></input>
