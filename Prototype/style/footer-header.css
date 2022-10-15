@@ -38,11 +38,9 @@ header{
     height: 135px;
     right: 23.6vw;
     padding: 0;
-    background-color: white;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
 }
-
 /*sub-menu styling*/
 #menu li li{
     color: black;

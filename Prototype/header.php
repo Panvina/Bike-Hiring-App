@@ -36,10 +36,10 @@
                                 <li><a class="nav-text <?php if($activeLink=="index"){echo'nav-active';} ?>" href="index.php">Home</a></li>
                                 <li><a class="nav-text <?php if($activeLink=="hire"){echo'nav-active';} ?>" href="makeabooking.php">Hire</a></li>
                                 <li><a class="nav-text <?php if($activeLink=="about"){echo'nav-active';} ?>" href="about.php">About Inverloch</a></li>
-                                <li><a class="nav-text explore-link <?php if($activeLink=="explore"){echo'nav-active';} ?>" href="explore.php">About Cycling</a>
+                                <li><a class="nav-text explore-link <?php if($activeLink=="explore" || $activeLink=="local" || $activeLink=="rail" ){echo'nav-active';} ?>" href="explore.php">About Cycling</a>
                                     <ul id="subNav">
-                                        <li><a class="nav-text" href="explore-local.php">Our Region</a></li>
-                                        <li><a class="nav-text" href="explore-rail.php">Rail Trails</a></li>
+                                        <li><a class="nav-text <?php if($activeLink=="local" ){echo'nav-active';} ?>" href="explore-local.php">Our Region</a></li>
+                                        <li><a class="nav-text <?php if($activeLink=="rail" ){echo'nav-active';} ?>" href="explore-rail.php">Rail Trails</a></li>
                                     </ul>
                                 </li>
                                 <li><a class="nav-text <?php if($activeLink=="contact"){echo'nav-active';} ?>" href="contactus.php">Contact Us</a></li>
@@ -72,7 +72,8 @@
         //Resource: https://www.w3schools.com/
         // Get the navbar
         var navbar = document.getElementById('nav');
-        var subNav = document.getElementById('nav')
+        var subNav = document.getElementById('subNav');
+        subNav.style.backgroundColor = "white";
 
         // When the user scrolls the page, execute function
         window.onscroll = function() {stickyMenu()};
@@ -83,9 +84,10 @@
         function stickyMenu() {
         if (window.pageYOffset > sticky) {
             navbar.classList.add("sticky");
-            subNav.getElementById('subNav').style.background.color= "red";
+            subNav.style.backgroundColor = "#eaf7f6";
         } else {
             navbar.classList.remove("sticky");
+            subNav.style.backgroundColor = "white";
         }
         }
         </script>
