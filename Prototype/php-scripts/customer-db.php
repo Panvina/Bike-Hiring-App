@@ -5,7 +5,6 @@
 	{
 		public function __construct($tablename="customer_table", $servername="localhost", $username="root", $password="", $dbname="bike_hiring_system")
 		{
-			echo "<script>console.log('Test');</script>";
 			$this->servername = $servername;
 			$this->username = $username;
 			$this->password = $password;
@@ -13,31 +12,6 @@
 			$this->tablename = $tablename;
 
 			$this->getConn();
-
-			echo "<script>console.log('Test');</script>";
 		}
-
-		//Jake.H
-		//not working currently atm
-		public function checkMultipleUserName($username)
-		{
-			$ret = false;
-			$customerTable = "customer_table";
-			$employeeTable = "employee_table";
-			$fetchedUserName = substr($username, 3);
-
-			$query = "SELECT customer_table.user_name FROM customer_table inner join employee_table on employee_table.user_name = customer_table.$fetchedUserName
-			where customer_table.user_name = $fetchedUserName";
-
-			$res = $this->conn->query($query);
-			if ($res->num_rows >= 1)
-			{
-				$ret = true;
-			}
-
-			return $ret;
-		}
-
 	}
-
 ?>

@@ -1,11 +1,9 @@
 <?php
 	/**
-	 *
-	 *
-	 *
-	 *
 	 * IMPORTANT NOTE:
 	 *	- For column names with spaces, MySQL uses backticks (`) for these. Don't forget these, or the query will fail.
+	 *
+	 * Made by Dabin Lee (unless specified otherwise)
 	 */
 	class DBConnection
 	{
@@ -33,12 +31,14 @@
 			$this->closeConn();
 		}
 
+		// create new database connection
 		protected function getConn()
 		{
 			$this->conn = new mysqli($this->servername, $this->username, $this->password, $this->dbname);
 		}
 
-		protected function closeConn()
+		// Close database connection.
+		private function closeConn()
 		{
 			$this->conn->close();
 		}
@@ -58,7 +58,7 @@
 			$ret = FALSE;
 
 			$query = "INSERT INTO $this->tablename ($columns) VALUES ($data)";
-			echo $query;
+			// echo $query;
 			if ($this->conn->query($query) == TRUE)
 			{
 				$ret = TRUE;
@@ -121,7 +121,7 @@
 				}
 				$query .= " WHERE $idColName=$id";
 
-				echo $query;
+				// echo $query;
 				// exit();
 				if ($this->conn->query($query) == TRUE)
 				{
@@ -148,19 +148,9 @@
 		 */
 		public function delete($pkeyColName, $pkeyValue)
 		{
-			$ret = FALSE;
-
 			$query = "DELETE FROM $this->tablename WHERE $pkeyColName=$pkeyValue";
 			//echo $query;
-			if ($this->conn->query($query) == TRUE)
-			{
-				echo "Record deleted successfully!";
-				$ret = true;
-			}
-			else
-			{
-				echo "Error: " . $query . "<br>" . $this->conn->error;
-			}
+			$ret = $this->conn->query($query);
 
 			return $ret;
 		}
@@ -202,72 +192,6 @@
             return $ret;
 		}
 
-		/**
-		 *	Retrieve the last 'x' rows from a table.
-		 *
-		 * 	Parameters:
-		 *	- tablename	: name of table to get from
-		 *	- pkeyName	: name of primary key of table (auto-incrementing pkey)
-		 *	- x			: number of rows (from last) to retrieve
-		 */
-		public function getLastX($pkeyName, $x)
-		{
-			$query = "SELECT * FROM $this->tablename ORDER BY $pkeyName DESC LIMIT $x";
-			echo '<br>';
-			echo $query;
-			$ret = $this->conn->query($query);
-			if ($res->num_rows > 0)
-			{
-				while($row = $res->fetch_assoc())
-				{
-					array_push($ret, $row);
-				}
-			}
-
-			return $ret;
-		}
-
-		/**
-		 *	Prints a table. For testing.
-		 *	Parameters:
-		 *	- $tablename	: name of table to print
-		 */
-		public function printRows()
-		{
-			echo "<br>Printing array<br>";
-			$ret = $this->get("*");
-			$keys = array_keys($ret[0]);
-			for($x = 0; $x < count($ret); $x++)
-			{
-				$row = $ret[$x];
-				$str = "";
-				for($y = 0; $y < count($keys); $y++)
-				{
-					$key = $keys[$y];
-					$str .= "$key: ";
-					$str .="$row[$key] ";
-				}
-				echo "$str<br>";
-			}
-		}
-
-		// Convert result from SQL query to PHP array
-		public function getRowsFromResult($queryRes)
-		{
-			$ret = null;
-
-			if ($queryRes->num_rows > 0)
-			{
-				$ret = array();
-				while($row = $queryRes->fetch_assoc())
-				{
-					array_push($ret, $row);
-				}
-			}
-
-			return $ret;
-		}
-
 		//Jake.H accepts a query and runs the query in the database
 		public function runQuery($query)
 		{
@@ -280,64 +204,5 @@
 
 			return $ret;
 		}
-
-		//Jake.H
-		public function checkMultipleUserName($username)
-		{
-			$ret = false;
-			$customerTable = "customer_table";
-			$employeeTable = "employee_table";
-			$fetchedUserName = substr($username, 3);
-
-			$query = "SELECT customer_table.user_name FROM customer_table UNION ALL SELECT employee_table.user_name FROM employee_table
-			where user_name = $fetchedUserName";
-
-			$res = $this->conn->query($query);
-			if ($res->num_rows >= 1)
-			{
-				$ret = true;
-			}
-
-			return $ret;
-		}
-
 	}
-
-	// change this variable to true to perform test
-	$doTest = false;
-	if ($doTest)
-	{
-		// Instantiate database connection object
-		$conn = new DBConnection("bike_type_table");
-
-		// Test INSERT method
-	    $conn->insert("Name, Description", "'Hydro', 'Non-existent'");
-	    echo "INSERT success";
-
-		// Test GET method
-		$conn->printRows();
-
-		echo "GET success";
-
-		// Test UPDATE method
-		$conn->insert("Name, Description", "'Hydro', 'Non-existent'");
-		$conn->printRows();
-		echo "inserted<br>";
-		$ret = $conn->getLastX("BikeTypeID", 1);
-		$toUpdateId = $ret[0]["BikeTypeID"];
-		$conn->update("BikeTypeID", $toUpdateId, "Description, Name", "New Description, Updated-Hydro");
-		$conn->printRows();
-
-		// Test DELETE method
-		$conn->insert("Name, Description", "'Hydro', 'Test'");
-		$ret = $conn->getLastX("BikeTypeID", 1);
-		$toDeleteId = $ret[0]["BikeTypeID"];
-
-		$conn->printRows("bike_type_table");
-		$conn->delete("BikeTypeID", $toDeleteId);
-		echo "<br>DELETE success";
-
-		$conn->printRows("bike_type_table");
-	}
-
 ?>

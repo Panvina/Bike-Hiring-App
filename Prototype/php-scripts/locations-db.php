@@ -13,42 +13,5 @@
 
 			$this->getConn();
 		}
-
-		/**
-		 *	INSERT method
-		 *	Parameters:
-		 *		- tablename : name of table (e.g. 'bike_types')
-		 *		- colnames : columns to fill from table (e.g. 'id, name, address')
-		 *		- data : conditional on which rows to retrieve (e.g. '"val1", "val2", "val3"')
-		 *
-		 *	Return:
-		 * 		- Return if insert was successful
-		 *
-		 *	To insert a new row, need to first create a booking_table row:
-		 *		Requirements:
-		 *		- CustomerID, Start Date, End Date, Start Time, End Time, Duration, Pick-up, Drop-off, and final price
-		 *			- Final Price =
-		 */
-		public function insert($columns="name, address, suburb, post_code, drop_off_location, pick_up_location", $data)
-		{
-			$ret = FALSE;
-
-			$data = explode(',', $data);
-			if (count($data) == count(explode(',', $columns)))
-			{
-				$query = "INSERT INTO $tablename ($columns) VALUES ($data)";
-				//echo $query;
-				if ($this->conn->query($query) == TRUE)
-				{
-					$ret = TRUE;
-				}
-			}
-			else
-			{
-				echo "Data value count is incorrect.";
-			}
-
-			return $ret;
-		}
 	}
 ?>
