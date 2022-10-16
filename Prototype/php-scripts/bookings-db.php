@@ -24,7 +24,7 @@ Contributor(s): Dabin Lee @ icelasersparr@gmail.com
 
 		/**
 		 *	Retrieve all rows from bookings table, with associated data.
-		 *	condition is simply appended to the end of the
+		 *	condition is simply appended to the end of the query
 		 *
 		 */
 		public function getBookingRows($condition=0)
@@ -259,7 +259,7 @@ Contributor(s): Dabin Lee @ icelasersparr@gmail.com
 			}
 
 			// execute booking_table query
-			echo "<br>$bookingTableQuery<br>";
+			// echo "<br>$bookingTableQuery<br>";
 			if ($this->conn->query($bookingTableQuery) == TRUE)
 			{
 				$ret = TRUE;
@@ -378,8 +378,8 @@ Contributor(s): Dabin Lee @ icelasersparr@gmail.com
 			for($i = 0; $i < count($queries); $i++)
 			{
 				$query = $queries[$i];
-				echo "$i: $query<br>";
-				$success &= !($this->conn->query($query));
+				// echo "$i: $query<br>";
+				$success &= ($this->conn->query($query));
 			}
 
 			return $success;
@@ -413,7 +413,7 @@ Contributor(s): Dabin Lee @ icelasersparr@gmail.com
 			{
 				$query = $queries[$i];
 				//echo "$query<br>";
-				$success &= !($this->conn->query($query));
+				$success &= ($this->conn->query($query));
 			}
 
 			return $success;
