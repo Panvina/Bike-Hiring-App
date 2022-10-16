@@ -1,13 +1,20 @@
 <?php
+    /* Code completed by Aadesh Jagannathan - 102072344*/
+    /* Script responsible for updating records in accessory table*/
     session_start();
     include_once("backend-connection.php");
-    //include ("utils.php");
     include("inventory-util.php");
     $conn = new mysqli("localhost", "root", "", "bike_hiring_system") or die(mysqli_error($mysqli));
-    $ret = array();
-  
+
+    //temporary variables to print error msg based on form validation
+    $validName = "";
+    $validPrice = "";
+    $emptyType = "";
+    $emptyForm = "";
+
+    //Check to identify if the update record button has been set
     if (isset($_POST['updateItem']))
-  {
+    {
         $primaryKey = $_POST['updateItem'];
     
         $cols = "accessory_id, name, accessory_type_id, price_ph, safety_inspect";
@@ -31,56 +38,56 @@
         $safetyInspect = $_SESSION['safety_inspect'];
 
         header("location:../Accessory.php?update=notEmpty");
-        /* if (!checkEmptyVariables([$name, $accessoryTypeId, $price, $safetyInspect]))
-        {
-            header("Location: ../Accessory.php?update=notEmpty");
-            exit();
-        }
-        else
-        {
-            header("Location: ../Accessory.php?update=empty");
-            exit();
-        }  */
-   }
-   
+    }
+
+    //Check to identify if the submit button in the update form has been set
    if (isset($_POST["submitUpdateItem"]))
-   {
+    {
+        //Manually assigning ID for the new record - Only used whilst testing
         $accessoryId = $_POST['accessoryId'];
-        //$name = $_POST['name'];
-        //$accessoryTypeId = $_POST['accessoryTypeId'];
-        //$price = $_POST['price'];
+
+        //Setting safety inspect when updating record
         $safetyInspect = $_POST['safetyInspect'];
 
-                /* Form validation for adding records*/
+        /* Form validation for adding records*/
         //Check if all the fields are empty
         if(empty($_POST["name"]) && empty($_POST["accessoryTypeId"])&& empty($_POST["price"]))
         {
-            header("Location: ../Accessory.php?update=empty");
+            $emptyForm = "empty";
         }
+
         //Check if the name field is empty
-        else if(empty($_POST["name"]))
+        if(empty($_POST["name"]))
         {
-            header("Location: ../Accessory.php?update=emptyName");
-        }
-        //Check if the accessory type id is empty
-        else if (empty($_POST["accessoryTypeId"]))
-        {
-            header("Location: ../Accessory.php?update=emptyType");
-        }
-        //Check if the price field is empty
-        else if (empty($_POST["price"]))
-        {
-            header("Location: ../Accessory.php?update=emptyPrice");
+            $validName = "empty";
         }
         //Check if the name field has only alphabets
         else if (!validName($_POST["name"])) 
         {
-           header("Location: ../Accessory.php?update=invalidName");
+            $validName = "invalid";
+        }
+
+        //Check if the accessory type id is empty
+        if (empty($_POST["accessoryTypeId"]))
+        {
+            $emptyType = "empty";
+        }
+
+        //Check if the price field is empty
+        if (empty($_POST["price"]))
+        {
+            $validPrice = "empty";
         }
         //Check if the price field has only integers and decimals
         else if (!validPrice($_POST["price"]))
         {
-            header("Location: ../Accessory.php?update=invalidPrice");
+            $validPrice = "invalid";
+        }
+
+        //Check to determine if any validation flags have been set
+        if((!empty($validName)) || (!empty($emptyType)) || (!empty($validPrice)) || (!empty($emptyForm)))
+        {
+            header("Location: ../Accessory.php?update=$emptyForm&name=$validName&type=$emptyType&price=$validPrice");           
         }
         else 
         {

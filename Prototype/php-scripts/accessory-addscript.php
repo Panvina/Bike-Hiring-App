@@ -1,4 +1,6 @@
 <?php
+    /* Code completed by Aadesh Jagannathan - 102072344*/
+    /* Script responsible for adding records in accessory types table*/
     session_start();
     include 'backend-connection.php';
     include("inventory-util.php");
@@ -10,14 +12,17 @@
      $_SESSION["tempPrice"] = $_POST["price"];
      $_SESSION["tempSafetyInspect"] = $_POST["safetyInspect"];
     
+    //Manually assigning ID for the new record - Only used whilst testing
     $accessoryId = $_POST["accessoryId"];
-    //$name = $_POST["name"];
-    //$accessoryTypeId = $_POST["accessoryTypeId"];
-    //$price = $_POST["price"];
+    //Setting safety inspect when adding record
     $safetyInspect = $_POST["safetyInspect"];
 
-    //$tempaccessoryTypeId = explode("-",$accessoryTypeId,2);
-    
+    //temporary variables to print error msg based on form validation
+    $validName = "";
+    $validPrice = "";
+    $emptyType = "";
+    $emptyForm = "";
+
     //Search concept adapted from Alex
     if (isset($_POST['search-btn'])){
         $search = $_POST["search"];
@@ -31,37 +36,48 @@
             header("Location: ..\Accessory.php");
         }
     } 
+
+    //Check to identify if the add record button has been set
     if(isset($_POST['AddItem'])){
         /* Form validation for adding records*/
         //Check if all the fields are empty
         if(empty($_POST["name"]) && empty($_POST["accessoryTypeId"])&& empty($_POST["price"]))
         {
-            header("Location: ../Accessory.php?insert=empty");
+            $emptyForm = "empty";
         }
+
         //Check if the name field is empty
-        else if(empty($_POST["name"]))
+        if(empty($_POST["name"]))
         {
-            header("Location: ../Accessory.php?insert=emptyName");
+            $validName = "empty";
         }
-        //Check if the accessory type id is empty
-        else if (empty($_POST["accessoryTypeId"]))
-        {
-            header("Location: ../Accessory.php?insert=emptyType");
-        }
-        //Check if the price field is empty
-        else if (empty($_POST["price"]))
-        {
-            header("Location: ../Accessory.php?insert=emptyPrice");
-        }
-        //Check if the name field has only alphabets
+        ////Check if the name field has the alphabets, integers, _ or -
         else if (!validName($_POST["name"])) 
         {
-           header("Location: ../Accessory.php?insert=invalidName");
+            $validName = "invalid";
+        }
+
+        //Check if the accessory type id is empty
+        if (empty($_POST["accessoryTypeId"]))
+        {
+            $emptyType = "empty";
+        }
+
+        //Check if the price field is empty
+        if (empty($_POST["price"]))
+        {
+            $validPrice = "empty";
         }
         //Check if the price field has only integers and decimals
         else if (!validPrice($_POST["price"]))
         {
-            header("Location: ../Accessory.php?insert=invalidPrice");
+            $validPrice = "invalid";
+        }
+
+        //Check to determine if any validation flags have been set
+        if((!empty($validName)) || (!empty($emptyType)) || (!empty($validPrice)) || (!empty($emptyForm)))
+        {
+            header("Location: ../Accessory.php?insert=$emptyForm&name=$validName&type=$emptyType&price=$validPrice");           
         }
         else 
         {

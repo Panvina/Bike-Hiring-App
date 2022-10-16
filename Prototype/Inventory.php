@@ -37,41 +37,42 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 </head>
 
 <body>
-    <?php
-    //Prints message based on success of record insertion
-    if (isset($_GET["insert"])) {
-        if ($_GET["insert"] == "true") {
-            echo "<p class = 'echo-success' id='tempEcho'>  Record successfully created! </p>";
-        } else if ($_GET["insert"] == "false") {
-            echo "<p class = 'echo-fail'>  Record was not created successfully! </p>";
-        }
-    }
-
-    //Prints message based on success of record updation
-    if (isset($_GET["update"])) {
-        if ($_GET["update"] == "true") {
-            echo "<p class = 'echo-success' id='tempEcho'>  Record successfully updated! </p>";
-        } else if ($_GET["update"] == "false") {
-            echo "<p class = 'echo-fail' id='tempEcho'> Record was not updated successfuly </p>";
-        }
-    }
-
-    //Prints message based on success of record deletion
-    if (isset($_GET["delete"])) {
-        if ($_GET["delete"] == "true") {
-            echo "<p class = 'echo-success' id='tempEcho'>  Record successfully deleted! </p>";
-        } else if ($_GET["delete"] == "false") {
-            echo "<p class = 'echo-fail' id='tempEcho'> Record was not deleted successfully! </p>";
-        }
-    }
-    ?>
-
     <div class="grid-container">
         <div class="menu">
             <?php printMenu("inventory"); ?>
         </div>
         <div class="main">
+        <?php
+            //Prints message based on success of record insertion
+            if (isset($_GET["insert"])) {
+                if ($_GET["insert"] == "true") {
+                    echo "<p class = 'echo-success' id='tempEcho'>  Record successfully created! </p>";
+                } else if ($_GET["insert"] == "false") {
+                    echo "<p class = 'echo-fail'>  Record was not created successfully! </p>";
+                }
+            }
+
+            //Prints message based on success of record updation
+            if (isset($_GET["update"])) {
+                if ($_GET["update"] == "true") {
+                    echo "<p class = 'echo-success' id='tempEcho'>  Record successfully updated! </p>";
+                } else if ($_GET["update"] == "false") {
+                    echo "<p class = 'echo-fail' id='tempEcho'> Record was not updated successfully! </p>";
+                }
+            }
+
+            //Prints message based on success of record deletion
+            if (isset($_GET["delete"])) {
+                if ($_GET["delete"] == "true") {
+                    echo "<p class = 'echo-success' id='tempEcho'>  Record successfully deleted! </p>";
+                } else if ($_GET["delete"] == "false") {
+                    echo "<p class = 'echo-fail' id='tempEcho'> Record was not deleted successfully! </p>";
+                }
+            }
+        ?>
+            <!-- Page Title -->
             <h1 id="content-header"> All Bikes </h1>
+            <!-- Page Search Bar  - Concept adopted from Alex--> 
             <div class="midbar">
                     <form id="midbar-form" action='php-scripts/inventory-addscript.php' method='POST'>
                         <input type="text" name="search" placeholder="Search (Bike Name)"></input>
@@ -108,85 +109,101 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                             <th> Description </th>
                             <th> Edit </th>
                         </tr>";
-                
-                
-                
-                // Printing data of all table columns by fetching from database
-                while ($row = $bikeInventory->fetch_assoc()) {
-                    // Print Safety Inspection based on 0 or 1 values
-                    $safetyStatus = safety_check($row["safety_inspect"]);
+                        
+                // Populating table when data is is found to be present in the database table
+                if($bikeInventory->num_rows != 0) 
+                {
+                    // Printing data of all table columns by fetching from database
+                    while ($row = $bikeInventory->fetch_assoc()) {
+                        // Print Safety Inspection based on 0 or 1 values
+                        $safetyStatus = safety_check($row["safety_inspect"]);
 
-                    // Fetching bike type data from the bike_type_table
-                    $biketype = $row["bike_type_id"];
-                    if ($biketype == "")
-                    {
-                        $bookingStatus = "BikeTypeNull";
-                        $availabilityStatusColour = "#EF6E6E";
-                        $safetyStatusColour = "#EF6E6E";
-                        $primaryKey = $row["bike_id"];
-                        $_SESSION["primaryKey"] = $primaryKey;
+                        // Fetching bike type data from the bike_type_table
+                        $biketype = $row["bike_type_id"];
+                        if ($biketype == "")
+                        {
+                            $bookingStatus = "BikeTypeNull";
+                            $availabilityStatusColour = "#EF6E6E";
+                            $safetyStatusColour = "#EF6E6E";
+                            $primaryKey = $row["bike_id"];
+                            $_SESSION["primaryKey"] = $primaryKey;
+                        }
+                        else
+                        {
+                            $bikeTypeInventory = $conn->query("SELECT name FROM bike_type_table WHERE bike_type_id=$biketype")->fetch_assoc();
+
+                            // Booking availbility check for bikes using custom utility functions
+                            $bookingStatus = bike_availability_check($row["bike_id"]);
+
+                            //Set the availability status colour based on the availability status
+                            $availabilityStatusColour = "#000000";
+                            $availabilityStatusColour = availabilityStatusColour($bookingStatus);
+
+                            //Set the availability status colour based on the availability status
+                            $safetyStatusColour = "#000000";
+                            $safetyStatusColour = safetyStatusColour($safetyStatus);
+
+                            // Setting the primary key value based on table's primary key
+                            $primaryKey = $row["bike_id"];
+                            $_SESSION["primaryKey"] = $primaryKey;
+                        }
+
+
+                    ?>
+                        <tr>
+                            <td><?php echo $row["bike_id"]; ?></td>
+                            <td><?php echo $row["name"]; ?></td>
+                            <td><?php
+                                if (isset($bikeTypeInventory))
+                                {
+                                    echo $bikeTypeInventory["name"];
+                                }
+                                else
+                                {
+                                    echo "[Deleted Item]";
+                                }
+                            ?></td>
+                            <td><?php echo $row["price_ph"]; ?></td>
+                            <?php echo "<td style=\"background-color:$availabilityStatusColour\"> <span style=\"font-weight:bold\">$bookingStatus</span></td>";?>
+                            <?php echo "<td style=\"background-color:$safetyStatusColour\"> <span style=\"font-weight:bold\">$safetyStatus</span></td>";?>
+                            <td><?php echo $row["description"]; ?></td>
+                        <!--  <td>
+                                <a href="inventory-process.php?delete=<//?php echo $row["bike_id"]; ?>">Delete</a>
+                            </td> -->
+                            <td class="editcolumn">
+                                <!--Buttons added to the table to update and delete records-->
+                                <?php
+                                echo "
+                                <div class='dropdown'>
+                                <button class='dropbtn' disabled>...</button>
+                                    <div class='dropdown-content'>
+                                    <!-- Yes or No selection as dropdown for safety check -->
+                                    <form action='php-scripts/inventory-updatescript.php' method='POST' event.preventDefault() > <button type='submit' id= '$primaryKey' class='dropdown-element' name='updateItem'
+                                        value='$primaryKey'> Update </button> </form>
+                                    <form action='php-scripts/inventory-deletescript.php' method='POST' event.preventDefault()> <button type='submit' id='$primaryKey' name='deleteItem' class='dropdown-element'
+                                        value = '$primaryKey'> Delete </button> </form>
+                                    </div>
+                                </div>";
+                                ?>
+                            </td>
+                        </tr>
+
+                    <?php
                     }
-                    else
-                    {
-                        $bikeTypeInventory = $conn->query("SELECT name FROM bike_type_table WHERE bike_type_id=$biketype")->fetch_assoc();
-
-                        // Booking availbility check for bikes using custom utility functions
-                        $bookingStatus = bike_availability_check($row["bike_id"]);
-
-                        //Set the availability status colour based on the availability status
-                        $availabilityStatusColour = "#000000";
-                        $availabilityStatusColour = availabilityStatusColour($bookingStatus);
-
-                        //Set the availability status colour based on the availability status
-                        $safetyStatusColour = "#000000";
-                        $safetyStatusColour = safetyStatusColour($safetyStatus);
-
-                        // Setting the primary key value based on table's primary key
-                        $primaryKey = $row["bike_id"];
-                        $_SESSION["primaryKey"] = $primaryKey;
-                    }
-
-
-                ?>
-                    <tr>
-                        <td><?php echo $row["bike_id"]; ?></td>
-                        <td><?php echo $row["name"]; ?></td>
-                        <td><?php
-                            if (isset($bikeTypeInventory))
-                            {
-                                echo $bikeTypeInventory["name"];
-                            }
-                            else
-                            {
-                                echo "[Deleted Item]";
-                            }
-                        ?></td>
-                        <td><?php echo $row["price_ph"]; ?></td>
-                        <?php echo "<td style=\"background-color:$availabilityStatusColour\"> <span style=\"font-weight:bold\">$bookingStatus</span></td>";?>
-                        <?php echo "<td style=\"background-color:$safetyStatusColour\"> <span style=\"font-weight:bold\">$safetyStatus</span></td>";?>
-                        <td><?php echo $row["description"]; ?></td>
-                       <!--  <td>
-                            <a href="inventory-process.php?delete=<//?php echo $row["bike_id"]; ?>">Delete</a>
-                        </td> -->
-                        <td class="editcolumn">
-                            <!--Buttons added to the table to update and delete records-->
-                            <?php
-                            echo "
-                            <div class='dropdown'>
-                            <button class='dropbtn' disabled>...</button>
-                                <div class='dropdown-content'>
-                                <!-- Yes or No selection as dropdown for safety check -->
-                                <form action='php-scripts/inventory-updatescript.php' method='POST' event.preventDefault() > <button type='submit' id= '$primaryKey' class='dropdown-element' name='updateItem'
-                                    value='$primaryKey'> Update </button> </form>
-                                <form action='php-scripts/inventory-deletescript.php' method='POST' event.preventDefault()> <button type='submit' id='$primaryKey' name='deleteItem' class='dropdown-element'
-                                    value = '$primaryKey'> Delete </button> </form>
-                                 </div>
-                            </div>";
-                            ?>
-                        </td>
-                    </tr>
-
-                <?php
+                }
+                // Populating table with NULL when no data is present in database table
+                else
+                {
+                    ?>
+                    <td><?php echo "NULL"; ?></td>
+                    <td><?php echo "NULL"; ?></td>
+                    <td><?php echo "NULL"; ?></td>
+                    <td><?php echo "NULL"; ?></td>
+                    <td><?php echo "NULL"; ?></td>
+                    <td><?php echo "NULL"; ?></td>
+                    <td><?php echo "NULL"; ?></td>
+                    <td><?php echo "NULL"; ?></td>
+                <?php    
                 }
                 ?>
             </table>
@@ -208,16 +225,13 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
     <!-- Modal to add inventory records -->
     <div id="AddInventoryModal" class="modal-overlay"<?php
             // Ensures modal stays open when "insert" is set to print errors
-            if(isset($_GET["insert"]))
-            {
-                if ($_GET["insert"] != "true")
-                {
-                    echo "style = 'display:inline-block'";
+            if (isset($_GET["insert"])) {
+                if ($_GET["insert"] == "false") {
+                    echo "style = 'display:none;'";
                 }
-                else if($_GET["insert"] == "true")
-                {
-                    echo "style = 'display:none'";
-                }
+                else if ($_GET["insert"] != "true") {
+                    echo "style = 'display:inline-block;'";
+                } 
             }
         ?>>
         <!-- Content within popup -->
@@ -242,7 +256,6 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     <!-- <label>Bike ID</label> -->
                     <input placeholder="ID of the Bike..." type="hidden" name="bikeId">
                 </div>
-                <br>
                 <div>
                     <label>Name</label><br>
                     <?php
@@ -261,22 +274,21 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     ?>
                     <span class="error">
                         <?php
-                            if (isset($_GET["insert"]))
+                            if (isset($_GET["name"]))
                             {
-                                $name = $_GET["insert"];
-                                if ($name == "emptyName")
+                                $name = $_GET["name"];
+                                if ($name == "empty")
                                 {
                                     echo '<p class = "error">* Please fill the name field!</p>';
                                 }
-                                else if ($name == "invalidName")
+                                else if ($name == "invalid")
                                 {
-                                    echo '<p class = "error">* Name has to only contain alphabets! </p>';
+                                    echo '<p class = "error">* Name can only contain alphabets, integers, - and _</p>';
                                 }
                             }
                         ?>
                     </span>
                 </div>
-                <br>
                 <div>
                     <!-- Bike type options displayed as a dropdown by fetching from bike type table in db-->
                     <label>Bike Type ID</label><br>
@@ -325,10 +337,10 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     ?>
                     <span class="error">
                         <?php
-                            if (isset($_GET["insert"]))
+                            if (isset($_GET["type"]))
                             {
-                                $bikeTypeId = $_GET["insert"];
-                                if ($bikeTypeId == "emptyType")
+                                $bikeTypeId = $_GET["type"];
+                                if ($bikeTypeId == "empty")
                                 {
                                     echo '<p class = "error">* Please select a bike type!</p>';
                                 }
@@ -336,7 +348,6 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                         ?>
                     </span>
                 </div>
-                <br>
                 <div>
                     <!-- Helmet options displayed as a dropdown by fetching from accessory type table in db-->
                     <label>Helmet ID</label><br>
@@ -384,10 +395,10 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     ?>
                     <span class="error">
                         <?php
-                            if (isset($_GET["insert"]))
+                            if (isset($_GET["helmet"]))
                             {
-                                $helmetId = $_GET["insert"];
-                                if ($helmetId == "emptyHelmet")
+                                $helmetId = $_GET["helmet"];
+                                if ($helmetId == "empty")
                                 {
                                     echo '<p class = "error">* Please select a helmet!</p>';
                                 }
@@ -395,7 +406,6 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                         ?>
                     </span>
                 </div>
-                <br>
                 <div>
                     <label>Price p/h</label><br>
                     <?php
@@ -414,14 +424,14 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     ?>
                     <span class="error">
                     <?php
-                            if (isset($_GET["insert"]))
+                            if (isset($_GET["price"]))
                             {
-                                $price = $_GET["insert"];
-                                if ($price == "emptyPrice")
+                                $price = $_GET["price"];
+                                if ($price == "empty")
                                 {
                                     echo '<p class = "error">* Please fill the price field!</p>';
                                 }
-                                else if ($price == "invalidPrice")
+                                else if ($price == "invalid")
                                 {
                                     echo '<p class = "error">* Price can only contain integers or decimals! </p>';
                                 }
@@ -430,6 +440,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     <span>
                 </div>
                 <br>
+                <!-- Old styled check box for safety status-->
                 <!-- <div>
                     <label>Safety Inspect</label>
                     <select placeholder="Safety status..." name="safetyInspect" type="submit">
@@ -444,7 +455,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     if(isset($_SESSION["tempSafetyInspect"]))
                     {
                     ?>
-                       <label class="switch"  style='left: 10px; bottom:10px;' >
+                       <label class="switch"  id="inventory-safety-switch" >
                         <input type="hidden" name="safetyInspect" value="0">
                         <input type="checkbox" name="safetyInspect" value="1" <?php echo ($_SESSION['tempSafetyInspect']==1 ? 'checked' : '');?>>
                         <span class="slider round"></span>
@@ -454,7 +465,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     else
                     {
                     ?>
-                        <label class="switch"  style='left: 10px; bottom:10px;' >
+                        <label class="switch"  id="inventory-safety-switch" >
                         <input type="hidden" name="safetyInspect" value="0">
                         <input type="checkbox" name="safetyInspect" value="1" checked>
                         <span class="slider round"></span>
@@ -480,13 +491,13 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     <?php
                     }
                     ?>
-                </div><br>
+                </div>
                 <span class="error">
                         <?php
-                            if (isset($_GET["insert"]))
+                            if (isset($_GET["desc"]))
                             {
-                                $description = $_GET["insert"];
-                                if ($description == "emptyDescription")
+                                $description = $_GET["desc"];
+                                if ($description == "empty")
                                 {
                                     echo '<p class = "error">* Please fill the description field!</p>';
                                 }
@@ -502,16 +513,18 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
     </div>
 
     <!-- Modal to update inventory records -->
-    <div id="UpdateInventoryModal" class="modal-overlay" <?php
+    <div id="UpdateInventoryModal" class="modal-overlay" 
+    <?php
 
-                                                    if (isset($_GET["update"])) {
-                                                        if ($_GET["update"] != "true") {
-                                                            echo "style = 'display:inline-block;'";
-                                                        } else if ($_GET["update"] == "true") {
-                                                            echo "style = 'display:none;'";
-                                                        }
-                                                    }
-                                                    ?>>
+        if (isset($_GET["update"])) {
+            if ($_GET["update"] == "false") {
+                echo "style = 'display:none;'";
+            }
+            else if ($_GET["update"] != "true") {
+                echo "style = 'display:inline-block;'";
+            } 
+        } 
+    ?>>
         <!-- Content within popup -->
         <div class="modal-content">
             <span class="close-btn">&times;</span>
@@ -530,32 +543,31 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     </span>
                 </div>
                 <h2>Update Bike</h2>
+                <br>
                 <div>
                     <label>Bike ID</label><br>
                     <input placeholder="ID of the Bike..." type="text" name="bikeId" readonly value="<?php echo $_SESSION['bike_id'] ?>">
                 </div>
-                <br>
                 <div>
                     <label>Name</label><br>
                     <input placeholder="Bike's name..." type="text" name="name" value="<?php echo $_SESSION['name'] ?>">
                     <span class="error">
                         <?php
-                            if (isset($_GET["update"]))
+                            if (isset($_GET["name"]))
                             {
-                                $name = $_GET["update"];
-                                if ($name == "emptyName")
+                                $name = $_GET["name"];
+                                if ($name == "empty")
                                 {
                                     echo '<p class = "error">* Please fill the name field!</p>';
                                 }
-                                else if ($name == "invalidName")
+                                else if ($name == "invalid")
                                 {
-                                    echo '<p class = "error">* Name has to only contain alphabets! </p>';
+                                    echo '<p class = "error">* Name can only contain alphabets, integers, - and _</p>';
                                 }
                             }
                         ?>
                     </span>
                 </div>
-                <br>
                 <div>
                     <!-- Bike type options displayed as a dropdown by fetching from bike type table in db-->
                     <label>Bike Type ID</label><br>
@@ -578,10 +590,10 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     </select>
                     <span class="error">
                         <?php
-                            if (isset($_GET["update"]))
+                            if (isset($_GET["type"]))
                             {
-                                $bikeTypeId = $_GET["update"];
-                                if ($bikeTypeId == "emptyType")
+                                $bikeTypeId = $_GET["type"];
+                                if ($bikeTypeId == "empty")
                                 {
                                     echo '<p class = "error">* Please select a bike type!</p>';
                                 }
@@ -589,7 +601,6 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                         ?>
                     </span>
                 </div>
-                <br>
                 <div>
                     <!-- Helmet options displayed as a dropdown by fetching from accessory type table in db-->
                     <label>Helmet ID</label><br>
@@ -607,10 +618,10 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     </select>
                     <span class="error">
                         <?php
-                            if (isset($_GET["update"]))
+                            if (isset($_GET["helmet"]))
                             {
-                                $helmetId = $_GET["update"];
-                                if ($helmetId == "emptyHelmet")
+                                $helmetId = $_GET["helmet"];
+                                if ($helmetId == "empty")
                                 {
                                     echo '<p class = "error">* Please select a helmet!</p>';
                                 }
@@ -618,20 +629,19 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                         ?>
                     </span>
                 </div>
-                <br>
                 <div>
                     <label>Price p/h</label><br>
                     <input placeholder="Price per hour..." type="text" name="price" value="<?php echo $_SESSION['price_ph'] ?>">
                     <span class="error">
                     <?php
-                            if (isset($_GET["update"]))
+                            if (isset($_GET["price"]))
                             {
-                                $price = $_GET["update"];
-                                if ($price == "emptyPrice")
+                                $price = $_GET["price"];
+                                if ($price == "empty")
                                 {
                                     echo '<p class = "error">* Please fill the price field!</p>';
                                 }
-                                else if ($price == "invalidPrice")
+                                else if ($price == "invalid")
                                 {
                                     echo '<p class = "error">* Price can only contain integers or decimals! </p>';
                                 }
@@ -650,9 +660,9 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                 </div>-->
 
                 <!-- Yes or No selection as dropdown for safety check -->
-                <div>
+                <div style="margin-top: 10px;">
                     <label>Safety Status</label>
-                    <label class="switch"  style='left: 10px; bottom:5px;' >
+                    <label class="switch" id="inventory-safety-switch">
                     <input type="hidden" name="safetyInspect" value="0">
                     <input type="checkbox" name="safetyInspect" value="1" <?php echo ($_SESSION['safety_inspect']==1 ? 'checked' : '');?>>
                     <span class="slider round"></span>
@@ -664,10 +674,10 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     <textarea placeholder="Description about the bike..." name="description"><?php echo $_SESSION['description'] ?></textarea>
                 <span class="error">
                         <?php
-                            if (isset($_GET["update"]))
+                            if (isset($_GET["desc"]))
                             {
-                                $description = $_GET["update"];
-                                if ($description == "emptyDescription")
+                                $description = $_GET["desc"];
+                                if ($description == "empty")
                                 {
                                     echo '<p class = "error">* Please fill the description field!</p>';
                                 }
@@ -675,7 +685,6 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                         ?>
                 </span>
                 </div><br>
-
                 <div>
                     <button type="submit" name="submitUpdateItem">Update</button>
                 </div>
@@ -684,16 +693,17 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
     </div>
 
     <!-- Modal to delete inventory records -->
-    <div id="DeleteInventoryModal" class="modal-overlay" <?php
-
-                                                    if (isset($_GET["delete"])) {
-                                                        if ($_GET["delete"] != "true") {
-                                                            echo "style = 'display:inline-block;'";
-                                                        } else if ($_GET["delete"] == "true") {
-                                                            echo "style = 'display:none;'";
-                                                        }
-                                                    }
-                                                    ?>>
+    <div id="DeleteInventoryModal" class="modal-overlay" 
+    <?php
+    if (isset($_GET["delete"])) {
+        if ($_GET["delete"] == "false") {
+            echo "style = 'display:none;'";
+        }
+        else if ($_GET["delete"] != "true") {
+            echo "style = 'display:inline-block;'";
+        } 
+    }
+    ?>>
         <div class="modal-content">
             <span class="close-btn">&times;</span>
             <h2> Do you wish to delete the item? </h2>

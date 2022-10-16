@@ -1,5 +1,6 @@
 <?php
 /* Code completed by Aadesh Jagannathan - 102072344*/
+/* Script responsible for adding records in bike types table*/
     session_start();
     include 'backend-connection.php';
     include("inventory-util.php");
@@ -10,12 +11,17 @@
     $_SESSION["tempPictureId"] = $_POST["pictureId"];
     $_SESSION["tempDescription"] = $_POST["description"];
 
-
+    //Manually assigning ID for the new record - Only used whilst testing
     $bikeId = $_POST["bikeId"];
+    //Setting picture Id when adding record
     $pictureId = $_POST["pictureId"];
-    //$name = $_POST["name"];
-    //$description = $_POST["description"];
 
+    //temporary variables to print error msg based on form validation
+    $validName = "";
+    $validDesc = "";
+    $emptyPicId = "";
+    $emptyForm = "";
+    
     //Search concept adapted from Alex
     if (isset($_POST['search-btn'])){
         $search = $_POST["search"];
@@ -34,28 +40,38 @@
         //Check if all fields are empty
         if(empty($_POST["name"]) && empty($_POST["description"]) && empty($_POST["pictureId"]))
         {
-            header("Location: ../BikeTypes.php?insert=empty");
+            $emptyForm = "empty";
         }
+
         //Check if only the name field is empty
-        else if (empty($_POST["name"])) 
+        if (empty($_POST["name"])) 
         {
-           header("Location: ../BikeTypes.php?insert=emptyName");
+            $validName = "empty";
         }
-        //Check if only the picture id field is empty
-        else if (empty($_POST["pictureId"])) 
-        {
-           header("Location: ../BikeTypes.php?insert=emptyPictureId");
-        }
-        //Check if only the description field is empty
-        else if (empty($_POST["description"])) 
-        {
-           header("Location: ../BikeTypes.php?insert=emptyDescription");
-        }
-        //Check if the name field has only alphabets
+        //Check if the name field has alphabets, integers, _ or -
         else if (!validName($_POST["name"])) 
         {
-            header("Location: ../BikeTypes.php?insert=invalidName");
+            $validName = "invalid";
         } 
+
+        //Check if only the picture id field is empty
+        if (empty($_POST["pictureId"])) 
+        {
+            $emptyPicId = "empty";
+        }
+
+        //Check if only the description field is empty
+        if (empty($_POST["description"])) 
+        {
+           $validDesc = "empty";
+        }
+        
+        //Check to determine if any validation flags have been set
+        if((!empty($validName)) || (!empty($validDesc)) || (!empty($emptyPicId)) || (!empty($emptyForm)))
+        {
+            header("Location: ../BikeTypes.php?insert=$emptyForm&name=$validName&picId=$emptyPicId&desc=$validDesc");           
+        }
+        //Setting variables if validation has passed
         else 
         {
             //Cleaning the inputs before assigning to variables 

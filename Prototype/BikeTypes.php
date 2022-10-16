@@ -32,41 +32,42 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 </head>
 
 <body>
-    <?php
-    //checks to see if inserting was successful and provides input
-    if (isset($_GET["insert"])) {
-        if ($_GET["insert"] == "true") {
-            echo "<p class = 'echo-success' id='tempEcho'>  Record successfully created! </p>";
-        } else if ($_GET["insert"] == "false") {
-            echo "<p class = 'echo-fail'>  Record was not created successfully! </p>";
-        }
-    }
-
-    //checks to see if updating was successful and provides input
-    if (isset($_GET["update"])) {
-        if ($_GET["update"] == "true") {
-            echo "<p class = 'echo-success' id='tempEcho'>  Record successfully updated! </p>";
-        } else if ($_GET["update"] == "false") {
-            echo "<p class = 'echo-fail' id='tempEcho'> Record was not updated successfuly </p>";
-        }
-    }
-
-    //checks to see if deleting was successful and provides input
-    if (isset($_GET["delete"])) {
-        if ($_GET["delete"] == "true") {
-            echo "<p class = 'echo-success' id='tempEcho'>  Record successfully deleted! </p>";
-        } else if ($_GET["delete"] == "false") {
-            echo "<p class = 'echo-fail' id='tempEcho'> Record was not deleted successfully! </p>";
-        }
-    }
-    ?>
-
     <div class="grid-container">
     	<div class="menu">
     		<?php printMenu("biketype"); ?>
     	</div>
     	<div class="main">
+        <?php
+            //Prints message based on success of record insertion
+            if (isset($_GET["insert"])) {
+                if ($_GET["insert"] == "true") {
+                    echo "<p class = 'echo-success' id='tempEcho'>  Record successfully created! </p>";
+                } else if ($_GET["insert"] == "false") {
+                    echo "<p class = 'echo-fail'>  Record was not created successfully! </p>";
+                }
+            }
+
+            //Prints message based on success of record updation
+            if (isset($_GET["update"])) {
+                if ($_GET["update"] == "true") {
+                    echo "<p class = 'echo-success' id='tempEcho'>  Record successfully updated! </p>";
+                } else if ($_GET["update"] == "false") {
+                    echo "<p class = 'echo-fail' id='tempEcho'> Record was not updated successfuly </p>";
+                }
+            }
+
+            //Prints message based on success of record deletion
+            if (isset($_GET["delete"])) {
+                if ($_GET["delete"] == "true") {
+                    echo "<p class = 'echo-success' id='tempEcho'>  Record successfully deleted! </p>";
+                } else if ($_GET["delete"] == "false") {
+                    echo "<p class = 'echo-fail' id='tempEcho'> Record was not deleted successfully! </p>";
+                }
+            }
+        ?>
+            <!-- Page Title -->
             <h1 id="content-header"> All Bike Types </h1>
+            <!-- Page Search Bar  - Concept adopted from Alex--> 
             <div class="midbar">
                     <form id="midbar-form" action='php-scripts/biketype-addscript.php' method='POST'>
                         <input type="text" name="search" placeholder="Search (Bike Type Name)"></input>
@@ -99,36 +100,50 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                             <th> Description </th>
                             <th> Edit </th>
                         </tr>";
+                // Populating table when data is found to be present in the database table
+                if($bikeType->num_rows != 0) 
+                {
+                    while ($row = $bikeType->fetch_assoc()) {
 
-                while ($row = $bikeType->fetch_assoc()) {
+                        // Setting the primary key value based on table's primary key
+                        $primaryKey = $row["bike_type_id"];
+                        $_SESSION["primaryKey"] = $primaryKey;
 
-                    // Setting the primary key value based on table's primary key
-                    $primaryKey = $row["bike_type_id"];
-                    $_SESSION["primaryKey"] = $primaryKey;
+                    ?>
+                        <tr>
+                            <td><?php echo $row["bike_type_id"]; ?></td>
+                            <td><?php echo $row["name"]; ?></td>
+                            <td><?php echo $row["picture_id"]; ?></td>
+                            <td><?php echo $row["description"]; ?></td>
+                            <td class="editcolumn">
+                                <?php
+                                echo "
+                                <div class='dropdown'>
+                                <button class='dropbtn' disabled>...</button>
+                                    <div class='dropdown-content'>
+                                    <form action='php-scripts/biketype-modifyscript.php' method='POST' event.preventDefault() > <button type='submit' id= '$primaryKey' class='dropdown-element' name='updateItem'
+                                        value='$primaryKey'> Update </button> </form>
+                                    <form action='php-scripts/biketype-modifyscript.php' method='POST' event.preventDefault()> <button type='submit' id='$primaryKey' name='deleteItem' class='dropdown-element'
+                                        value = '$primaryKey'> Delete </button> </form>
+                                    </div>
+                                </div>";
 
-                ?>
-                    <tr>
-                        <td><?php echo $row["bike_type_id"]; ?></td>
-                        <td><?php echo $row["name"]; ?></td>
-                        <td><?php echo $row["picture_id"]; ?></td>
-                        <td><?php echo $row["description"]; ?></td>
-                        <td class="editcolumn">
-                            <?php
-                            echo "
-                            <div class='dropdown'>
-                            <button class='dropbtn' disabled>...</button>
-                                <div class='dropdown-content'>
-                                <form action='php-scripts/biketype-modifyscript.php' method='POST' event.preventDefault() > <button type='submit' id= '$primaryKey' class='dropdown-element' name='updateItem'
-                                    value='$primaryKey'> Update </button> </form>
-                                <form action='php-scripts/biketype-modifyscript.php' method='POST' event.preventDefault()> <button type='submit' id='$primaryKey' name='deleteItem' class='dropdown-element'
-                                    value = '$primaryKey'> Delete </button> </form>
-                                </div>
-                            </div>";
-
-                            ?>
-                        </td>
-                    </tr>
-                <?php
+                                ?>
+                            </td>
+                        </tr>
+                    <?php
+                    }
+                }
+                // Populating table with NULL when no data is present in database table
+                else
+                {
+                    ?>
+                    <td><?php echo "NULL"; ?></td>
+                    <td><?php echo "NULL"; ?></td>
+                    <td><?php echo "NULL"; ?></td>
+                    <td><?php echo "NULL"; ?></td>
+                    <td><?php echo "NULL"; ?></td>
+                <?php  
                 }
                 ?>
             </table>
@@ -190,18 +205,18 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     ?>
                     <span class="error">
                         <?php
-                            if (isset($_GET["insert"]))
+                            if (isset($_GET["name"]))
                             {
                                 //Checks and prints an error if the name field empty
-                                $name = $_GET["insert"];
-                                if ($name == "emptyName")
+                                $name = $_GET["name"];
+                                if ($name == "empty")
                                 {
                                     echo '<p class = "error">* Please fill the name field!</p>';
                                 }
                                 //Checks and prints an error if the name entered is invalid
-                                else if ($name == "invalidName")
+                                else if ($name == "invalid")
                                 {
-                                    echo '<p class = "error">* Name has to only contain alphabets! </p>';
+                                    echo '<p class = "error">* Name can only contain alphabets, integers, - and _ </p>';
                                 }
                             }
                         ?>
@@ -250,9 +265,9 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                         <?php
                             if (isset($_GET["insert"]))
                             {
-                                //Checks and prints an error if the description field empty
-                                $description = $_GET["insert"];
-                                if ($description == "emptyPictureId")
+                                //Checks and prints an error if the picture id has not been selected
+                                $pictureId = $_GET["picId"];
+                                if ($pictureId == "empty")
                                 {
                                     echo '<p class = "error">* Please select a picture ID!</p>';
                                 }
@@ -279,11 +294,11 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     ?>
                     <span class="error">
                         <?php
-                            if (isset($_GET["insert"]))
+                            if (isset($_GET["desc"]))
                             {
                                 //Checks and prints an error if the description field empty
-                                $pictureId = $_GET["insert"];
-                                if ($pictureId == "emptyDescription")
+                                $pictureId = $_GET["desc"];
+                                if ($pictureId == "empty")
                                 {
                                     echo '<p class = "error">* Please fill the description field!</p>';
                                 }
@@ -338,18 +353,18 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     <input placeholder="Name of Bike Type..." type="text" name="name" value="<?php echo $_SESSION['name'] ?>">
                     <span class="error">
                         <?php
-                            if (isset($_GET["update"]))
+                            if (isset($_GET["name"]))
                             {
-                                $name = $_GET["update"];
+                                $name = $_GET["name"];
                                 //Checks and prints an error if the name field empty
-                                if ($name == "emptyName")
+                                if ($name == "empty")
                                 {
                                     echo '<p class = "error">* Please fill the name field!</p>';
                                 }
                                 //Checks and prints an error if the name entered is invalid
-                                else if ($name == "invalidName")
+                                else if ($name == "invalid")
                                 {
-                                    echo '<p class = "error">* Name has to only contain alphabets! </p>';
+                                    echo '<p class = "error">* Name can only contain alphabets, integers, - and _</p>';
                                 }
                             }
                         ?>
@@ -367,11 +382,11 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     </select> 
                     <span class="error">
                         <?php
-                            if (isset($_GET["insert"]))
+                            if (isset($_GET["picId"]))
                             {
                                 //Checks and prints an error if the picture id is not selected
-                                $pictureId = $_GET["insert"];
-                                if ($pictureId == "emptyPictureId")
+                                $pictureId = $_GET["picId"];
+                                if ($pictureId == "empty")
                                 {
                                     echo '<p class = "error">* Please select a picture ID!</p>';
                                 }
@@ -386,11 +401,11 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
                     <textarea placeholder="Description about the bike type..." name="description"><?php echo $_SESSION['description'] ?></textarea>
                     <span class="error">
                         <?php
-                            if (isset($_GET["update"]))
+                            if (isset($_GET["desc"]))
                             {
-                                $description = $_GET["update"];
+                                $description = $_GET["desc"];
                                 //Checks and prints an error if the description field empty
-                                if ($description == "emptyDescription")
+                                if ($description == "empty")
                                 {
                                     echo '<p class = "error">* Please fill the description field!</p>';
                                 }
@@ -442,6 +457,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 
 
 </body>
+<!--Script responsible for the popup functionality is linked-->
 <script src="scripts/biketypes-popup.js"></script>
 
 </html>

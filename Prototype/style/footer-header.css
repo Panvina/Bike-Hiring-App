@@ -33,17 +33,22 @@ header{
 #subNav{
     display: none;
     position: absolute;
-    top: 65px;
-    width: 7.8vw;
-    right: 23.3vw;
+    top: 67px;
+    min-width: 145px;
+    height: 135px;
+    right: 23.6vw;
     padding: 0;
-    background: white;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
 }
-
 /*sub-menu styling*/
 #menu li li{
-    font-size: 16px;
-    float: none;
+    color: black;
+    padding-left: 20px;
+    text-decoration: none;
+    font-size:.9vw;
+    display: block;
+
 }
 /* shows sub-sublist on hover */
 #menu li:hover #subNav{
@@ -51,37 +56,60 @@ header{
     margin-left:60.5em; /* this should be the same width as the parent list item */
     
 }
-
-#menu a {
-    text-decoration: none;
-    color:inherit;
-}
-
-
-#menu a:hover, .nav-active, nav-active:focus{
-    color: #00b7b1!important;
-}
-
 /******************************************/
-/*style the hover effect on the navigation texts only - not the button*/
-.nav-text:hover:after, .nav-active:after{
-    content: "";
-    background: none repeat scroll 0 0 #00b7b1;
-    bottom: -10px;
+/*style the hover effect and animations on the navigation texts only - not the button*/
+/*Ref: https://css-tricks.com/css-link-hover-effects/ */
+#menu .nav-text {
+    background-image: linear-gradient(
+        to right,
+        #00b7b1,
+        #00b7b1 50%,
+        #172026 50%
+      );
+      background-size: 200% 100%;
+      background-position: -100%;
+      display: inline-block;
+      padding: 5px 0;
+      position: relative;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      transition: all 0.3s ease-in-out;
+    text-decoration:none;
+}
+
+#menu .nav-text::before {
+    content: '';
+    background: #00b7b1;
     display: block;
-    height: 1px;
-    position: relative;
-    width: 30px;
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 0;
+    height: 3px;
+    transition: all 0.3s ease-in-out;
+}
+#menu .nav-text:hover {
+    background-position: 0;
+   }
 
+#menu .nav-text:hover::before {
+    width:100%;
+  }
+
+ .nav-active, nav-active:focus{
+    background-image:none!important;
+    -webkit-text-fill-color: #00b7b1 !important;
 }
 
 /******************************************/
+
   /* The sticky class is added to the navbar with JS when it reaches its scroll position */
 .sticky {
     position: fixed;
     top: 0;
     width: 100%;
     background-color: #eaf7f6;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.068);
     transition: background-color 0.5s ease;
   }
 
@@ -97,6 +125,7 @@ header{
     border-radius: 5px;
     border-width: 0px;
     cursor:pointer;
+    transition: box-shadow .5s ease-in-out, background-color .6s ease-in-out;
 }
 .button{
     padding: 10px 20px 10px 20px;
@@ -111,6 +140,7 @@ header{
     background-color: #00b7b1;
     color: white;
     border-width: 0px;
+    box-shadow: inset 10vw 0 0 0 #00b7b1;
 }
 
 /******************************************/

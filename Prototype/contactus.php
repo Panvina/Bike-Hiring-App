@@ -9,10 +9,12 @@ Contributor:
 	- Aadesh Jagannathan @ 102072344@student.swin.edu.au
 -->
 <?php
+//added a session to store an active state of which page has been clicked by the user - Vina Touch 
 if (!isset($_SESSION)) {
   session_start();
 }
 $_SESSION['active'] = "contact";
+/**************************************/
 ?>
 <!doctype html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
@@ -51,8 +53,8 @@ $_SESSION['active'] = "contact";
     <!-- From ths onwards, this is done by Clement -->
     <!-- This is for people to see the page and can jump to FAQ quickly if needed -->
     <div id="headercomment" class="contactmargin">
-      <h2>For questions, bookings or just to chat about eBikes, contact us today.<br />
-        Or Check Our<a href="#faq">FAQ'S</a>.</h2>
+      <p>For questions, bookings or just to chat about eBikes, contact us today<br />
+        or check Our <a href="#faq">FAQ'S</a>.</p>
     </div>
     <!-- This is the contact information of the company from here onwards - Clement -->
     <div id="contactUsInfo" class="contactmargin">
@@ -75,8 +77,8 @@ $_SESSION['active'] = "contact";
                   <td><img src="img/icons/phone.png" alt="" width="56" height="59" class="imgpadding" /></td>
                   <td>
                     <p>INVERLOCH BIKE HIRE&nbsp;<br>
-                      <a href="mailto:invenlochbikes@gmail.com">invenlochbikes@gmail.com</a><br>
-                      Mob:0455 896 240
+                      <a id="mail" href="mailto:invenlochbikes@gmail.com">invenlochbikes@gmail.com</a><br>
+                      0411 234 321
                     </p>
                   </td>
                 </tr>
@@ -108,7 +110,7 @@ $_SESSION['active'] = "contact";
               <br>
               <textarea name="msg" rows="10" id="msg" class="fourmsize" maxlength="500000"></textarea>
             </p>
-            <button id="submit" class="submitbutton"><span>Send</span></button>
+            <button id="submit" class="submitbutton"> Send </button>
           </form>
         </div>
       </div>
@@ -269,8 +271,6 @@ $_SESSION['active'] = "contact";
             <p>If you have a FAQ for us or we can do anything else to help – please let us know.</p>
             <p>From all of us here at Inverloch Bike Hire, enjoy your time on our beautiful coast … and have a great ride!</p>
           </div>
-
-
         </div>
       </div>
     </div>
