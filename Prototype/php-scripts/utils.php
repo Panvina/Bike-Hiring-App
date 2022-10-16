@@ -10,23 +10,10 @@ Contributor(s):
 
 <?php
 	/**
-	 * Takes in an array of items, and returns indices of items that are empty
+	 * print combo box options for time from start time to end hour.
+ 	 * startHour is less than endHour.
+ 	 * Dabin Lee
 	 */
-	function returnEmptyVariables($arr)
-	{
-		$ret = array();
-
-		for($i = 0; $i < count($arr); $i++)
-		{
-			if (empty($arr[$i]))
-			{
-				array_push($ret, $i);
-			}
-		}
-
-		return $ret;
-	}
-
 	function printTimeComboBoxOptions($selectedTime=-1, $startHour=9, $endHour=17)
 	{
 		if ($selectedTime != -1)
@@ -93,31 +80,9 @@ Contributor(s):
 		}
 	}
 
-	/**
-     * Convert combobox option to item id
-     * Removes describing strings
-     *
-	 * Used in Alex's modals
-     */
-    function comboboxArrayToItemIdArray($arrays)
-    {
-		if (empty($arrays))
-		{
-			$arrays = array();
-		}
-		else
-	    {
-			for($i = 0; $i < count($arrays); $i++)
-	        {
-	            $arrays[$i] = explode(",", $arrays[$i])[0];
-	        }
-		}
-
-		return $arrays;
-    }
-
 	// Validate email
 	// Return true if valid email
+	// From https://www.w3schools.com/Php/filter_validate_email.asp
 	function validEmail($email)
     {
         return filter_var($email, FILTER_VALIDATE_EMAIL);
@@ -229,24 +194,9 @@ Contributor(s):
 	}
 
 	/**
-	 * Performs empty() OR operations for each variable in $arr
-	 * Returns true if anything in the array is empty.
-	 */
-	function emptyArr($arr)
-	{
-		$ret = false;
-
-		for($i = 0; $i < count($arr); $i++)
-		{
-			$ret |= (empty($arr[$i]) || $arr[$i] == "");
-		}
-
-		return $ret;
-	}
-
-	/**
 	 * Combine data with columns into single array of pairs
 	 * e.g. [0, 1, 2, 3], [col1, col2, col3, col4] => ['col1=0, col2=1, col3=2, col4=3']
+	 * Dabin Lee
 	 */
 	function joinDataAndCols($data, $cols)
 	{
@@ -280,7 +230,7 @@ Contributor(s):
 	}
 
 	/**
-	 * Dabin
+	 * Dabin Lee
 	 * Adapted from https://stackoverflow.com/questions/12030810/php-date-validation
 	 * Validate that $date is a date in the $format provided
 	 */
@@ -293,7 +243,7 @@ Contributor(s):
 	}
 
 	/**
-	 * Dabin
+	 * Dabin Lee
 	 * Adapted from https://stackoverflow.com/questions/470617/how-do-i-get-the-current-date-and-time-in-php
 	 * Retrieve current date from server. If locale is specified, uses the datetime for given locale instead.
 	 */
@@ -307,6 +257,10 @@ Contributor(s):
 		return $datetime;
 	}
 
+	/**
+	 * Convert integer from 0 to 6 to date of week text
+	 * Dabin Lee
+	 */
 	function intToDayOfWeek($day)
 	{
 		$ret = "";
@@ -433,6 +387,7 @@ Contributor(s):
 
 	/*
 	 * Returns a query to get conflicting bookings
+	 * Dabin Lee
 	 */
 	function getConflictingBookingsQuery($startDate, $startTime, $endDate, $endTime)
 	{
