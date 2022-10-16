@@ -6,6 +6,89 @@ File Description: interface for interacting with bookings table and related oper
 Contributor(s): Dabin Lee @ icelasersparr@gmail.com
 -->
 <?php
+	include_once "../bookings-db.php";
+
+	// setup
+	$conn = new BookingsDBConnection();
+	$sql = new mysqli("localhost", "root", "", "bike_hiring_system");
+
+	try {
+		/**
+		 * Required booking data (in order):
+		 *	- user_name			  : Customer ID
+		 *	- start_date		  : Booking start date
+		 *	- start_time		  : Booking start time
+		 *	- end_date			  : Booking end date
+		 *	- end_time			  : Booking end time
+		 *	- booking_duration	  : Duration of booking (in hours)
+		 *	- pick_up_location	  : Location of pick-up for booking
+		 *	- drop_off_location	  : Location of drop-off for booking
+		 *	- booking_fee		  : Price of booking (function of duration and bikes/accessories)
+		 *
+		 * Required bike data (in order):
+		 *	- bike_id[array]	  : Array of bike ids for booking
+		 *
+		 * Optional data (accessories - in order):
+		 *	- accessory_id[array] :	Array of accessory ids for booking (may be empty)
+		 *
+		 * Performs an SQL transaction
+		 *
+		 */
+		public function addBooking($bookingData, $bikeData, $accessoryData=array())
+
+		// test : addBooking
+		{
+			// add customer
+			$query = "INSERT INTO customer_table (user_name,name,phone_number,email,street_address,suburb,post_code,licence_number,state) VALUES ('testcustomer','testname',0,'testemail','testaddress','testsuburb',0,'teststate')";
+			$sql->query($query);
+
+			// add location
+			$query = "INSERT INTO location_table (location_id, name, address, suburb, post_code, drop_off_location, pick_up_location) VALUES (9999, '1', '1', '1', '1', '1', '1')";
+			$sql->query($query);
+
+			// add bike
+			$query = "INSERT INTO bike_inv (location_id, name, address, suburb, post_code, drop_off_location, pick_up_location) VALUES (9999, '1', '1', '1', '1', '1', '1')";
+			$sql->query($query);
+
+			$bookingData = array("testcustomer", "2022-10-16", "09:00", "2022-10-16", "10:00", 1, 9999, 9999, 1126491);
+			$conn->addBooking($bookingData, $bikeData);
+
+
+		}
+
+		// test : getBookingRows
+		{
+
+		}
+
+		// test : retrieveBookingForChangeBooking
+		{
+
+		}
+
+		// test : modifyBooking
+		{
+
+		}
+
+		// test : deleteBooking
+		{
+
+		}
+	}
+	catch (Exception $e) {
+		$msg = $e->getMessage();
+		echo "<br>$msg";
+	}
+	finally {
+
+	}
+
+	function cleanup() {
+		echo "<br>Cleanup completed.";
+		exit();
+	}
+
 	include_once "backend-connection.php";
 	include_once "utils.php";
 
@@ -164,7 +247,6 @@ Contributor(s): Dabin Lee @ icelasersparr@gmail.com
 		}
 
 		/**
-		 * TODO: Switch from standard arrays to associative arrays
 		 * Required booking data (in order):
 		 *	- user_name			  : Customer ID
 		 *	- start_date		  : Booking start date
