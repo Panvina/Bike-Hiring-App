@@ -158,6 +158,9 @@ Contributor(s):
                 $startTime = $row["start_time"];
                 $endTime = $row["expected_end_time"];
 
+                $startDate = $row["start_date"];
+                $endDate = $row["end_date"];
+
                 $custName = $row['name'];
                 // if (!in_array($custName, $tmpCustNames))
                 // {
@@ -177,7 +180,9 @@ Contributor(s):
                     "startMin" => $startMinutes,
                     "endHour" => $endHour,
                     "endMin" => $endMinutes,
-                    "custId" => $custCount
+                    "custId" => $custCount,
+                    "startDate" => $startDate,
+                    "endDate" => $endDate
                 ));
             }
 
@@ -234,6 +239,11 @@ Contributor(s):
                     $endHour = $time["endHour"];
                     $endMin = $time["endMin"];
                     $custId = $time["custId"];
+
+                    if ($time["endDate"] != $time["startDate"]) {
+                        $endHour = "17";
+                        $endMin = "00";
+                    }
 
                     echo "timetable.addEvent('$startHour:$startMin - $endHour:$endMin', '$custId', new Date($year, $month, $day, $startHour, $startMin), new Date($year, $month, $day, $endHour, $endMin));";
                 }

@@ -31,6 +31,10 @@ Contributor(s):
 
 			// add day string
 			$dayLastDigit = $day % 10;
+			if ("$day"[0] == '0') {
+				$day = "$day[1]";
+			}
+			
 			switch($dayLastDigit)
 			{
 				case 1:
@@ -46,6 +50,8 @@ Contributor(s):
 					$ret .= "{$day}th ";
 					break;
 			}
+
+
 
 			// add month and year
 			$ret .= "$month $year";
