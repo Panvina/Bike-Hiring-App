@@ -53,7 +53,7 @@ Contributor(s): Dabin Lee @ icelasersparr@gmail.com
 
 
 		 // get conflicting bikes, then remove them. Return non-conflicting bikes.
- 		public function getAvailableBikes($startDate, $startTime, $endDate, $endTime, $bookingId)
+ 		public function getAvailableBikes($startDate, $startTime, $endDate, $endTime, $bookingId=null)
  		{
  			$overlappedBikes = array();
 

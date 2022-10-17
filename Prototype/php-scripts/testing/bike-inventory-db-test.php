@@ -1,165 +1,125 @@
 <?php
-	include_once "backend-connection.php";
-	include_once "utils.php";
+	include_once "../bike-inventory-db.php";
+	include_once "../backend-connection.php";
+	include_once "../bookings-db.php";
 
-	class BikeInventoryDBConnection extends DBConnection
-	{
-		public function __construct($tablename="bike_inventory_table", $servername="localhost", $username="root", $password="", $dbname="bike_hiring_system")
+	// setup
+	$conn = new BikeInventoryDBConnection();
+	$sql = new mysqli("localhost", "root", "", "bike_hiring_system");
+
+	$checkRows = $sql->query("SELECT bike_id FROM bike_inventory_table WHERE safety_inspect=1");
+	$checkedBikesOriginal = $checkRows->num_rows;
+
+	$uncheckRows = $sql->query("SELECT bike_id FROM bike_inventory_table WHERE safety_inspect=0");
+	$uncheckedBikesOriginal = $uncheckRows->num_rows;
+
+	// testing
+	try {
+		// test : getNumCheckedBikes
 		{
-			$this->servername = $servername;
-			$this->username = $username;
-			$this->password = $password;
-			$this->dbname = $dbname;
-			$this->tablename = $tablename;
+			$expectedResult = $checkedBikesOriginal;
+			$actualResult = $conn->getNumCheckedBikes();
 
-			$this->getConn();
+			if ($expectedResult == $actualResult) {
+				echo "getNumCheckedBikes success.<br>";
+			}
+			else {
+				echo "getNumCheckedBikes failed. Expected $expectedResult. Got $actualResult.<br>";
+			}
 		}
 
-		public function getNumCheckedBikes()
+		// test : getNumUncheckedBikes
 		{
-			$bikeCount = 0;
+			$expectedResult = $uncheckedBikesOriginal;
+			$actualResult = $conn->getNumUncheckedBikes();
 
-			$query = "SELECT bike_id FROM $this->tablename WHERE safety_inspect=1";
-			// echo $query;
-			$res = $this->conn->query($query);
-			if ($res->num_rows > 0)
-			{
-				$bikeCount = $res->num_rows;
+			if ($expectedResult == $actualResult) {
+				echo "getNumUncheckedBikes success.<br>";
 			}
-
-			return $bikeCount;
+			else {
+				echo "getNumUncheckedBikes failed. Expected $expectedResult. Got $actualResult.<br>";
+			}
 		}
 
-		public function getNumUncheckedBikes()
+		// test : getAvailableBikes
 		{
-			$bikeCount = 0;
+			$date = date("Y-m-d");
+			$start = "09:00";
+			$end = "16:00";
 
-			$query = "SELECT bike_id FROM $this->tablename WHERE safety_inspect=0";
-			$res = $this->conn->query($query);
-			if ($res->num_rows > 0)
-			{
-				$bikeCount = $res->num_rows;
+			// add customer
+			$query = "INSERT INTO customer_table (user_name,name,phone_number,email,street_address,suburb,post_code,licence_number,state) VALUES ('testcustomer','testname',0,'testemail','testaddress','testsuburb','testpostcode',0,'teststate')";
+			$sql->query($query);
+
+			// add location
+			$query = "INSERT INTO location_table (location_id, name, address, suburb, post_code, drop_off_location, pick_up_location) VALUES (9999, '1', '1', '1', '1', '1', '1')";
+			$sql->query($query);
+
+			// add accessory
+			$accessoryConn = new DBConnection("accessory_inventory_table");
+			$accessoryTypeConn = new DBConnection("accessory_type_table");
+
+			$accessoryTypeConn->insert("accessory_type_id,name,description", "99999,'accessorytypetest','accessorytypedesc'");
+			$accessoryConn->insert("accessory_id,name,accessory_type_id,price_ph,safety_inspect", "99999,'accessorytest',99999,10000000000,1");
+
+			// add bike
+			$bikeConn = new DBConnection("bike_inventory_table");
+			$bikeTypeConn = new DBConnection("bike_type_table");
+
+			$bikeTypeConn->insert("bike_type_id,name,picture_id,description", "99999, 'biketypetest', 1, 'biketypedesctest'");
+			$bikeConn->insert("bike_id,bike_type_id,name,helmet_id,price_ph,safety_inspect,description", "99999,99999,'biketest',99999,3579480,1,'bikedesc'");
+
+			$bikeData = array("99999");
+			$bookingData = array("testcustomer", $date, $start, $date, $end, 0, 9999, 9999, 1126491);
+
+			// get current available bikes
+			$bikes = $conn->getAvailableBikes($date, $start, $date, $end);
+
+			// add booking
+			$bookingDbConnection = new BookingsDBConnection();
+			$bookingDbConnection->addBooking($bookingData, $bikeData);
+
+			$newBikes = $conn->getAvailableBikes($date, $start, $date, $end);
+
+			$countOldBikes = count($bikes);
+			$countNewBikes = count($newBikes);
+			if ($countOldBikes - $countNewBikes == 1) {
+				echo "addAvailableBikes success.<br>";
 			}
-
-			return $bikeCount;
+			else {
+				echo "addAvailableBikes failed. Expected $countNewBikes bikes. Got $countOldBikes.<br>";
+			}
 		}
+	}
+	catch (Exception $e) {
+		echo "Exception caught: $e->getMessage()";
+	}
+	finally {
+		cleanup();
+	}
 
+	function cleanup() {
+		$sql = new mysqli("localhost", "root", "", "bike_hiring_system");
 
-		 // get conflicting bikes, then remove them. Return non-conflicting bikes.
- 		public function getAvailableBikes($startDate, $startTime, $endDate, $endTime, $bookingId)
- 		{
- 			$overlappedBikes = array();
+        // delete bike
+        $sql->query("DELETE FROM bike_inventory_table WHERE bike_id=99999");
+		$sql->query("DELETE FROM bike_type_table WHERE bike_type_id=99999");
 
- 			$filterQuery = getConflictingBookingsQuery($startDate, $startTime, $endDate, $endTime);
-			// echo "$filterQuery<br>";
-			// exit();
+        // delete accessory
+		$sql->query("DELETE FROM accessory_inventory_table WHERE accessory_id=99999");
+		$sql->query("DELETE FROM accessory_type_table WHERE accessory_type_id=99999");
 
- 			$bookingsTableName = "booking_table";
- 			$bookingBikeTableName = "booking_bike_table";	// Table linking bikes to bookings
- 			$bikeInvTableName = $this->tablename;		// Table with all individual concrete bikes
- 			$damagedTableName = "damaged_items_table";
+		// delete customer
+		$sql->query("DELETE FROM customer_table WHERE user_name='testcustomer'");
 
- 			$query =   "SELECT $bikeInvTableName.bike_id
- 						FROM $bookingsTableName
- 							LEFT JOIN $bookingBikeTableName
- 								ON $bookingBikeTableName.booking_id = $bookingsTableName.booking_id
- 							LEFT JOIN $bikeInvTableName
- 						    	ON $bikeInvTableName.bike_id = $bookingBikeTableName.bike_id
- 						WHERE $filterQuery";
+		// delete location
+		$sql->query("DELETE FROM location_table WHERE location_id=9999");
 
- 			// echo "$query<br><br>";
+		// delete empty booking_bike_table references
+		$sql->query("DELETE FROM booking_bike_table WHERE bike_id is null");
 
- 			// get bike_ids for unavailable bikes
- 			$res = $this->conn->query($query);
- 			if ($res->num_rows > 0)
- 			{
- 				// append all rows to return array
- 				while($row = $res->fetch_assoc())
- 				{
- 					array_push($overlappedBikes, $row);
- 				}
- 			}
-			// print_r($overlappedBikes);
-
- 			// remove duplicates
- 			$unavailableBikes = array();
- 			for($i = 0; $i < count($overlappedBikes); $i++)
- 			{
- 				$bikeId = $overlappedBikes[$i]["bike_id"];
- 				if (!in_array($bikeId, $unavailableBikes))
- 				{
- 					array_push($unavailableBikes, $bikeId);
- 				}
- 			}
-
- 			// get damaged items
- 			$damagedBikes = array();
- 			$query = "SELECT bike_id FROM $damagedTableName WHERE bike_id IS NOT NULL";
-
- 			$res = $this->conn->query($query);
- 			if ($res->num_rows > 0)
- 			{
- 				// append all rows to return array
- 				while($row = $res->fetch_assoc())
- 				{
- 					array_push($damagedBikes, $row);
- 				}
- 			}
-
- 			// add damaged bikes to cleaned bikes
- 			for($i = 0; $i < count($damagedBikes); $i++)
- 			{
- 				$bikeId = $damagedBikes[$i]["bike_id"];
- 				if (!in_array($bikeId, $unavailableBikes))
- 				{
- 					array_push($unavailableBikes, $bikeId);
- 				}
- 			}
-
- 			// construct query (could put this above, but leaving separate for clarity)
- 			$bikeQuery = "LOCATE(bike_id, '";
- 			for($i = 0; $i < count($unavailableBikes); $i++)
- 			{
- 				$bikeId = $unavailableBikes[$i];
- 				$bikeQuery .= "$bikeId,";
- 			}
- 			$bikeQuery .= "') = 0";
-
-			// add bike ids of current booking to allow for reselection
-			if ($bookingId != null)
-			{
-				$bikeQuery .= " OR LOCATE(bike_id, '";
-				$query = "SELECT $bikeInvTableName.bike_id FROM $bookingBikeTableName
-						  LEFT JOIN $bikeInvTableName
-						      ON $bookingBikeTableName.bike_id = $bikeInvTableName.bike_id
-						  WHERE $bookingBikeTableName.booking_id = $bookingId";
-				$res = $this->conn->query($query);
-				if ($res->num_rows > 0)
-				{
-					while($row = $res->fetch_assoc())
-					{
-						$bikeQuery .= "{$row['bike_id']},";
-					}
-				}
-				$bikeQuery .= "') > 0";
-			}
-
- 			// get bikes that are available by searching for all bikes not already booked for period, or damaged
- 			$query = "SELECT bike_id, name FROM $bikeInvTableName WHERE $bikeQuery";
- 			// echo $query;
-
-			$availableBikes = array();
- 			$res = $this->conn->query($query);
- 			if ($res->num_rows > 0)
- 			{
- 				// append all rows to return array
- 				while($row = $res->fetch_assoc())
- 				{
- 					array_push($availableBikes, $row);
- 				}
- 			}
-
- 			return $availableBikes;
- 		}
+		$sql->query("DELETE FROM booking_table WHERE user_name is null");
+        echo "<br>Finished cleanup.";
+		exit();
 	}
 ?>
