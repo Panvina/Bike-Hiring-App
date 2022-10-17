@@ -11,7 +11,7 @@ $expected_result = array("");
 $test_case = array("");
 $result = array("");
 
-//Calling to all test functions
+//Calling all test functions
 test_safety_check(); //Testing safety status function
 test_availabilty_colour(); //Testing availability status colour returned
 test_safety_colour(); //Testing safety status colour returned
