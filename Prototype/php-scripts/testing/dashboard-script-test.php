@@ -8,53 +8,44 @@ Contributor(s):
 -->
 
 <?php
-	include_once "backend-connection.php";
-	include_once "utils.php";
+	include_once "../dashboard-script.php";
 
-	function getFormattedDate($date)
+	// test : getFormattedDate
 	{
-		$ret = "";
+		$testinput1 = "01-01-2021";
+		$testinput2 = "02-02-2022";
+		$testinput3 = "03-03-2023";
+		$testinput4 = "04-04-2024";
 
-		// validate date
-		if (validDate($date, "d-m-Y"))
-		{
-			// echo $date;
-
-			// get day, month, and year
-			$datetime = new DateTime($date);
-			$dayWeek = intToDayOfWeek(date("w", strtotime($date)));
-			$day = date("d", strtotime($date));
-			$month = date("F", strtotime($date));
-			$year = date("Y", strtotime($date));
-
-			// $ret = "$dayWeek ";
-
-			// add day string
-			$dayLastDigit = $day % 10;
-			switch($dayLastDigit)
-			{
-				case 1:
-					$ret .= "{$day}st ";
-					break;
-				case 2:
-					$ret .= "{$day}nd ";
-					break;
-				case 3:
-					$ret .= "{$day}rd ";
-					break;
-				default:
-					$ret .= "{$day}th ";
-					break;
-			}
-
-			// add month and year
-			$ret .= "$month $year";
-		}
-		else
-		{
-			$ret = "error";
+		$expectedResult1 = "01st January 2021";
+		$actualResult1 = getFormattedDate($testinput1);
+		if ($expectedResult1 != $actualResult1) {
+			echo "getFormattedDate 1 failed. Expected $expectedResult1. Got $actualResult1.<br>";
+			exit();
 		}
 
-		return $ret;
+		$expectedResult2 = "02nd February 2022";
+		$actualResult2 = getFormattedDate($testinput2);
+		if ($expectedResult2 != $actualResult2) {
+			echo "getFormattedDate 2 failed. Expected $expectedResult2. Got $actualResult2.<br>";
+			exit();
+		}
+
+		$expectedResult3 = "03rd March 2023";
+		$actualResult3 = getFormattedDate($testinput3);
+		if ($expectedResult3 != $actualResult3) {
+			echo "getFormattedDate 3 failed. Expected $expectedResult3. Got $actualResult3.<br>";
+			exit();
+		}
+
+		$expectedResult4 = "04th April 2024";
+		$actualResult4 = getFormattedDate($testinput4);
+		if ($expectedResult4 != $actualResult4) {
+			echo "getFormattedDate 4 failed. Expected $expectedResult4. Got $actualResult4.<br>";
+			exit();
+		}
+
+		echo "getFormattedDate success.";
+
 	}
 ?>
