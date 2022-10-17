@@ -217,7 +217,7 @@ Contributor(s): Dabin Lee @ icelasersparr@gmail.com
         if (empty($bikes))
         {
             addErrorToMode($mode, "bikeError");
-            echo "empty - $bikes";
+            // echo "empty - $bikes";
             // exit();
         }
     }
@@ -247,7 +247,7 @@ Contributor(s): Dabin Lee @ icelasersparr@gmail.com
             $errorSet = in_array($errorCode, $errorCodes);
         }
 
-        echo ($errorSet);
+        // echo ($errorSet);
 
         return $errorSet;
     }
@@ -607,6 +607,8 @@ Contributor(s): Dabin Lee @ icelasersparr@gmail.com
         }
     }
 
+    // required as other files that use booking-popups.php file will exit if it always exits.
+    // could refactor this, but time constraints exist.
     if ($doExit)
     {
         exit();

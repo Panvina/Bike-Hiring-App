@@ -121,7 +121,7 @@
                         <?php
                             // Declare columns and create array
                             $conn = new BookingsDBConnection();
-                            $cols = $conn->getBookingDisplayColumns();
+                            $cols = "Booking ID,Bike Name,Customer Name,Start Date,Start Time,End Date,End Time,Duration<br>(Hours),Pick Up,Drop Off,Price($)";
                             $cols = explode(',', $cols);
 
                             // Get number of columns
