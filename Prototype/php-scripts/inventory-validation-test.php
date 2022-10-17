@@ -1,4 +1,8 @@
 <?php
+/* Code completed by Aadesh Jagannathan - 102072344*/
+/* This file carries out the unit testing for form validation functions associated with Inventory bikes/accessories */
+
+// Linking utility functions associated with inventory
 include("inventory-util.php");
 
 //Initialising results and test case variables
@@ -12,7 +16,7 @@ test_name_validation(); //Testing name validation
 test_price_validation(); //Testing price validation
 test_input_validation(); //Testing sanitise input
 
-//Function comparing actual and expected results
+//Custom function comparing actual and expected results
 function assert_match($expected, $actual)
 {
     if($expected == $actual)
@@ -29,12 +33,13 @@ function assert_match($expected, $actual)
 function test_name_validation()
 {
     //Incorrect value test
-    $expected_result[0] = 0;
-    $test_case[0] = "./231a";
+    $expected_result[0] = 0; //expected result
+    $test_case[0] = "./231a"; //test case input
 
     $actual_result[0] = validName($test_case[0]);
-    $result[0] = assert_match($expected_result[0],$actual_result[0]);
+    $result[0] = assert_match($expected_result[0],$actual_result[0]); //comparing using the custom assert_match function
 
+    //printing results
     echo "Test 1 - Name Validation || Actual: $actual_result[0] || Expected: $expected_result[0] || Result:  $result[0]";
 
     //Correct value test
@@ -77,7 +82,7 @@ function test_input_validation()
 {
     //Incorrect value test
     $expected_result[4] = "twenty-four";
-    $test_case[4] = "twenty-four  "; // test case with additional spaces
+    $test_case[4] = "   twenty-f\our  "; // test case with additional spaces and backslashes that will have to be trimmed
 
     $actual_result[4] = test_input($test_case[4]);
 
