@@ -1,153 +1,102 @@
-<!--
-Project Name: Inverloch Bike Hire
-Project Description: A website for hiring bikes. Front-end accompanied
-	   by an admin dashboard.
-File Description: Utility functions for the project
-Contributor(s):
-	- Dabin Lee @ icelasersparr@gmail.com
-	- Jake Hipworth @ 102090870@student.swin.edu.au
--->
-
 <?php
-	// Check if any values within array are empty
-	// Returns true if any variables are empty
-	function checkEmptyVariables($arr)
-	{
-		$ret = true;
+	include_once "../utils.php";
 
-		for($i = 0; $i < count($arr) && $ret; $i++)
-		{
-			$ret &= !empty($arr[$i]);
+	// setup
+
+	// test : checkEmptyVariables
+	{
+		$case1 = array('1', '2', '3', '4', '5');
+
+		if (checkEmptyVariables($case1)) {
+			echo "checkEmptyVariables failed. case 1 has no empty variables, but returned true<br>";
 		}
 
-		return !$ret;
-	}
-
-	/**
-	 * Combine data with columns into single array of pairs
-	 * e.g. [0, 1, 2, 3], [col1, col2, col3, col4] => ['col1=0, col2=1, col3=2, col4=3']
-	 * Dabin Lee
-	 */
-	function joinDataAndCols($data, $cols)
-	{
-		$ret = array();
-		$lenData = count($data);
-
-		// incorrect length check
-		if ($lenData != count($cols))
-		{
-			$ret = null;
+		$case2 = $case1;
+		$case2[1] = null;
+		if (checkEmptyVariables($case2)) {
+			echo "checkEmptyVariables success.<br>";
 		}
-		else
-		{
-			// reformat each corresponding data value and column to: "col=data"
-			for($i = 0; $i < $lenData; $i++)
-			{
-				$col = $cols[$i];
-				$dat = $data[$i];
-
-				$str = "";
-				$str .= "$col";
-				$str .= "=";
-				$str .= "'$dat'";
-
-				// append to array
-				array_push($ret, $str);
-			}
+		else {
+			echo "checkEmptyVariables failed. case 1 has an empty variable, but returned false.<br>";
 		}
-
-		return $ret;
 	}
 
-	/**
-	 * Dabin Lee
-	 * Adapted from https://stackoverflow.com/questions/12030810/php-date-validation
-	 * Validate that $date is a date in the $format provided
-	 */
-	function validDate($date, $format)
+	// test joinDataAndCols
 	{
-		$tmpDate = DateTime::createFromFormat($format, $date);
-		$validDate = $tmpDate && $tmpDate->format($format) === $date;
+		$testcase = array(
+			"cols" => array("col1", "col2", "col3", "col4"),
+			"data" => array(1, 2, 3, 4)
+		);
 
-		return $validDate;
-	}
+		$actualResult = joinDataAndCols($testcase["data"], $testcase["cols"]);
+		$expectedResult = array("col1='1'", "col2='2'", "col3='3'", "col4='4'");
 
-	/**
-	 * Dabin Lee
-	 * Adapted from https://stackoverflow.com/questions/470617/how-do-i-get-the-current-date-and-time-in-php
-	 * Retrieve current date from server. If locale is specified, uses the datetime for given locale instead.
-	 */
-	function getCurrentDate($locale=null) {
-		if ($locale != null)
-		{
-			date_default_timezone_set($locale);
+		if ($actualResult == $expectedResult) {
+			echo "joinDataAndCols success.<br>";
 		}
-
-		$datetime = date('d-m-Y');
-		return $datetime;
+		else {
+			echo "joinDataAndCols fail. Expected: ";
+			print_r($expectedResult);
+			echo " Got: ";
+			print_r($actualResult);
+			echo "<br>";
+		}
 	}
 
-	/**
-	 * Convert integer from 0 to 6 to date of week text
-	 * Dabin Lee
-	 */
-	function intToDayOfWeek($day)
+	// test : validDate
 	{
-		$ret = "";
-		switch($day)
-		{
-			case 1:
-				$ret = "Monday";
-				break;
-			case 2:
-				$ret = "Tuesday";
-				break;
-			case 3:
-				$ret = "Wednesday";
-				break;
-			case 4:
-				$ret = "Thursday";
-				break;
-			case 5:
-				$ret = "Friday";
-				break;
-			case 6:
-				$ret = "Saturday";
-				break;
-			case 0:
-				$ret = "Sunday";
-				break;
-			default:
-				$ret = "ERROR $day ERROR: ";
-				break;
+		// only testing with this format, as it is the only one used.
+		$format = "d-M-Y";
+
+		$testcase1 = "15-02-2000";
+		$testcase2 = "30-02-2000";
+		$testcase3 = "2000-02-15";
+
+		if (validDate($testcase2, $format)) {
+			echo "validDate failed. $testcase2 is not in format 'd-m-Y'<br>";
+		}
+		else if (validDate($testcase3, $format)) {
+			echo "validDate failed. $testcase3 is not in format 'd-m-Y'<br>";
+		}
+		else if (validDate($testcase1, $format)) {
+			echo "validDate success.'<br>";
+		}
+	}
+
+	// test : getCurrentDate
+	{
+		$actualResult = getCurrentDate();
+		$expectedResult = date('d-m-Y');
+		if ($actualResult == $expectedResult) {
+			echo "getCurrentDate success.<br>";
+		}
+		else {
+			echo "getCurrentDate failed. <br>";
+		}
+	}
+
+	// test : intToDayOfWeek
+	{
+		$expectedResult = array("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
+		$actualResult = array();
+		for($i = 0; $i < count($expectedResult); $i++) {
+			 array_push($actualResult, intToDayOfWeek($i));
 		}
 
-		return $ret;
+		if ($expectedResult == $actualResult) {
+			echo "intToDayOfWeek success.<br>";
+		}
+		else {
+			echo "intToDayOfWeek failed. Expected: ";
+			print_r($expectedResult);
+			echo " Got: ";
+			print_r($actualResult);
+			echo "<br>";
+		}
 	}
 
-	/*
-	 * Returns a query to get conflicting bookings
-	 * Dabin Lee
-	 */
-	function getConflictingBookingsQuery($startDate, $startTime, $endDate, $endTime)
+	// test : getConflictingBookingsQuery
 	{
-		// DATE FILTER
-		// Non-overlapping dates are those with both the start date and end date either before or after. Reverse for overlapping dates
-		$dateFilterQuery = "NOT ((start_date < '$startDate' AND end_date < '$startDate') OR (start_date > '$endDate' AND end_date > '$endDate'))";
-
-		// TIME FILTER
-		// Quite complex. Time filter matters if this.start_date == other.end_date or this.end_date == other.start_date
-		// if this.start_date == other.end_date, this.start_time must be greater than other.end_time.
-		// Additionally, if this.end_date == other.start_date, this.end_time must be greater than other.start_time
-		// i.e. overlapping = ((this.end_date == other.start_date) AND (this.end_time < other.start_time)) OR ((this.start_date == other.end_date) AND (this.start_time > other.end_date ))
-		$timeCondition1 = "('$endDate' = start_date AND CAST( '$endTime' AS TIME) >= start_time)";
-		$timeCondition2 = "('$startDate' = end_date AND CAST('$startTime' AS TIME) <= expected_end_time)";
-		// $timeCondition3 = "('$startDate' = start_date AND '$endDate' = end_date AND '$startTime' = start_time AND '$endTime' = expected_end_time)";
-		$timeFilterQuery = "($timeCondition1 AND $timeCondition2)";
-		// $timeFilterQuery = "($timeCondition1 OR $timeCondition2 OR $timeCondition3)";
-
-		$filterQuery = "$timeFilterQuery OR $dateFilterQuery";
-
-		return $filterQuery;
+		// Untested. Not tested standalone. Just returns a WHERE condition for SQL queries.
 	}
 ?>

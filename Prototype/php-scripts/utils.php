@@ -195,7 +195,7 @@ Contributor(s):
 
 	/**
 	 * Combine data with columns into single array of pairs
-	 * e.g. [0, 1, 2, 3], [col1, col2, col3, col4] => ['col1=0, col2=1, col3=2, col4=3']
+	 * e.g. [0, 1, 2, 3], [col1, col2, col3, col4] => ['col1='0', col2='1', col3='2', col4='3'']
 	 * Dabin Lee
 	 */
 	function joinDataAndCols($data, $cols)

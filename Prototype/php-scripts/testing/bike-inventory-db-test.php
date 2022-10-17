@@ -1,10 +1,3 @@
-<!--
-Project Name: Inverloch Bike Hire
-Project Description: A website for hiring bikes. Front-end accompanied
-	   by an admin dashboard.
-File Description: interface for interacting with bike table and related operations..
-Contributor(s): Dabin Lee @ icelasersparr@gmail.com
--->
 <?php
 	include_once "backend-connection.php";
 	include_once "utils.php";
