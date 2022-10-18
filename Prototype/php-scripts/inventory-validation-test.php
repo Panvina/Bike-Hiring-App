@@ -38,7 +38,7 @@ function test_name_validation()
 
     $actual_result[0] = validName($test_case[0]);
     $result[0] = assert_match($expected_result[0],$actual_result[0]); //comparing using the custom assert_match function
-
+    
     //printing results
     echo "Test 1 - Name Validation || Actual: $actual_result[0] || Expected: $expected_result[0] || Result:  $result[0]";
 
@@ -89,6 +89,6 @@ function test_input_validation()
     $result[4] = assert_match($expected_result[4],$actual_result[4]);
 
 
-    echo "<br>"."Test 5 - Price Validation || Actual: $actual_result[4] || Expected: $expected_result[4] || Result:  $result[4]";
+    echo "<br>"."Test 5 - Sanitise Input || Actual: $actual_result[4] || Expected: $expected_result[4] || Result:  $result[4]";
 }
 ?>

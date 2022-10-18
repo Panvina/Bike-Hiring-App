@@ -340,7 +340,7 @@ function test_delete()
     //Comparing results to identify if they match
     $result[2] = assert_match($expected_result[2],$actual_result[2]);
 
-    echo "<br>"."Test 11 - Delete Bike Type || Actual: $actual_result[2] || Expected: $expected_result[2] || Result:  $result[2]";
+    echo "<br>"."Test 12 - Delete Bike Type || Actual: $actual_result[2] || Expected: $expected_result[2] || Result:  $result[2]";
 }
 
 function delete_test_data()
