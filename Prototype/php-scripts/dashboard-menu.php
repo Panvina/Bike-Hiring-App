@@ -33,9 +33,9 @@
         echo "<a class='{$classes['customer']}' href='Customer.php'> <img src= 'img/icons/account-group.png' alt='Customer Logo' />  Customer  </a> <br>";
         setOwnerDashboardPrivilege($classes['staff'], $classes['account']);
         echo " <div class='dropDownNav'>
-                    <a disabled> <img src= 'img/icons/bicycle.png' alt='Inventory Logo'/> Bikes</a>
+                    <a disabled id='bikeHeading'> <img src= 'img/icons/bicycle.png' alt='Inventory Logo'/> Bikes</a>
                     <div class='bikeDropdown-Navcontent'>
-                        <a class='{$classes['inventory']}' href= 'Inventory.php'> <img src= 'img/icons/bicycle.png' alt='Inventory Logo' />  Bike Inventory </a>
+                        <a class='{$classes['inventory']}' href= 'Inventory.php' onclick='makeActiveElement()'> <img src= 'img/icons/bicycle.png' alt='Inventory Logo' />  Bike Inventory </a>
                         <a class='{$classes['biketype']}' href='BikeTypes.php'> <img src='img/icons/biketypes.png' alt='Bike Types Logo' /> Bike Types </a>
                     </div>
                </div>";
@@ -57,3 +57,12 @@
         setLogoutButton();
     }
 ?>
+
+<script> 
+function makeActiveElement()
+{
+
+    var element = document.getElementById('bikeHeading').setAttribute("class", "style1");
+  
+ 
+} </script>
