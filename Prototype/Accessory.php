@@ -534,7 +534,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
         ?>>
             <div class="modal-content">
                 <span class="close-btn">&times;</span>
-                <h2> Do you wish to delete the item? </h2>
+                <h2> Do you wish to delete the accessory? </h2>
                 <form action="php-scripts/accessory-deletescript.php" method="post" event.preventDefault()>
                     <div>
                         <div style="text-align: center; background-color: none;">

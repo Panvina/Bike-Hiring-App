@@ -706,7 +706,7 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
     ?>>
         <div class="modal-content">
             <span class="close-btn">&times;</span>
-            <h2> Do you wish to delete the item? </h2>
+            <h2> Do you wish to delete the bike? </h2>
             <form action="php-scripts/inventory-deletescript.php" method="post" event.preventDefault()>
                 <div>
                     <div>
