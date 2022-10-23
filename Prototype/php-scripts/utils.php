@@ -92,7 +92,7 @@ Contributor(s):
 	// Return true if it is a valid name
     function validName($name)
     {
-        return preg_match("/^[a-zA-Z-' ]*$/",$name);
+        return preg_match("/^[a-zA-Z-']*$/",$name);
     }
 
 	// Check if any values within array are empty
@@ -155,19 +155,6 @@ Contributor(s):
 		driveway|trace|park|(terrace|tce)|blvd|(ally|alley)|(circuit|cct)|(crescent|cr)|(esplanade|esp)|(grove|gr)|(heights|hts)|(highway|hwy)|(parade|pde))$/';
 		$address = strtolower($address);
 		$match = preg_match($pattern ,$address);
-
-		// echo $pattern;
-		// echo "\n";
-		//echo $address;
-		//echo "\n";
-		// if ($match) {
-		// 	echo "true";
-		// }
-		// else
-		// {
-		// 	echo "false";
-		// }
-		// exit();
 
 		return $match;
 	}

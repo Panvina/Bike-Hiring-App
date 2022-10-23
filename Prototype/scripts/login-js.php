@@ -10,7 +10,7 @@ var login_create_account_button = document.getElementById("login-create-account-
 
 
 // Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close-btn");
+var span = document.getElementsByClassName("close-account-btn");
 
 // When the user clicks the button, open the modal
 login_popup_button.onclick = function()
