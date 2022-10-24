@@ -7,7 +7,7 @@ Contributor(s):
 	- Clement Cheung @ 103076376@student.swin.edu.au
 	- Vina Touch @ 101928802@student.swin.edu.au
 	- Jake Hipworth @ 102090870@student.swin.edu.au (Navigation section and Styles)
-	- Dabin Lee @ icelasersparr@gmail.com.
+	- Dabin Lee @ icelasersparr@gmail.com.(the base layout, timetable integration, booking statistics, bike availability status, and date selector)
     - Aadesh Jagannathan @102072344@student.swin.edu.au (Urgent replacements)
 -->
 <?php
@@ -193,6 +193,7 @@ Contributor(s):
     <script src="scripts/timetable.js"></script>
 
     <script>
+        // credit to https://github.com/friou/timetable.js
         var timetable = new Timetable();
 
         timetable.setScope(9, 17);
