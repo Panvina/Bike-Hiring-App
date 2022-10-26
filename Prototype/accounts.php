@@ -13,6 +13,8 @@
         exit;}
     //create the connection with the database
     $conn = new DBConnection("accounts_table");
+
+    $_SESSION["CurrentPage"] = "";
 ?>
 <html>
 <link rel="stylesheet" href="style/dashboard-style.css">

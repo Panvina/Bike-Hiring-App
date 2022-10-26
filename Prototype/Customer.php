@@ -12,6 +12,8 @@
 
     //create the connection with the database
     $conn = new CustomerDBConnection();
+
+    $_SESSION["CurrentPage"] = "";
 ?>
 <!DOCTYPE html>
 <html>

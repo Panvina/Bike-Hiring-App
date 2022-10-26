@@ -5,6 +5,7 @@
 body
 {
     background-color: #eaf7f6;
+    margin: auto;
 }
 
 /* Header text formatting */
@@ -59,7 +60,6 @@ body
 /* Menu content grid layout formatting */
 .menu
 {
-    margin-left: 10px;
     font-size: 0px;
     min-width: 200px;
 }
@@ -72,6 +72,7 @@ body
     font-size: calc(20px + 0.9vw);
     padding-bottom: 12px;
     display: block;
+    padding-left: 10px;
 }
 
 .menu a:hover
@@ -297,8 +298,6 @@ form
     z-index: 1;
     width: 100%;
     margin-left: 100%;
-    /* margin-bottom: 100%; */
-    /* margin-top: 1%; */
     bottom: 0%;
     top: 0%;
   }
@@ -350,8 +349,6 @@ form
     z-index: 1;
     width: 100%;
     margin-left: 100%;
-    /* margin-bottom: 100%; */
-    /* margin-top: 1%; */
     bottom: 0%;
     top: 0%;
 }

@@ -11,6 +11,8 @@ include("php-scripts/utils.php");
 // dashboard side menu import (Dabin)
 include_once("php-scripts/dashboard-menu.php");
 
+$_SESSION["CurrentPage"] = "bikeType";
+
 //Establishing database connection using mysqli()
 $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 ?>

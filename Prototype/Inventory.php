@@ -6,6 +6,8 @@
 // Enabling session
 session_start();
 
+$_SESSION["CurrentPage"] = "inventory";
+
 // Setting the timezone to local timezone to compare booking availabilities
 date_default_timezone_set('Australia/Melbourne');
 

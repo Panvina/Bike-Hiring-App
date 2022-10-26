@@ -13,6 +13,8 @@ include_once("php-scripts/dashboard-menu.php");
 
 //Establishing database connection using mysqli()
 $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
+
+$_SESSION["CurrentPage"] = "";
 ?>
 
 <!DOCTYPE html>

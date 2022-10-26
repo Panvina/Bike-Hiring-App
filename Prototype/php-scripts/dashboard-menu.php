@@ -1,7 +1,11 @@
 <?php
     //enabling the user privilege of certain tabs. Added by Vina Touch 101928802
     include_once "user-privilege.php";
+    if(!isset($_SESSION)){ 
+        session_start();     
+    }
 
+    //$_SESSION['CurrentPage'] = "";
     function getMenuActiveArray()
     {
         $classes = array(
@@ -32,17 +36,33 @@
         echo "<a class='{$classes['dashboard']}' href= 'Dashboard.php'> <img src= 'img/icons/bulletin-board.png' alt='Dashboard Logo' /> Dashboard </a> <br>";
         echo "<a class='{$classes['customer']}' href='Customer.php'> <img src= 'img/icons/account-group.png' alt='Customer Logo' />  Customer  </a> <br>";
         setOwnerDashboardPrivilege($classes['staff'], $classes['account']);
-        echo " <div class='dropDownNav'>
-                    <a disabled id='bikeHeading'> <img src= 'img/icons/bicycle.png' alt='Inventory Logo'/> Bikes</a>
+        echo " <div class='dropDownNav'> ";
+        if ($_SESSION['CurrentPage'] == 'inventory' || $_SESSION['CurrentPage'] == 'bikeType') 
+        {  
+           echo "<a href= 'Inventory.php' id='bikeHeading' class='active'> <img src= 'img/icons/bicycle.png' alt='Inventory Logo'/> Bikes</a>";
+        } 
+        else
+        {
+            echo "<a href= 'Inventory.php' id='bikeHeading'> <img src= 'img/icons/bicycle.png' alt='Inventory Logo'/> Bikes</a>";
+        }
+        echo "
                     <div class='bikeDropdown-Navcontent'>
-                        <a class='{$classes['inventory']}' href= 'Inventory.php' onclick='makeActiveElement()'> <img src= 'img/icons/bicycle.png' alt='Inventory Logo' />  Bike Inventory </a>
+                        <a class='{$classes['inventory']}' href= 'Inventory.php' onclick='makeActiveElement()'> <img src= 'img/icons/bicycle.png' alt='Inventory Logo'/>  Bike Inventory </a>
                         <a class='{$classes['biketype']}' href='BikeTypes.php'> <img src='img/icons/biketypes.png' alt='Bike Types Logo' /> Bike Types </a>
                     </div>
                </div>";
         // echo "<a class='{$classes['inventory']}' href= 'Inventory.php'> <img src= 'img/icons/bicycle.png' alt='Inventory Logo' />  Bike Inventory </a> <br>";
         // echo "<a class='{$classes['biketype']}' href='BikeTypes.php'> <img src='img/icons/biketypes.png' alt='Bike Types Logo' /> Bike Types </a> <br>";
-        echo " <div class='dropDownNav'>
-                    <a disabled> <img src='img/icons/accessories.png' alt='Inventory Logo'/> Accessories</a>
+        echo " <div class='dropDownNav'> ";
+                    if ($_SESSION['CurrentPage'] == 'accessory' || $_SESSION['CurrentPage'] == 'accessoryType') 
+                    {  
+                       echo "<a href='Accessory.php' class='active'> <img src='img/icons/accessories.png' alt='Inventory Logo'/> Accessories</a>";
+                    } 
+                    else
+                    {
+                        echo "<a href='Accessory.php'> <img src='img/icons/accessories.png' alt='Inventory Logo'/> Accessories</a>";
+                    }
+        echo "
                     <div class='dropdown-Navcontent'>
                         <a class='{$classes['accessory']}' href='Accessory.php'> <img src='img/icons/accessories.png' alt='Inventory Logo' />   Accessory Inventory </a>
                         <a class='{$classes['accessorytype']}' href='AccessoryTypes.php'> <img src='img/icons/accessorytypes.png' alt='Bike Types Logo' />  Accessory Types </a>
@@ -56,6 +76,13 @@
         echo "<a class='{$classes['editpage']}' href='editpages.php'> <img src= 'img/icons/bulletin-board.png' alt='Edit Pages Logo' /> Edit Page </a> <br>";
         setLogoutButton();
     }
+
+    if ($_SESSION["CurrentPage"] != "inventory" && $_SESSION["CurrentPage"] != "bikeType")
+    {
+        unset($_SESSION["CurrentPage"]);
+    }
+    
+    
 ?>
 
 <script> 

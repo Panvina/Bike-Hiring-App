@@ -30,6 +30,8 @@ Contributor(s):
 
     // get date from URL
     $date = $_GET["date"];
+    
+    $_SESSION["CurrentPage"] = "";
 ?>
 
 <!--DOCTYPE html -->

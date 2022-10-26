@@ -16,6 +16,8 @@
         exit;}
     //create the connection with the database
     $conn = new DBConnection("employee_table");
+
+    $_SESSION["CurrentPage"] = "";
 ?>
 
 <html>

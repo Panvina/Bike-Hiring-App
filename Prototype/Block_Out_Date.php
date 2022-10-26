@@ -12,6 +12,8 @@ include("php-scripts/utils.php");
 
 //Establishing database connection using mysqli()
 $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
+
+$_SESSION["CurrentPage"] = "";
 ?>
 
 <!DOCTYPE html>

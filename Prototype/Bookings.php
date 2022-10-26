@@ -14,6 +14,8 @@
         session_start();
     }
 
+    $_SESSION["CurrentPage"] = "";
+    
     $_SESSION['id'] = '123';
 
     $bookingMode = "none";  // direct booking-mode variable from GET
