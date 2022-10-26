@@ -14,6 +14,7 @@ include_once("php-scripts/dashboard-menu.php");
 //Establishing database connection using mysqli()
 $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 
+//Assigns the session variable used for side nav. Added by Jake Hipworth 102090870
 $_SESSION["CurrentPage"] = "";
 ?>
 

@@ -13,6 +13,7 @@
     //create the connection with the database
     $conn = new CustomerDBConnection();
 
+     //Assigns the session variable used for side nav. Added by Jake Hipworth 102090870
     $_SESSION["CurrentPage"] = "";
 ?>
 <!DOCTYPE html>

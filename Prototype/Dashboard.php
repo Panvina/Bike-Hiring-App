@@ -31,6 +31,7 @@ Contributor(s):
     // get date from URL
     $date = $_GET["date"];
     
+    //Assigns the session variable used for side nav. Added by Jake Hipworth 102090870
     $_SESSION["CurrentPage"] = "";
 ?>
 

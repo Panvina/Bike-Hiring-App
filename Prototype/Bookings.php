@@ -14,8 +14,9 @@
         session_start();
     }
 
+     //Assigns the session variable used for side nav. Added by Jake Hipworth 102090870
     $_SESSION["CurrentPage"] = "";
-    
+
     $_SESSION['id'] = '123';
 
     $bookingMode = "none";  // direct booking-mode variable from GET
