@@ -46,17 +46,27 @@ try {
     //Get Bike Availability Test
   	if ($bikeInventoryNum > 0)
   	{
-  		echo "Success: Bike Availability Recieved.<br>";
+  		echo "Success: Bike Type Recieved.<br>";
 		// Get Bike Price Test
-		if ($bikeTypeId == '25')
+		if ($bikePrice == '25')
 		{
 			echo "Success: Bike Price Recieved.<br>";
 		}
   	}else
   	{
-  		echo "Failure: Bike Availability Not Recieved.<br>";
+  		echo "Failure: Bike Type Not Recieved.<br>";
 		echo "Failure: Bike Price Not Recieved.<br>";
   	}
+  	$bikeAvailable = $conn->query("SELECT bike_id FROM booking_bike_table where bike_id = '999'");
+	$bikeAvailableNum = mysqli_num_rows($bikeAvailable);
+	if ($bikeAvailableNum == 0)
+	{
+		echo "Success: Bike Availability Recieved.<br>";
+	}
+	else
+	{
+		echo "Failure: Bike Availability Not Recieved.<br>";
+	}
     // Get Bike ID Test
 	if ($bikeTypeId == '999')
 	{
