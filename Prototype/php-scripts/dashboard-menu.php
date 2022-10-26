@@ -5,6 +5,11 @@
         session_start();     
     }
 
+    if (!isset($_SESSION['CurrentPage']))
+    {
+        $_SESSION['CurrentPage'] = "";
+    }
+
     //$_SESSION['CurrentPage'] = "";
     function getMenuActiveArray()
     {
