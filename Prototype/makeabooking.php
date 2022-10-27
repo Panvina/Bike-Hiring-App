@@ -1,4 +1,7 @@
 ﻿<?php
+
+// Make a Booking Page - Created by Eamon Kearney 102093549 //
+
 //added a session to store an active state of which page has been clicked by the user - Vina Touch
 if (!isset($_SESSION)){
         session_start();
@@ -24,21 +27,26 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
     <title>Make a Booking</title>
 </head>
 <style type="text/css">    
-/* The Modal (background) */
+
+/* Terms and Condtions Pop Up */
+
+/*https://www.w3schools.com/howto/howto_css_modals.asp */
+
 .modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  padding-top: 100px; /* Location of the box */
+  display: none; 
+  position: fixed;
+   overflow: auto;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0,0.5);
+  z-index: 1; 
+  padding-top: 100px; 
   left: 0;
   top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  width: 100%; 
+  height: 100%;
+ 
 }
-/* Modal Content */
+
 .modal-content {
   background-color: black;
   margin: auto;
@@ -47,7 +55,6 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
   width: 100%;
 }
 
-/* The Close Button */
 .close {
   color: black;
   float: right;
@@ -64,26 +71,25 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 }
 
 
+/*  Scrollbar CSS */
 
-/* width */
 ::-webkit-scrollbar {
   width: 10px;
 }
 
-/* Track */
 ::-webkit-scrollbar-track {
   background: #f1f1f1; 
 }
  
-/* Handle */
 ::-webkit-scrollbar-thumb {
   background: #888; 
 }
 
-/* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555; 
 }
+
+/* Header CSS */
 
 .mainheader {
     position: relative; 
@@ -131,26 +137,28 @@ $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
 
 /* Bike Columns */
 
-#dualContainer {
+#columnContainer {
     width: 100%;
     margin: 0 auto;
     background-color: white;
     height: 1000px;
 }
 
-#dualColumn1 {
+#Column1 {
     float: left;
     width: 45%;
 }
 
-#dualColumn2 {
+#Column2 {
     float: left;
     width: 30%;
 }
-#dualColumn3 {
+#Column3 {
     float: left;
     width: 20%;
 }
+
+/* Calender CSS */
 
 ul {list-style-type: none;}
 
@@ -256,50 +264,62 @@ ul {list-style-type: none;}
                     </ul>
             </div>
         </div>
-        
+        <!-- Available Bikes Column -->
         <div class="maincontainer">
-        <div id="dualContainer">
-            <div style="" id="dualColumn1">
+        <div id="columnContainer">
+            <div style="" id="Column1">
             	<h1>Available Bikes:</h1>
             	<div style="overflow-y: scroll;height: 1000px;">
               <?php
+              //Get all available bikes
             $bikeType = $conn->query("SELECT * FROM bike_type_table");
             while ($row = $bikeType->fetch_assoc()) {
+              //Assign values
                 $bikeName = $row["name"];
                 $bikeTypeId = $row["bike_type_id"];  
                 $bikeDescription = $row["description"];
                 $bikeImage = $row["picture_id"];
             ?>
+            <!-- Display Bike Information -->
             <h1><strong><?php echo $bikeName; ?></strong></h1>
                 <?php echo '<img src="img/bike-type/'; echo $bikeImage; echo'.jpg" style="width:300px;">'; ?>
                 <?php echo '<p style="font-size:24px;">Description: ' . $bikeDescription . '</p>'; ?>
                 <?php 
+                //Check if bike is available in inventory
                   $bikeInventoryAvailable = $conn->query("SELECT bike_type_id, bike_id, price_ph FROM bike_inventory_table where bike_type_id = $bikeTypeId");
                   $bikeInventoryNum = mysqli_num_rows($bikeInventoryAvailable);
+                  //If available
                   if ($bikeInventoryNum > 0){
                     while ($row = $bikeInventoryAvailable->fetch_assoc()) {
+                    //Assign values
                     $bikeInventoryBikeBikeId = $row["bike_id"];
                     $bikePrice = $row["price_ph"];
+                    //Check is bike is currently booked
                     $bookingBikeTableAvailability = $conn->query("SELECT * FROM booking_bike_table");
                       while ($row = $bookingBikeTableAvailability->fetch_assoc()) {
                         $bookingBikeTableBikeId = $row["bike_id"];
+                        //Check if bike is booked
                         if ($bookingBikeTableBikeId == $bikeInventoryBikeBikeId){
                           $bikeInventoryNum = $bikeInventoryNum - 1;
                         }
                       }
                     }
+                    // Display bike information
                     echo '<p style="font-size:24px;">Price Per Hour: $' . $bikePrice . '</p>';
                     echo '<p style="font-size:24px;">Available Bikes: ' . $bikeInventoryNum . '</p>';
+                    //If Bike is avaiable and not booked print information and quantity
                     if ($bikeInventoryNum > 0){
                     echo '<div id="addBikeContainer'. $bikeTypeId .'">';
                     echo '<a style="font-size:24px;font-family: Comfortaa;color:black;font-weight:bold;" href="javascript: addBike(' . '\'' . $bikeName . '\'' . ', ' . '\'' . $bikeTypeId . '\'' .  ', ' . '\'' . $bikeInventoryNum . '\'' .    ')">Select Bike</a>';
                     echo '</div>';
                     echo '<br>';
                     echo '<hr>';
+                    //Print if unavailable  
                     }else{
                     echo '<p style="font-size:24px;">Bike Unavailable</p>';
                     }
                   }else {
+                    //Print if no quantity
                     echo '<p style="font-size:24px;">Available Bikes: 0</p>';
                     echo '<p style="font-size:24px;">Bike Unavailable</p>';
                   }
@@ -313,9 +333,11 @@ ul {list-style-type: none;}
             <br>
         	</div>
             </div>
-            <div id="dualColumn2">
+            <!-- Booking Details Section -->
+            <div id="Column2">
             	 <h1>Booking Details:</h1>
             	 <div style="overflow-y: scroll;height: 1000px;padding-right: 50px;padding-left: 50px;">
+                <!-- Calender Selection -->
                 <p><strong>Select Date/s:</strong></p>
                 <div class="month">      
                   <ul>
@@ -326,7 +348,6 @@ ul {list-style-type: none;}
                     </li>
                   </ul>
                 </div>
-
                 <ul class="weekdays">
                   <li>M</li>
                   <li>T</li>
@@ -336,19 +357,20 @@ ul {list-style-type: none;}
                   <li>S</li>
                   <li>S</li>
                 </ul>
-                
                 <div id="dateContainer">
                 <ul class="days">
-
                   <a class="datetest" style="display: none;" href=""><li><span class="date active">0</span></li></a>
                   <?php 
+                  // Get all blockout dates
                   $blockOutDatesSQL = $conn->query("SELECT * FROM block_out_dates");
                   while ($row = $blockOutDatesSQL->fetch_assoc()) {
                       $date_value = $row["date_value"];
                       $date_day = $row["date_day"];
                       $date_blockout = $row["date_blockout"];
+                      // Sort blockout dates by block status
                       if ($date_blockout == 0){
                         echo '<a class="datetest" href="javascript:changeStartDate()"><li><span id="' . $date_value . '" class="date";">' . $date_day .'</span></li></a>';
+                        //If blocked disable pointer events
                       }else if ($date_blockout == 1){
                         echo '<a style="pointer-events: none;" class="datetest" href="javascript:changeStartDate()"><li><span style="color:red;" id="' . $date_value . '" class="date";">' . $date_day .'</span></li></a>';
                       }
@@ -360,6 +382,7 @@ ul {list-style-type: none;}
                 </ul>
                 </div>
                 <br>
+                <!-- Form Details -->
                 <form action="makeabookingconfirm.php" method="post">
                 	<div style="display:none;" id="startDateContainer">
                   <label style="font-family: Comfortaa;" for="timeValue">Start Date:</label>
@@ -407,13 +430,14 @@ ul {list-style-type: none;}
                   <select id="pickupLocationValue" name="pickupLocationValue" style="font-size:18px;">
                     <option value="none"></option>
                   <?php
+                  //Get current pick up locations
                     $locationQuery = $conn->query("SELECT * FROM location_table WHERE pick_up_location=1");
                     while ($row = $locationQuery->fetch_assoc()) {
                         
                         $locationName = $row["name"];
                         $locationId = $row["location_id"];  
                     ?>
-                    
+                    <!-- Loop and echo options into select -->
                     <?php echo '<option value="' . $locationId . '"> ' . $locationName . '</option>'?>
                     <?php
                     }
@@ -425,12 +449,13 @@ ul {list-style-type: none;}
                   <select id="dropoffLocationValue" name="dropoffLocationValue" style="font-size:18px;">
                     <option value="none"></option>
                   <?php
+                    //Get current drop off locations
                     $locationQuery = $conn->query("SELECT * FROM location_table WHERE drop_off_location=1");
                     while ($row = $locationQuery->fetch_assoc()) {
                         $locationName = $row["name"];
                         $locationId = $row["location_id"];  
                     ?>
-                    
+                    <!-- Loop and echo options into select -->
                     <?php echo '<option value="' . $locationId . '">' . $locationName . '</option>'?>
                     <?php
                     }
@@ -439,14 +464,15 @@ ul {list-style-type: none;}
                   <br>
                 <p style="font-size: 24px;display: inline-block;">Add Accessory:</p>
                 <?php
+                //Get accessory types
                 $accessoryType = $conn->query("SELECT * FROM accessory_type_table");
-
                 while ($row = $accessoryType->fetch_assoc()) {
                     $accessoryTypeId = $row["accessory_type_id"];
                     $accessoryTypeName = $row["name"];
                 ?>
                 <br>
                 <?php 
+                //Loop and echo all available accessory types
                   echo '<div id="addAccessoryContainer'. $accessoryTypeId .'">';
                   echo '<a style="font-size:18px;font-family: Comfortaa;color:black;font-weight:bold;" href="javascript: addAccessory(' . '\'' . $accessoryTypeName . '\'' . ', ' . '\'' . $accessoryTypeId . '\'' .     ')">Add ' . $accessoryTypeName . '</a>';
                   echo '</div>';
@@ -455,6 +481,7 @@ ul {list-style-type: none;}
                 }
                 ?>
                 <br>
+                <!-- Empty containers to be filled by items -->
                     <p style="font-size: 24px;">Item List:</p>
                     <div id="itemListContainer" style="">
                       <p style="font-size: 20px;font-weight: bold;">Bikes:</p>
@@ -462,49 +489,40 @@ ul {list-style-type: none;}
                       </div>
                      <p style="font-size: 20px;font-weight: bold;">Accessories:</p>
                       <div id="accessoryListContainer" style="">
-                      
                       </div>
                     </div>
-					<a style="font-size: 18px;color:black;" href="javascript:clearItems()"><p>Clear Items</p></a>                  
-                  <!--<label style="" id="" for="custId">Customer Info:</label>
-                  <input style="font-size: 14px;" class="" type="text" id="userName" name="userName" value="11" readonly> -->
-                  <!--<label for="timeValue">Total Price:</label>
-                  <input style="font-size: 14px;" class="" type="text" id="totalPriceInput" name="totalPriceInput" value="0" readonly>-->
+					         <a style="font-size: 18px;color:black;" href="javascript:clearItems()"><p>Clear Items</p></a>                  
                   <input required type="checkbox" id="termsValue" name="termsValue" value="">
                   <label for="termsValue"> I have read and agreed to the <a href="javascript:openTerms()">terms and conditions.</a></label>
-                  <!--<a href="javascript:calculateDuration()">Calculate Duration Test</a>
-                  <a href="javascript:calculatePrice()">Calculate Price</a>-->
                   <br>
                   <center><input id="bookNowButton" type="submit" value="BOOK NOW" style="background-color:black;color:white;padding: 10px;text-align: center;font-size:24px;width: 100%;display:none"></center>
-					<br><br><br>
-
+					       <br><br><br>
                 </form>
-
             </div>
         </div>
-	        <div id="dualColumn3">
+        <!-- Current Cart Section -->
+	        <div id="Column3">
 	        	<h1>Current Cart:</h1>
 	        	<div style="overflow-y: scroll;height: 1000px;padding-left: 10px;padding-right: 50px;">
+                    <!-- Empty containers to be filled by items -->
                     <div id="cartContainer" style="">
                       <p style="font-size: 20px;font-weight: bold;">Bikes:</p>
                       <div id="bikeCart" style="">
-                      
                       </div>
                       <p style="font-size: 20px;font-weight: bold;">Accessories:</p>
                       <div id="accessoryCart" style="">
-                      
                       </div>
                     </div> 
 	          </div>
 	        </div>
         </div>
     </div>
-    <br>    <br>
     <br>
     <br>
-
+    <br>
+    <br>
+    <!-- Terms and Conditions Pop Up - https://www.w3schools.com/howto/howto_css_modals.asp -->
     <div id="myModal" class="modal">
-
     <!-- Modal content -->
     <div class="modal-content" style="width: 75%;background-color: black;">
       <span class="close">&times;</span>
@@ -559,9 +577,7 @@ ul {list-style-type: none;}
       <br>
       </div>
     </div>
-
   </div>
-
         <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
         <script type = "text/javascript">
         $('.main-carousel').flickity({
@@ -573,11 +589,14 @@ ul {list-style-type: none;}
     <?php include 'footer.php' ?>
 
 <script type="text/javascript">
+  // Function to clear current items in cart
   function clearItems(){
+    //Get Values
     var bikeListContainer = document.getElementById("bikeListContainer");
     var accessoryListContainer = document.getElementById("accessoryListContainer");
     var bikeCart = document.getElementById("bikeCart");
     var accessoryCart = document.getElementById("accessoryCart");
+    //Clear Values
     bikeCart.innerHTML = '';
     bikeListContainer.innerHTML = '';
     accessoryListContainer.innerHTML = '';
@@ -587,11 +606,13 @@ ul {list-style-type: none;}
 
 
 <script type="text/javascript">
-
+// Function to calculate duration
 function calculateDuration(){
+  //Get Values
   var pickUpTimeVar = document.getElementById("pickupTimeValue");
   var pickUpTimeText = pickUpTimeVar.options[pickUpTimeVar.selectedIndex].text;
   var pickUpTimeValue;
+  //Assign values per time
   if (pickUpTimeText == "9:00 AM"){
     pickUpTimeValue = 1;
   }else if (pickUpTimeText == "10:00 AM"){
@@ -609,9 +630,11 @@ function calculateDuration(){
   }else if (pickUpTimeText == "4:00 PM"){
     pickUpTimeValue = 8;
   }
+    //Get Values
   var dropOffTimeVar = document.getElementById("dropoffTimeValue");
   var dropOffTimeText = dropOffTimeVar.options[dropOffTimeVar.selectedIndex].text;
   var dropOffTimeValue;
+    //Assign values per time
   if (dropOffTimeText == "9:00 AM"){
     dropOffTimeValue = 1;
   }else if (dropOffTimeText == "10:00 AM"){
@@ -632,41 +655,49 @@ function calculateDuration(){
   var durationValueTimes = dropOffTimeValue - pickUpTimeValue;
   var startDateValue = document.getElementById("startDateValue").value;
   var endDateValue = document.getElementById("endDateValue").value;
+  // Remove AM/PM
   startDateValueDays = startDateValue.slice(-2);
   endDateValueDays = endDateValue.slice(-2);
   startDateValueDays = parseInt(startDateValueDays);
   endDateValueDays = parseInt(endDateValueDays);
+  //Calculate Value
   var durationValueDates = endDateValueDays - startDateValueDays;
   var durationDatesTotalValueHours = durationValueDates * 24;
   var totalDuration = durationDatesTotalValueHours + durationValueTimes;
-  alert(totalDuration);
+  //Function no longer used
+  //return totalDuration;
 }  
 
 </script>
 
 
 <script type="text/javascript">
-  
+  //Function to remove individual bike
   function removeBike(bikeTypeId){
+    //Concat function call with bike ID variable
     var removeText = "remove";
     var removeCartText = "removecart";
     var removeId = removeText.concat(bikeTypeId);
     var removeCartId = removeCartText.concat(bikeTypeId);
     var bikeRemove = document.getElementById(removeId);
     var bikeCartRemove = document.getElementById(removeCartId);
+    //Remove Values
     bikeRemove.innerHTML = '';
     bikeCartRemove.innerHTML = '';
     bikeRemove.remove();
     bikeCartRemove.remove();
   }
 
+  //Function to remove individual accessory
   function removeAccessory(accessoryTypeId){
+    //Concat function call with accessory id variable
     var removeText = "remove";
     var removeCartText = "removecart";
     var removeId = removeText.concat(accessoryTypeId);
     var removeCartId = removeCartText.concat(accessoryTypeId);
     var accesoryRemove = document.getElementById(removeId);
     var accessoryCartRemove = document.getElementById(removeCartId);
+    //Remove Values
     accesoryRemove.innerHTML = '';
     accessoryCartRemove.innerHTML = '';
     accesoryRemove.remove();
@@ -679,17 +710,20 @@ function calculateDuration(){
 
 <script type="text/javascript">
 
-
+//Function to add bike 
  function addBike(bikeName, bikeTypeId, bikeInventoryCount){
+  //Create bike data variables
   var bikeListContainer = document.getElementById("bikeListContainer");
   var testText = "bike";
+  //Create bike id value to test 
   var testNum = testText.concat(bikeTypeId);
+  //Get cart items in div for bike id
   var hasChild = bikeListContainer.querySelector("p#" + CSS.escape(testNum) + "") != null;
-
   var countInDiv = document.querySelectorAll("p#" + CSS.escape(testNum) + "").length;
+  //Check if cart is empty, if in cart ignore
   if (hasChild == 1){
-
   }else{
+    //Create and hide input to be submitted to the booking form
       var newTextInput = document.createElement("input");
       var bikeNameText = "bike";
       newTextInput.name = bikeNameText.concat(bikeTypeId);
@@ -698,10 +732,7 @@ function calculateDuration(){
       newTextInput.value = bikeTypeId;
       newTextInput.readOnly = true;
       newTextInput.style.display = "none";
-
-
-
-
+      //Create div to display item information to customer
       var bikeCartDiv = document.createElement("div");
       bikeCartDivText = bikeNameText.concat(bikeTypeId);
       bikeCartDivText2 = "removecart";
@@ -709,11 +740,12 @@ function calculateDuration(){
       var cartText = document.createElement("p");
       cartText.innerHTML = bikeName;
       cartText.style.fontSize = "18px";
+      //Append Input and Text to cart
       bikeCart.appendChild(bikeCartDiv);
       bikeCartDiv.appendChild(cartText);
-
-
+      //Create remove bike button
       var bikeCartRemoveButton = document.createElement("a");
+      //Concat function call
       bikeCartRemoveButton.innerHTML = "Remove";
       bikeCartRemoveButtonText = "bike";
       bikeCartRemoveButtonText2 = bikeCartRemoveButtonText.concat(bikeTypeId);
@@ -722,37 +754,34 @@ function calculateDuration(){
       bikeCartRemoveButtonText5 = "')";
       bikeCartRemoveButtonText6 = bikeCartRemoveButtonText4.concat(bikeCartRemoveButtonText5);
       bikeCartRemoveButton.href = bikeCartRemoveButtonText6;
+      //Append function call button
       bikeCartDiv.appendChild(bikeCartRemoveButton);
-
-
-
-
+      //Concat bike id to remove function call
       var bikeDiv = document.createElement("div");
       bikeDivText = bikeNameText.concat(bikeTypeId);
       bikeDivText2 = "remove";
       bikeDiv.id = bikeDivText2.concat(bikeDivText);
- 
-
+      //Create text to display information to customers
       var newBikeText = document.createElement("p");
       newBikeText.innerHTML = bikeName;
       var newBikeTextText = "bike";
       newBikeText.id = newBikeTextText.concat(bikeTypeId);
+      //Append information and inputs to cart container
       bikeListContainer.appendChild(bikeDiv);
       bikeDiv.appendChild(newTextInput);
       bikeDiv.appendChild(newBikeText);
-
-
-
-
+      //Create quantity select text
       newSelectText = document.createElement("p");
-      //newSelectText.innerHTML =  bikeName + " Quantity:&nbsp;";
       newSelectText.innerHTML = "Quantity:&nbsp;";
       newSelectText.style.display = "inline-block";
       bikeDiv.appendChild(newSelectText);
+      //Create array of quantity numbers
       var newArray = [];
+      //Add inventory count to array
       for (var i = 1; i <= bikeInventoryCount; i++) {
           newArray.push([i]);
       }
+      //Create quantity select field
       var newSelectList = document.createElement("select");
       newSelectText1 = "bike";
       newSelectText2 = "quantity";
@@ -760,15 +789,18 @@ function calculateDuration(){
       newSelectIDName2 = newSelectIDName1.concat(newSelectText2);
       newSelectList.id = newSelectIDName2;
       newSelectList.name = newSelectIDName2;
+      //Loop through quantity array and add array values to select
       for (var i = 0; i < newArray.length; i++) {
           var option = document.createElement("option");
           option.value = newArray[i];
           option.text = newArray[i];
           newSelectList.appendChild(option);
       }
+      //Append select to form with quantity
       bikeDiv.appendChild(newSelectList);
-
+      //Create remove button
       var bikeRemoveButton = document.createElement("a");
+      //Concat function call based on ID
       bikeRemoveButton.innerHTML = "Remove";
       bikeRemoveButtonText = "bike";
       bikeRemoveButtonText2 = bikeRemoveButtonText.concat(bikeTypeId);
@@ -777,27 +809,26 @@ function calculateDuration(){
       bikeRemoveButtonText5 = "')";
       bikeRemoveButtonText6 = bikeRemoveButtonText4.concat(bikeRemoveButtonText5);
       bikeRemoveButton.href = bikeRemoveButtonText6;
-
+      //Append values to form and cart
       bikeDivBreak = document.createElement("br");
       bikeDiv.appendChild(bikeDivBreak);
       bikeDiv.appendChild(bikeRemoveButton);
-
-
     }
-  
-
  }
 
-
-
-
+//Function to add accessory to cart
  function addAccessory(accessoryName, accessoryTypeId){
+  //Get accessory cart container
   var accessoryListContainer = document.getElementById("accessoryListContainer");
-  var testText = "accessory"
+  var testText = "accessory";
+  //Create accessory id value to test 
   var testNum = testText.concat(accessoryTypeId);
+  //See if cart contains accessory
   var hasChild = accessoryListContainer.querySelector("p#" + CSS.escape(testNum) + "") != null;
+  //If already in cart ignore
   if (hasChild == 1){
   }else{
+    //Create input to add to form
   var newTextInput = document.createElement("input");
   var newAccessoryText = "accessory";
   newTextInput.id = newAccessoryText.concat(accessoryTypeId);
@@ -806,29 +837,23 @@ function calculateDuration(){
   newTextInput.value = accessoryTypeId;
   newTextInput.readOnly = true;
   newTextInput.style.display = "none";
-
-
-  
-
-
+  //Create div to add accessory to
   var accessoryCartDiv = document.createElement("div");
+  //Concat function call to remove from cart
   accessoryCartDivText = newAccessoryText.concat(accessoryTypeId);
   accessoryCartDivText2 = "removecart";
   accessoryCartDiv.id = accessoryCartDivText2.concat(accessoryCartDivText);
-
-
+  //Create text to display to customer about accessory
   var cartText = document.createElement("p");
   cartText.innerHTML = accessoryName;
   cartText.style.fontSize = "18px";
-
-
-
-
+  //Append to cart div
   accessoryCart.appendChild(accessoryCartDiv);
   accessoryCartDiv.appendChild(cartText);
-
+  //Create link to remove from cart
   var accessoryCartRemoveButton = document.createElement("a");
   accessoryCartRemoveButton.innerHTML = "Remove";
+  //Concat function call to remove accessory item
   accessoryCartRemoveButtonText = "accessory";
   accessoryCartRemoveButtonText2 = accessoryCartRemoveButtonText.concat(accessoryTypeId);
   accessoryCartRemoveButtonText3 = "javascript:removeAccessory('";
@@ -836,36 +861,30 @@ function calculateDuration(){
   accessoryCartRemoveButtonText5 = "')";
   accessoryCartRemoveButtonText6 = accessoryCartRemoveButtonText4.concat(accessoryCartRemoveButtonText5);
   accessoryCartRemoveButton.href = accessoryCartRemoveButtonText6;
+  //Append remove from cart function call link
   accessoryCartDiv.appendChild(accessoryCartRemoveButton);
 
-
-
-
-
+  //Create div for cart
   var accessoryDiv = document.createElement("div");
   accessoryDivText = newAccessoryText.concat(accessoryTypeId);
+  //Concat function call to remove accessory item
   accessoryDivText2 = "remove";
   accessoryDiv.id = accessoryDivText2.concat(accessoryDivText);
 
-
+  //Create text to display to customer about accessory
   var newAccessoryText = document.createElement("p");  
   newAccessoryText.innerHTML = accessoryName;
   newAccessoryText.style.fontSize = "20px";
   var newAccessoryTextText = "accessory"
   newAccessoryText.id = newAccessoryTextText.concat(accessoryTypeId);
-
-
-
-
-
-
-
+  //Append input and text to accessory cart div
   document.getElementById("accessoryListContainer").appendChild(accessoryDiv);
   accessoryDiv.appendChild(newTextInput);
   accessoryDiv.appendChild(newAccessoryText);
-
+  //Create remove button for accessory
   var accessoryRemoveButton = document.createElement("a");
   accessoryRemoveButton.innerHTML = "Remove";
+  //Concat function call to remove accessory
   accessoryRemoveButtonText = "accessory";
   accessoryRemoveButtonText2 = accessoryRemoveButtonText.concat(accessoryTypeId);
   accessoryRemoveButtonText3 = "javascript:removeAccessory('";
@@ -873,47 +892,45 @@ function calculateDuration(){
   accessoryRemoveButtonText5 = "')";
   accessoryRemoveButtonText6 = accessoryRemoveButtonText4.concat(accessoryRemoveButtonText5);
   accessoryRemoveButton.href = accessoryRemoveButtonText6;
+  //Append remove button to cart
   accessoryDiv.appendChild(accessoryRemoveButton);
-
-
-
-
   }
-
-
  }
 
 </script>
-
-
-
 <script type="text/javascript">
-// Run function on load 
+// Run calendar on load 
 document.onload = initaliseCalendar();
 
+//Function to set end date
 function setEnd(){
+      //Set second clicked date to change the end date
       $(".datetest[href]").attr("href", "javascript:changeEndDate()");
+      //Change start date to green
       document.getElementsByClassName("active")[0].style.backgroundColor = "green";
       document.getElementsByClassName("active")[0].style.color = "white";
+      //Set next click to reset
       document.getElementsByClassName("active")[0].parentNode.parentNode.href = "javascript:resetDates()";
 }
 
+//Function to set start date
 function setStart(){
+      //Set first cliked date to change the start date
       $(".datetest[href]").attr("href", "javascript:changeStartDate()");
-      //document.getElementsByClassName("active")[0].style.backgroundColor = "red";
-      //document.getElementsByClassName("active")[0].style.color = "white";
 }
 
+//Function to set start and end dates
 function finaliseCalendar(){
+      //Aftter end date is changed make all calendar buttons reset calendar on click
       $(".datetest[href]").attr("href", "javascript:resetDates()");
+      //change end date to red
       document.getElementsByClassName("active")[0].style.backgroundColor = "red";
       document.getElementsByClassName("active")[0].style.color = "white";
-
-
 }
 
 
 function resetDates(){
+    //Get calendar values
       var dateContainer = document.getElementById("dateContainer");
       var allDates = dateContainer.getElementsByClassName("date");
       // Loop through the buttons and add the active class to the clicked date
@@ -921,10 +938,11 @@ function resetDates(){
         allDates[i].style.backgroundColor = "";
         allDates[i].style.color = "";
       }
-      //document.getElementById("endDateContainer").style.display = "none";
+      //Clear start and end date from form
       document.getElementById("endDateValue").value = document.getElementById("startDateValue").value;
       document.getElementById("startDateValue").value = "";
       document.getElementById("endDateValue").value = "";
+      //Reset Calendar by calling functions allowing dates to be selected without reseting calendar 
       setStart();
       changeStartDate();
       setEnd();
@@ -932,16 +950,18 @@ function resetDates(){
 
 
 function initaliseCalendar(){
-  // Set variables
+  // Get variables
 var dateContainer = document.getElementById("dateContainer");
 var allDates = dateContainer.getElementsByClassName("date");
 // Loop through the buttons and add the active class to the clicked date
 for (var i = 0; i < allDates.length; i++) {
   allDates[i].addEventListener("click", function() {
+    //Get curent active date
     var currentDates = document.getElementsByClassName("active");
+    //Remove current active date
     currentDates[0].className = currentDates[0].className.replace(" active", "");
+    // Add new active date 
     this.className += " active";
-    // Set form value for date to clicked date
   });
   document.getElementById("startDateValue").value = document.getElementsByClassName("active")[0].id;
   document.getElementById("endDateValue").value = document.getElementsByClassName("active")[0].id;
@@ -950,19 +970,23 @@ for (var i = 0; i < allDates.length; i++) {
 
 
 function changeStartDate(){
-// Set variables
+// Display form values for start and end date
 document.getElementById("startDateContainer").style.display = "block";
 document.getElementById("endDateContainer").style.display = "block";
+//Get variables
 var dateContainer = document.getElementById("dateContainer");
 var allDates = dateContainer.getElementsByClassName("date");
 // Loop through the buttons and add the active class to the clicked date
 for (var i = 0; i < allDates.length; i++) {
   allDates[i].addEventListener("click", function() {
+        //Get curent active date
     var currentDates = document.getElementsByClassName("active");
+        //Remove current active date
     currentDates[0].className = currentDates[0].className.replace(" active", "");
+        // Add new active date 
     this.className += " active";
-    // Set form value for date to clicked date
   });
+  //Set values in form
   document.getElementById("startDateValue").value = document.getElementsByClassName("active")[0].id;
   document.getElementById("endDateValue").value = document.getElementsByClassName("active")[0].id;
 }
@@ -970,26 +994,30 @@ for (var i = 0; i < allDates.length; i++) {
 }
 
 function changeEndDate(){
-// Set variables
+// Get variables
 var dateContainer = document.getElementById("dateContainer");
 var allDates = dateContainer.getElementsByClassName("date");
 // Loop through the buttons and add the active class to the clicked date
 for (var i = 0; i < allDates.length; i++) {
   allDates[i].addEventListener("click", function() {
+            //Get curent active date
     var currentDates = document.getElementsByClassName("active");
+            //Remove current active date
     currentDates[0].className = currentDates[0].className.replace(" active", "");
+            // Add new active date 
     this.className += " active";
-    // Set form value for date to clicked date
   });
+    //Set values in form
   document.getElementById("startDateContainer").style.display = "block";
   document.getElementById("endDateContainer").style.display = "block";
   document.getElementById("endDateValue").value = document.getElementsByClassName("active")[0].id;
 }
+//Set Duration
 setDuration();
 finaliseCalendar();
 }
 
-
+//Function to set duration to 'overnight' when selecting multiple dates
 function setDuration(){
   var start = document.getElementById("startDateValue").value;
   var end = document.getElementById("startDateValue").value;
@@ -998,12 +1026,11 @@ function setDuration(){
   }
 }
 
-
-
-
 </script>    
 <script type="text/javascript">
   
+/* https://www.w3schools.com/howto/howto_css_modals.asp */
+
 // Get the modal
 var modal = document.getElementById("myModal");
 
@@ -1029,23 +1056,7 @@ window.onclick = function(event) {
     modal.style.display = "none";
   }
 }
-
-
 </script>
-
-<script type="text/javascript">
-	
-
-
-
-
-
-
-
-</script>
-
-
-
 </body>
 </html>
 <?php
