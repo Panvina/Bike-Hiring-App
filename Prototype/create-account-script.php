@@ -1,7 +1,7 @@
 <?php
     require "php-scripts/utils.php";
     include_once 'php-scripts/backend-connection.php';
-    include_once 'person-dto.php';
+    include_once 'php-scripts/person-dto.php';
 
     session_start();
     $_SESSION['id'] = '123';
@@ -38,11 +38,6 @@
             header("Location: index.php?ca=email");
             exit();
         }
-        // elseif (!isset($_POST["ca-privacy-policy"]))
-        // {
-        //     header("Location: index.php?ca=privacy");
-        //     exit();
-        // }
         else
         {
              /* Inserting data into the customer table and the accounts table

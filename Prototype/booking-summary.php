@@ -43,8 +43,8 @@
     </html>
     
     <?php
-    include 'person-dto.php';
-    include 'booking-dto.php';
+    include 'php-scripts/person-dto.php';
+    include 'php-scripts/booking-dto.php';
     $email = $_SESSION["login-email"];
     $bookingDetail = new BookingDTO($email);
     $userDetail = new PersonDTO($email);

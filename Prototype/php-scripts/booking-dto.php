@@ -1,6 +1,7 @@
-<?php /* This file as a whole is written by Vina Touch 101928802 */
+<?php 
+    /* This file as a whole is written by Vina Touch 101928802 */
     include_once 'person-dto.php';
-    include_once 'php-scripts/bookings-db.php';    //to retrieve a function
+    include_once 'bookings-db.php';    //to retrieve a function
     class BookingDTO{
         private $username="";
         private $bookingid=array();

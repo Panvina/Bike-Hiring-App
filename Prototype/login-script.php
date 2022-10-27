@@ -1,10 +1,9 @@
 <!------------------------------------------------------------------------------------------
 File Description: Processing whether the user is authorised to access the system given their login details and their account privilege.
-Contributor(s): Vina Touch 101928802
 --------------------------------------------------------------------------------->
 <?php
     session_start();
-    include 'person-dto.php';
+    include 'php-scripts/person-dto.php';
     ?>
     
 <?php
@@ -26,6 +25,7 @@ Contributor(s): Vina Touch 101928802
 
         else
         {
+            //Written by Vina Touch 101928802
             $newUser = new PersonDTO($email);       //add initialise a new user
             $role = $newUser->authenticateUser($pwd);       //retrieve the role of that user
             $newUser->getDetails();     //retrieve the user details based on the login they entered
@@ -46,7 +46,7 @@ Contributor(s): Vina Touch 101928802
                 $_SESSION['login-type'] = 'employee';  
                 header("Location: dashboard.php?Adminlogin=success");       //redirect them to the dashboard/backend system
                 exit();
-            }else if ($role == "1") {   //if the role of the user is 2 - it means they are the owner/master of the system trying to log in.
+            }else if ($role == "1") {   //if the role of the user is 1 - it means they are the owner/master of the system trying to log in.
                 $_SESSION['login-type'] = 'owner';
                 header("Location: dashboard.php?masterlogin=success");
                 exit();

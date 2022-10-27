@@ -8,7 +8,7 @@
         exit;
     }
 
-    include_once 'person-dto.php';
+    include_once 'php-scripts/person-dto.php';
     include_once "php-scripts/backend-connection.php" ;
     include_once 'php-scripts/utils.php';
     $error = "";

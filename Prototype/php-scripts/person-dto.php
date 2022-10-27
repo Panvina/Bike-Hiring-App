@@ -2,8 +2,8 @@
 <!-- written by Vina Touch-->
 
 <?php 
-    include_once 'php-scripts/backend-connection.php';
-    include_once 'php-scripts/utils.php';
+    include_once 'backend-connection.php';
+    include_once 'utils.php';
     class PersonDTO{
         private $username="";
         private $name ="";
@@ -67,21 +67,25 @@
             $oneDiArray = array_reduce($detail, 'array_merge', array());
 
             //assign values from the array to the class variables appropriately.
-            $this->name = $oneDiArray['name'];
-            $this->phoneN= $oneDiArray['phone_number'];
-            $this->email = $oneDiArray['email'];
-            $this->address= $oneDiArray['street_address'];
-            $this->licence = $oneDiArray['licence_number'];
-            $this->suburb = $oneDiArray ['suburb'];
-            $this->postcode=$oneDiArray ['post_code'];
-            $this->state=$oneDiArray ['state'];
+            if(!empty($oneDiArray)){
+                $this->name = $oneDiArray['name'];
+                $this->phoneN= $oneDiArray['phone_number'];
+                $this->email = $oneDiArray['email'];
+                $this->address= $oneDiArray['street_address'];
+                $this->licence = $oneDiArray['licence_number'];
+                $this->suburb = $oneDiArray ['suburb'];
+                $this->postcode=$oneDiArray ['post_code'];
+                $this->state=$oneDiArray ['state'];
+            }
+
         }
 
         function updateDetails($login="", $formName, $formNumber, $formStreet, $formSuburb, $formPcode, $formState, $formEmail ){
             $login = $this->getUsername();
             $dbCon = new DBConnection('customer_table');
+            $validateFullName = str_replace(' ', '', $formName);    //remove whitespace of the form full name and check
             $msg="";
-                if (!validName($formName) || empty($formName)){
+                if (!validName($validateFullName) || empty($formName)){
                     $msg = $msg . "<p class='error'>Name is invalid.</p>";
                 }
                 if (!validMobileNumber($formNumber) || empty($formNumber)){
@@ -149,7 +153,6 @@
                     $this->username = implode("",$username[0]);
                 }
             }
-
         }
     }
 ?>

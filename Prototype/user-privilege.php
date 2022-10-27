@@ -1,4 +1,5 @@
 <?php
+    //The entirety of this file is written by Vina Touch 101928802
     if (!isset($_SESSION)){
         session_start();
     }
@@ -27,7 +28,6 @@
         </form>";
     }
 ?>
-
 <html>
     <style>
         .logout {
