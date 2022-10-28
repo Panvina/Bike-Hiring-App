@@ -1,5 +1,6 @@
 <?php
-/* Code completed by Aadesh Jagannathan - 102072344*/
+/* Code entirely completed by Aadesh Jagannathan - 102072344*/
+/* File contains all inventory page related utility functions*/
 date_default_timezone_set('Australia/Melbourne');
 
 // Print Safety Inspection based on 0 or 1 values  

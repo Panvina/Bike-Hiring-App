@@ -1,7 +1,7 @@
 /* Reference = https://www.w3schools.com/howto/howto_css_modals.asp */
 
 /* Code completed by Aadesh Jagannathan - 102072344*/
-/* File contains all Accessory pop-up related JS functions  */
+/* File contains all Accessory types pop-up related JS functions  */
 
 // Getting the modal for each Add, Create and Delete
 var addPopup = document.getElementById("AddAccessoryModal");

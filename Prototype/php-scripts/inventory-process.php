@@ -1,4 +1,6 @@
 <?php
+/* Code completed by Aadesh Jagannathan - 102072344*/
+/* Replaced with individual scripts*/
 session_start();
 include 'php-scripts/backend-connection.php';
 $conn = new mysqli("localhost", "root", "", "bike_hiring_system") or die(mysqli_error($mysqli));

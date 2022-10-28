@@ -1,5 +1,6 @@
 <?php
     /* Code completed by Aadesh Jagannathan - 102072344*/
+    /* Script responsible for adding records*/
     session_start();
     include 'backend-connection.php';
     include("inventory-util.php");

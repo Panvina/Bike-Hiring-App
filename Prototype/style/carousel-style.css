@@ -1,5 +1,6 @@
 /* Reference = https://www.w3schools.com/howto/howto_css_modal_images.asp */
 /* Code completed by Aadesh Jagannathan - 102072344*/ 
+/* Styling unique to about page image carousel */
   /*Main background of modal */
   .modal {
     display: none; /* Hidden by default */
