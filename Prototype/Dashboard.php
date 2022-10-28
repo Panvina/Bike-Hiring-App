@@ -30,7 +30,7 @@ Contributor(s):
 
     // get date from URL
     $date = $_GET["date"];
-    
+
     //Assigns the session variable used for side nav. Added by Jake Hipworth 102090870
     $_SESSION["CurrentPage"] = "";
 ?>
@@ -54,12 +54,14 @@ Contributor(s):
         		<?php printMenu("dashboard"); ?>
         	</div>
         	<div class="main">
+                <!-- grid section for top date bar -->
                 <div class="date-grid">
                     <img class="arrows" id="leftArrow" onclick="decrementDate()" src="img/icons/arrow-left-bold.png"/>
                     <div>
                         <input id="date-picker" class="date-picker" type="date"></input>
                         <label class="date_string" for="dDate">
                             <?php
+                                // get date from URL and convert to readable format
                                 $date = $_GET["date"];
                                 $dateStr = getFormattedDate($date);
 
@@ -69,6 +71,7 @@ Contributor(s):
                     </div>
                     <img class="arrows" id="rightArrow" onclick="incrementDate()" src="img/icons/arrow-right-bold.png"/>
                 </div>
+                <!-- dashboard information div -->
                 <div class="DashboardInformationContainer">
                     <!-- Booking summary section -->
                     <div class="DashboardInformation dashboard-headers">
@@ -139,6 +142,7 @@ Contributor(s):
         </div>
 
         <?php
+            // retrieve bookings for date given
             $conn = new BookingsDBConnection();
 
             // create new DB connection and fetch rows for a given date
@@ -195,6 +199,7 @@ Contributor(s):
     <script src="scripts/dashboard.js"></script>
     <script src="scripts/timetable.js"></script>
 
+    <!-- Initialise JS timetable -->
     <script>
         // credit to https://github.com/friou/timetable.js
         var timetable = new Timetable();
@@ -227,6 +232,7 @@ Contributor(s):
         ]);
 
         <?php
+            // put data into timetable
             $today = date("Y/m/d");
             $year = substr("$today", 0, 4);
             $month = substr("$today", 5, 2);

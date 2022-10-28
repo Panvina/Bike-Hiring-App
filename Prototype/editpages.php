@@ -1,4 +1,7 @@
 <?php
+
+// Edit Pages Page - Created by Eamon Kearney 102093549 //
+
 session_start();
 
 date_default_timezone_set('Australia/Melbourne');
@@ -13,9 +16,6 @@ include_once("php-scripts/dashboard-menu.php");
 
 //Establishing database connection using mysqli()
 $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
-
-//Assigns the session variable used for side nav. Added by Jake Hipworth 102090870
-$_SESSION["CurrentPage"] = "";
 ?>
 
 <!DOCTYPE html>
@@ -38,6 +38,7 @@ $_SESSION["CurrentPage"] = "";
         	<div class="main">
                 <div class="grid">
                   <div class="item">
+                    <!-- Menu of options -->
                     <h1 style="">Select a Page:</h1><br>
                     <a href="editIndex.php"><h1 style="text-decoration: underline;">Home Page</h1></a><br>
                     <a href="editIndex.php"><img src="img/editpages/index.png" style="width:500px;"></a>

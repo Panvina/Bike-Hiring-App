@@ -1,4 +1,7 @@
 ﻿<?php
+
+// Edit Index Page - Created by Eamon Kearney 102093549 //
+
 session_start();
 
 date_default_timezone_set('Australia/Melbourne');
@@ -25,7 +28,7 @@ body{
     margin: 0;
 }
 
-    span{
+span{
     padding-right: 10px;
     line-height: 1.9;
     font-size: 18px;
@@ -33,6 +36,7 @@ body{
     font-family: Comfortaa;
 }
 
+/*Style bottom navbar */
 
 .bottomnavbar {
   overflow: hidden;
@@ -61,13 +65,13 @@ body{
   text-decoration: none;
 }
 
+/* Style edit area */
 
 fieldset {
     border: 1px dashed red;
     color:red;
     font-size:24px;
 }
-
 
 </style>
 <body>
@@ -88,34 +92,36 @@ fieldset {
         </div>
         <div class='HomeMainCont'>  
             <?php
-                $locationQuery = $conn->query("SELECT * FROM content_editing_table WHERE edit_name = 'home_about_us_image'");
-                    while ($row = $locationQuery->fetch_assoc()) {
+                //SQL query to get display image from database
+                $editImageQuery = $conn->query("SELECT * FROM content_editing_table WHERE edit_name = 'home_about_us_image'");
+                    while ($row = $editImageQuery->fetch_assoc()) {
+                        //Assign values to variables
                         $edit_name = $row["edit_name"];
                         $edit_content = $row["edit_content"];
+                        // Echo to display image
                         echo '<div class="HomeImg"><img class="filled-img" id="home_image_id" style= "height: 100%; width: 100%;" src="' . $edit_content . '" alt="About Us"/></div>';
                     }
                     ?>
-            <!--<div class='HomeImg'><img style= "height: 100%; width: 100%;" src="./img/photos/5.jpg" alt="About Us"/></div>-->
             <div class='HomeTxt'><h1 id="HomeHeader"> ABOUT US</h1>
                 <?php
-                $locationQuery = $conn->query("SELECT * FROM content_editing_table WHERE edit_name = 'home_about_us_text'");
-                    while ($row = $locationQuery->fetch_assoc()) {
+                //SQL query to get about text  from database
+                $editTextQuery = $conn->query("SELECT * FROM content_editing_table WHERE edit_name = 'home_about_us_text'");
+                    while ($row = $editTextQuery->fetch_assoc()) {
+                        //assign values to variables
                         $edit_name = $row["edit_name"];
                         $edit_content = $row["edit_content"];
+                        //print about us in editable field
                         echo '<fieldset>';
                         echo '<legend>EDIT HERE</legend>';
                         echo '<div style="outline:none;" class="HomeDesc"><span id="text_span" style="outline:none;" contenteditable="true">' . $edit_content . '</span></div>';
                         echo '</fieldset>';
-
                     }
                     ?>
                     <br>
                 <button style="font-size: 32px;" onclick="updateForm()">Save Changes</button>
-
-                <!--<div class='HomeDesc'><p>Explore the area and Rail Trails in comfort and style on an electric bike. We also have a range of standard bikes to suit your needs with a range of accessories available. We are a local family owned and operated business and pride ourselves on providing you with a unique experience while you enjoy what Inverloch and the sounding region has to offer. Whether your family have been holidaying here for years, you’re are having a weekend away or just simply visiting for the day we have an experience to suit everyone’s tastes and abilities.</p></div>-->
             </div>
         </div>
-
+        <!-- Mirror of Index Page -->
         <div class='HomeMainCont'>
             <div class='HomeTxt'><h1 id="HomeHeader">NEED HELP?</h1>
                 <div class='HomeDesc'><p>Feel free to contact us and we are more than happy to help you plan the perfect bike hire experience!</p>
@@ -135,12 +141,11 @@ fieldset {
         </div>
     </div>
     <br><br><br><br>
-
     <div class="bottomnavbar" style="visibility: hidden;">
         <form id="formTest" action="editindexinsert.php" method="post">
             <?php
-                $locationQuery = $conn->query("SELECT * FROM content_editing_table WHERE edit_name = 'home_about_us_text'");
-                    while ($row = $locationQuery->fetch_assoc()) {
+                $editTextQuery2 = $conn->query("SELECT * FROM content_editing_table WHERE edit_name = 'home_about_us_text'");
+                    while ($row = $editTextQuery2->fetch_assoc()) {
                         $edit_name = $row["edit_name"];
                         $edit_content = $row["edit_content"];
                         echo '<input style="display:none" id="edit_content_text" type="text" name="edit_content_text" value="' . $edit_content . '">';
@@ -152,44 +157,36 @@ fieldset {
         </form>
     </div>
     <script type="text/javascript">
-
-
-function updateForm(){
-    var currentText =  document.getElementById("text_span").innerHTML;
-    document.getElementById("edit_content_text").value = currentText;
-    document.getElementById("edit_content_text2").value = currentText;
-    document.getElementById("formTest").submit();
-
-    //var currentImage =  document.getElementById("home_image_id").src;
-    //document.getElementById("edit_content_image").value = currentImage;
-}
-
-
-
-window.onload = function() {
-    // Set variables
-    var elements = document.getElementsByTagName("span"),
-        i,
-        element;
-    // Loop through elements
-    for (i = 0; i < elements.length; ++i) {
-        element = elements[i];
-        // Check if contentEditable true 
-        if (element.contentEditable) {
-        // Check if text loses focus
-            span.onblur = function() {
-            // Set text to current text
-                var text = this.innerHTML;
-                // Replace old text with new text
-                text = text.replace(/&/g, "&amp").replace(/</g, "&lt;");
-            };
-        }
+     //Function to update submit form with new text   
+    function updateForm(){
+        //Get new value from text form
+        var currentText =  document.getElementById("text_span").innerHTML;
+        //Set new value to submit form
+        document.getElementById("edit_content_text").value = currentText;
+        document.getElementById("edit_content_text2").value = currentText;
+        //Submit form
+        document.getElementById("formTest").submit();
     }
-};
 
-
-
-
+    // Function to make text field editable
+    window.onload = function() {
+        // Set variables
+        var elements = document.getElementsByTagName("span"),i,element;
+        // Loop through elements
+        for (i = 0; i < elements.length; ++i) {
+            element = elements[i];
+            // Check if contentEditable true 
+            if (element.contentEditable) {
+            // Check if text loses focus
+                span.onblur = function() {
+                // Set text to current text
+                    var text = this.innerHTML;
+                    // Replace old text with new text
+                    text = text.replace(/&/g, "&amp").replace(/</g, "&lt;");
+                };
+            }
+        }
+    };
 </script>   
 </body>
 </html>

@@ -91,6 +91,8 @@
             <!-- separator  -->
             <div class="location-container-separator">
             </div>
+
+            <!-- Section completed by Aadesh Jagannathan - 102072344 -->
             <div class='SubExploreMainCont'>  
             <div class='SubExploreImg'><img class="filled-img" style= 'height: 100%; width: 100%; 'src="./img/photos/railtrail.jpg" alt="About Us"/></div>
                 <div class='SubExploreTxt'><h1 id="SubExploreHeader">Feeling Adventurous?</h1>

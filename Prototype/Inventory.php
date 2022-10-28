@@ -1,6 +1,7 @@
 <?php
+/* Code entirely completed by Aadesh Jagannathan - 102072344*/
+
 /* Reference = https://www.w3schools.com/howto/howto_css_modals.asp */
-/* Code completed by Aadesh Jagannathan - 102072344*/
 /* Styling reused from Jake's dashboard pages*/
 
 // Enabling session

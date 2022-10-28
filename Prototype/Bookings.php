@@ -24,10 +24,12 @@
     $rescode = "none";      // result code (send with booking-mode from server)
     $rescodes = array();    // result code array (list of all codes from server)
 
+    // these are to determine what booking modes belong to add, change, or delete
     $addBookingModes = array("add1", "add2", "addBooking");
     $changeBookingModes = array("change1", "change2", "changeBooking");
     $deleteBookingModes = array("delete", "deleteBooking");
 
+    // get data from current booking mode for error handling
     if (isset($_GET["booking-mode"]))
     {
         $bookingErrorData = explode('-', $_GET["booking-mode"]);
@@ -104,6 +106,7 @@
                             break;
                     }
 
+                    // print success message
                     if (in_array("success", $rescodes))
                     {
                         echo "<p class='echo'>Record successfully $opStr</p>";
@@ -191,6 +194,8 @@
                                 echo "<td> $data </td>";
                             }
                             echo "<td class='editcolumn'>";
+
+                            // default if no rows in bookings
                             if ($nullRows)
                             {
                                 echo "    <div class='dropdown-disabled'>";
@@ -219,6 +224,7 @@
         <!-- Booking Popup (main) -->
         <div id="add-booking-main-modal" class="modal-overlay"
             <?php
+                // hide popup if not in specific booking mode
                 if ($bookingMode == "add1")
                 {
                     echo "style='display: block';";
@@ -368,6 +374,7 @@
                             $conn = new LocationsDBConnection();
                             $pickupLocations = $conn->get("location_id, name", "pick_up_location=1");
 
+                            // print selection dropdown
                             $selectedId = null;
                             if (isset($_SESSION["addBooking"]))
                             {
@@ -410,6 +417,7 @@
                     </select>
                     <p class="modal-error">
                         <?php
+                            // print error for drop off location
                             if (in_array("dropoffError", $rescodes))
                             {
                                 echo "Please add a dropoff location";
@@ -425,6 +433,7 @@
         <!-- Form for adding bikes and accessories to bookings -->
         <div id="add-booking-bikes-modal" class="modal-overlay"
         <?php
+            // hide popup depending on current booking mode
             if ($bookingMode == "add2" && $rescode != "success")
             {
                 echo "style='display: block';";
@@ -449,6 +458,7 @@
                     </div>
                     <p class="modal-error">
                         <?php
+                            // print error for bike list
                             if (in_array("bikeError", $rescodes))
                             {
                                 echo "Please select at least one bike";
@@ -477,6 +487,7 @@
         -->
         <div id="change-booking-main-modal" class="modal-overlay"
             <?php
+                // hide popup based on current booking mode
                 if ($bookingMode == "change1")
                 {
                     echo "style='display: block';";
@@ -530,6 +541,7 @@
                     </select><br>
                     <p class="modal-error">
                         <?php
+                            // print error if no customers exist
                             if (in_array("customerEmpty", $rescodes))
                             {
                                 echo "Please ensure at least one customer exists";
@@ -543,6 +555,7 @@
                     <input name="change-booking-start-date" id="change-booking-start-date" type="date" value=<?php if (isset($startDate)) {echo "$startDate";} ?>><br>
                     <p class="modal-error">
                         <?php
+                            // print error if dates are improperly constrained
                             if (in_array("startDateEmpty", $rescodes))
                             {
                                 echo "Please select a date";
@@ -562,6 +575,7 @@
                     </select><br>
                     <p class="modal-error">
                         <?php
+                            // print error if time is improperly constrained
                             if (in_array("timeError", $rescodes))
                             {
                                 echo "Please ensure starting time is before the ending time";
@@ -575,6 +589,7 @@
                     <input name="change-booking-end-date" id="change-booking-end-date" type="date" value=<?php if (isset($endDate)) {echo "$endDate";} ?>><br>
                     <p class="modal-error">
                         <?php
+                            // print errror if dates are empty or are improperly constrained
                             if (in_array("endDateEmpty", $rescodes))
                             {
                                 echo "Please select a date";
@@ -595,6 +610,7 @@
                     </select><br>
                     <p class="modal-error">
                         <?php
+                            // print error if time inputs are not properly constrained
                             if (in_array("timeError", $rescodes))
                             {
                                 echo "Please ensure starting time is before the ending time";
@@ -619,6 +635,7 @@
                     </select><br>
                     <p class="modal-error">
                         <?php
+                            // print error if no pickup locations have been added
                             if (in_array("pickupError", $rescodes))
                             {
                                 echo "Please add a pickup location";
@@ -641,6 +658,7 @@
                     </select><br>
                     <p class="modal-error">
                         <?php
+                            // print error if no dropoff locations have been added
                             if (in_array("dropoffError", $rescodes))
                             {
                                 echo "Please add a dropoff location";
@@ -656,6 +674,7 @@
         <!-- Form for adding bikes and accessories to bookings -->
         <div id="change-booking-bikes-modal" class="modal-overlay"
         <?php
+            // hide popup based on current booking mode
             if ($bookingMode == "change2" && $rescode != "success")
             {
                 echo "style='display: block';";
@@ -680,6 +699,7 @@
                     </div>
                     <p class="modal-error">
                         <?php
+                            // print error if no bikes are selected
                             if (in_array("bikeError", $rescodes))
                             {
                                 echo "Please select at least one bike";
@@ -711,7 +731,7 @@
             }
         ?>
         >
-            <!-- Modal content for bikes and accessories -->
+            <!-- Modal content for delete booking confirmation -->
             <div class="modal-content">
                 <span class="close-btn">&times;</span>
                 <h2 >Booking Delete Confirmation </h2>

@@ -6,8 +6,9 @@
     $_SESSION['active']="explore";
     /********************************/ 
 ?>
-<!DOCTYPE html>
+<!-- All code completed on this page by Aadesh Jagannathan - 102072344 -->
 
+<!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
@@ -23,6 +24,7 @@
             <div id="bannertext">
                 <h1> EXPLORE</h1>
             </div>
+            <!-- Breadcrumbs Navigation completed by Aadesh Jagannathan - 102072344-->
             <div class ="NavContainer">
                      <ul class="Breadcrumbs">
                         <li class="BreadcrumbsItem">

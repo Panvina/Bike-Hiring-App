@@ -22,6 +22,7 @@
                 <div id="bannertext">
                     <h1> EXPLORE</h1>
                 </div>
+                <!-- Breadcrumbs Navigation completed by Aadesh Jagannathan - 102072344-->
                 <div class ="NavContainer">
                      <ul class="Breadcrumbs">
                         <li class="BreadcrumbsItem">
@@ -92,6 +93,7 @@
             <div class="location-container-separator">
             </div>
 
+            <!-- Section completed by Aadesh Jagannathan - 102072344 -->
             <div class='SubExploreMainCont'>  
             <div class='SubExploreImg'><img class="filled-img" style= 'height: 100%; width: 100%; 'src="./img/photos/region.jpg" alt="About Us"/></div>
                 <div class='SubExploreTxt'><h1 id="SubExploreHeader">YOUR NEW JOURNEY?</h1>

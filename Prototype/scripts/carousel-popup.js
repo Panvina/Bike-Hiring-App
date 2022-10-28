@@ -1,5 +1,7 @@
 /* Reference = https://www.w3schools.com/howto/howto_css_modal_images.asp */
+
 /* Code completed by Aadesh Jagannathan - 102072344*/  
+/* File contains all About page Image Carousel pop-up related JS functions  */
    
     /* Retreiving all image modals by ID */
     var imgOne = document.getElementById("img-one");

@@ -38,6 +38,7 @@ $_SESSION['active'] = "contact";
   </header>
   <main>
     <!-- The banner is created by aadesh and implemented the BreadCrumbs program in -->
+    <!-- Breadcrumbs Navigation completed by Aadesh Jagannathan - 102072344-->
     <div class="banner">
       <div id="bannertext">
         <h1>Contact Us</h1>

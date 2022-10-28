@@ -1,3 +1,7 @@
+
+/* Block Out Date Page CSS - Created by Eamon Kearney 102093549 */
+
+/* Style Container */
 #dateContainer{
     box-sizing: border-box;
 }
@@ -5,6 +9,7 @@
 
 ul {list-style-type: none;}
 
+/* style Months */
 
 .month {
   padding: 10px 25px;
@@ -36,6 +41,8 @@ ul {list-style-type: none;}
   padding-top: 10px;
 }
 
+/* Style Weeks */
+
 .weekdays {
   margin: 0;
   padding: 10px 0;
@@ -51,6 +58,8 @@ ul {list-style-type: none;}
   color: black;
   text-align: center;
 }
+
+/* Style Days */
 
 .days {
   padding: 10px 0;
@@ -76,6 +85,8 @@ ul {list-style-type: none;}
   color: grey !important
 }
 
+/* Style Date */
+
 .date {
   border: none;
   outline: none;
@@ -88,6 +99,7 @@ ul {list-style-type: none;}
   color: white;
 }
  
+ /* Style Column Format */
 
 .columnmain {
   float: left;
