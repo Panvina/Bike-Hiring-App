@@ -1,4 +1,6 @@
 <?php
+/* Code entirely completed by Aadesh Jagannathan - 102072344*/
+
 session_start();
 
 // dashboard side menu import (Dabin)
@@ -12,7 +14,6 @@ include_once("php-scripts/backend-connection.php");
 //Linking utility functions associated with inventory
 include("php-scripts/inventory-util.php");
 
-$_SESSION["CurrentPage"] = "accessory";
 
 //Establishing database connection using mysqli()
 $conn = new mysqli("localhost", "root", "", "bike_hiring_system");

@@ -1,12 +1,10 @@
 ﻿<?php
+/* Code entirely completed by Aadesh Jagannathan - 102072344*/
 session_start();
 
 date_default_timezone_set('Australia/Melbourne');
 
 include_once("php-scripts/backend-connection.php");
-
-//Linking utility functions associated with inventory
-include("php-scripts/utils.php");
 
 //Establishing database connection using mysqli()
 $conn = new mysqli("localhost", "root", "", "bike_hiring_system");
@@ -33,6 +31,7 @@ $_SESSION['active']="index";    //added a session to store an active state of wh
         </div>
         <div class='HomeMainCont'>  
             <?php
+                //Modifications by Eamon
                 //Get current image from database
                 $locationQuery = $conn->query("SELECT * FROM content_editing_table WHERE edit_name = 'home_about_us_image'");
                     while ($row = $locationQuery->fetch_assoc()) {

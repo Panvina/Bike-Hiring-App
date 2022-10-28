@@ -1,4 +1,5 @@
 <?php
+/* Code completed by Aadesh Jagannathan - 102072344*/
 	include_once "backend-connection.php";
 
 	class DamagedItemsDBConnection extends DBConnection
