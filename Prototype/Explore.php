@@ -17,6 +17,7 @@
 </head>
 <body>
     <?php include 'header.php'?>
+    <!-- All the images and web contend were modified by Vina Touch 101928802!-->
     <div id = "main">
         <div class="banner">
             <div id="bannertext">

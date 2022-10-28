@@ -80,8 +80,9 @@
 
         }
 
+        //updating the account details of the customer
         function updateDetails($login="", $formName, $formNumber, $formStreet, $formSuburb, $formPcode, $formState, $formEmail ){
-            $login = $this->getUsername();
+            $login = $this->getUsername();      //get the current logged in username
             $dbCon = new DBConnection('customer_table');
             $validateFullName = str_replace(' ', '', $formName);    //remove whitespace of the form full name and check
             $msg="";
@@ -106,6 +107,8 @@
                 if (!validEmail( $formEmail)||empty ($formEmail)){
                     $msg =$msg . "<p class='error'>The email address is invalid. </p>";
                 }
+
+                //if no errrors, update the details
                 if (empty($msg)){
                     $user = $this->getUsername();
                     $conn = new DBConnection("customer_table");

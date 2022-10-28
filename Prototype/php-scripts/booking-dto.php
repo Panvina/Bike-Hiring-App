@@ -56,6 +56,7 @@
             return $this->fee;
         }
 
+        //retrieve the pickup location name address from the database where the pickup ID = $pickupID
         function getPickUpLocNameAddress($pickupID){
             $dbCon = new DBConnection('location_table');
             $pickupLoc = $dbCon->get('name, address, suburb, post_code',("location_id = '$pickupID'"));
@@ -64,6 +65,7 @@
             return $pickupLoc;
         }
 
+        //retrieve the drop off location name address from the database where the drop ID = $dropOffID
         function getDropOffLocNameAddress($dropOffID){
             $dbCon = new DBConnection('location_table');
             $dropOffLoc = $dbCon->get('name, address, suburb, post_code',("location_id = '$dropOffID'"));
@@ -72,17 +74,19 @@
             return $dropOffLoc;
         }
 
+         //retrieve the booking bike ID from the database where the booking ID = $booking_id
         function getBookingBikeID($booking_id){
             $dbCon = new DBConnection('booking_bike_table');
             $bike = $dbCon->get('bike_id',("booking_id = '$booking_id'"));
             $bikeList = array();
             foreach ($bike as $row){
-                $row = implode("",$row);
-                array_push($bikeList, $row);
+                $row = implode("",$row);    //convert the $row array into a string
+                array_push($bikeList, $row);    //then push the string value into a new array $bikeList
             }
             return $bikeList;
         }
 
+        //retrieve the bike ID from the database where the bike id = $bikeid
         function getBikeName($bikeid){
             $dbCon = new DBConnection('bike_inventory_table');
             $bikeName = array();
@@ -93,6 +97,7 @@
             return $bikeName;
         }
 
+        //retrieve the bike accessory from the database where the booking id = $bookingid
         function getBikeAccessory($bookingid){
             $getID = new DBConnection('booking_accessory_table');
             $getName = new DBConnection('accessory_inventory_table');
@@ -105,6 +110,8 @@
             }
             return $accessoryName;
         }
+
+        //get all the current bookings for the logged in user
         function getDetails($login=""){
             $login = $this->getUsername();
             $dbCon = new DBConnection('booking_table');
@@ -125,8 +132,8 @@
         }
 
 
+        //print booking details on the webpage
         function printDetails($array){
-
             if (count($array)< 1){
                 echo "<p>No current booking/s.</p>";
                 echo"<p><a href='makeabooking.php'><button class='cta-hire-button' type='button'>Start my first booking</button></a></p>";
@@ -135,7 +142,6 @@
                     $bookingid =$this->bookingid[$i];
                     $bikeid = $this->getBookingBikeID($bookingid);
                     $bikeName = $this->getBikeName($bikeid);
-                    //$bikeid = implode(", ",$bikeid);
                     $bikeName = implode(", ",$bikeName);
                     $bikeAccessory = $this->getBikeAccessory($bookingid);
                     $bikeAccessory = implode(", ",$bikeAccessory);

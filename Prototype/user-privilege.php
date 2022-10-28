@@ -3,6 +3,8 @@
     if (!isset($_SESSION)){
         session_start();
     }
+
+    //detect if the 'logout' button is clicked, then destory all set sessions and redirect them back to homepage
     if(isset($_POST['logout'])==true){
         $_SESSION = array();
         session_destroy();
@@ -10,16 +12,18 @@
         exit;
     }
 
+    //define a function that provides additional functionationality to the owner
     function setOwnerDashboardPrivilege($staffActiveClass="", $accountActiveClass=""){
         if($_SESSION["login-type"] == "owner"){
             echo "<a class='$staffActiveClass' href='staff.php'> <img src='img/icons/staff.png' alt='Staff Logo' /> Staff </a> <br>";
             echo "<a class='$accountActiveClass' href='accounts.php'> <img src='img/icons/account.png' alt='Account logo'/> Accounts </a> <br>";
         }else if(!isset($_SESSION["login-type"]) || $_SESSION["login-type"] == "customer"){
-            header("location: index.php?Error403:AccessDenied");
+            header("location: index.php?Error403:AccessDenied");    //if the user tries to access the pages via the url, redirect him back to home page
             exit;
         }
     }
 
+    //display a button on the dashboard
     function setLogoutButton()
     {
         echo "<form action='user-privilege.php' method='post'>

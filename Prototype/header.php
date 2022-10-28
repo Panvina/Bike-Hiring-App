@@ -33,6 +33,7 @@
                     <div class="column nav-wrapper">
                         <nav class="mainNav">
                             <ul id="menu">
+                                <!-- The php code below is to detect which page is being selected, if so, change the styling of the active state -->
                                 <li><a class="nav-text <?php if($activeLink=="index"){echo'nav-active';} ?>" href="index.php">Home</a></li>
                                 <li><a class="nav-text <?php if($activeLink=="hire"){echo'nav-active';} ?>" href="makeabooking.php">Hire</a></li>
                                 <li><a class="nav-text <?php if($activeLink=="about"){echo'nav-active';} ?>" href="about.php">About Inverloch</a></li>

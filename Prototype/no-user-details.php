@@ -3,17 +3,20 @@
     if(!isset($_SESSION)){ 
         session_start();     
     }
+    //if anyone thats not the customer tries to access this page, redirect them back to the homepage
     if(!isset($_SESSION["login-type"]) || $_SESSION["login-type"] != "customer" || !isset($_SESSION["user-details"]) || $_SESSION["user-details"] == "yes"){
         header("location: index.php?Error403:AccessDenied");
         exit;
     }
 
+    //include the files to instantiate objects
     include_once 'php-scripts/person-dto.php';
     include_once "php-scripts/backend-connection.php" ;
     include_once 'php-scripts/utils.php';
     $error = "";
     if(isset($_POST['number']) || isset($_POST['street_address']) || isset($_POST['suburb']) || isset($_POST['post_code']) 
     || isset($_POST['state']) || isset($_POST['licence_number'])){
+        //also set the input details in sessions just so when they put in invalid data, they dont have to redo the whole form
         $number = $_POST['number'];
         $_SESSION["user-num"] = $number;
         $street = $_POST['street_address'];
@@ -26,6 +29,8 @@
         $_SESSION["user-state"] = $state;
         $licence = $_POST['licence_number'];
         $_SESSION["user-licence"] = $licence;
+
+        //utilising validation functions from utils.php
         if (!validMobileNumber($number) || empty($_POST['number'])){
             $errNum = "The phone number has to be 10 digit numbers starting with 0.<br>";
             $error = "error";
@@ -50,15 +55,17 @@
             $errLic="The licence number has to contain 10 digit numbers.<br>";
             $error = "error";
         }
+
+        //if no errros are detected, update the details in the database for that customer IDD
         if (empty($error) || isset($_GET['cusID'])){
             $cusID = $_SESSION['cusID'];
             $user = new PersonDTO($cusID);
-            $cusID = $user->getUsername();
+            $cusID = $user->getUsername();  //get the logged in customer ID
             $conn = new DBConnection("customer_table");
             if ($conn->update("user_name", "'$cusID'", "phone_number, street_address, suburb, post_code, licence_number, state",
             "$number,  $street, $suburb, $pcode, $licence, $state") == true){
-                $_SESSION["user-details"] = "yes";
-                header("Location: booking-summary.php?update=success");
+                $_SESSION["user-details"] = "yes";      //to let the system know that the logged in user is no longer a new user
+                header("Location: booking-summary.php?update=success");     //redirect them to the booking-summary page
                 exit();
             }
         }
